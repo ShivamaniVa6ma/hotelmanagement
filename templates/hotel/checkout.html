@@ -312,27 +312,27 @@
                                                 <!-- Add Check-in Date and Time -->
                                                 <div class="col-md-6 mb-2">
                                                     <label for="checkIn" class="form-label">Check-in Date and Time</label>
-                                                    <input type="datetime-local" name="check_in" id="checkIn" class="form-control">
+                                                    <input type="datetime-local" name="check_in" id="checkIn" value="{{ check_in|date:'Y-m-d H:i' }}" class="form-control">
                                                 </div>
                                                 <!-- Add Check-out Date and Time -->
                                                 <div class="col-md-6 mb-2">
                                                     <label for="checkOut" class="form-label">Check-out Date and Time</label>
-                                                    <input type="datetime-local" id="checkOut" name="check_out" class="form-control">
+                                                    <input type="datetime-local" id="checkOut" name="check_out" value="{{ check_out|date:'Y-m-d H:i' }}" class="form-control">
                                                 </div>
                                             </div>
                                             
                                             <h3 class="room-type-title" style="color: black;">Select Room Types</h3>
                                             <div class="room-selection-container">
                                                 <div class="form-check">
-                                                    <input class="form-check-input room-checkbox" type="checkbox" value="standard" id="standardRoom">
+                                                    <input class="form-check-input room-checkbox" type="checkbox" value="standard" id="standardRoom" name="room_type">
                                                     <label class="form-check-label" for="standardRoom">Standard Room </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input room-checkbox" type="checkbox" value="deluxe" id="deluxeRoom">
+                                                    <input class="form-check-input room-checkbox" type="checkbox" value="deluxe" id="deluxeRoom" name="room_type">
                                                     <label class="form-check-label" for="deluxeRoom">Deluxe Room </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input room-checkbox" type="checkbox" value="vip" id="vipRoom">
+                                                    <input class="form-check-input room-checkbox" type="checkbox" value="vip" id="vipRoom" name="room_type">
                                                     <label class="form-check-label" for="vipRoom">VIP Room </label>
                                                 </div>
                                                 <div class="form-check">

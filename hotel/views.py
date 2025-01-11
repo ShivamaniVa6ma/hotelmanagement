@@ -47,7 +47,9 @@ def check_availability(request):
             return render(request, 'hotel/checkout.html', {
                 'available_rooms': available_rooms,
                 'check_in': check_in,
-                'check_out': check_out
+                'check_out': check_out,
+                'room_type': room_type  # Pass the room type
+
             })
         except ValueError as e:
             return JsonResponse({'error': 'Invalid date format. Please use the correct format.'}, status=400)
