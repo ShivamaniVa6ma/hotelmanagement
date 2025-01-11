@@ -1,0 +1,2625 @@
+{% load static %}
+
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Best Luxurious Hotel Booking Template." />
+    <meta
+      name="keywords"
+      content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern"
+    />
+    <meta name="author" content="ashishmaraviya" />
+
+    <title> Hotel Booking HTML Template + Admin Dashboard</title>
+
+    <!-- App favicon -->
+    <!-- <link rel="shortcut icon" href="assets/img/favicon/favicon.ico" /> -->
+
+    <!-- Icon CSS -->
+    <link
+      href="{% static 'assets/css/vendor/materialdesignicons.min.css' %}"
+      rel="stylesheet"
+    />
+    <link href="{% static 'assets/css/vendor/remixicon.css' %}" rel="stylesheet" />
+
+    <!-- Vendor -->
+    <link
+      href="{% static 'assets/css/vendor/datatables.bootstrap5.min.css' %}"
+      rel="stylesheet"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <link
+      href="{% static 'assets/css/vendor/responsive.datatables.min.css' %}"
+      rel="stylesheet"
+    />
+    <link href="{% static 'assets/css/vendor/daterangepicker.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/vendor/apexcharts.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/vendor/simplebar.css' %}" rel="stylesheet" />
+    <link
+      href="{% static 'assets/css/vendor/jquery-jvectormap-1.2.2.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Main CSS -->
+    <link id="mainCss" href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
+
+<style>
+  /*Multi room booking form styles*/
+   /* .form-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+        } */
+
+        /* .offcanvas-backdrop {
+            background-color: #e4e2e2;
+           
+        } */
+        .offcanvas-backdrop.show {
+          opacity: 0;
+        }
+
+
+        .room-card {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #e0e0ff;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        
+
+      .hidden {
+            display: none;
+        }
+
+        .room-type-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .room-type-header .form-check-input {
+            width: 20px;
+            height: 20px;
+        }
+        .room-details {
+            /* background: white; */
+            border-radius: 8px;
+            /* padding: 15px; */
+            /* box-shadow: 0 2px 4px rgba(0,0,0,0.05); */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .price-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .availability-text {
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .number-input {
+            width: 100px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 5px 10px;
+        }
+
+        .ac-options, .bed-options {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .form-check-input:checked {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+
+
+        .remove-btn {
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1.2rem;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+        }
+
+        .remove-btn:hover {
+            color: #bb2d3b;
+        }
+
+        .selected-rooms {
+            margin-top: 20px;
+        }
+
+        .room-card {
+            position: relative;
+        }
+
+
+        .btn-check:checked + .btn-outline-primary {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+
+        .dropdown-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+        }
+        .add-more-text {
+            color: #0d6efd;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: none;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .dropdown {
+            width: 21%;
+        }
+        .dropdown-toggle {
+            width: 100%;
+        }
+        .dropdown-menu {
+            width: 21%;
+        }
+        @media (min-width: 576px) {
+            .add-more-text {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (min-width: 320px) {
+            .add-more-text {
+                font-size: 13px;
+            }
+        }
+         
+         /* End Multi room booking form styles*/
+        .form-select-room{
+          width: 22%;
+          padding: 10px;
+        }
+         
+</style>
+
+  </head>
+
+  <body data-lh-mode="light">
+    <main class="wrapper sb-default">
+      <!-- Overlay -->
+      <div class="lh-loader">
+        <span class="loader"></span>
+      </div>
+
+      <!-- Header -->
+      <header class="lh-header">
+        <div class="container-fluid">
+          <div class="lh-header-items">
+            <div class="left-header">
+              <a href="javascript:void(0)" class="lh-toggle-sidebar">
+                <span class="outer-ring">
+                  <span class="inner-ring"></span>
+                </span>
+              </a>
+              <div class="header-search-box">
+                <div class="header-search-drop">
+                  <a href="javascript:void(0)" class="open-search"
+                    ><i class="ri-search-line"></i
+                  ></a>
+                  <form class="lh-search">
+                    <input
+                      class="search-input"
+                      type="text"
+                      placeholder="Search..."
+                    />
+                    <a href="javascript:void(0)" class="search-btn"
+                      ><i class="ri-search-line"></i>
+                    </a>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="right-header">
+              <div class="lh-right-tool lh-flag-drop language">
+                <div class="lh-hover-drop">
+                  <div class="lh-hover-tool">
+                    <img class="flag" src="{% static 'assets/img/flag/us.png' %}" alt="flag" />
+                  </div>
+                  <div class="lh-hover-drop-panel right">
+                    <ul>
+                      <li>
+                        <a href="javascript:void(0)"
+                          ><img
+                            class="flag"
+                            src="{% static 'assets/img/flag/us.png' %}"
+                            alt="flag"
+                          />English</a
+                        >
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)"
+                          ><img
+                            class="flag"
+                            src="{% static 'assets/img/flag/in.png' %}"
+                            alt="flag"
+                          />Hindi</a
+                        >
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)"
+                          ><img
+                            class="flag"
+                            src="{% static 'assets/img/flag/de.png' %}"
+                            alt="flag"
+                          />
+                          Deutsch</a
+                        >
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)"
+                          ><img
+                            class="flag"
+                            src="{% static 'assets/img/flag/it.png' %}"
+                            alt="flag"
+                          />Italian</a
+                        >
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)"
+                          ><img
+                            class="flag"
+                            src="{% static 'assets/img/flag/jp.png' %}"
+                            alt="flag"
+                          />Japanese</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="lh-right-tool apps">
+                <div class="lh-hover-drop">
+                  <div class="lh-hover-tool">
+                    <i class="ri-apps-2-line"></i>
+                  </div>
+                  <div class="lh-hover-drop-panel right apps">
+                    <h6 class="title">Apps</h6>
+                    <ul>
+                      <li>
+                        <a href="javascript:void(0)"
+                          ><img
+                            class="app"
+                            src="{% static 'assets/img/apps/1.png' %}"
+                            alt="flag"
+                          />Github</a
+                        >
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)"
+                          ><img
+                            class="app"
+                            src="{% static 'assets/img/apps/2.png' %}"
+                            alt="flag"
+                          />Dribbble</a
+                        >
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)"
+                          ><img
+                            class="app"
+                            src="{% static 'assets/img/apps/3.png' %}"
+                            alt="flag"
+                          />Dropbox</a
+                        >
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)"
+                          ><img
+                            class="app"
+                            src="{% static 'assets/img/apps/4.png' %}"
+                            alt="flag"
+                          />Figma</a
+                        >
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)"
+                          ><img
+                            class="app"
+                            src="{% static 'assets/img/apps/5.png' %}"
+                            alt="flag"
+                          />Meta</a
+                        >
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)"
+                          ><img
+                            class="app"
+                            src="{% static 'assets/img/apps/6.png' %}"
+                            alt="flag"
+                          />Adsense</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="lh-right-tool display-screen">
+                <a class="lh-screen full" href="javascript:void(0)"
+                  ><i class="ri-fullscreen-line"></i
+                ></a>
+                <a class="lh-screen reset" href="javascript:void(0)"
+                  ><i class="ri-fullscreen-exit-line"></i
+                ></a>
+              </div>
+              <div class="lh-right-tool">
+                <a class="lh-notify" href="javascript:void(0)">
+                  <i class="ri-notification-2-line"></i>
+                  <span class="label"></span>
+                </a>
+              </div>
+              <div class="lh-right-tool display-dark">
+                <a class="lh-mode dark" href="javascript:void(0)"
+                  ><i class="ri-moon-clear-line"></i
+                ></a>
+                <a class="lh-mode light" href="javascript:void(0)"
+                  ><i class="ri-sun-line"></i
+                ></a>
+              </div>
+              <div class="lh-right-tool lh-user-drop">
+                <div class="lh-hover-drop">
+                  <div class="lh-hover-tool">
+                    <img class="user" src="{% static 'assets/img/user/1.jpg' %}" alt="user" />
+                  </div>
+                  <div class="lh-hover-drop-panel right">
+                    <div class="details">
+                      <h6>Moris Waites</h6>
+                      <p>moris@example.com</p>
+                    </div>
+                    <ul class="border-top">
+                      <li><a href="team-profile.html">Profile</a></li>
+                      <li><a href="#">Help</a></li>
+                      <li><a href="#">Messages</a></li>
+                      <li><a href="team-update.html">Settings</a></li>
+                    </ul>
+                    <ul class="border-top">
+                      <li>
+                        <a href="signin.html"
+                          ><i class="ri-logout-circle-r-line"></i>Logout</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- sidebar -->
+      <div class="lh-sidebar-overlay"></div>
+      <div class="lh-sidebar" data-mode="light">
+        <div class="lh-sb-logo">
+          <a href="index.html" class="sb-full"
+            ><img src="{% static 'assets/img/logo/full-logo.png' %}" alt="logo"
+          /></a>
+          <a href="index.html" class="sb-collapse"
+            ><img src="{% static 'assets/img/logo/collapse-logo.png' %}" alt="logo"
+          /></a>
+        </div>
+        <div class="lh-sb-wrapper">
+          <div class="lh-sb-content">
+            <ul class="lh-sb-list">
+              <li class="lh-sb-item sb-drop-item">
+                <a href="javascript:void(0)" class="lh-drop-toggle">
+                  <i class="ri-dashboard-3-line"></i>
+                  <span class="condense"
+                    >Dashboard<i class="drop-arrow ri-arrow-down-s-line"></i
+                  ></span>
+                </a>
+                <ul class="lh-sb-drop condense">
+                  <li class="list">
+                    <a href="index.html" class="lh-page-link drop"
+                      ><i class="ri-git-commit-line"></i>Report</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="lh-sb-item-separator"></li>
+              <li class="lh-sb-title condense">Apps</li>
+              <li class="lh-sb-item sb-drop-item">
+                <a href="javascript:void(0)" class="lh-drop-toggle">
+                  <i class="ri-shield-user-line"></i
+                  ><span class="condense"
+                    >Staff<i class="drop-arrow ri-arrow-down-s-line"></i></span
+                ></a>
+                <ul class="lh-sb-drop condense">
+                  <!-- <li>
+                    <a href="team-profile.html" class="lh-page-link drop"
+                      ><i class="ri-git-commit-line"></i>Team Profile</a
+                    >
+                  </li> -->
+                  <li>
+                    <a href="team-add.html" class="lh-page-link drop"
+                      ><i class="ri-git-commit-line"></i>Team Add</a
+                    >
+                  </li>
+                  <!-- <li>
+                    <a href="team-update.html" class="lh-page-link drop"
+                      ><i class="ri-git-commit-line"></i>Team Update</a
+                    >
+                  </li> -->
+                  <li>
+                    <a href="team-list.html" class="lh-page-link drop"
+                      ><i class="ri-git-commit-line"></i>Team List</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="lh-sb-item-separator"></li>
+              <li class="lh-sb-title condense">Hotel | Resort</li>
+              <li class="lh-sb-item">
+                <a href="guest.html" class="lh-page-link">
+                  <i class="ri-group-line"></i
+                  ><span class="condense"
+                    ><span class="hover-title">Guest</span>
+                  </span>
+                </a>
+              </li>
+              <li class="lh-sb-item">
+                <a href="guest-details.html" class="lh-page-link">
+                  <i class="ri-user-search-line"></i
+                  ><span class="condense"
+                    ><span class="hover-title">Guest Details</span>
+                  </span>
+                </a>
+              </li>
+              <li class="lh-sb-item">
+                <a href="rooms.html" class="lh-page-link">
+                  <i class="ri-home-8-line"></i
+                  ><span class="condense"
+                    ><span class="hover-title">Rooms</span>
+                  </span>
+                </a>
+              </li>
+              <li class="lh-sb-item">
+                <a href="bookings.html" class="lh-page-link">
+                  <i class="ri-contacts-book-line"></i
+                  ><span class="condense"
+                    ><span class="hover-title">Bookings</span>
+                  </span>
+                </a>
+              </li>
+              <li class="lh-sb-item">
+                <a href="invoice.html" class="lh-page-link">
+                  <i class="ri-bill-line"></i
+                  ><span class="condense"
+                    ><span class="hover-title">Invoice</span>
+                  </span>
+                </a>
+              </li>
+              <li class="lh-sb-item-separator"></li>
+              <li class="lh-sb-title condense">Restaurant</li>
+              <li class="lh-sb-item">
+                <a href="menu.html" class="lh-page-link">
+                  <i class="ri-restaurant-2-line"></i
+                  ><span class="condense"
+                    ><span class="hover-title">Menu</span>
+                  </span>
+                </a>
+              </li>
+              <li class="lh-sb-item">
+                <a href="menu-add.html" class="lh-page-link">
+                  <i class="ri-restaurant-2-line"></i
+                  ><span class="condense"
+                    ><span class="hover-title">Add Menu</span>
+                  </span>
+                </a>
+              </li>
+              <li class="lh-sb-item">
+                <a href="orders.html" class="lh-page-link">
+                  <i class="ri-bookmark-3-line"></i
+                  ><span class="condense"
+                    ><span class="hover-title">Orders</span>
+                  </span>
+                </a>
+              </li>
+              <li class="lh-sb-item-separator"></li>
+              <li class="lh-sb-title condense">Extra</li>
+              <li class="lh-sb-item sb-drop-item">
+                <a href="javascript:void(0)" class="lh-drop-toggle">
+                  <i class="ri-pages-line"></i
+                  ><span class="condense"
+                    >Authentication<i
+                      class="drop-arrow ri-arrow-down-s-line"
+                    ></i></span
+                ></a>
+                <ul class="lh-sb-drop condense">
+                  <li>
+                    <a href="signin.html" class="lh-page-link drop"
+                      ><i class="ri-git-commit-line"></i>Login</a
+                    >
+                  </li>
+                  <li>
+                    <a href="signup.html" class="lh-page-link drop"
+                      ><i class="ri-git-commit-line"></i>Signup</a
+                    >
+                  </li>
+                  <!-- <li>
+                    <a href="forgot.html" class="lh-page-link drop"
+                      ><i class="ri-git-commit-line"></i>Forgot password</a
+                    >
+                  </li>
+                  <li>
+                    <a href="reset-password.html" class="lh-page-link drop"
+                      ><i class="ri-git-commit-line"></i>Reset password</a
+                    >
+                  </li> -->
+                </ul>
+              </li>
+              <!-- <li class="lh-sb-item sb-drop-item">
+                <a href="javascript:void(0)" class="lh-drop-toggle">
+                  <i class="ri-service-line"></i
+                  ><span class="condense"
+                    >Service pages<i
+                      class="drop-arrow ri-arrow-down-s-line"
+                    ></i></span
+                ></a>
+                <ul class="lh-sb-drop condense">
+                  <li>
+                    <a href="404-error-page.html" class="lh-page-link drop"
+                      ><i class="ri-git-commit-line"></i>404 error</a
+                    >
+                  </li>
+                  <li>
+                    <a href="maintenance.html" class="lh-page-link drop"
+                      ><i class="ri-git-commit-line"></i>Maintenance</a
+                    >
+                  </li>
+                </ul>
+              </li> -->
+              <!-- <li class="lh-sb-item-separator"></li>
+              <li class="lh-sb-title condense">Elements</li>
+              <li class="lh-sb-item">
+                <a href="remix-icons.html" class="lh-page-link">
+                  <i class="ri-remixicon-line"></i
+                  ><span class="condense"
+                    ><span class="hover-title">remix icons</span></span
+                  ></a
+                >
+              </li>
+              <li class="lh-sb-item">
+                <a href="material-icons.html" class="lh-page-link">
+                  <i class="mdi mdi-material-ui"></i
+                  ><span class="condense"
+                    ><span class="hover-title">Material icons</span></span
+                  ></a
+                >
+              </li>
+              <li class="lh-sb-item">
+                <a href="alert-popup.html" class="lh-page-link">
+                  <i class="ri-file-warning-line"></i
+                  ><span class="condense"
+                    ><span class="hover-title">Alert Popup</span></span
+                  ></a
+                >
+              </li> -->
+              <li class="lh-sb-item-separator"></li>
+              <li class="lh-sb-title condense">Settings</li>
+              <li class="lh-sb-item">
+                <a href="role.html" class="lh-page-link">
+                  <i class="ri-magic-line"></i
+                  ><span class="condense"
+                    ><span class="hover-title">Role</span></span
+                  ></a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notify sidebar -->
+      <div class="lh-notify-bar-overlay"></div>
+      <div class="lh-notify-bar">
+        <div class="lh-bar-title">
+          <h6>Notifications<span class="label">12</span></h6>
+          <a href="javascript:void(0)" class="close-notify"
+            ><i class="ri-close-line"></i
+          ></a>
+        </div>
+        <div class="lh-bar-content">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="alert-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#alert"
+                type="button"
+                role="tab"
+                aria-controls="alert"
+                aria-selected="true"
+              >
+                Alert
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="messages-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#messages"
+                type="button"
+                role="tab"
+                aria-controls="messages"
+                aria-selected="false"
+              >
+                Messages
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="alert"
+              role="tabpanel"
+              aria-labelledby="alert-tab"
+            >
+              <div class="lh-alert-list">
+                <ul>
+                  <li>
+                    <div class="icon lh-alert">
+                      <i class="ri-alarm-warning-line"></i>
+                    </div>
+                    <div class="detail">
+                      <div class="title">Your final report is overdue</div>
+                      <p class="time">Just now</p>
+                      <p class="message">
+                        Please submit your quarterly report before - June 15.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="icon lh-warn">
+                      <i class="ri-error-warning-line"></i>
+                    </div>
+                    <div class="detail">
+                      <div class="title">Your Booking campaign is stop!</div>
+                      <p class="time">5:45AM - 25/05/2024</p>
+                      <p class="message">
+                        Please submit your quarterly report before Jun 15.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="icon lh-success">
+                      <i class="ri-check-double-line"></i>
+                    </div>
+                    <div class="detail">
+                      <div class="title">
+                        Your payment is successfully processed
+                      </div>
+                      <p class="time">9:20PM - 19/06/2024</p>
+                      <p class="message">
+                        Check your account wallet. if there is any issue, create
+                        support ticket.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="icon lh-warn">
+                      <i class="ri-error-warning-line"></i>
+                    </div>
+                    <div class="detail">
+                      <div class="title">Budget threshold exceeded!</div>
+                      <p class="time">4:15AM - 01/04/2024</p>
+                      <p class="message">
+                        Budget threshold was exceeded for project "Luxurious"
+                        B612 elements.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="icon lh-warn">
+                      <i class="ri-close-line"></i>
+                    </div>
+                    <div class="detail">
+                      <div class="title">Booking was decline!</div>
+                      <p class="time">4:15AM - 01/04/2024</p>
+                      <p class="message">
+                        Your booking "B126" is declined by Theresa Mayeras.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="icon lh-success">
+                      <i class="ri-check-double-line"></i>
+                    </div>
+                    <div class="detail">
+                      <div class="title">
+                        Your payment is successfully processed
+                      </div>
+                      <p class="time">9:20PM - 19/06/2024</p>
+                      <p class="message">
+                        Check your account wallet. if there is any issue, create
+                        support ticket.
+                      </p>
+                    </div>
+                  </li>
+                  <li class="check">
+                    <a class="lh-primary-btn" href="#">View all</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="messages"
+              role="tabpanel"
+              aria-labelledby="messages-tab"
+            >
+              <div class="lh-message-list">
+                <ul>
+                  <li>
+                    <a href="#" class="reply">Reply</a>
+                    <div class="user">
+                      <img src="{% static 'assets/img/user/9.jpg' %}" alt="user" />
+                      <span class="label online"></span>
+                    </div>
+                    <div class="detail">
+                      <a href="#" class="name">Boris Whisli</a>
+                      <p class="time">5:30AM, Today</p>
+                      <p class="message">Hello, Room 204 need to be clean.</p>
+                      <span class="download-files">
+                        <span class="download">
+                          <img src="{% static 'assets/img/room/1.png' %}" alt="image" />
+                          <a href="javascript:void(0)"
+                            ><i class="ri-download-2-line"></i
+                          ></a>
+                        </span>
+                        <span class="download">
+                          <img src="{% static 'assets/img/room/2.png' %}" alt="image" />
+                          <a href="javascript:void(0)"
+                            ><i class="ri-download-2-line"></i
+                          ></a>
+                        </span>
+                        <span class="download">
+                          <img src="{% static 'assets/img/room/3.png' %}" alt="image" />
+                          <a href="javascript:void(0)"
+                            ><i class="ri-download-2-line"></i
+                          ></a>
+                        </span>
+                      </span>
+                    </div>
+                  </li>
+                  <li>
+                    <a href="#" class="reply">Reply</a>
+                    <div class="user">
+                      <img src="{% static 'assets/img/user/8.jpg' %}" alt="user" />
+                      <span class="label offline"></span>
+                    </div>
+                    <div class="detail">
+                      <a href="#" class="name">Frank N. Stein</a>
+                      <p class="time">8:30PM, 05/12/2024</p>
+                      <p class="message">
+                        Please take a look and get order from table 06.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <a href="#" class="reply">Reply</a>
+                    <div class="user">
+                      <img src="{% static 'assets/img/user/7.jpg' %}" alt="user" />
+                      <span class="label busy"></span>
+                    </div>
+                    <div class="detail">
+                      <a href="#" class="name">Frank N. Stein</a>
+                      <p class="time">8:30PM, 05/12/2024</p>
+                      <p class="message">Room 65 AC repair service is done.</p>
+                      <span class="download-files">
+                        <span class="download">
+                          <img src="{% static 'assets/img/facilities/1.png' %}" alt="image" />
+                          <a href="javascript:void(0)"
+                            ><i class="ri-download-2-line"></i
+                          ></a>
+                        </span>
+                      </span>
+                    </div>
+                  </li>
+                  <li>
+                    <a href="#" class="reply">Reply</a>
+                    <div class="user">
+                      <img src="{% static 'assets/img/user/6.jpg' %}" alt="user" />
+                      <span class="label busy"></span>
+                    </div>
+                    <div class="detail">
+                      <a href="#" class="name">Paige Turner</a>
+                      <p class="time">4:30PM, 12/12/2024</p>
+                      <p class="message">Take a Spa trainer interview.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <a href="#" class="reply">Reply</a>
+                    <div class="user">
+                      <img src="{% static 'assets/img/user/5.jpg' %}" alt="user" />
+                      <span class="label busy"></span>
+                    </div>
+                    <div class="detail">
+                      <a href="#" class="name">Allie Grater</a>
+                      <p class="time">8:30PM, 05/12/2024</p>
+                      <p class="message">Take marketing module task.</p>
+                    </div>
+                  </li>
+                  <li class="check">
+                    <a class="lh-primary-btn" href="#">View all</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- main content -->
+      <div class="lh-main-content">
+        <div class="container-fluid">
+          <!-- Page title & breadcrumb -->
+          <div class="lh-page-title">
+            <div class="lh-breadcrumb">
+              <h5>Bookings</h5>
+              <ul>
+                <li><a href="index.html">Home</a></li>
+                <li>Bookings</li>
+              </ul>
+            </div>
+            <div class="lh-tools">
+              <a href="javascript:void(0)" title="Refresh" class="refresh"
+                ><i class="ri-refresh-line"></i
+              ></a>
+              <div id="pagedate">
+                <div class="lh-date-range" title="Date">
+                  <span></span>
+                </div>
+              </div>
+
+              <div class="filter">
+                <div class="dropdown" title="Filter">
+                  <button
+                    class="btn dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    >
+                  
+                    <i class="ri-sound-module-line"></i>
+                  </button>
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    <li><a class="dropdown-item" href="#">Booking</a></li>
+                    <li><a class="dropdown-item" href="#">Revenue</a></li>
+                    <li><a class="dropdown-item" href="#">Expence</a></li>
+                  </ul>
+                </div>
+              </div>
+
+			  <!-- Book room button  -->
+              <button
+                class="btn btn-primary"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#bookingOffcanvas"
+              >
+                <i class="fas fa-plus-circle me-2"></i>Book Room
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-12 col-md-12">
+              <div class="lh-card" id="bookingtbl">
+                <div class="lh-card-header">
+                  <h4 class="lh-card-title">Latest Bookings</h4>
+                  <div class="header-tools">
+                    <a href="javascript:void(0)" class="m-r-10 lh-full-card"
+                      ><i class="ri-fullscreen-line" title="Full Screen"></i
+                    ></a>
+                    <div class="lh-date-range dots">
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="lh-card-content card-default">
+                  <div class="booking-table">
+                    <div class="table-responsive">
+                      <table id="booking_table" class="table">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Room_Name</th>
+                            <th>CheckIn</th>
+                            <th>CheckOut</th>
+                            <th>Proof</th>
+                            <th>Payment</th>
+                            <th>Amount</th>
+                            <th>RoomNo</th>
+                            <th>Rooms</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="token">2650</td>
+                            <td>
+                              <img
+                                class="cat-thumb"
+                                src="{% static 'assets/img/room/1.png' %}"
+                                alt="clients Image"
+                              /><span class="name">Deluxe Double Bed</span>
+                            </td>
+                            <td>15/01/2024</td>
+                            <td>20/01/2024</td>
+                            <td>Passport</td>
+                            <td class="active">Cash</td>
+                            <td>$550</td>
+                            <td class="type"><span>VIP : </span>101, 102</td>
+                            <td class="rooms">
+                              <span class="mem">6 Member</span> /
+                              <span class="room">2 Room</span>
+                            </td>
+                            <td>
+                              <div class="d-flex justify-content-center">
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success"
+                                >
+                                  <i class="ri-information-line"></i>
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                  data-bs-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                  data-display="static"
+                                >
+                                  <span class="sr-only"
+                                    ><i class="ri-settings-3-line"></i
+                                  ></span>
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#">Edit</a>
+                                  <a class="dropdown-item" href="#">Delete</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="token">2650</td>
+                            <td>
+                              <img
+                                class="cat-thumb"
+                                src="{% static 'assets/img/room/2.png' %}"
+                                alt="clients Image"
+                              /><span class="name">VIP King Double Bed</span>
+                            </td>
+                            <td>19/04/2024</td>
+                            <td>29/04/2024</td>
+                            <td>Pan Card</td>
+                            <td class="close">Cheque</td>
+                            <td>$200</td>
+                            <td class="type"><span>Junior : </span>105</td>
+                            <td class="rooms">
+                              <span class="mem">4 Member</span> /
+                              <span class="room">1 Room</span>
+                            </td>
+                            <td>
+                              <div class="d-flex justify-content-center">
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success"
+                                >
+                                  <i class="ri-information-line"></i>
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                  data-bs-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                  data-display="static"
+                                >
+                                  <span class="sr-only"
+                                    ><i class="ri-settings-3-line"></i
+                                  ></span>
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#">Edit</a>
+                                  <a class="dropdown-item" href="#">Delete</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="token">2365</td>
+                            <td>
+                              <img
+                                class="cat-thumb"
+                                src="{% static 'assets/img/room/3.png' %}"
+                                alt="clients Image"
+                              /><span class="name"
+                                >Junior Suites Double Bed</span
+                              >
+                            </td>
+                            <td>01/07/2024</td>
+                            <td>02/07/2024</td>
+                            <td>Pan Card</td>
+                            <td class="pending">Pending</td>
+                            <td>$400</td>
+                            <td class="type"><span>VVIP : </span>107</td>
+                            <td class="rooms">
+                              <span class="mem">2 Member</span> /
+                              <span class="room">1 Room</span>
+                            </td>
+                            <td>
+                              <div class="d-flex justify-content-center">
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success"
+                                >
+                                  <i class="ri-information-line"></i>
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                  data-bs-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                  data-display="static"
+                                >
+                                  <span class="sr-only"
+                                    ><i class="ri-settings-3-line"></i
+                                  ></span>
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#">Edit</a>
+                                  <a class="dropdown-item" href="#">Delete</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="token">2205</td>
+                            <td>
+                              <img
+                                class="cat-thumb"
+                                src="{% static 'assets/img/room/4.png' %}"
+                                alt="clients Image"
+                              /><span class="name">Deluxe Double Bed</span>
+                            </td>
+                            <td>01/07/2024</td>
+                            <td>02/07/2024</td>
+                            <td>Adhar Card</td>
+                            <td class="success">Gpay</td>
+                            <td>$1200</td>
+                            <td class="type">
+                              <span>Premium :</span> 103, 104,
+                              <span>Delux : </span>106
+                            </td>
+                            <td class="rooms">
+                              <span class="mem">12 Member</span> /
+                              <span class="room">3 Room</span>
+                            </td>
+                            <td>
+                              <div class="d-flex justify-content-center">
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success"
+                                >
+                                  <i class="ri-information-line"></i>
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                  data-bs-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                  data-display="static"
+                                >
+                                  <span class="sr-only"
+                                    ><i class="ri-settings-3-line"></i
+                                  ></span>
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#">Edit</a>
+                                  <a class="dropdown-item" href="#">Delete</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="token">2187</td>
+                            <td>
+                              <img
+                                class="cat-thumb"
+                                src="{% static 'assets/img/room/5.png' %}"
+                                alt="clients Image"
+                              /><span class="name">VVIP Queen Double Bed</span>
+                            </td>
+                            <td>22/03/2024</td>
+                            <td>05/04/2024</td>
+                            <td>Passport</td>
+                            <td class="active">Cash</td>
+                            <td>$1200</td>
+                            <td class="type"><span>Delux : </span>108</td>
+                            <td class="rooms">
+                              <span class="mem">1 Member</span> /
+                              <span class="room">1 Room</span>
+                            </td>
+                            <td>
+                              <div class="d-flex justify-content-center">
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success"
+                                >
+                                  <i class="ri-information-line"></i>
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                  data-bs-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                  data-display="static"
+                                >
+                                  <span class="sr-only"
+                                    ><i class="ri-settings-3-line"></i
+                                  ></span>
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#">Edit</a>
+                                  <a class="dropdown-item" href="#">Delete</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="token">2050</td>
+                            <td>
+                              <img
+                                class="cat-thumb"
+                                src="{% static 'assets/img/room/6.png' %}"
+                                alt="clients Image"
+                              /><span class="name">Deluxe Double Bed</span>
+                            </td>
+                            <td>09/09/2022</td>
+                            <td>15/09/2022</td>
+                            <td>Adhar Card</td>
+                            <td class="close">Cheque</td>
+                            <td>$1560</td>
+                            <td class="type"><span>VIP : </span>203</td>
+                            <td class="rooms">
+                              <span class="mem">2 Member</span> /
+                              <span class="room">1 Room</span>
+                            </td>
+                            <td>
+                              <div class="d-flex justify-content-center">
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success"
+                                >
+                                  <i class="ri-information-line"></i>
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                  data-bs-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                  data-display="static"
+                                >
+                                  <span class="sr-only"
+                                    ><i class="ri-settings-3-line"></i
+                                  ></span>
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#">Edit</a>
+                                  <a class="dropdown-item" href="#">Delete</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="token">1995</td>
+                            <td>
+                              <img
+                                class="cat-thumb"
+                                src="{% static 'assets/img/room/2.png' %}"
+                                alt="clients Image"
+                              /><span class="name">Junior Double Bed</span>
+                            </td>
+                            <td>16/08/2024</td>
+                            <td>20/08/2024</td>
+                            <td>Pan Card</td>
+                            <td class="success">Gpay</td>
+                            <td>$1560</td>
+                            <td class="type">
+                              <span>VIP : </span>204, <span>Junior : </span>401,
+                              402
+                            </td>
+                            <td class="rooms">
+                              <span class="mem">6 Member</span> /
+                              <span class="room">3 Room</span>
+                            </td>
+                            <td>
+                              <div class="d-flex justify-content-center">
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success"
+                                >
+                                  <i class="ri-information-line"></i>
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                  data-bs-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                  data-display="static"
+                                >
+                                  <span class="sr-only"
+                                    ><i class="ri-settings-3-line"></i
+                                  ></span>
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#">Edit</a>
+                                  <a class="dropdown-item" href="#">Delete</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="token">1985</td>
+                            <td>
+                              <img
+                                class="cat-thumb"
+                                src="{% static 'assets/img/room/4.png' %}"
+                                alt="clients Image"
+                              /><span class="name">Deluxe Double Bed</span>
+                            </td>
+                            <td>19/12/2021</td>
+                            <td>25/12/2021</td>
+                            <td>Pan Card</td>
+                            <td class="success">Gpay</td>
+                            <td>$1560</td>
+                            <td class="type">
+                              <span>Deluxe : </span>104,
+                              <span>Junior : </span>401, 402
+                            </td>
+                            <td class="rooms">
+                              <span class="mem">10 Member</span> /
+                              <span class="room">4 Room</span>
+                            </td>
+                            <td>
+                              <div class="d-flex justify-content-center">
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success"
+                                >
+                                  <i class="ri-information-line"></i>
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                  data-bs-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                  data-display="static"
+                                >
+                                  <span class="sr-only"
+                                    ><i class="ri-settings-3-line"></i
+                                  ></span>
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#">Edit</a>
+                                  <a class="dropdown-item" href="#">Delete</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="token">1945</td>
+                            <td>
+                              <img
+                                class="cat-thumb"
+                                src="{% static 'assets/img/room/6.png' %}"
+                                alt="clients Image"
+                              /><span class="name">VIP Double Bed</span>
+                            </td>
+                            <td>25/02/2024</td>
+                            <td>25/02/2024</td>
+                            <td>Pan Card</td>
+                            <td class="pending">pending</td>
+                            <td>$400</td>
+                            <td class="type"><span>VIP : </span>104</td>
+                            <td class="rooms">
+                              <span class="mem">1 Member</span> /
+                              <span class="room">1 Room</span>
+                            </td>
+                            <td>
+                              <div class="d-flex justify-content-center">
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success"
+                                >
+                                  <i class="ri-information-line"></i>
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                  data-bs-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                  data-display="static"
+                                >
+                                  <span class="sr-only"
+                                    ><i class="ri-settings-3-line"></i
+                                  ></span>
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#">Edit</a>
+                                  <a class="dropdown-item" href="#">Delete</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="token">1865</td>
+                            <td>
+                              <img
+                                class="cat-thumb"
+                                src="{% static 'assets/img/room/1.png' %}"
+                                alt="clients Image"
+                              /><span class="name">Deluxe  Double Bed</span>
+                            </td>
+                            <td>28/02/2024</td>
+                            <td>05/03/2024</td>
+                            <td>Passport</td>
+                            <td class="active">Cash</td>
+                            <td>$800</td>
+                            <td class="type"><span>Deluxe : </span>304, 305</td>
+                            <td class="rooms">
+                              <span class="mem">7 Member</span> /
+                              <span class="room">2 Room</span>
+                            </td>
+                            <td>
+                              <div class="d-flex justify-content-center">
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success"
+                                >
+                                  <i class="ri-information-line"></i>
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                  data-bs-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                  data-display="static"
+                                >
+                                  <span class="sr-only"
+                                    ><i class="ri-settings-3-line"></i
+                                  ></span>
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#">Edit</a>
+                                  <a class="dropdown-item" href="#">Delete</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Footer -->
+      <footer class="footer-center" >
+        <div class="container-fluid" >
+          <div class="copyright">
+            <p class="mb-0 " >© <script>document.write(new Date().getFullYear())</script> <a href="index.html" class="link">Bloom Up </a> – All Rights Reserved ||  Developed by <a href="https://ultrakeyit.in/" target="_blank" class="link" >Ultrakey It Solutions Private Limited </a>.</p>
+
+          </div>
+        </div>
+      </footer>
+
+      <!-- Feature tools -->
+      <div class="lh-tools-sidebar-overlay"></div>
+      <div class="lh-tools-sidebar">
+        <a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
+          <i class="ri-settings-4-line"></i>
+        </a>
+        <div class="lh-bar-title">
+          <h6>Tools</h6>
+          <a href="javascript:void(0)" class="close-tools"
+            ><i class="ri-close-line"></i
+          ></a>
+        </div>
+        <div class="lh-tools-detail">
+          <div class="lh-tools-block">
+            <h3>Modes</h3>
+            <div class="lh-tools-info">
+              <div class="lh-tools-item mode active" data-lh-mode-tool="light">
+                <img src="{% static 'assets/img/tools/light.png' %}" alt="light" />
+                <p>light</p>
+              </div>
+              <div class="lh-tools-item mode" data-lh-mode-tool="dark">
+                <img src="{% static 'assets/img/tools/dark.png' %}" alt="dark" />
+                <p>dark</p>
+              </div>
+            </div>
+          </div>
+          <div class="lh-tools-block">
+            <h3>Sidebar</h3>
+            <div class="lh-tools-info">
+              <div
+                class="lh-tools-item sidebar active"
+                data-sidebar-mode-tool="light"
+              >
+                <img src="{% static 'assets/img/tools/side-light.png' %}" alt="light" />
+                <p>light</p>
+              </div>
+              <div class="lh-tools-item sidebar" data-sidebar-mode-tool="dark">
+                <img src="{% static 'assets/img/tools/side-dark.png' %}" alt="dark" />
+                <p>dark</p>
+              </div>
+              <div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-1">
+                <img src="{% static 'assets/img/tools/side-bg-1.png' %}" alt="background" />
+                <p>Bg-1</p>
+              </div>
+              <div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-2">
+                <img src="{% static 'assets/img/tools/side-bg-2.png' %}" alt="background" />
+                <p>Bg-2</p>
+              </div>
+              <div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-3">
+                <img src="{% static 'assets/img/tools/side-bg-3.png' %}" alt="background" />
+                <p>Bg-3</p>
+              </div>
+              <div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-4">
+                <img src="{% static 'assets/img/tools/side-bg-4.png' %}" alt="background" />
+                <p>Bg-4</p>
+              </div>
+            </div>
+          </div>
+          <div class="lh-tools-block">
+            <h3>Header</h3>
+            <div class="lh-tools-info">
+              <div class="lh-tools-item header active" data-header-mode="light">
+                <img src="{% static 'assets/img/tools/header-light.png' %}" alt="light" />
+                <p>light</p>
+              </div>
+              <div class="lh-tools-item header" data-header-mode="dark">
+                <img src="{% static 'assets/img/tools/header-dark.png' %}" alt="dark" />
+                <p>dark</p>
+              </div>
+            </div>
+          </div>
+          <div class="lh-tools-block">
+            <h3>Backgrounds</h3>
+            <div class="lh-tools-info">
+              <div class="lh-tools-item bg active" data-bg-mode="default">
+                <img src="{% static 'assets/img/tools/bg-0.png' %}" alt="default" />
+                <p>Default</p>
+              </div>
+              <div class="lh-tools-item bg" data-bg-mode="bg-1">
+                <img src="{% static 'assets/img/tools/bg-1.png' %}" alt="bg-1" />
+                <p>Bg-1</p>
+              </div>
+              <div class="lh-tools-item bg" data-bg-mode="bg-2">
+                <img src="{% static 'assets/img/tools/bg-2.png' %}" alt="bg-2" />
+                <p>Bg-2</p>
+              </div>
+              <div class="lh-tools-item bg" data-bg-mode="bg-3">
+                <img src="{% static 'assets/img/tools/bg-3.png' %}" alt="bg-3" />
+                <p>Bg-3</p>
+              </div>
+              <div class="lh-tools-item bg" data-bg-mode="bg-4">
+                <img src="{% static 'assets/img/tools/bg-4.png' %}" alt="bg-4" />
+                <p>Bg-4</p>
+              </div>
+              <div class="lh-tools-item bg" data-bg-mode="bg-5">
+                <img src="{% static 'assets/img/tools/bg-5.png' %}" alt="bg-5" />
+                <p>Bg-5</p>
+              </div>
+            </div>
+          </div>
+          <div class="lh-tools-block">
+            <h3>Box Design</h3>
+            <div class="lh-tools-info">
+              <div
+                class="lh-tools-item box active"
+                data-box-mode-tool="default"
+              >
+                <img src="{% static 'assets/img/tools/box-0.png' %}" alt="default" />
+                <p>Default</p>
+              </div>
+              <div class="lh-tools-item box" data-box-mode-tool="box-1">
+                <img src="{% static 'assets/img/tools/box-1.png' %}" alt="box-1" />
+                <p>Box-1</p>
+              </div>
+              <div class="lh-tools-item box" data-box-mode-tool="box-2">
+                <img src="{% static 'assets/img/tools/box-2.png' %}" alt="box-2" />
+                <p>Box-2</p>
+              </div>
+              <div class="lh-tools-item box" data-box-mode-tool="box-3">
+                <img src="{% static 'assets/img/tools/box-3.png' %}" alt="box-3" />
+                <p>Box-3</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     
+
+
+
+      <!-- Book room offcanva html -->
+      <div class="container">
+        <!-- Booking Form Offcanvas -->
+        <div
+          class="offcanvas offcanvas-end"
+          tabindex="-1"
+          id="bookingOffcanvas"
+          aria-labelledby="bookingOffcanvasLabel">
+        
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="bookingOffcanvasLabel">
+              New Booking
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="offcanvas-body">
+            <form id="bookingForm" class="booking-form">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Check-in Date & Time</label>
+                  <input
+                    type="datetime-local"
+                    name="issueDate"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Check-out Date & Time</label>
+                  <input
+                    type="datetime-local"
+                    name="expiryDate"
+                    class="form-control"
+                    required
+                  />
+                </div>
+
+               
+
+<!--Multi room booking-->
+
+<div class="container">
+  <div class="form-container">
+      <!-- Room Type Selection -->
+      <div class="mb-3">
+          <div class="dropdown-container">
+              <div style="flex: 1;">
+                  <label for="roomType" class="form-label">Add Room Type</label>
+                  <div class="dropdown">
+                      <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" onclick="toggleDropdown()"  style="width: 165px;">
+                          Choose Room Type
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <li><a class="dropdown-item" href="#" data-value="standard">Standard</a></li>
+                          <li><a class="dropdown-item" href="#" data-value="deluxe">Deluxe</a></li>
+                          <li><a class="dropdown-item" href="#" data-value="vip">VIP</a></li>
+                          <li><a class="dropdown-item" href="#" data-value="conference">Conference</a></li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="add-more-text" id="addMoreText" style="cursor: pointer;" onclick="toggleDropdown()">Add More</div>
+          </div>
+      </div>
+
+      <!-- Selected Rooms Container -->
+      <div id="selectedRooms" class="selected-rooms"></div>
+  </div>
+</div>
+
+<script>
+  // Room type configurations
+  const roomTypes = {
+      standard: {
+          title: 'Standard',
+          price: 400,
+          available: 50
+      },
+      deluxe: {
+          title: 'Deluxe',
+          price: 800,
+          available: 30
+      },
+      vip: {
+          title: 'VIP',
+          price: 1200,
+          available: 20
+      },
+      conference: {
+          title: 'Conference',
+          price: 2000,
+          available: 10
+      }
+  };
+
+
+
+
+  // Create unique IDs for elements
+  let roomCounter = 0;
+
+  function createRoomCard(roomType) {
+      const room = roomTypes[roomType];
+      const uniqueId = `${roomType}_${roomCounter++}`;
+      
+      const cardHtml = `
+          <div class="room-card" id="${uniqueId}">
+              <span class="remove-btn" onclick="removeRoom('${uniqueId}')">&times;</span>
+              <div class="room-type-header">
+                 
+                  <h5 class="mb-0">${room.title}</h5>
+              </div>
+
+              <!-- Bed Options -->
+              <div class="bed-options" style="display: ${roomType === 'conference' ? 'none' : 'block'};">
+                  <label class="mb-2">Bed Type</label>
+                  <div class="d-flex gap-2">
+                      <input type="radio" class="btn-check" name="bedType_${uniqueId}" id="single_${uniqueId}" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="single_${uniqueId}">Single Bed</label>
+
+                      <input type="radio" class="btn-check" name="bedType_${uniqueId}" id="double_${uniqueId}" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="double_${uniqueId}">Double Bed</label>
+                  </div>
+              </div>
+
+
+            
+              
+              <!-- AC Options -->
+               <div class="mb-3" style="display: ${roomType === 'conference' ? 'block' : 'none'};">
+                      <label class="form-label">Sitting Capacity:</label>
+                      <select class="form-select-room" name="sittingCapacity_${uniqueId}">
+                          <option value="1-10">Up to 10</option>
+                          <option value="11-20">Up to 20</option>
+                          <option value="21-30">Up to 30</option>
+                      </select>
+                  </div>
+              <div class="ac-options">
+                  <label class="mb-2">AC Preference</label>
+                  <div class="d-flex gap-3">
+                      <div class="form-check mb-2">
+                          <input class="form-check-input" type="radio" name="acType_${uniqueId}" id="ac_${uniqueId}">
+                          <label class="form-check-label" for="ac_${uniqueId}">AC</label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="acType_${uniqueId}" id="nonAc_${uniqueId}">
+                          <label class="form-check-label" for="nonAc_${uniqueId}">Non-AC</label>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="room-details">
+                  <div class="price-text" style="color: green;">Room Price: ${room.price}/-</div>
+                  <div class="availability-text">Available Rooms: ${room.available}</div>
+                  <div class="mb-3">
+                      <label class="form-label">Select No. Rooms:</label>
+                      <input type="number" class="number-input" min="1" max="${room.available}" value="1">
+                  </div>
+                 
+              </div>
+
+            
+          </div>
+      `;
+      return cardHtml;
+  }
+
+      
+  function removeRoom(roomId) {
+      document.getElementById(roomId).remove();
+      // Hide "Add More" text if no rooms are selected
+      if (document.querySelectorAll('.room-card').length === 0) {
+          document.getElementById('addMoreText').style.display = 'none';
+      }
+  }
+
+
+
+  document.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', function() {
+          const selectedValue = this.getAttribute('data-value');
+          const selectedRoomsContainer = document.getElementById('selectedRooms');
+          const newRoomCard = createRoomCard(selectedValue);
+          selectedRoomsContainer.insertAdjacentHTML('beforeend', newRoomCard);
+          // Show "Add More" text
+          document.getElementById('addMoreText').style.display = 'block';
+      });
+  });
+
+  document.getElementById('addMoreText').addEventListener('click', function() {
+      const dropdownMenu = document.querySelector('.dropdown-menu');
+      dropdownMenu.classList.toggle('show');
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!--End Multi room booking-->
+
+
+
+
+
+
+
+                <!-- <div class="content">
+                  <h6>Room Details</h6>
+
+                  <div class="row">
+                    <div class="col-12 col-md-6 col-lg-3">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="Standard"
+                          id="standardCheckbox"
+                          onclick="displayRoomInfo('standard')"
+                        />
+                        <label class="form-check-label" for="standardCheckbox"
+                          >Standard</label
+                        >
+                        <div id="standardInfo" class="room-info">
+                          <p>Room Price: 400/-</p>
+                          <br />
+                          <p style="display: flex">
+                            Available Rooms: <span>50</span>
+                          </p>
+                          <div class="room-selection">
+                            <label for="standardSelect"
+                              >Select No. Rooms:</label
+                            >
+                            <input
+                              type="number"
+                              id="standardSelect"
+                              class="form-control con"
+                              min="0"
+                              max="10"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                   
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="Deluxe"
+                          id="deluxeCheckbox"
+                          onclick="displayRoomInfo('deluxe')"
+                        />
+                        <label class="form-check-label" for="deluxeCheckbox"
+                          >Deluxe</label
+                        >
+                        <div id="deluxeInfo" class="room-info">
+                          <p>Room Price: 500/-<br /></p>
+                          <p style="display: flex">
+                            Available Rooms: <span>40</span>
+                          </p>
+                          <div class="room-selection">
+                            <label for="deluxeSelect">Select No. Rooms:</label>
+                            <input
+                              type="number"
+                              id="deluxeSelect"
+                              class="form-control con"
+                              min="0"
+                              max="20"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="VIP"
+                          id="vipCheckbox"
+                          onclick="displayRoomInfo('vip')"
+                        />
+
+                        <label class="form-check-label" for="vipCheckbox"
+                          >VIP</label
+                        >
+                        <div id="vipInfo" class="room-info">
+                          <p>Room Price: 5000/-<br /></p>
+                          <p style="display: flex">
+                            Available Rooms: <span>50</span>
+                          </p>
+                          <div class="room-selection">
+                            <label for="vipSelect">Select No. Rooms:</label>
+                            <input
+                              type="number"
+                              id="vipSelect"
+                              class="form-control con"
+                              min="0"
+                              max="10"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="Premium"
+                          id="premiumCheckbox"
+                          onclick="displayRoomInfo('premium')"
+                        />
+
+                        <label class="form-check-label" for="premiumCheckbox"
+                          >Conference</label
+                        >
+                        <div id="premiumInfo" class="room-info">
+                          <p>Room Price: 6000/-<br /></p>
+                          <p style="display: flex">
+                            Available Rooms: <span>60</span>
+                          </p>
+                          <div class="room-selection">
+                            <label for="premiumSelect">Select No. Rooms:</label>
+                            <input
+                              type="number"
+                              id="premiumSelect"
+                              class="form-control con"
+                              min="0"
+                              max="50"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+
+                <!--end selected room and room no-->
+
+                <!-- <div class="col-md-6 mb-3">
+					   <label class="form-label"> Number Of Rooms</label>
+					   <input type="number" name="roomNo" class="form-control" required>
+				   </div> -->
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Guest Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Phone Number</label>
+                  <input
+                    type="tel"
+                    name="mobile"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Address</label>
+                  <input
+                    name="address"
+                    class="form-control"
+                    rows="2"
+                    required
+                  />
+                </div>
+                 <!-- New Guest Information Section -->
+                 <div class="col-12">
+                  <div class="guest-info">
+                    <h6 class="mb-3">Guest Count</h6>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">Adults</label>
+                        <input
+                          type="number"
+                          id="standardSelect"
+                          class="form-control"
+                          min="0"
+                          max="100"
+                          placeholder="Number Of Adults"
+                          name="adults"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">Children</label>
+                        <select name="children" class="form-select">
+                          <option value="0">None</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+
+
+
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="col-md-6 mb-3">
+                  <label class="form-label">Payment Type</label>
+                  <select name="paymentType" class="form-select" required>
+                    <option value="">Select Payment Type</option>
+                    <option value="cash">Cash</option>
+                    <option value="card">Card</option>
+                    <option value="upi">UPI</option>
+                    <option value="upi">Bank</option>
+                  </select>
+                </div> -->
+
+                <!-- <div class="col-md-6 mb-3">
+					   <label class="form-label">Total Amount</label>
+					   <input type="tel" name="phoneNo" class="form-control" required>
+				   </div>
+					-->
+
+                <div class="col-md-5 mb-3" style="width: 100%">
+                  <h6 class="card-title mb-4">ID Proof Selection</h6>
+
+                  <!-- ID Proof Radio Buttons -->
+                  <div class="mb-4">
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="idProof"
+                        id="aadharRadio"
+                        value="aadhar"
+                      />
+                      <label class="form-check-label" for="aadharRadio"
+                        >Aadhar Card</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="idProof"
+                        id="panRadio"
+                        value="pan"
+                      />
+                      <label class="form-check-label" for="panRadio"
+                        >PAN Card</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="idProof"
+                        id="passportRadio"
+                        value="passport"
+                      />
+                      <label class="form-check-label" for="passportRadio"
+                        >Passport</label
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Aadhar Form -->
+                  <div id="aadharForm" class="proof-form">
+                    <!-- <button type="button" class="close-btn" aria-label="Close">&times;</button> -->
+                    <form id="aadharDetailsForm">
+                      <!-- Same Aadhar form fields as before -->
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label">Aadhar Number</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="aadharNumber"
+                            maxlength="15"
+                            pattern="\d{15}"
+                            required
+                          />
+                          <div class="form-text">
+                            Enter 12 digit Aadhar number
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- PAN Form -->
+                  <div id="panForm" class="proof-form">
+                    <!-- <button type="button" class="close-btn" aria-label="Close">&times;</button> -->
+                    <form id="panDetailsForm">
+                      <!-- Same PAN form fields as before -->
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label">PAN Number</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="panNumber"
+                            maxlength="10"
+                            pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
+                            required
+                          />
+                          <div class="form-text">
+                            Enter 10 character PAN number (e.g., ABCDE1234F)
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- New Passport Form -->
+                  <div id="passportForm" class="proof-form">
+                    <!-- <button type="button" class="close-btn" aria-label="Close">&times;</button> -->
+                    <form id="passportDetailsForm">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label">Passport Number</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="passportNumber"
+                            pattern="[A-Z]{1}[0-9]{7}"
+                            maxlength="8"
+                            required
+                          />
+                          <div class="form-text">
+                            Enter 8 character Passport number (e.g., A1234567)
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-md-6 mb-3"> <!-- Added mb-3 for consistent spacing -->
+                      <div class="guest-info">
+                          <label class="form-label">Upload ID Proof</label> <!-- Added label for clarity -->
+                          <input type="file" name="aadharProof" class="form-control" accept=".jpg, .jpeg, .png, .pdf" style="width: 100%;" />
+                      </div>
+                  </div>
+              
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Payment Type</label>
+                    <select name="paymentType" class="form-select" required>
+                        <option value="">Select Payment Type</option>
+                        <option value="cash">Cash</option>
+                        <option value="card">Card</option>
+                        <option value="upi">UPI</option>
+                        <option value="bank">Bank</option> <!-- Corrected duplicate 'upi' to 'bank' -->
+                    </select>
+                </div></div>
+
+
+
+
+
+
+
+                <hr />
+
+                <div class="col-md-6 mb-3" style="display: flex; gap: 9px">
+                  <p>Total Amount:</p>
+                  <h5 style="color: green">3000/-</h5>
+                </div>
+              </div>
+
+              <div
+                class="d-grid gap-2"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  width: 100%;
+                  margin-top: 40px;
+                "
+              >
+                <button
+                  type="submit"
+                  id="confirmBookingButton"
+                  class="btn btn-primary"
+                >
+                  <i class="fas fa-check-circle me-2"></i>Confirm Booking
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Vendor Custom -->
+    <script src="{% static 'assets/js/vendor/jquery-3.6.4.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/simplebar.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/apexcharts.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery-jvectormap-1.2.2.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery-jvectormap-world-mill-en.js' %}"></script>
+    <!-- Data Tables -->
+    <script src="{% static 'assets/js/vendor/jquery.datatables.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/datatables.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/datatables.responsive.min.js' %}"></script>
+    <!-- Caleddar -->
+    <script src="{% static 'assets/js/vendor/jquery.simple-calendar.js' %}"></script>
+    <!-- Date Range Picker -->
+    <script src="{% static 'assets/js/vendor/moment.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/daterangepicker.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/date-range.js' %}"></script>
+
+    <!-- Main Custom -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <!-- Booking rooms offcanva code -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Form Validation
+      const form = document.getElementById("bookingForm");
+      const patterns = {
+        email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        phone: /^\d{10}$/,
+      };
+
+      function validateField(field) {
+        const value = field.value.trim();
+        const fieldName = field.name;
+
+        removeError(field);
+
+        if (!value && field.hasAttribute("required")) {
+          showError(
+            field,
+            `${
+              fieldName.charAt(0).toUpperCase() + fieldName.slice(1)
+            } is required`
+          );
+          return false;
+        }
+
+        if (fieldName === "email" && !patterns.email.test(value)) {
+          showError(field, "Please enter a valid email address");
+          return false;
+        }
+
+        if (fieldName === "phoneNo" && !patterns.phone.test(value)) {
+          showError(field, "Please enter a valid 10-digit phone number");
+          return false;
+        }
+
+        if (fieldName === "checkout") {
+          const checkin = document.querySelector('[name="checkin"]').value;
+          if (new Date(value) <= new Date(checkin)) {
+            showError(field, "Check-out date must be after check-in date");
+            return false;
+          }
+        }
+
+        // Validate adults count
+        if (fieldName === "adults" && value === "") {
+          showError(field, "Please select number of adults");
+          return false;
+        }
+
+        return true;
+      }
+
+      function showError(field, message) {
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "error-message";
+        errorDiv.textContent = message;
+        field.classList.add("is-invalid");
+
+        field.parentNode.appendChild(errorDiv);
+      }
+
+      function removeError(field) {
+        field.classList.remove("is-invalid");
+        const errorDiv = field.parentNode.querySelector(".error-message");
+        if (errorDiv) {
+          errorDiv.remove();
+        }
+      }
+
+      form.querySelectorAll("input, select").forEach((field) => {
+        field.addEventListener("blur", () => validateField(field));
+      });
+    </script>
+
+    <!--Aadhar and PAN script and passport-->
+    <script>
+      // Get form elements
+      const aadharRadio = document.getElementById("aadharRadio");
+      const panRadio = document.getElementById("panRadio");
+      const passportRadio = document.getElementById("passportRadio");
+      const aadharForm = document.getElementById("aadharForm");
+      const panForm = document.getElementById("panForm");
+      const passportForm = document.getElementById("passportForm");
+      const aadharDetailsForm = document.getElementById("aadharDetailsForm");
+      const panDetailsForm = document.getElementById("panDetailsForm");
+      const passportDetailsForm = document.getElementById(
+        "passportDetailsForm"
+      );
+
+      // Close buttons
+      const closeButtons = document.querySelectorAll(".close-btn");
+
+      // Function to close all forms
+      function closeAllForms() {
+        aadharForm.classList.remove("active");
+        panForm.classList.remove("active");
+        passportForm.classList.remove("active");
+        aadharRadio.checked = false;
+        panRadio.checked = false;
+        passportRadio.checked = false;
+        aadharDetailsForm?.reset();
+        panDetailsForm.reset();
+        passportDetailsForm.reset();
+      }
+
+      // Function to handle outside click
+      function handleOutsideClick(event) {
+        const formsClicked = [aadharForm, panForm, passportForm].some((form) =>
+          form?.contains(event.target)
+        );
+        const radioClicked = event.target.closest(".form-check-inline");
+
+        if (!formsClicked && !radioClicked) {
+          closeAllForms();
+        }
+      }
+
+      // Add click event listener to document
+      document.addEventListener("click", handleOutsideClick);
+
+      // Close button event listeners
+      closeButtons.forEach((button) => {
+        button.addEventListener("click", (e) => {
+          e.stopPropagation();
+          closeAllForms();
+        });
+      });
+
+      // Radio button event listeners
+      aadharRadio.addEventListener("change", function (e) {
+        e.stopPropagation();
+        if (this.checked) {
+          aadharForm.classList.add("active");
+          panForm.classList.remove("active");
+          passportForm.classList.remove("active");
+          panDetailsForm.reset();
+          passportDetailsForm.reset();
+        }
+      });
+
+      panRadio.addEventListener("change", function (e) {
+        e.stopPropagation();
+        if (this.checked) {
+          panForm.classList.add("active");
+          aadharForm.classList.remove("active");
+          passportForm.classList.remove("active");
+          aadharDetailsForm?.reset();
+          passportDetailsForm.reset();
+        }
+      });
+
+      passportRadio.addEventListener("change", function (e) {
+        e.stopPropagation();
+        if (this.checked) {
+          passportForm.classList.add("active");
+          aadharForm.classList.remove("active");
+          panForm.classList.remove("active");
+          aadharDetailsForm?.reset();
+          panDetailsForm.reset();
+        }
+      });
+
+      // Prevent form clicks from closing
+      [aadharForm, panForm, passportForm].forEach((form) => {
+        form.addEventListener("click", (e) => {
+          e.stopPropagation();
+        });
+      });
+
+      // Previous form validation for Aadhar and PAN remains the same
+
+      // Form Validation - Passport
+      document
+        .getElementById("confirmBookingButton")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          let isValid = true;
+
+          document
+            .getElementById("bookingForm")
+            .querySelectorAll("input, select")
+            .forEach((field) => {
+              if (!validateField(field)) {
+                isValid = false;
+              }
+            });
+
+          if (isValid) {
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            // Custom validation for Passport number
+            const passportNumber = data.passportNumber;
+            if (!/^[A-Z][0-9]{7}$/.test(passportNumber)) {
+              showError(
+                "passportNumber",
+                "Please enter a valid Passport number (e.g., A1234567)"
+              );
+              return;
+            }
+
+            // Custom validation for mobile
+            const mobile = data.mobile;
+            if (!/^\d{10}$/.test(mobile)) {
+              showError(
+                "mobile",
+                "Please enter a valid 10-digit mobile number"
+              );
+              return;
+            }
+
+            // Validate dates
+            const issueDate = new Date(data.issueDate);
+            const expiryDate = new Date(data.expiryDate);
+            const today = new Date();
+
+            if (issueDate > today) {
+              showError("issueDate", "Issue date cannot be in the future");
+              return;
+            }
+
+            if (expiryDate <= issueDate) {
+              showError("expiryDate", "Expiry date must be after issue date");
+              return;
+            }
+
+            // If all validations pass
+            alert("Passport form submitted successfully!");
+            closeAllForms();
+          } else {
+            this.reportValidity();
+          }
+        });
+
+      //   function showError(fieldName, message) {
+      //     const field = document.querySelector(`[name="${fieldName}"]`);
+      //     console.log(field.parentElement);
+
+      //     const existingError =
+      //       field.parentElement.querySelector(".error-message");
+
+      //     if (!existingError) {
+      //       const errorDiv = document.createElement("div");
+      //       errorDiv.className = "error-message";
+      //       errorDiv.textContent = message;
+      //       field.parentElement.appendChild(errorDiv);
+      //     }
+
+      //     field.focus();
+      //   }
+
+      // Clear error messages on input for all forms
+      document
+        .querySelectorAll("input, select, textarea")
+        .forEach((element) => {
+          element.addEventListener("input", function () {
+            const errorMessage =
+              this.parentElement.querySelector(".error-message");
+            if (errorMessage) {
+              errorMessage.remove();
+            }
+          });
+        });
+    </script>
+    <!--End Aadhar and PAN script-->
+
+    <script>
+      // Get payment form elements
+      const onlineRadio = document.getElementById("onlineRadio");
+      const offlineRadio = document.getElementById("offlineRadio");
+      const onlineForm = document.getElementById("onlineForm");
+      const offlineForm = document.getElementById("offlineForm");
+      const onlineDetailsForm = document.getElementById("onlineDetailsForm");
+      const offlineDetailsForm = document.getElementById("offlineDetailsForm");
+
+      // Function to close payment forms
+      function closePaymentForms() {
+        onlineForm?.classList.remove("active");
+        offlineForm?.classList.remove("active");
+
+        // Set radio buttons to unchecked state if they exist
+        if (onlineRadio) {
+          onlineRadio.checked = false;
+        }
+        if (offlineRadio) {
+          offlineRadio.checked = false;
+        }
+
+        // Reset the forms if they exist
+        onlineDetailsForm?.reset();
+        offlineDetailsForm?.reset();
+      }
+
+      // Function to handle outside click for payment forms
+      function handlePaymentOutsideClick(event) {
+        const paymentFormsClicked = [onlineForm, offlineForm].some((form) =>
+          form?.contains(event.target)
+        );
+        const paymentRadioClicked = event.target.closest(".form-check-inline");
+
+        if (!paymentFormsClicked && !paymentRadioClicked) {
+          closePaymentForms();
+        }
+      }
+
+      
+      // Add click event listener to document for payment forms
+      document.addEventListener("click", handlePaymentOutsideClick);
+
+      // Radio button event listeners for payment forms
+      onlineRadio?.addEventListener("change", function (e) {
+        e.stopPropagation();
+        if (this.checked) {
+          onlineForm?.classList.add("active");
+          offlineForm?.classList.remove("active");
+          offlineDetailsForm.reset();
+        }
+      });
+
+      offlineRadio?.addEventListener("change", function (e) {
+        e.stopPropagation();
+        if (this.checked) {
+          offlineForm?.classList.add("active");
+          onlineForm?.classList.remove("active");
+          onlineDetailsForm.reset();
+        }
+      });
+
+      // Prevent form clicks from closing
+      [onlineForm, offlineForm]?.forEach((form) => {
+        form?.addEventListener("click", (e) => {
+          e.stopPropagation();
+        });
+      });
+    </script>
+
+    <!--selected room no script-->
+    <script>
+      function displayRoomInfo(roomType) {
+        const roomInfoDivs = {
+          standard: document.getElementById("standardInfo"),
+          deluxe: document.getElementById("deluxeInfo"),
+          vip: document.getElementById("vipInfo"),
+          premium: document.getElementById("premiumInfo"),
+        };
+
+        const roomSelects = {
+          standard: document.getElementById("standardSelect"),
+          deluxe: document.getElementById("deluxeSelect"),
+          vip: document.getElementById("vipSelect"),
+          premium: document.getElementById("premiumSelect"),
+        };
+
+        for (let type in roomInfoDivs) {
+          const isChecked = document.getElementById(type + "Checkbox").checked;
+
+          // Show/hide room info and enable/disable select based on checkbox status
+          roomInfoDivs[type].style.display = isChecked ? "block" : "none";
+          roomSelects[type].disabled = !isChecked;
+        }
+      }
+    </script>
+    <!--end selected  room no script-->
+
+    <script>
+      function toggleDropdown() {
+          const dropdown = document.querySelector('.dropdown-menu'); // Correctly select the dropdown menu
+          if (dropdown) { // Check if dropdown exists
+              dropdown.classList.toggle('show'); // Toggle the dropdown visibility
+          }
+      }
+    </script>
+  </body>
+
+</html>
+
+

@@ -1,0 +1,1491 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Best Luxurious Hotel Booking Template.">
+    <meta name="keywords"
+        content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern">
+    <title>Luxurious - Hotel Booking HTML Template</title>
+   
+    <link rel="icon" href="assets/img/favicons/favicon.png" type="image/x-icon">
+
+    <!-- Css All Plugins Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/remixicon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/semantic.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/slick.min.css' %}">
+
+    <!-- Main Style -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+       
+        body {
+            background-color: #f4f4f4;
+        }
+
+        .booking-container {
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+   
+    border-radius: 15px;
+    /* padding: 30px; */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+        }
+
+        .room-selection-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .room-checkbox {
+            margin-right: 10px;
+        }
+
+        .seat-layout {
+            background-color: #e9ecef;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 20px;
+        }
+
+        .seat {
+            width: 40px;
+            height: 35px;
+            margin: 3px;
+            font-size: 12px;
+        }
+
+        .selected-rooms-info {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .seat {
+                width: 40px;
+                height: 30px;
+                font-size: 12px;
+            }
+
+            .seat-row {
+                flex-direction: column;
+            }
+        }
+
+
+        .available {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .bestseller {
+            background-color: rgb(235, 70, 133);
+            /* background-color: rgb(216, 228, 38); */
+            color: white;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .sold {
+            background-color: #aba5a5;
+            color: white;
+            border-radius: 10px;
+            cursor: progress;
+            border: none;
+        }
+
+        .selected {
+            background-color: blue;
+            color: white;
+            border-radius: 10px;
+            border: none;
+        }
+
+        /* Add button styles */
+        .container.mt-4.text-center button {
+            padding: 10px 20px;
+            margin: 5px;
+            margin-bottom: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            /* New styles */
+            font-weight: bold;
+            /* Make text bold */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            /* Add shadow */
+        }
+
+        .container.mt-4.text-center button:hover {
+            transform: scale(1.05);
+            /* New hover effect */
+            background-color: #0056b3;
+            /* Change background on hover */
+            color: white;
+            /* Change text color on hover */
+        }
+
+        /* New styles for room layout headings */
+        .seat-layout h2 {
+            font-size: 1.5rem; /* Adjust the font size as needed */
+        }
+        .padding-tb-100 {
+    padding: 39px 0;
+}
+
+    </style>
+   
+
+</head>
+
+<body>
+    <!-- Overlay -->
+    <div class="overlay"></div>
+    <div class="lh-loader">
+        <span class="loader"></span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="lh-top-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12  lh-top-social">
+                        <div class="lh-mail">
+                            <i class="ri-mail-line"></i>
+                            example@ec-email.com
+                        </div>
+                        <div class="lh-location">
+                            <div class="custom-select">
+                                <i class="ri-map-pin-line"></i>
+                                <select>
+                                    <option value="option1">Surat</option>
+                                    <option value="option2">Delhi</option>
+                                    <option value="option3">Rajkot</option>
+                                    <option value="option4">Udaipur</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 lh-top-social">
+                        <div class="lh-phone">
+                            <i class="ri-phone-line"></i>
+                            +91(123)(456)(7890)
+                        </div>
+                        <div class="lh-header-icons">
+                            <a href="javascript:void(0)"><i class="ri-facebook-box-line facebook"></i></a>
+                            <a href="javascript:void(0)"><i class="ri-twitter-x-line twitter"></i></a>
+                            <a href="javascript:void(0)"><i class="ri-linkedin-box-line linkedin"></i></a>
+                            <a href="javascript:void(0)"><i class="ri-instagram-line instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lh-header">
+            <div class="container">
+                <div class="row">
+                    <nav class="navbar navbar-expand-lg">
+                        <a class="navbar-brand" href="index.html">
+                            <img src="{% static 'assets/img/logo/logo.png' %}" alt="logo" class="lh-logo">
+                        </a>
+                        <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="ri-menu-2-line"></i>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="index.html">
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button"
+                                        data-bs-toggle="dropdown">
+                                        Pages
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="about.html">About Us</a>
+                                        </li>
+                                        <!-- <li>
+                                            <a class="dropdown-item" href="contact.html">Contact</a>
+                                        </li> -->
+
+                                        <li>
+                                            <a class="dropdown-item" href="facilities.html">Facilities</a>
+                                        </li>
+                                       <li>
+                                            <a class="dropdown-item" href="faq.html">Faq</a>
+                                        </li>
+                                        <!-- <li>
+                                            <a class="dropdown-item" href="prices.html">Prices</a>
+                                        </li> -->
+                                        <li>
+                                            <a class="dropdown-item" href="services.html">Services</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="spa.html">Spa</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="team.html">Team</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="checkout.html">Checkout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                               
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button"
+                                        data-bs-toggle="dropdown">
+                                        Room
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="room.html">Rooms</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="room-2.html">Rooms 2</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="room-details.html">Rooms details</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="gallery.html">
+                                        Gallery
+                                    </a>
+                                </li>
+                             
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button"
+                                        data-bs-toggle="dropdown">
+                                        Blog
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="blog.html">Blog</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="blog-details.html">Blog Details</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="restaurant.html">
+                                        Restaurant Menu
+                                    </a>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="contact.html">
+                                        Contact Us
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile-menu -->
+    <div class="lh-sidebar-overlay"></div>
+    <div id="lh_mobile_menu" class="lh-side-cart lh-mobile-menu">
+        <div class="lh-menu-title">
+            <span class="menu-title">My Menu</span>
+            <button class="lh-close">×</button>
+        </div>
+        <div class="lh-menu-inner">
+            <input type="text" placeholder="Search" class="lh-menu-box">
+            <div class="lh-menu-content">
+                <ul>
+                    <li class="dropdown drop-list">
+                        <a href="#" class="dropdown-list">Home</a>
+                        <ul class="sub-menu">
+                            <li><a href="index.html">Home Layout 1</a></li>
+                            <li><a href="demo-2.html">Home Layout 2</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown drop-list">
+                        <a href="#" class="dropdown-list">Categories</a>
+                        <ul class="sub-menu">
+                            <li><a href="gallery.html">gallery 1</a></li>
+                            <li><a href="gallery-2.html">gallery 2</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown drop-list">
+                        <a href="#" class="dropdown-list">Room</a>
+                        <ul class="sub-menu">
+                            <li><a href="room.html">Rooms</a></li>
+                            <li><a href="room-2.html">Rooms 2</a></li>
+                            <li><a href="room-details.html">Room Details</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown drop-list">
+                        <a href="#" class="dropdown-list">Pages</a>
+                        <ul class="sub-menu">
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="facilities.html">Facilities</a></li>
+                            <li><a href="faq.html">Faq</a></li>
+                            <li><a href="prices.html">Prices</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="spa.html">Spa</a></li>
+                            <li><a href="team.html">Team</a></li>
+                            <li><a href="checkout.html">Checkout</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown drop-list">
+                        <a href="#" class="dropdown-list">Blog</a>
+                        <ul class="sub-menu">
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="blog-details.html">Blog Details</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown drop-list">
+                        <a href="restaurant.html">Restaurant</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Banner -->
+    <section class="section-banner">
+        <div class="row banner-image">
+            <div class="banner-overlay"></div>
+            <div class="banner-section">
+                <div class="lh-banner-contain">
+                    <h2 class="text-white">Book Rooms</h2>
+                    <div class="lh-breadcrumb">
+                        <h5>
+                            <span class="lh-inner-breadcrumb">
+                                <a href="index.html">Home</a>
+                            </span>
+                            <span> / </span>
+                            <span>
+                                <a href="javascript:void(0)">Checkout</a>
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout-detsils -->
+    <section class="checkout-page padding-tb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 check-dash" data-aos="fade-up" data-aos-duration="2000">
+                    <div class="lh-checkout">
+                        <div class="lh-checkout-content">
+                            <div class="lh-checkout-inner">
+                                <!-- <div class="lh-checkout-wrap mb-24">
+                                    <div class="lh-checkout-block lh-check-new">
+                                        <h3 class="lh-checkout-title">New Customer</h3>
+                                        <div class="lh-check-block-content">
+                                            <div class="lh-check-subtitle">Checkout Options</div>
+                                            <form action="#">
+                                                <span class="lh-new-option">
+                                                    <span>
+                                                        <input type="radio" id="account1" name="radio-group" checked>
+                                                        <label for="account1">Register Account</label>
+                                                    </span>
+                                                    <span>
+                                                        <input type="radio" id="account2" name="radio-group">
+                                                        <label for="account2">Guest Account</label>
+                                                    </span>
+                                                </span>
+                                            </form>
+                                            <div class="lh-new-desc">By creating an account you will be able to shop faster,
+                                                be up to date on an order's status, and keep track of the orders you have
+                                                previously made.
+                                            </div>
+                                            <div class="lh-new-btn"><a href="#" class="lh-buttons">Continue</a></div>
+    
+                                        </div>
+                                    </div>
+                                    <div class="lh-checkout-block lh-check-login">
+                                        <h3 class="lh-checkout-title">Returning Customer</h3>
+                                        <div class="lh-check-login-form">
+                                            <form action="#" method="post">
+                                                <span class="lh-check-login-wrap">
+                                                    <label>Email Address</label>
+                                                    <input type="text" name="name" placeholder="Enter your email address"
+                                                        required />
+                                                </span>
+                                                <span class="lh-check-login-wrap">
+                                                    <label>Password</label>
+                                                    <input type="password" name="password" placeholder="Enter your password"
+                                                        required />
+                                                </span>
+    
+                                                <span class="lh-check-login-wrap lh-check-login-btn">
+                                                    <button class="lh-buttons mr-12" type="submit">Login</button>
+                                                    <a class="lh-check-login-fp" href="#">Forgot Password?</a>
+                                                </span>
+                                            </form>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                                <div class="lh-checkout-wrap">
+                                    <div class="lh-checkout-block lh-check-bill">
+                                        <h3 class="lh-checkout-title">Billing Details</h3>
+                                        <div class="lh-bl-block-content">
+                                            <div class="lh-check-subtitle">Checkout Options</div>
+                                            <span class="lh-bill-option">
+                                                <span>
+                                                    <input type="radio" id="bill1" name="radio-group">
+                                                    <label for="bill1">I want to use an existing address</label>
+                                                </span>
+                                                <span>
+                                                    <input type="radio" id="bill2" name="radio-group" checked>
+                                                    <label for="bill2">I want to use new address</label>
+                                                </span>
+                                            </span>
+                                            <div class="lh-check-bill-form">
+                                                <form action="#" method="post">
+                                                    <span class="lh-bill-wrap lh-bill-half">
+                                                        <label>First Name*</label>
+                                                        <input type="text" name="firstname"
+                                                            placeholder="Enter your first name" required />
+                                                    </span>
+                                                    <span class="lh-bill-wrap lh-bill-half">
+                                                        <label>Last Name*</label>
+                                                        <input type="text" name="lastname"
+                                                            placeholder="Enter your last name" required />
+                                                    </span>
+                                                    <span class="lh-bill-wrap">
+                                                        <label>Address</label>
+                                                        <input type="text" name="address" placeholder="Address Line 1" />
+                                                    </span>
+                                                    <span class="lh-bill-wrap lh-bill-half mb-15">
+                                                        <label>City *</label>
+                                                        <span class="lh-bl-select-inner">
+                                                            <select name="ec_select_city" id="lh-select-city"
+                                                                class="lh-bill-select">
+                                                                <option selected disabled>City</option>
+                                                                <option value="1">City 1</option>
+                                                                <option value="2">City 2</option>
+                                                                <option value="3">City 3</option>
+                                                                <option value="4">City 4</option>
+                                                                <option value="5">City 5</option>
+                                                            </select>
+                                                        </span>
+                                                    </span>
+                                                    <span class="lh-bill-wrap lh-bill-half">
+                                                        <label>Post Code</label>
+                                                        <input type="text" name="postalcode" placeholder="Post Code" />
+                                                    </span>
+                                                    <span class="lh-bill-wrap lh-bill-half m-xl-0">
+                                                        <label>Country *</label>
+                                                        <span class="lh-bl-select-inner">
+                                                            <select name="ec_select_country" id="lh-select-country"
+                                                                class="lh-bill-select">
+                                                                <option selected disabled>Country</option>
+                                                                <option value="1">Country 1</option>
+                                                                <option value="2">Country 2</option>
+                                                                <option value="3">Country 3</option>
+                                                                <option value="4">Country 4</option>
+                                                                <option value="5">Country 5</option>
+                                                            </select>
+                                                        </span>
+                                                    </span>
+                                                    <span class="lh-bill-wrap lh-bill-half">
+                                                        <label>Region State</label>
+                                                        <span class="lh-bl-select-inner">
+                                                            <select name="ec_select_state" id="lh-select-state"
+                                                                class="lh-bill-select">
+                                                                <option selected disabled>Region/State</option>
+                                                                <option value="1">Region/State 1</option>
+                                                                <option value="2">Region/State 2</option>
+                                                                <option value="3">Region/State 3</option>
+                                                                <option value="4">Region/State 4</option>
+                                                                <option value="5">Region/State 5</option>
+                                                            </select>
+                                                        </span>
+                                                    </span>
+                                                </form>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+    
+                                </div> -->
+                           <!--booking form-->
+                           <div class="booking-container">
+                            <h3 class="text-center mb-4">Room Booking System</h3>
+                    
+                            <div class="row">
+                                <!-- Add Bed Type Selection -->
+                    
+                                <!-- Add Check-in Date and Time -->
+                                <div class="col-md-6 mb-2">
+                                    <label for="checkIn" class="form-label">Check-in Date and Time</label>
+                                    <input type="datetime-local" id="checkIn" class="form-control">
+                                </div>
+                                <!-- Add Check-out Date and Time -->
+                                <div class="col-md-6 mb-2">
+                                    <label for="checkOut" class="form-label">Check-out Date and Time</label>
+                                    <input type="datetime-local" id="checkOut" class="form-control">
+                                </div>
+                            </div>
+                            <!-- Room Selection -->
+                            <div class="room-selection-container">
+                                <h5>Select Room Types</h5>
+                                <div class="row">
+                                    <div class="col-md-3 col-6 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input room-checkbox" type="checkbox" value="standard"
+                                                id="standardRoom">
+                                            <label class="form-check-label" for="standardRoom">
+                                                Standard Room (Rs. 200)
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input room-checkbox" type="checkbox" value="deluxe" id="deluxeRoom">
+                                            <label class="form-check-label" for="deluxeRoom">
+                                                Deluxe Room (Rs. 250)
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input room-checkbox" type="checkbox" value="vip" id="vipRoom">
+                                            <label class="form-check-label" for="vipRoom">
+                                                VIP Room (Rs. 300)
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-2 ">
+                                        <div class="form-check">
+                                            <input class="form-check-input room-checkbox" type="checkbox" value="conference"
+                                                id="conferenceRoom">
+                                            <label class="form-check-label" for="conferenceRoom">
+                                                Conference Room (Rs. 500)
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="legend d-flex flex-wrap justify-content-start">
+                                <div class="legend-item d-flex align-items-center mb-2 mx-2">
+                                    <div class="legend-color"
+                                        style="background-color: #4CAF50; width: 20px; height: 20px; margin-right: 5px;border-radius: 5px;">
+                                    </div>
+                                    <span>Available</span>
+                                </div>
+                                <div class="legend-item d-flex align-items-center mb-2 mx-2">
+                                    <div class="legend-color"
+                                        style="background-color:   rgb(235, 70, 133); width: 20px; height: 20px; margin-right: 5px;border-radius: 5px;">
+                                    </div>
+                                    <span>Bestseller</span>
+                                </div>
+                                <div class="legend-item d-flex align-items-center mb-2 mx-2">
+                                    <div class="legend-color"
+                                        style="background-color: #aba5a5; width: 20px; height: 20px; margin-right: 5px;border-radius: 5px;">
+                                    </div>
+                                    <span>Sold</span>
+                                </div>
+                                <div class="legend-item d-flex align-items-center mb-2 mx-2">
+                                    <div class="legend-color"
+                                        style="background-color: blue; width: 20px; height: 20px; margin-right: 5px;border-radius: 5px;">
+                                    </div>
+                                    <span>Selected</span>
+                                </div>
+                    
+                                <!-- <div class="col-md-6 mb-2">
+                                    <label class="form-label">Select Bed Type</label>
+                                    <div class="form-check " style="display: flex; gap: 35px;">
+                                    <div>
+                                        <input type="radio" id="singleBed" name="bedType" value="single" class="form-check-input">
+                                        <label for="singleBed" class="form-check-label">Single Bed</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="doubleBed" name="bedType" value="double" class="form-check-input">
+                                        <label for="doubleBed" class="form-check-label">Double Bed</label>
+                                    </div></div>
+                                </div> -->
+                            </div>
+                            <!-- <div class="container mt-4 text-center">
+                            <button class="available">Available</button>
+                            <button class="bestseller">Bestseller</button>
+                            <button class="sold">Sold</button>
+                            <button class="selected">Selected</button>
+                            </div> -->
+                            <!-- Seat Layouts Container -->
+                            <div id="seatLayoutsContainer" style="display: flex
+                            ;
+                                justify-content: space-between;
+                                flex-wrap: wrap;
+                                "></div>
+                            <!-- Add Guest Information Section -->
+                            <div class="guest-info-container mb-4">
+                                <h5>Guest Information</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <label for="guestName" class="form-label">Guest Name</label>
+                                        <input type="text" id="guestName" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                                        <input type="tel" id="phoneNumber" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" id="email" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input type="text" id="address" class="form-control">
+                                    </div>
+                                </div>
+                                <h5>Guest Count</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <label for="numberOfAdults" class="form-label">Number Of Adults</label>
+                                        <input type="number" id="numberOfAdults" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label for="children" class="form-label">Children</label>
+                                        <select id="children" class="form-select">
+                                            <option value="none">None</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            
+                    
+                          
+                    
+                    
+                            
+                    <!-- ... existing code ... -->
+                    
+                          
+                             <div class="row">
+                                  <!-- Upload ID Proof Image -->
+                                <div class="col-md-6">
+                                    <label for="idProofImage" class="form-label">Upload ID Proof Image</label>
+                                    <input type="file" id="idProofImage" class="form-control" accept="image/*" required>
+                                    <div class="form-text">Please upload a clear image of your ID proof (Aadhar, PAN, or Passport).</div>
+                                </div>
+                                  <!-- Payment Type Selection -->
+                            <div class="col-md-6">
+                                <label for="paymentType" class="form-label">Payment Type</label>
+                                <select id="paymentType" class="form-select">
+                                    <option value="creditCard">Credit Card</option>
+                                    <option value="debitCard">Debit Card</option>
+                                    <option value="netBanking">Net Banking</option>
+                                    <option value="upi">UPI</option>
+                                </select>
+                            </div>
+                    
+                        </div>
+                    
+                    
+                    
+                    
+                    
+                              <!-- ID Proof Radio Buttons -->
+                              <div class="mb-4 mt-2" id="idProofContainer">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="idProof" id="aadharRadio" value="aadhar" onclick="toggleIDProofFields()"/>
+                                    <label class="form-check-label" for="aadharRadio">Aadhar Card</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="idProof" id="panRadio" value="pan" onclick="toggleIDProofFields()"/>
+                                    <label class="form-check-label" for="panRadio">PAN Card</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="idProof" id="passportRadio" value="passport" onclick="toggleIDProofFields()"/>
+                                    <label class="form-check-label" for="passportRadio">Passport</label>
+                                </div>
+                            </div>
+                    
+                            <!-- Aadhar Form -->
+                            <div id="aadharForm" class="proof-form" style="display: none;">
+                                <form id="aadharDetailsForm">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Aadhar Number</label>
+                                            <input type="text" class="form-control" name="aadharNumber" maxlength="15" pattern="\d{15}" required />
+                                            <div class="form-text">Enter 12 digit Aadhar number</div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                    
+                            <!-- PAN Form -->
+                            <div id="panForm" class="proof-form" style="display: none;">
+                                <form id="panDetailsForm">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">PAN Number</label>
+                                            <input type="text" class="form-control" name="panNumber" maxlength="10" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" required />
+                                            <div class="form-text">Enter 10 character PAN number (e.g., ABCDE1234F)</div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                    
+                            <!-- Passport Form -->
+                            <div id="passportForm" class="proof-form" style="display: none;">
+                                <form id="passportDetailsForm">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Passport Number</label>
+                                            <input type="text" class="form-control" name="passportNumber" pattern="[A-Z]{1}[0-9]{7}" maxlength="8" required />
+                                            <div class="form-text">Enter 8 character Passport number (e.g., A1234567)</div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                          
+                    
+                    <!-- ... existing code ... -->
+                    
+                            <!-- Booking Details -->
+                            <div class="card mt-4">
+                                <div class="card-body">
+                                    <div class="selected-rooms-info">
+                                        <h5>Selected Rooms</h5>
+                                        <div id="selectedRoomsList"></div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <strong>Total Amount: </strong>
+                                        <span id="totalAmount">Rs. 0</span>
+                                    </div>
+                                    <button id="bookButton" class="btn btn-primary mt-3" disabled>Book Now</button>
+                                </div>
+                            </div>
+                        </div></div>
+                           <!--end booking form-->
+                           
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4 check-sidebar" data-aos="fade-up" data-aos-duration="3000">
+                    <div class="lh-side-room">
+                        <h4 class="lh-room-inner-heading">Reservation</h4>
+                        <div class="lh-side-reservation">
+                            <form>
+                                <div class="lh-side-reservation-from">
+                                    <label>Check In</label>
+                                    <div class="calendar" id="date_1">
+                                        <input type="text" class="reservation-form-control" placeholder="Sep 09,2024">
+                                        <i class="ri-calendar-line"></i>
+                                    </div>
+                                </div>
+                                <div class="lh-side-reservation-from">
+                                    <label>Check Out</label>
+                                    <div class="calendar" id="date_2">
+                                        <input type="text" class="reservation-form-control" placeholder="Sep 09,2024">
+                                        <i class="ri-calendar-line"></i>
+                                    </div>
+                                </div>
+                                <div class="lh-side-reservation-from">
+                                    <label>Room</label>
+                                    <div class="custom-select reservation-form-control">
+                                        <select>
+                                            <option value="option1">1</option>
+                                            <option value="option2">2</option>
+                                            <option value="option3">3</option>
+                                            <option value="option4">4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="lh-side-reservation-from">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Adult</label>
+                                            <div class="custom-select reservation-form-control">
+                                                <select>
+                                                    <option value="option1">1</option>
+                                                    <option value="option2">2</option>
+                                                    <option value="option3">3</option>
+                                                    <option value="option4">4</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Children</label>
+                                            <div class="custom-select reservation-form-control">
+                                                <select>
+                                                    <option value="option1">1</option>
+                                                    <option value="option2">2</option>
+                                                    <option value="option3">3</option>
+                                                    <option value="option4">4</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lh-side-reservation-from ex-service">
+                                    <h4>Extra Services</h4>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="flexcheckboxDefault"
+                                            id="flexcheckboxDefault1">
+                                        <label class="form-check-label" for="flexcheckboxDefault1">
+                                            Air Conditioner
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="flexcheckboxDefault"
+                                            id="flexcheckboxDefault2" checked>
+                                        <label class="form-check-label" for="flexcheckboxDefault2">
+                                            Free Internet
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="flexcheckboxDefault"
+                                            id="flexcheckboxDefault3" checked>
+                                        <label class="form-check-label" for="flexcheckboxDefault3">
+                                            LCD Television
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="flexcheckboxDefault"
+                                            id="flexcheckboxDefault4" checked>
+                                        <label class="form-check-label" for="flexcheckboxDefault4">
+                                            Microwave
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="lh-side-reservation-from">
+                                    <h4>Your Price</h4>
+                                    <span>$210 / per room</span>
+                                </div>
+                                <div class="lh-side-reservation-from">
+                                    <div class="lh-side-reservation-from-buttons">
+                                        <button class="lh-buttons result-placeholder" type="submit">
+                                            Book Now
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-top-section">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 rs-pb-24 p-991 order-lg-1 order-md-2 order-2">
+                    <div class="lh-footer-cols-contain">
+                        <div class="lh-footer-heading">
+                            <h4>Explore</h4>
+                        </div>
+                        <ul>
+                            <li>
+                                <code>*</code>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <code>*</code>
+                                <a href="about.html">About</a>
+                            </li>
+                             <li>
+                                <code>*</code>
+                                <a href="room.html">Rooms & suites</a>
+                            </li>
+                            <li>
+                                <code>*</code>
+                                <a href="spa.html">spa & Wellness</a>
+                            </li>
+                            <li>
+                                <code>*</code>
+                                <a href="restaurant.html">Restaurant</a>
+                            </li>
+                            <li>
+                                <code>*</code>
+                                <a href="gallery.html">Gallery</a>
+                            </li>
+                            <li>
+                                <code>*</code>
+                                <a href="contact.html">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 rs-pb-24 order-lg-2 order-md-1 order-1">
+                    <div class="lh-social-media">
+                        <div class="footer-logos">
+                            <img src="{% static 'assets/img/logo/logo.png' %}" alt="logo">
+                        </div>
+                        <div class="lh-footer-social">
+                            <p>Step into a world where opulence meets unparalleled comfort, and every detail is designed to elevate your experience. Bloom Up Hotel isn’t just a destination; 
+                                it’s an exquisite journey into the art of refined living.!</p>
+                            <form class="lh-control-footer" role="search">
+                                <div class="lh-control-inner-icons">
+                                    <i class="ri-send-plane-line"></i>
+                                </div>
+                                <input class="form-control shadow-none me-4" type="search" placeholder="Subscribe..."
+                                    aria-label="Search">
+                            </form>
+                        </div>
+                      
+                        <a href="termsandconditions.html"><p style="text-align: center;color: white;margin-top: 10px;">Terms And Conditions</p></a> 
+                        <a href="privacy.html"><p style="text-align: center;color: white;margin-top: 10px;">Privacy and policy</p></a> 
+                        <a href="cancellation.html"><p style="text-align: center;color: white;margin-top: 10px;">Cancellation Policy</p></a> 
+
+                      
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 rs-pb-24 order-lg-3 order-md-3 order-3">
+                    <div class="lh-footer-cols-contain ">
+                        <div class="lh-footer-heading">
+                            <h4>Contact Information</h4>
+                        </div>
+                        <div class="lh-footer-contact-infoemation">
+                            <ul>
+                                <li class="lh-information">
+                                    <h5 class="heading">Location</h5>
+                                    <span>5 Green st.Huntington stati on, Ny 11746, Libero voluptatem soluta
+                                        Bharat.</span>
+                                </li>
+                                <li class="lh-information">
+                                    <h5 class="heading">Email</h5>
+                                    <span>example@ec-email.com</span>
+                                </li>
+                                <li class="lh-information">
+                                    <h5 class="heading">Phone No</h5>
+                                    <span>+91(1234)(567)(890)</span>
+                                </li>
+                                <li class="lh-information">
+                                    <div class="lh-follow-social">
+                                        <h4 class="heading">Follow On Social</h4>
+                                        <div class="footer-logo-image" style="margin-top: 10px;">
+                                            <a href="#"><img src="{% static 'assets/img/logo/facebook.png' %}" alt="facebook"></a>
+                                            <a href="#"><img src="{% static 'assets/img/logo/twitter.png' %}" alt="twitter"></a>
+                                            <a href="#"><img src="{% static 'assets/img/logo/instagram.png' %}" alt="instagram"></a>
+                                            <a href="#"><img src="{% static 'assets/img/logo/linkedin.png' %}" alt="linkedin"></a>
+                                            <a href="#"><img src="{% static 'assets/img/logo/dribbble.png' %}" alt="dribbble" style="width: 12%;"></a>
+                                            <a href="#"><img src="{% static 'assets/img/logo/pinterest.png' %}" alt="pinterest"  style="width: 12%;"></a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="footer-bottom-copy">
+<div class="md:text-start text-center">
+                    <p class="mb-0 " >© <script>document.write(new Date().getFullYear())</script> <a href="index.html" class="link">Bloom Up </a> – All Rights Reserved ||  Developed by <a href="https://ultrakeyit.in/" target="_blank" class="link" >Ultrakey It Solutions Private Limited </a>.</p>
+                 </div>   
+        </div>
+    </footer>
+
+    <!-- Tap to top -->
+    <a href="#" class="back-to-top result-placeholder">
+        <i class="ri-arrow-up-double-line"></i>
+    </a>
+
+    <!-- Side-tool -->
+       <!-- <div class="tool-overlay"></div>
+    <div class="lh-tool">
+        <div class="lh-tool-btn">
+            <button type="button" class="btn-lh-tool result-placeholder close-tool">
+                <i class="ri-settings-line"></i>
+            </button>
+            <div class="color-variant">
+                <div class="tool-header">
+                    <h5>Tools</h5>
+                </div>
+                <div class="heading">
+                    <h2>Select Color</h2>
+                </div>
+                <ul class="lh-color">
+                    <li class="colors c1 active-colors">
+                        <span class="lh-all-color"></span>
+                    </li>
+                    <li class="colors c2">
+                        <span class="lh-all-color"></span>
+                    </li>
+                    <li class="colors c3">
+                        <span class="lh-all-color"></span>
+                    </li>
+                    <li class="colors c4">
+                        <span class="lh-all-color"></span>
+                    </li>
+                    <li class="colors c5">
+                        <span class="lh-all-color"></span>
+                    </li>
+                    <li class="colors c6">
+                        <span class="lh-all-color"></span>
+                    </li>
+                    <li class="colors c7">
+                        <span class="lh-all-color"></span>
+                    </li>
+                    <li class="colors c8">
+                        <span class="lh-all-color"></span>
+                    </li>
+                    <li class="colors c9">
+                        <span class="lh-all-color"></span>
+                    </li>
+                    <li class="colors c10">
+                        <span class="lh-all-color"></span>
+                    </li>
+                </ul>
+                <div class="heading">
+                    <h2>Dark mode</h2>
+                </div>
+                <ul class="dark-mode">
+                    <li class="dark">
+                        <span class="lh-all-color"></span>
+                    </li>
+                    <li class="white active-dark-mode">
+                        <span class="lh-all-color"></span>
+                    </li>
+                </ul>
+                <div class="heading">
+                    <h2>Skin mode</h2>
+                </div>
+                <ul class="skin-mode">
+                    <li class="skin-1">
+                        <span class="lh-all-color"><img src="{% static 'assets/img/skin/1.png' %}" alt="skin-1"></span>
+                    </li>
+                    <li class="skin-2">
+                        <span class="lh-all-color"><img src="{% static 'assets/img/skin/2.png' %}" alt="skin-2"></span>
+                    </li>
+                    <li class="skin-3 active">
+                        <span class="lh-all-color"><img src="{% static 'assets/img/skin/3.png' %}" alt="skin-3"></span>
+                    </li>
+                </ul>
+                <div class="heading">
+                    <h2>Border Radius Mode</h2>
+                </div>
+                <ul class="border-mode">
+                    <li class="lh-radius radius-mode active-radius">
+                        <span class="lh-all-color"><img src="{% static 'assets/img/skin/box-1.png' %}" alt="skin-1"></span>
+                    </li>
+                    <li class="lh-radius radius-mode-none">
+                        <span class="lh-all-color"><img src="{% static 'assets/img/skin/box-2.png' %}" alt="skin-1"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+<!-booking script-->
+<script>
+    // Room configurations (same as before)
+    const roomConfigs = {
+        standard: {
+            rows: '1,2,3',
+            seatsPerRow: 10,
+            price: 200
+        },
+        deluxe: {
+            rows: '1,2,3',
+            seatsPerRow: 10,
+            price: 250
+        },
+        vip: {
+            rows: '1,2,3',
+            seatsPerRow: 10,
+            price: 300
+        },
+        conference: {
+            rows: '1,2,3',
+            seatsPerRow: 10,
+            price: 500
+        }
+    };
+
+    // State management
+    const selectedRooms = {
+        standard: { seats: new Set(), layoutElement: null },
+        deluxe: { seats: new Set(), layoutElement: null },
+        vip: { seats: new Set(), layoutElement: null },
+        conference: { seats: new Set(), layoutElement: null }
+    };
+
+    // Initialize the booking system
+    document.addEventListener('DOMContentLoaded', function () {
+        const roomCheckboxes = document.querySelectorAll('.room-checkbox');
+        const seatLayoutsContainer = document.getElementById('seatLayoutsContainer');
+        const selectedRoomsList = document.getElementById('selectedRoomsList');
+        const totalAmountElement = document.getElementById('totalAmount');
+        const bookButton = document.getElementById('bookButton');
+
+        // Event listener for room type checkboxes
+        roomCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const roomType = this.value;
+                const hasConferenceRoom = roomType === 'conference'
+
+                if (this.checked) {
+                    // Create layout for selected room
+                    const layoutDiv = document.createElement('div');
+                    layoutDiv.className = 'seat-layout';
+                    layoutDiv.id = `${roomType}Layout`;
+
+                    const titleDiv = document.createElement('h2');
+                    titleDiv.textContent = `${roomType.charAt(0).toUpperCase() + roomType.slice(1)} Room`;
+                    layoutDiv.appendChild(titleDiv);
+
+
+                    if (!hasConferenceRoom) {
+                        const bedTypeDiv = document.createElement('div');
+                        bedTypeDiv.style.display = 'flex';
+                        bedTypeDiv.style.alignItems = 'center';
+                        bedTypeDiv.style.gap = '20px';
+                        bedTypeDiv.innerHTML = `
+                        <h4 style="font-size: 20px; margin: 0;">Bed Type</h4>
+                        <div>
+                            <input type="radio" id="singleBed" name="bedType" value="single" class="form-check-input">
+                            <label for="singleBed" class="form-check-label">Single Bed</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="doubleBed" name="bedType" value="double" class="form-check-input">
+                            <label for="doubleBed" class="form-check-label">Double Bed</label>
+                            </div>
+                            `;
+                        layoutDiv.appendChild(bedTypeDiv);
+                    }
+                    else {
+                        const sittingCapacity = document.createElement('div');
+                        sittingCapacity.style.display = 'flex';
+                        sittingCapacity.style.alignItems = 'center';
+                        sittingCapacity.style.gap = '20px';
+                        sittingCapacity.innerHTML = `
+                        <h4>Sitting Capacity</h4>
+                        <div style="margin-bottom: 10px;display: flex;align-items: center;">
+                           
+                            <select id="guestCount" class="form-select">
+                                <option value="upTo10">Up to 10 members</option>
+                                <option value="upTo30">Up to 30 members</option>
+                                <option value="upTo40">Up to 40 members</option>
+                            </select>
+                        </div>
+                        `;
+                        layoutDiv.appendChild(sittingCapacity);
+                    }
+
+                    const acSeatsDiv = document.createElement('div');
+                    acSeatsDiv.id = `${roomType}ACSeats`;
+                    acSeatsDiv.innerHTML = '<h4 style="font-size: 1rem;">AC Rooms</h4>';
+                    layoutDiv.appendChild(acSeatsDiv);
+
+                    const nonAcSeatsDiv = document.createElement('div');
+                    nonAcSeatsDiv.id = `${roomType}NonACSeats`;
+                    nonAcSeatsDiv.innerHTML = '<h4 style="font-size: 1rem;margin-top: 5px;">Non-AC Rooms</h4>';
+                    layoutDiv.appendChild(nonAcSeatsDiv);
+
+                    seatLayoutsContainer.appendChild(layoutDiv);
+
+                    // Render seat layout
+                    renderSeatLayout(roomType);
+
+                    // Store reference to layout element
+                    selectedRooms[roomType].layoutElement = layoutDiv;
+                } else {
+                    // Remove layout for unchecked room
+                    if (selectedRooms[roomType].layoutElement) {
+                        selectedRooms[roomType].layoutElement.remove();
+                        selectedRooms[roomType].layoutElement = null;
+                    }
+
+                    // Clear selected seats for this room type
+                    selectedRooms[roomType].seats.clear();
+                }
+
+                // Update booking info
+                updateBookingInfo();
+            });
+        });
+
+        // Booking button event listener
+        bookButton.addEventListener('click', handleBooking);
+    });
+
+    // Render seat layout for a specific room type
+    function renderSeatLayout(roomType) {
+        const layout = roomConfigs[roomType];
+        const acSeats = document.getElementById(`${roomType}ACSeats`);
+        const nonAcSeats = document.getElementById(`${roomType}NonACSeats`);
+
+        // Generate seats for this room type
+        for (let row of layout.rows) {
+            const rowDivAC = document.createElement('div');
+            const rowDivNonAC = document.createElement('div');
+            rowDivAC.className = 'seat-row';
+            rowDivNonAC.className = 'seat-row';
+
+            // Create seats container
+            const seatsContainerAC = document.createElement('div');
+            const seatsContainerNonAC = document.createElement('div');
+            seatsContainerAC.className = 'seats-container';
+            seatsContainerNonAC.className = 'seats-container';
+
+            // Generate seats for this row
+            for (let i = (parseInt(row) - 1) * 10 + 1; i <= parseInt(row) * 10; i++) {
+                const seatAC = createSeatElement(row, i, 'ac', roomType);
+                const seatNonAC = createSeatElement(row, i, 'non-ac', roomType);
+                seatsContainerAC.appendChild(seatAC);
+                seatsContainerNonAC.appendChild(seatNonAC);
+            }
+
+            rowDivAC.appendChild(seatsContainerAC);
+            rowDivNonAC.appendChild(seatsContainerNonAC);
+            acSeats.appendChild(rowDivAC);
+            nonAcSeats.appendChild(rowDivNonAC);
+        }
+    }
+
+    // Create seat element
+    function createSeatElement(row, i, type, roomType) {
+        const seat = document.createElement('button');
+        const seatId = `${row}${i}`;
+        seat.className = 'seat';
+        seat.dataset.seatId = seatId;
+        seat.dataset.roomType = roomType;
+        seat.dataset.seatType = type;
+        seat.textContent = i;
+
+        // Randomly assign seat status
+        const random = Math.random();
+        if (random > 0.8) {
+            seat.classList.add('sold');
+        } else if (random > 0.6) {
+            seat.classList.add('bestseller');
+        } else {
+            seat.classList.add('available');
+        }
+
+        // Add click event listener
+        seat.addEventListener('click', () => handleSeatClick(seat));
+        return seat;
+    }
+
+    // Handle seat selection
+    function handleSeatClick(seatElement) {
+        if (seatElement.classList.contains('sold')) return;
+
+        const roomType = seatElement.dataset.roomType;
+        const seatType = seatElement.dataset.seatType;
+        const seatId = seatElement.dataset.seatId;
+        const roomTypeLabel = roomType.charAt(0).toUpperCase() + roomType.slice(1);
+        const seatLabel = `${roomTypeLabel} ${seatType === 'ac' ? 'AC' : 'NON AC'} ${seatId}`;
+
+        const roomSeats = selectedRooms[roomType].seats;
+
+        // Toggle seat selection
+        if (roomSeats.has(seatLabel)) {
+            roomSeats.delete(seatLabel);
+            seatElement.classList.remove('selected');
+        } else {
+            roomSeats.add(seatLabel);
+            seatElement.classList.add('selected');
+        }
+
+        // Update booking info
+        updateBookingInfo();
+    }
+
+    // Update booking information
+    function updateBookingInfo() {
+        const selectedRoomsList = document.getElementById('selectedRoomsList');
+        const totalAmountElement = document.getElementById('totalAmount');
+        const bookButton = document.getElementById('bookButton');
+
+        let totalAmount = 0;
+        let selectedRoomsContent = '';
+
+        // Iterate through room types
+        Object.keys(selectedRooms).forEach(roomType => {
+            const roomSeats = selectedRooms[roomType].seats;
+            if (roomSeats.size > 0) {
+                const roomPrice = roomConfigs[roomType].price;
+                totalAmount += roomSeats.size * roomPrice;
+
+                selectedRoomsContent += `
+                    <div>
+                        <strong>${roomType.charAt(0).toUpperCase() + roomType.slice(1)} Room:</strong>
+                        ${Array.from(roomSeats).join(', ')} 
+                        (${roomSeats.size} rooms, Rs. ${roomSeats.size * roomPrice})
+                    </div>
+                `;
+            }
+        });
+
+        // Update UI
+        selectedRoomsList.innerHTML = selectedRoomsContent || 'No rooms selected';
+        totalAmountElement.textContent = `Rs. ${totalAmount}`;
+        bookButton.disabled = totalAmount === 0;
+    }
+
+    // Handle booking
+    function handleBooking() {
+        const bookingDetails = {
+            rooms: {}
+        };
+
+        // Collect booking details for each room type
+        Object.keys(selectedRooms).forEach(roomType => {
+            const roomSeats = selectedRooms[roomType].seats;
+            if (roomSeats.size > 0) {
+                bookingDetails.rooms[roomType] = {
+                    seats: Array.from(roomSeats),
+                    price: roomConfigs[roomType].price,
+                    totalAmount: roomSeats.size * roomConfigs[roomType].price
+                };
+            }
+        });
+
+        // Total booking amount
+        bookingDetails.totalAmount = Object.values(bookingDetails.rooms)
+            .reduce((total, room) => total + room.totalAmount, 0);
+
+        // Here you would typically send this to a server
+        alert('Booking Successful!\n' + JSON.stringify(bookingDetails, null, 2));
+
+        // Reset selections
+        Object.values(selectedRooms).forEach(room => {
+            room.seats.clear();
+            if (room.layoutElement) {
+                const seats = room.layoutElement.querySelectorAll('.seat');
+                seats.forEach(seat => seat.classList.remove('selected'));
+            }
+        });
+
+        // Uncheck all room checkboxes
+        const roomCheckboxes = document.querySelectorAll('.room-checkbox');
+        roomCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+
+        // Clear layouts
+        document.getElementById('seatLayoutsContainer').innerHTML = '';
+
+        // Update booking info
+        updateBookingInfo();
+    }
+
+    // Function to create bed type button
+    function createBedTypeButton(bedType) {
+        const button = document.createElement('button');
+        button.textContent = bedType;
+        button.className = 'btn btn-secondary m-1';
+        button.addEventListener('click', () => {
+            alert(`${bedType} selected`);
+            // Additional logic for bed type selection can be added here
+        });
+        return button;
+    }
+
+    function toggleIDProofFields() {
+        // Hide all ID proof forms
+        document.getElementById('aadharForm').style.display = 'none';
+        document.getElementById('panForm').style.display = 'none';
+        document.getElementById('passportForm').style.display = 'none';
+
+        // Show the selected ID proof form
+        if (document.getElementById('aadharRadio').checked) {
+            document.getElementById('aadharForm').style.display = 'block';
+        } else if (document.getElementById('panRadio').checked) {
+            document.getElementById('panForm').style.display = 'block';
+        } else if (document.getElementById('passportRadio').checked) {
+            document.getElementById('passportForm').style.display = 'block';
+        }
+    }
+
+
+
+
+
+
+      // Function to hide ID proof fields when clicking outside
+document.addEventListener('click', function(event) {
+    const idProofContainer = document.getElementById('idProofContainer');
+    const aadharForm = document.getElementById('aadharForm');
+    const panForm = document.getElementById('panForm');
+    const passportForm = document.getElementById('passportForm');
+
+    // Check if the click is outside the ID proof container
+    if (!idProofContainer.contains(event.target)) {
+        // Hide all ID proof forms
+        aadharForm.style.display = 'none';
+        panForm.style.display = 'none';
+        passportForm.style.display = 'none';
+    }
+});
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!--end booking script-->
+
+
+
+
+
+
+
+    <!-- Plugins JS -->
+    <script src="{% static 'assets/js/vendor/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/magnific-popup.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/aos.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/semantic.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/slick.min.js' %}"></script>
+
+    <!-- Main-js -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+
+</html>

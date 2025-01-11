@@ -1,0 +1,19 @@
+<!-- Add Team Member Button -->
+{% if user.is_authenticated %}
+    {% if user.is_superuser %}
+        <a href="{% url 'admin-panel:add_team_member' %}" class="btn btn-primary">
+            Add Team Member
+        </a>
+    {% else %}
+        <button class="btn btn-primary" onclick="showPermissionError()">
+            Add Team Member
+        </button>
+    {% endif %}
+{% endif %}
+
+<script>
+function showPermissionError() {
+    alert('Sorry, only superusers can add team members.');
+    // Or use a more sophisticated notification system
+}
+</script> 

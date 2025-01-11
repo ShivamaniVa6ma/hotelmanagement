@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="lh-main-content">
+    <div class="container-fluid">
+<h2>{% if form.instance.pk %}Edit Room{% else %}Add New Room{% endif %}</h2>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="mb-3">
+        <label for="{{ form.room_type.id_for_label }}" class="form-label">{{ form.room_type.label }}</label>
+        {{ form.room_type }}
+    </div>
+    <div class="mb-3" id="bed-type-container">
+        <label for="{{ form.bed_type.id_for_label }}" class="form-label">{{ form.bed_type.label }}</label>
+        {{ form.bed_type }}
+    </div>
+    <div class="mb-3" id="seating-capacity-container" style="display: none;">
+        <label for="{{ form.seating_capacity.id_for_label }}" class="form-label">{{ form.seating_capacity.label }}</label>
+        {{ form.seating_capacity }}
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.ac_type.id_for_label }}" class="form-label">{{ form.ac_type.label }}</label>
+        {{ form.ac_type }}
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.room_price.id_for_label }}" class="form-label">{{ form.room_price.label }}</label>
+        {{ form.room_price }}
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.room_no.id_for_label }}" class="form-label">{{ form.room_no.label }}</label>
+        {{ form.room_no }}
+        {% if form.room_no.errors %}
+        <div class="invalid-feedback d-block">
+            {{ form.room_no.errors }}
+        </div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.no_of_rooms.id_for_label }}" class="form-label">{{ form.no_of_rooms.label }}</label>
+        {{ form.no_of_rooms }}
+    </div>
+    <button type="submit" class="btn btn-primary">Save Room</button>
+</form>
+</div>
+</div>
+
+
+<script>
+    document.getElementById('id_room_type').addEventListener('change', function() {
+        var bedTypeContainer = document.getElementById('bed-type-container');
+        var seatingCapacityContainer = document.getElementById('seating-capacity-container');
+        
+        if (this.value === 'conference') {
+            // Set bed type to None
+            document.getElementById('id_bed_type').value = 'none';
+            bedTypeContainer.style.display = 'none'; // Hide bed type field
+            seatingCapacityContainer.style.display = 'block'; // Show seating capacity field
+        } else {
+            bedTypeContainer.style.display = 'block'; // Show bed type field
+            seatingCapacityContainer.style.display = 'none'; // Hide seating capacity field
+        }
+    });
+</script>
+{% endblock %} 

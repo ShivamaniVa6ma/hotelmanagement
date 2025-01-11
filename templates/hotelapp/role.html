@@ -1,0 +1,721 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+		<!-- main content -->
+		<div class="lh-main-content">
+			<div class="container-fluid">
+				<!-- Page title & breadcrumb -->
+				<div class="lh-page-title lh-page-title-2">
+					<div class="lh-breadcrumb">
+						<h5>Role</h5>
+						<ul>
+							<li><a href="{% url 'admin-panel:index' %}">Luxurious</a></li>
+							<li>Role</li>
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xxl-4 col-xl-4 col-md-6">
+						<div class="role-card">
+							<div class="lh-card lh-role">
+								<div class="lh-card-header">
+									<h4 class="lh-card-title">Branch Head</h4>
+								</div>
+								<div class="lh-card-content label-card">
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/2.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Emma Grater</h6>
+												<p>emma@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													id="dropdownMenu1" data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/8.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Mecov Maira</h6>
+												<p>mecov@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="role-card">
+							<div class="lh-card lh-role">
+								<div class="lh-card-header">
+									<h4 class="lh-card-title">Manager</h4>
+								</div>
+								<div class="lh-card-content label-card">
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/4.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Maria Johns</h6>
+												<p>maria@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/5.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Martin vegasu</h6>
+												<p>martin@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/6.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Lily wilson</h6>
+												<p>lily@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/9.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Boris Whisli</h6>
+												<p>boris@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="role-card">
+							<div class="lh-card lh-role">
+								<div class="lh-card-header">
+									<h4 class="lh-card-title">Accountant</h4>
+								</div>
+								<div class="lh-card-content label-card">
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/6.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Lily wilson</h6>
+												<p>lily@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/9.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Boris Whisli</h6>
+												<p>boris@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xxl-4 col-xl-4 col-md-6 order-md-3">
+						<div class="role-card">
+							<div class="lh-card lh-role">
+								<div class="lh-card-header">
+									<h4 class="lh-card-title">Team Leader</h4>
+								</div>
+								<div class="lh-card-content label-card">
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/4.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Maria Johns</h6>
+												<p>maria@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/5.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Martin vegasu</h6>
+												<p>martin@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/6.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Lily wilson</h6>
+												<p>lily@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/3.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Olive Yew</h6>
+												<p>olive@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/7.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Nancy thomas</h6>
+												<p>nancy@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="role-card">
+							<div class="lh-card lh-role">
+								<div class="lh-card-header">
+									<h4 class="lh-card-title">Team Spa</h4>
+								</div>
+								<div class="lh-card-content label-card">
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/4.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Maria Johns</h6>
+												<p>maria@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/5.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Martin vegasu</h6>
+												<p>martin@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="role-card">
+							<div class="lh-card lh-role">
+								<div class="lh-card-header">
+									<h4 class="lh-card-title">Team Gym</h4>
+								</div>
+								<div class="lh-card-content label-card">
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/3.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Olive Yew</h6>
+												<p>olive@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/7.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Nancy thomas</h6>
+												<p>nancy@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xxl-4 col-xl-4 col-md-6">
+						<div class="role-card">
+							<div class="lh-card lh-role">
+								<div class="lh-card-header">
+									<h4 class="lh-card-title">Team Restaurant</h4>
+								</div>
+								<div class="lh-card-content label-card">
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/4.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Maria Johns</h6>
+												<p>maria@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/5.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Martin vegasu</h6>
+												<p>martin@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/6.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Lily wilson</h6>
+												<p>lily@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/3.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Olive Yew</h6>
+												<p>olive@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/7.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Nancy thomas</h6>
+												<p>nancy@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="role-card">
+							<div class="lh-card lh-role">
+								<div class="lh-card-header">
+									<h4 class="lh-card-title">Team Marketing</h4>
+								</div>
+								<div class="lh-card-content label-card">
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/4.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Maria Johns</h6>
+												<p>maria@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/5.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Martin vegasu</h6>
+												<p>martin@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/6.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Lily wilson</h6>
+												<p>lily@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/3.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Olive Yew</h6>
+												<p>olive@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-role-item">
+										<div class="team-detail">
+											<img src="{% static 'assets/img/user/7.jpg' %}" alt="user">
+											<div class="info">
+												<h6>Nancy thomas</h6>
+												<p>nancy@example.com</p>
+											</div>
+										</div>
+										<div class="lh-tool">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" type="button">Action</button></li>
+													<li><button class="dropdown-item" type="button">Rename</button></li>
+													<li><button class="dropdown-item" type="button">Setting</button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+{% endblock %}

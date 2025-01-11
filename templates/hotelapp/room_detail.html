@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="lh-main-content">
+    <div class="container-fluid">
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">{{ room.get_room_type_display }} - Room {{ room.room_number }}</h2>
+        <div class="mb-3">
+            {% if room.is_available %}
+                <a href="{% url 'admin-panel:multiple_bookings_create' %}?room={{ room.pk }}" class="btn btn-success">Book this Room</a>
+            {% endif %}
+            
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h4>Room Details</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">Bed Type: {{ room.get_bed_type_display }}</li>
+                    <li class="list-group-item">AC/Non-AC: {{ room.get_ac_type_display }}</li>
+                    <li class="list-group-item">Price: ₹{{ room.base_price }}</li>
+                    <!-- <li class="list-group-item">Number of Rooms: {{ room.no_of_rooms }}</li> -->
+                    <li class="list-group-item">
+                        Status: 
+                        
+                            <span class="badge bg-success">Available</span>
+                        
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="col-md-6">
+                <h4>Current Bookings</h4>
+                <ul class="list-group">
+                    {% for booking in room.booking_set.all %}
+                        {% if booking.check_out > now %}
+                            <li class="list-group-item">
+                                Booked from: {{ booking.check_in|date:"M d, Y H:i" }}
+                                <br>
+                                Until: {{ booking.check_out|date:"M d, Y H:i" }}
+                            </li>
+                        {% endif %}
+                    {% empty %}
+                        <li class="list-group-item">No current bookings</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="mt-4">
+            <a href="{% url 'admin-panel:room_list' %}" class="btn btn-secondary">Back to Rooms</a>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %} 

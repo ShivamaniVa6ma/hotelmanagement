@@ -1,0 +1,171 @@
+{% extends 'hotelbase.html' %}
+{% block content %}
+{% load static %}
+  
+<div class="main-content">
+    <!-- Banner -->
+    <section class="section-banner">
+        <div class="row banner-image">
+            <div class="banner-overlay"></div>
+            <div class="banner-section">
+                <div class="lh-banner-contain">
+                    <h2>FAQS</h2>
+                    <div class="lh-breadcrumb">
+                        <h5>
+                            <span class="lh-inner-breadcrumb">
+                                <a href="{% url 'user-panel:index' %}">Home</a>
+                            </span>
+                            <span> / </span>
+                            <span>
+                                <a href="javascript:void(0)">FAQS</a>
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Faq -->
+    <section class="section-faq padding-tb-100">
+        <div class="container">
+            <div class="banner" data-aos="fade-up" data-aos-duration="1500">
+                <h2>Frequently Asked <span>Questions</span></h2>
+            </div>
+            <div class="ld-faq" data-aos="fade-up" data-aos-duration="2000">
+                <div class="row">
+                <div class="col-lg-6 rs-pb-24">
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    What Facilities Does Your Hotel Have?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        This is the dolor sit amet, consectetur adipisicing elit.
+                                        Ad voluptate doloribus eos sunt labore ea enim voluptatem,
+                                        sequi voluptas rem doloremque architecto. Libero, vero
+                                        natus.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed shadow-none" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                    How Do I Book A Room For My Vacation?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        This is the dolor sit amet, consectetur adipisicing elit.
+                                        Ad voluptate doloribus eos sunt labore ea enim voluptatem,
+                                        sequi voluptas rem doloremque architecto. Libero, vero
+                                        natus.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed shadow-none" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                    How We are best among others?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        This is the dolor sit amet, consectetur adipisicing elit.
+                                        Ad voluptate doloribus eos sunt labore ea enim voluptatem,
+                                        sequi voluptas rem doloremque architecto. Libero, vero
+                                        natus.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed shadow-none" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false"
+                                    aria-controls="collapseFour">
+                                    Is There Any Fitness Center In Your Hotel?
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        This is the dolor sit amet, consectetur adipisicing elit.
+                                        Ad voluptate doloribus eos sunt labore ea enim voluptatem,
+                                        sequi voluptas rem doloremque architecto. Libero, vero
+                                        natus.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button collapsed shadow-none" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false"
+                                    aria-controls="collapseFive">
+                                    What Type Of Room Service Do You Offer?
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        This is the dolor sit amet, consectetur adipisicing elit.
+                                        Ad voluptate doloribus eos sunt labore ea enim voluptatem,
+                                        sequi voluptas rem doloremque architecto. Libero, vero
+                                        natus.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingsix">
+                                <button class="accordion-button collapsed shadow-none" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapsesix" aria-expanded="false"
+                                    aria-controls="collapsesix">
+                                    What Type Of Room Service Do You Offer?
+                                </button>
+                            </h2>
+                            <div id="collapsesix" class="accordion-collapse collapse" aria-labelledby="headingsix"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        This is the dolor sit amet, consectetur adipisicing elit.
+                                        Ad voluptate doloribus eos sunt labore ea enim voluptatem,
+                                        sequi voluptas rem doloremque architecto. Libero, vero
+                                        natus.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 rs-pb-24">
+                    <div class="lh-faq-image">
+                        <img src="{% static 'hotel/assets/img/faq/faq-side.jpg' %}" alt="faq-side-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+   

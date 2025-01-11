@@ -1,0 +1,47 @@
+{% load static %}
+
+<div class="lh-main-content">
+    <div class="container-fluid">
+        <!-- Page title & breadcrumb -->
+        <div class="lh-page-title">
+            <div class="lh-breadcrumb">
+                <h5>Rooms</h5>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Rooms</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            {% if available_rooms %}
+                <div class="section-title d-flex justify-content-between">
+                    <h4>Available Rooms</h4>
+                </div>
+                {% if room_type %}
+                    <h4>{{ room_type|title }} Rooms</h4>
+                    <div class="row">
+                        {% for room in available_rooms %}
+                            {% if room.room_type == room_type %}
+                                <!-- Room card HTML -->
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {% for room_category in room_types %}
+                        <div class="row">
+                            <div class="section-title">
+                                <h4>{{ room_category|title }} Rooms</h4>
+                            </div>
+                            {% for room in available_rooms %}
+                                {% if room.room_type == room_category %}
+                                    <!-- Room card HTML -->
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>

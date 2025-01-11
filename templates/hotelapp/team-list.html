@@ -1,0 +1,565 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+
+	<style>
+		.delete-modal .modal-content {
+			border: none;
+			/* padding: 2rem 1rem; */
+			border-radius: 15px;
+			
+		}
+	
+		.delete-modal .delete-icon {
+			width: 85px;
+			height: 85px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: #ffe4e4;
+			border-radius: 50%;
+			margin: 0 auto 1.5rem;
+		}
+	
+		.delete-modal .delete-icon i {
+			font-size: 3rem;
+			color: #ff3b3b;
+		}
+	
+		.delete-modal h4 {
+			color: #343434;
+			font-size: 1.5rem;
+			margin-bottom: 1rem;
+		}
+	
+		.delete-modal p {
+			color: #666;
+			margin-bottom: 2rem;
+		}
+	
+		.delete-modal .button-row {
+			display: flex;
+			gap: 1rem;
+			justify-content: center;
+		}
+	
+		.delete-modal .btn {
+			min-width: 120px;
+			padding: 0.6rem 1.5rem;
+			border-radius: 50px;
+			font-weight: 500;
+		}
+	
+		.delete-modal .btn-danger {
+			background: #ff3b3b;
+			border-color: #ff3b3b;
+		}
+	
+		.delete-modal .btn-danger:hover {
+			background: #ff1c1c;
+			border-color: #ff1c1c;
+		}
+	
+		.delete-modal .btn-secondary {
+			background: #e4e6ef;
+			border-color: #e4e6ef;
+			color: #666;
+		}
+	
+		.delete-modal .btn-secondary:hover {
+			background: #d5d7e3;
+			border-color: #d5d7e3;
+			color: #444;
+		}
+	
+		.search-wrapper {
+			margin-right: 15px;
+			display: inline-block;
+		}
+	
+		.search-box {
+			position: relative;
+			display: flex;
+			align-items: center;
+		}
+	
+		.search-input {
+			width: 280px;
+			height: 40px;
+			padding: 10px 45px 10px 20px;
+			border: 2px solid #e4e6ef;
+			border-radius: 50px;
+			font-size: 14px;
+			transition: all 0.3s ease;
+			background: #f5f8fa;
+		}
+	
+		.search-input:focus {
+			border-color: #009ef7;
+			background: #fff;
+			outline: none;
+			box-shadow: 0 0 0 3px rgba(0, 158, 247, 0.1);
+		}
+	
+		.search-button {
+			position: absolute;
+			right: 5px;
+			height: 34px;
+			width: 34px;
+			border: none;
+			background: transparent;
+			border-radius: 50%;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.3s ease;
+		}
+	
+		.search-button i {
+			font-size: 18px;
+			color: #5e6278;
+			transition: all 0.3s ease;
+		}
+	
+		.search-button:hover {
+			background: #009ef7;
+		}
+	
+		.search-button:hover i {
+			color: #fff;
+		}
+		#edit-btn{
+			color: black;
+			border: none;
+			background: none;
+			margin-left: 10px;
+		}
+		#delete-btn{
+			color: none;
+			border: none;
+			background: none;
+		}
+
+	
+		/* Responsive adjustments */
+		@media (max-width: 768px) {
+			.search-input {
+				width: 200px;
+			}
+		}
+	
+		@media (max-width: 480px) {
+			.search-wrapper {
+				margin-right: 10px;
+			}
+			
+			.search-input {
+				width: 160px;
+			}
+		}
+	
+		.document-link {
+			color: #1a237e;
+			text-decoration: none;
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+		}
+	
+		.document-link:hover {
+			color: #283593;
+			text-decoration: underline;
+		}
+	
+		.document-link i {
+			font-size: 1.2em;
+		}
+		</style>
+		<!-- main content -->
+		<div class="lh-main-content team-list">
+			<div class="container-fluid">
+				<!-- Page title & breadcrumb -->
+				<div class="lh-page-title lh-page-title-2">
+					<div class="lh-breadcrumb">
+						<h5>Team List</h5>
+						<ul>
+							<li><a href="{% url 'admin-panel:index' %}">Luxurious</a></li>
+							<li>Team List</li>
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xxl-4 col-lg-5 col-md-12">
+						<div class="team-sticky-bar">
+							<div class="lh-card">
+								<div class="lh-card-header">
+									<h4 class="lh-card-title">Team List</h4>
+									<div class="header-tools">
+										<div class="dropdown" title="Add Member">
+											
+												<a class="btn btn-light" href="{% url 'admin-panel:add_team_member' %}">
+													<i class="ri-add-line"></i>
+												</a>
+											
+											
+										</div>
+									
+									</div>
+								</div>
+								
+									<div class="search-wrapper" style="margin: 31px 50px 0px;">
+										<form method="GET" action="{% url 'admin-panel:team_list' %}">
+											<div class="search-box">
+												<input type="text" class="search-input" name="search" placeholder="Search team members..." value="{{ request.GET.search }}">
+												<button class="search-button" type="submit">
+													<i class="ri-search-line"></i>
+												</button>
+											</div>
+										</form>
+									</div>
+								<div class="lh-card-content">
+									<ul class="nav nav-tabs" role="tablist">
+										{% for member in team_members %}
+										<li class="nav-item" role="presentation" data-member-name="{{ member.name|lower }}">
+											<a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" data-bs-target="#tab{{ member.id }}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+												<div class="form-group">
+													{% if member.image %}
+														<img class="team-img" src="{{ member.image.url }}" alt="{{member.name}}">
+													{% else %}
+													<img class="team-img" src="{% static 'assets/img/user/thumb.jpg' %}" alt="team">
+													{% endif %}
+													<span>{{ member.name }} </span>
+												</div>
+											</a>
+											<div class="lh-tool">
+												<div class="dropdown">
+													<button class="btn btn-secondary dropdown-toggle" type="button"
+														 data-bs-toggle="dropdown"
+														aria-expanded="false">
+														<i class="mdi mdi-dots-vertical"></i>
+													</button>
+													
+
+														<ul class="dropdown-menu">
+															<div class="form-group">
+																
+																<li>
+																	<a href="{% url 'admin-panel:edit_team_member' member.id %}" id="edit-btn">
+																		<i class="ri-edit-line"></i>Edit</a>
+
+																</li>
+																<li>
+																	<button  data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" data-member-id="{{ member.id }}" id="delete-btn">
+																		<i class="ri-delete-bin-line"></i> Delete</button>
+
+																</li>
+															</div>
+														</ul>
+														
+														
+												</div>
+											</div>
+										</li>
+										{% endfor %}
+										
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xxl-8 col-lg-7 col-md-12">
+						<div class="lh-card" id="assigntbl">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Team Detail</h4>
+								<div class="header-tools">
+									<a href="javascript:void(0)" class="button-add" title="Add Task"><i
+											class="ri-add-line"></i>Task</a>
+								</div>
+							</div>
+							<div class="lh-card-content card-default">
+								<div class="tab-content">
+									{% for member in team_members %}
+									<div class="tab-pane fade  {% if forloop.first %}show active{% endif %}" id="tab{{ member.id }}" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="row">
+													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
+														<div class="lh-team-detail">
+															<h6>E-mail address</h6>
+															<ul>
+																<li><strong>Email 1 : </strong>{{ member.email1 }}</li>
+																{% if member.email2 %}
+																<li><strong>Email 2 : </strong>{{ member.email2 }}</li>
+																{% endif %}
+															</ul>
+														</div>
+													</div>
+													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
+														<div class="lh-team-detail">
+															<h6>Contact number</h6>
+															<ul>
+																<li><strong>Phone Nubmer 1 : </strong>{{ member.phone1 }}
+																</li>
+																{% if member.phone2 %}
+																<li><strong>Phone Nubmer 2 : </strong>{{ member.phone2 }}
+																</li>
+																{% endif %}
+															</ul>
+														</div>
+													</div>
+													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
+														<div class="lh-team-detail">
+															<h6>Address</h6>
+															<ul>
+																<li>{{ member.address1 }}</li>
+															</ul>
+														</div>
+													</div>
+													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
+														<div class="lh-team-detail">
+															<h6>Address 2</h6>
+															<ul>
+																{% if member.address2 %}
+																<li>{{ member.address2 }}</li>
+																{% endif %}
+															</ul>
+														</div>
+													</div>
+													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
+														<div class="lh-team-detail">
+															<h6>Bank Accounts</h6>
+															<ul>
+																<li><strong>Account Name : </strong>{{ member.account_name }}</li>
+																<li><strong>Account Nubmer : </strong>{{ member.account_number }}
+																</li>
+																<li><strong>IFSC Code : </strong>{{ member.ifsc_code }}</li>
+																<li><strong>Bank name : </strong>{{ member.bank_name }}</li>
+															</ul>
+														</div>
+													</div>
+													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
+														<div class="lh-team-detail">
+															<h6>Social media</h6>
+															<ul>
+																{% if member.facebook %}	
+																<li><strong><i class="ri-facebook-line"></i> </strong><a
+																		href="#">{{ member.facebook }}</a>
+																</li>
+																{% endif %}
+																{% if member.twitter %}
+																<li><strong><i class="ri-twitter-line"></i> </strong><a
+																		href="#">{{ member.twitter }}</a>
+																</li>
+																{% endif %}
+																{% if member.linkedin %}
+																<li><strong><i class="ri-linkedin-line"></i> </strong><a
+																		href="#">{{ member.linkedin }}</a>
+																</li>
+																{% endif %}
+																{% if member.github %}
+																<li><strong><i class="ri-github-line"></i> </strong><a
+																		href="#">{{ member.github }}</a></li>
+																{% endif %}
+															</ul>
+														</div>
+													</div>
+													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
+														<div class="lh-team-detail">
+															<h6>Aadhar Information</h6>
+															<ul>
+																{% if member.aadhar_no %}
+																<li><strong>Aadhar No : </strong>{{ member.aadhar_no }}</li>
+																{% endif %}
+																{% if member.aadhar_file %}
+																<li><strong>Aadhar Uploaded File: </strong>
+																	<a href="{% url 'admin-panel:view_document' 'aadhar' member.id %}" target="_blank" class="document-link">
+																		<i class="ri-file-text-line"></i> View Aadhar
+																	</a>
+																</li>
+																{% endif %}
+															</ul>
+														</div>
+													</div>
+													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
+														<div class="lh-team-detail">
+															<h6>PAN Information</h6>
+															<ul>
+																{% if member.pan_no %}		
+																<li><strong>PAN NO : </strong>{{ member.pan_no }}</li>
+																{% endif %}
+																{% if member.pan_file %}
+																<li><strong>PAN File: </strong>
+																	<a href="{% url 'admin-panel:view_document' 'pan' member.id %}" target="_blank" class="document-link">
+																		<i class="ri-file-text-line"></i> View PAN
+																	</a>
+																</li>
+																{% endif %}
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									{% endfor %}
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+	
+
+	
+
+
+		<div class="modal fade delete-modal" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<form id="deleteForm" method="POST">
+						{% csrf_token %}
+						<div class="modal-body text-center">
+							<div class="delete-icon">
+								<i class="ri-error-warning-line"></i>
+							</div>
+							<h4>Are you sure?</h4>
+							<p>Do you really want to delete this record? This process cannot be undone.</p>
+							<div class="button-row">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-danger">Delete</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</main>
+	{% endblock %}
+	
+	{% block script %}
+
+	<!-- Vendor Custom -->
+	<script src="{% static 'assets/js/vendor/jquery-3.6.4.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/simplebar.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/apexcharts.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/jquery-jvectormap-1.2.2.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/jquery-jvectormap-world-mill-en.js' %}"></script>
+	<!-- Data Tables -->
+	<script src="{% static 'assets/js/vendor/jquery.datatables.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/datatables.bootstrap5.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/datatables.responsive.min.js' %}"></script>
+	<!-- Caleddar -->
+	<script src="{% static 'assets/js/vendor/jquery.simple-calendar.js' %}"></script>
+	<!-- Date Range Picker -->
+	<script src="{% static 'assets/js/vendor/moment.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/daterangepicker.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/date-range.js' %}"></script>
+
+	<!-- Main Custom -->
+	<script src="{% static 'assets/js/main.js' %}"></script>
+	<script>
+		// Set the action for the delete form when the modal is shown
+		var deleteModal = document.getElementById('deleteConfirmModal');
+		deleteModal.addEventListener('show.bs.modal', function (event) {
+			var button = event.relatedTarget; // Button that triggered the modal
+			var memberId = button.getAttribute('data-member-id'); // Extract info from data-* attributes
+			var form = document.getElementById('deleteForm');
+			form.action = `/admin/team-delete/${memberId}/`; // Set the form action directly
+		});
+	</script>
+
+	<!-- Add this just before the closing </body> tag -->
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		var form = document.getElementById('teamAddForm');
+		form.addEventListener('submit', function(e) {
+			e.preventDefault();  // Prevent the default form submission
+			console.log('Form submission attempted');
+			
+			// Log form data
+			var formData = new FormData(form);
+			for (var pair of formData.entries()) {
+				console.log(pair[0] + ': ' + pair[1]);
+			}
+	
+			// Submit the form
+			form.submit();
+		});
+	});
+</script>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		// Get all tab triggers
+		const tabTriggers = document.querySelectorAll('.nav-link[data-bs-toggle="tab"]');
+		
+		tabTriggers.forEach(trigger => {
+			trigger.addEventListener('click', function(e) {
+				e.preventDefault();
+				
+				// Remove active class from all triggers
+				tabTriggers.forEach(t => {
+					t.classList.remove('active');
+					t.setAttribute('aria-selected', 'false');
+				});
+				
+				// Add active class to clicked trigger
+				this.classList.add('active');
+				this.setAttribute('aria-selected', 'true');
+				
+				// Show corresponding content
+				const targetId = this.getAttribute('data-bs-target');
+				const tabPanes = document.querySelectorAll('.tab-pane');
+				
+				tabPanes.forEach(pane => {
+					pane.classList.remove('show', 'active');
+				});
+				
+				document.querySelector(targetId).classList.add('show', 'active');
+			});
+		});
+	});
+	</script>
+
+<script>
+	function searchMembers() {
+		const input = document.getElementById('searchInput');
+		if (!input) {
+			console.error('Search input element not found');
+			return;
+		}
+		const filter = input.value.toLowerCase();
+		const teamList = document.querySelector('.nav.nav-tabs');
+		if (!teamList) {
+			console.error('Team list element not found');
+			return;
+		}
+		const members = teamList.querySelectorAll('li.nav-item');
+	
+		members.forEach(member => {
+			const memberName = member.querySelector('.form-group span').textContent.toLowerCase();
+			if (memberName.includes(filter)) {
+				member.style.display = "";
+			} else {
+				member.style.display = "none";
+			}
+		});
+	}
+	
+	document.addEventListener('DOMContentLoaded', function() {
+		const searchInput = document.getElementById('searchInput');
+		if (searchInput) {
+			searchInput.addEventListener('input', searchMembers);
+		}
+	});
+	</script>
+{% endblock %}
+
+

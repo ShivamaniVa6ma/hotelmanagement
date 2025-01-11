@@ -1,0 +1,312 @@
+/* Color-9 */
+.ld-blog-replic .ld-blog-replic-inner .ld-blog-replic-contain .ld-blog-star i {
+  color: #f32078;
+}
+
+::-moz-selection {
+  color: #f32078;
+  background: rgba(237, 90, 49, 0.15);
+}
+
+::selection {
+  color: #f32078;
+  background: rgba(237, 90, 49, 0.15);
+}
+
+.checkout-page [type=radio]:checked + label:before {
+  border: 1px solid #f32078;
+}
+.checkout-page [type=radio]:checked + label:after {
+  background: #f32078;
+}
+
+.lh-aboutpage-call i {
+  color: #f32078;
+}
+
+.lh-our-blog .lh-our-blog-categories ul li a:hover span, .lh-our-blog .lh-our-blog-categories ul li p:hover span {
+  color: #f32078;
+}
+
+.lh-blog-relaxation .lh-blog-relaxation-tages span:hover {
+  background-color: #f32078;
+}
+
+.lh-our-blog-tages-inner ul.lh-our-blog-tages-inner-element li a:hover {
+  background-color: #f32078;
+}
+
+.lh-side-cart .lh-menu-title .menu-title {
+  color: #f32078;
+}
+
+.lh-services .lh-services-contain .lh-icon {
+  border-color: #f32078;
+}
+.lh-services .lh-services-contain .lh-icon i.fi {
+  color: #f32078;
+}
+
+.lh-amenities-in .lh-top-dish svg path, .lh-amenities-in .lh-top-dish svg circle {
+  fill: #f32078;
+}
+
+.lh-blog-details .lh-blog-details-quote .lh-blog-details-quote-image svg path {
+  fill: #f32078;
+}
+
+.ld-restaurant-menu .ld-restaurant-menu-contain h4 span {
+  color: #f32078;
+}
+
+.nav-tabs.rooms .nav-link.active:after {
+  color: #f32078;
+  border-color: #f32078;
+}
+
+.testimonials.svg-img {
+  opacity: 0.4;
+}
+.testimonials.svg-img path {
+  fill: #f32078;
+}
+
+.prev-slick-img:after, .next-slick-img:after {
+  border: 1px solid #f32078;
+}
+
+.lh-hero .main-slider-dot .swiper-pagination-bullet {
+  border-color: #f32078;
+}
+.lh-hero .main-slider-dot .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background-color: #f32078;
+}
+.lh-hero .lh-main-content .lh-slider-content .lh-main-slider .lh-main-slider .lh-slide-content p {
+  color: #f32078;
+}
+
+.lh-hero-contain h1 span {
+  color: #f32078;
+}
+
+.nav-tabs .nav-link.active:after {
+  color: #f32078;
+  border-color: #f32078;
+}
+
+.lh-services .lh-services-contain .lh-icon svg path {
+  fill: #f32078;
+}
+
+.lh-blog .lh-blog-date span code {
+  color: #f32078;
+}
+
+.select-options li:hover {
+  background: rgba(253, 133, 102, 0.1);
+}
+
+footer .footer-top-section ul li code {
+  color: #f32078;
+}
+
+.lh-our-blog .lh-our-blog-image .lh-our-blog-date h4 {
+  color: #f32078;
+}
+.lh-our-blog .lh-our-blog-categories ul li code {
+  color: #f32078;
+}
+
+.lh-contact .lh-contact-detalis .lh-contact-detalis-buttons a, .lh-contact .lh-contact-detalis .lh-contact-detalis-buttons .main {
+  color: #f32078;
+}
+.lh-contact .lh-contact-image svg path {
+  fill: #f32078;
+}
+
+.ld-faq .accordion .accordion-item .accordion-button:not(.collapsed):after {
+  color: #f32078;
+}
+
+.lh-hero-contain h4::after {
+  border: 1px solid #f32078;
+}
+.lh-hero-contain h4::before {
+  border: 1px solid #f32078;
+}
+.lh-hero-contain h2 span {
+  color: #f32078;
+}
+.lh-hero-contain h2 span::after {
+  background: #f32078;
+}
+
+.serch-box i {
+  color: #f32078;
+}
+
+.lh-prices .lh-prices-out {
+  padding: 0 30px;
+}
+.lh-prices .lh-prices-out .lh-prices-in h4.lh-price-dollar {
+  color: #f32078;
+}
+
+.lh-menu-restaurant .nav-link.active {
+  border: 1px solid #f32078 !important;
+}
+
+.lh-book-tale-box i {
+  color: #f32078;
+}
+
+.lh-tab-container .nav-tabs .nav-link:after {
+  background: #f32078;
+}
+.lh-tab-container .nav-tabs .nav-link.active {
+  color: #f32078 !important;
+}
+.lh-tab-container .nav-tabs .nav-link.active:after {
+  background: #f32078;
+}
+
+.lh-room-details .lh-room-details-amenities .lh-cols-room ul li code {
+  color: #f32078;
+}
+.lh-room-details .lh-room-details-rules .lh-cols-room ul li code {
+  color: #f32078;
+}
+.lh-room-details .lh-room-details-review .lh-room-review-form .lh-review-form-rating i {
+  color: #f32078;
+}
+
+.lh-side-room .lh-side-reservation .lh-side-reservation-from i.ri-calendar-line {
+  color: #f32078;
+}
+.lh-side-room .lh-side-reservation .lh-side-reservation-from .form-check input:checked {
+  background-color: #f32078;
+  border-color: #f32078;
+}
+
+.nav-tabs .nav-link.active .lh-room .lh-room-iamge img {
+  border: 1px solid #f32078;
+}
+
+.lh-room-contain .lh-room-price h4 {
+  color: #f32078;
+}
+.lh-room-contain .lh-main-features .lh-room-features .lh-cols-room ul li::marker {
+  color: #f32078;
+}
+
+.lh-spa-booking .lh-spa-contain span i {
+  color: #f32078;
+}
+
+.lh-team .lh-team-image .lh-team-inner a i:hover {
+  color: #f32078;
+}
+.lh-team:hover .lh-team-image {
+  border: 1px solid #f32078;
+}
+.lh-team:hover .lh-team-contain i {
+  color: #f32078;
+}
+
+.testimonials_image_1::after {
+  border: 1px solid #f32078;
+}
+
+.lh-buttons-bg:hover {
+  background: #f32078;
+  border: 1px solid #f32078;
+}
+
+.lh-buttons-invers {
+  color: #f32078;
+  border: 1px solid #f32078;
+}
+.lh-buttons-invers:hover {
+  color: #fff;
+  background-color: #f32078;
+  border: 1px solid #f32078;
+}
+
+.lh-buttons {
+  background: #f32078;
+  border: 1px solid #f32078;
+}
+.lh-buttons:hover {
+  color: #f32078;
+  border: 1px solid #f32078;
+}
+
+.banner h2 span {
+  color: #f32078;
+}
+.banner h2 span::after {
+  background: #f32078;
+}
+
+a.back-to-top {
+  background: #f32078;
+}
+
+.lh-top-social .lh-mail i {
+  color: #f32078;
+}
+.lh-top-social .lh-location i {
+  color: #f32078;
+}
+.lh-top-social .lh-location i {
+  color: #f32078;
+}
+.lh-top-social .lh-phone i {
+  color: #f32078;
+}
+
+ul.navbar-nav li.nav-item a.nav-link:hover {
+  color: #f32078;
+}
+ul.navbar-nav li.nav-item a.nav-link:hover::before {
+  background: #f32078;
+}
+ul.navbar-nav li.nav-item a.nav-link::before {
+  background: #f32078;
+}
+ul.navbar-nav .dropdown .dropdown-menu li a:hover {
+  color: #f32078;
+}
+
+footer .footer-top-section .lh-social-media .lh-footer-social .lh-control-footer .lh-control-inner-icons {
+  background-color: #f32078;
+}
+footer .footer-bottom-copy span a {
+  text-decoration: none;
+  color: #f32078;
+}
+
+.rooms-slider .slick-dots li.slick-active {
+  background-color: #f32078;
+}
+.rooms-slider .slick-dots li {
+  border-color: #f32078;
+}
+
+.dark-bg .lh-services .lh-services-contain .lh-icon svg path {
+  fill: #f32078;
+}
+
+.lh-buttons-2:hover {
+  background: #f32078;
+  border-color: #f32078;
+}
+
+.auth-card:after {
+  background: #f32078;
+}
+
+.lh-form .lh-signup-buttons a:hover {
+  color: #f32078;
+}
+/*# sourceMappingURL=color-9.css.map */

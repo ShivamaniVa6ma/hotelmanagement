@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hotel Booking Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        .room-card {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0ff;
+            transition: all 0.3s ease;
+        }
+        .room-type-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .room-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .price-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .remove-btn {
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1.2rem;
+            position: absolute; 
+            right: 15px;
+            top: 15px;
+        }
+        .form-select-room {
+            width: 100%;
+            padding: 10px;
+        }
+        @media (min-width: 768px) {
+            .form-select-room {
+                width: 22%;
+            }
+        }
+        .alert-danger {
+            color: red;
+            background-color: #f8d7da; /* Light red background */
+            border-color: #f5c6cb; /* Darker red border */
+        }
+    </style>
+</head>
+
+<div class="container my-5">
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger" style="color: red;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+
+    <h2 class="mb-4">Hotel Booking Form</h2>
+    <form method="post" enctype="multipart/form-data" action="{% url 'admin-panel:multiple_bookings_create' %}" id="bookingForm">
+        {% csrf_token %}
+        
+        <div class="row g-3">
+            <!-- Date Selection -->
+            <div class="col-md-6">
+                <label for="{{ booking_form.check_in.id_for_label }}" class="form-label">Check-in Date & Time</label>
+                <input type="datetime-local" 
+                       name="{{ booking_form.check_in.name }}" 
+                       id="{{ booking_form.check_in.id_for_label }}" 
+                       class="form-control {% if booking_form.check_in.errors %}is-invalid{% endif %}"
+                       value="{{ booking_form.check_in.value|default:'' }}"
+                       required>
+                {% if booking_form.check_in.errors %}
+                    <div class="invalid-feedback">{{ booking_form.check_in.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label for="{{ booking_form.check_out.id_for_label }}" class="form-label">Check-out Date & Time</label>
+                <input type="datetime-local" 
+                       name="{{ booking_form.check_out.name }}" 
+                       id="{{ booking_form.check_out.id_for_label }}" 
+                       class="form-control {% if booking_form.check_out.errors %}is-invalid{% endif %}"
+                       value="{{ booking_form.check_out.value|default:'' }}"
+                       required>
+                {% if booking_form.check_out.errors %}
+                    <div class="invalid-feedback">{{ booking_form.check_out.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Room Selection -->
+            <div class="col-12">
+                <h4>Room Selection</h4>
+                <div class="dropdown mb-3">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="roomTypeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Choose Room Type
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="roomTypeDropdown">
+                        <li><a class="dropdown-item" href="#" data-value="standard">Standard</a></li>
+                        <li><a class="dropdown-item" href="#" data-value="deluxe">Deluxe</a></li>
+                        <li><a class="dropdown-item" href="#" data-value="vip">VIP</a></li>
+                        <li><a class="dropdown-item" href="#" data-value="conference">Conference</a></li>
+                    </ul>
+                </div>
+                <div id="selectedRooms"></div>
+            </div>
+
+            <!-- Guest Information -->
+            <div class="col-md-6">
+                <label for="{{ guest_form.name.id_for_label }}" class="form-label">Name</label>
+                <input type="text" 
+                       name="{{ guest_form.name.name }}" 
+                       id="{{ guest_form.name.id_for_label }}" 
+                       class="form-control {% if guest_form.name.errors %}is-invalid{% endif %}"
+                       value="{{ guest_form.name.value|default:'' }}"
+                       required>
+                {% if guest_form.name.errors %}
+                    <div class="invalid-feedback">{{ guest_form.name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-6">
+                <label for="{{ guest_form.phone.id_for_label }}" class="form-label">Phone Number</label>
+                <input type="tel" 
+                       name="{{ guest_form.phone.name }}" 
+                       id="{{ guest_form.phone.id_for_label }}" 
+                       class="form-control {% if guest_form.phone.errors %}is-invalid{% endif %}"
+                       value="{{ guest_form.phone.value|default:'' }}"
+                       required>
+                {% if guest_form.phone.errors %}
+                    <div class="invalid-feedback">{{ guest_form.phone.errors }}</div>
+                {% endif %}
+            </div> 
+
+            <div class="col-md-6">
+                <label for="{{ guest_form.email.id_for_label }}" class="form-label">Email</label>
+                <input type="email" 
+                       name="{{ guest_form.email.name }}" 
+                       id="{{ guest_form.email.id_for_label }}" 
+                       class="form-control {% if guest_form.email.errors %}is-invalid{% endif %}"
+                       value="{{ guest_form.email.value|default:'' }}"
+                       required>
+                {% if guest_form.email.errors %}
+                    <div class="invalid-feedback">{{ guest_form.email.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-6">
+                <label for="{{ guest_form.address.id_for_label }}" class="form-label">Address</label>
+                <textarea name="{{ guest_form.address.name }}" 
+                          id="{{ guest_form.address.id_for_label }}" 
+                          class="form-control {% if guest_form.address.errors %}is-invalid{% endif %}" 
+                          rows="3"
+                          required>{{ guest_form.address.value|default:'' }}</textarea>
+                {% if guest_form.address.errors %}
+                    <div class="invalid-feedback">{{ guest_form.address.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Guest Count -->
+            <div class="col-md-6">
+                <label for="{{ booking_form.adults.id_for_label }}" class="form-label">Adults</label>
+                <input type="number" 
+                       name="{{ booking_form.adults.name }}" 
+                       id="{{ booking_form.adults.id_for_label }}" 
+                       class="form-control {% if booking_form.adults.errors %}is-invalid{% endif %}"
+                       value="{{ booking_form.adults.value|default:'1' }}"
+                       min="1"
+                       required>
+                {% if booking_form.adults.errors %}
+                    <div class="invalid-feedback">{{ booking_form.adults.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-6">
+                <label for="{{ booking_form.children.id_for_label }}" class="form-label">Children</label>
+                <input type="number" 
+                       name="{{ booking_form.children.name }}" 
+                       id="{{ booking_form.children.id_for_label }}" 
+                       class="form-control {% if booking_form.children.errors %}is-invalid{% endif %}"
+                       value="{{ booking_form.children.value|default:'0' }}"
+                       min="0">
+                {% if booking_form.children.errors %}
+                    <div class="invalid-feedback">{{ booking_form.children.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- ID Proof -->
+            <div class="col-12">
+                <h4>ID Proof</h4>
+                <div class="mb-3">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="idProof" id="aadharRadio" value="aadhar" required>
+                        <label class="form-check-label" for="aadharRadio">Aadhar Card</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="idProof" id="panRadio" value="pan">
+                        <label class="form-check-label" for="panRadio">PAN Card</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="idProof" id="passportRadio" value="passport">
+                        <label class="form-check-label" for="passportRadio">Passport</label>
+                    </div>
+                </div>
+                <div id="idProofDetails" class="mb-3" style="display: none;">
+                    <label for="proofNumber" class="form-label">Proof Number</label>
+                    <input type="text"   class="form-control" required>
+                </div>
+            </div>
+
+            <!-- File Upload and Payment -->
+            <div class="col-md-6">
+                <label for="{{ guest_form.proof_file.id_for_label }}" class="form-label">Upload ID Proof</label>
+                <input type="file" 
+                       name="{{ guest_form.proof_file.name }}" 
+                       id="{{ guest_form.proof_file.id_for_label }}" 
+                       class="form-control {% if guest_form.proof_file.errors %}is-invalid{% endif %}"
+                       accept=".jpg,.jpeg,.png,.pdf"
+                       required>
+                {% if guest_form.proof_file.errors %}
+                    <div class="invalid-feedback">{{ guest_form.proof_file.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-6">
+                <label for="{{ booking_form.payment_type.id_for_label }}" class="form-label">Payment Type</label>
+                <select name="payment_type" id="payment_type" class="form-control" required>
+                    <option value="">Choose Payment Type Type</option>
+                    <option value="cash" {% if payment_type == 'cash' %}selected{% endif %}>Cash</option>
+                    <option value="card" {% if payment_type == 'card' %}selected{% endif %}>card</option>
+                    <option value="upi" {% if payment_type == 'upi' %}selected{% endif %}>UPI</option>
+                    <option value="net_banking" {% if payment_type == 'net_banking' %}selected{% endif %}>Net Banking</option>
+                </select>
+                {% if booking_form.payment_type.errors %}
+                    <div class="invalid-feedback">{{ booking_form.payment_type.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Total Amount -->
+            <div class="col-12">
+                <hr>
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="mb-0">Total Amount:</p>
+                    <h5 id="totalAmount" class="text-success mb-0">0/-</h5>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="col-12 text-center mt-4">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check-circle me-2"></i>Confirm Booking
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const roomTypes = {
+        standard: { title: 'Standard', 
+            types: {
+                single_ac: { title: 'Single Bed AC', price: 1200, available: 50 },
+                single_non_ac: { title: 'Single Bed Non-AC', price: 1000, available: 50 },
+                double_ac: { title: 'Double Bed AC', price: 1800, available: 30 },
+                double_non_ac: { title: 'Double Bed Non-AC', price: 1500, available: 30 }
+            }
+        },
+        deluxe: { title: 'Deluxe', 
+            types: {
+                single_ac: { title: 'Single Bed AC', price: 1800, available: 50 },
+                single_non_ac: { title: 'Single Bed Non-AC', price: 1500, available: 50 },
+                double_ac: { title: 'Double Bed AC', price: 2000, available: 30 },
+                double_non_ac: { title: 'Double Bed Non-AC', price: 1800, available: 30 }
+            }
+        },
+        vip: { title: 'VIP', 
+            types: {
+                single_ac: { title: 'Single Bed AC', price: 2500, available: 50 },
+                single_non_ac: { title: 'Single Bed Non-AC', price: 2000, available: 50 },
+                double_ac: { title: 'Double Bed AC', price: 3000, available: 30 },
+                double_non_ac: { title: 'Double Bed Non-AC', price: 2500, available: 30 }
+            }
+        },
+        conference: { title: 'Conference', 
+            types: {
+                seating_capacity_1_10_ac: { title: 'Up to 10 (AC)', price: 2000, available: 10 },
+                seating_capacity_1_10_non_ac: { title: 'Up to 10 (Non-AC)', price: 1800, available: 10 },
+                seating_capacity_11_25_ac: { title: 'Up to 25 (AC)', price: 3000, available: 10 },
+                seating_capacity_11_25_non_ac: { title: 'Up to 25 (Non-AC)', price: 2800, available: 10 },
+                seating_capacity_26_50_ac: { title: 'Up to 50 (AC)', price: 4000, available: 10 },
+                seating_capacity_26_50_non_ac: { title: 'Up to 50 (Non-AC)', price: 3800, available: 10 },
+                seating_capacity_51_100_ac: { title: 'Up to 100 (AC)', price: 5000, available: 10 },
+                seating_capacity_51_100_non_ac: { title: 'Up to 100 (Non-AC)', price: 4800, available: 10 }
+            }
+        }
+    };
+
+    let roomCounter = 0;
+
+    function createRoomCard(roomType) {
+        const room = roomTypes[roomType]; // Ensure roomType matches the keys in roomTypes
+        if (!room) {
+            console.error(`Room type ${roomType} not found`);
+            return ''; // Return empty if room type is not found
+        }
+        const uniqueId = `${roomType}_${roomCounter++}`;
+        
+        return `
+            <div class="room-card" id="${uniqueId}">
+                <span class="remove-btn" onclick="removeRoom('${uniqueId}')">&times;</span>
+                <h5 class="mb-3">${room.title}</h5>
+                ${roomType !== 'conference' ? `
+                    <div class="mb-3">
+                        <label class="form-label">Bed Type</label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="bedType_${uniqueId}" id="single_${uniqueId}" value="single" required>
+                                <label class="form-check-label" for="single_${uniqueId}">Single Bed</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="bedType_${uniqueId}" id="double_${uniqueId}" value="double">
+                                <label class="form-check-label" for="double_${uniqueId}">Double Bed</label>
+                            </div>
+                        </div>
+                    </div>
+                ` : `
+                    <div class="mb-3">
+                        <label class="form-label">Sitting Capacity</label>
+                        <select class="form-select" name="sittingCapacity_${uniqueId}" required>
+                            <option value="seating_capacity_1_10_ac">Up to 10 (AC)</option>
+                            <option value="seating_capacity_1_10_non_ac">Up to 10 (Non-AC)</option>
+                            <option value="seating_capacity_11_25_ac">Up to 25 (AC)</option>
+                            <option value="seating_capacity_11_25_non_ac">Up to 25 (Non-AC)</option>
+                            <option value="seating_capacity_26_50_ac">Up to 50 (AC)</option>
+                            <option value="seating_capacity_26_50_non_ac">Up to 50 (Non-AC)</option>
+                            <option value="seating_capacity_51_100_ac">Up to 100 (AC)</option>
+                            <option value="seating_capacity_51_100_non_ac">Up to 100 (Non-AC)</option>
+                        </select>
+                    </div>
+                `}
+                <div class="mb-3">
+                    <label class="form-label">AC Preference</label>
+                    <div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="acType_${uniqueId}" id="ac_${uniqueId}" value="ac" required>
+                            <label class="form-check-label" for="ac_${uniqueId}">AC</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="acType_${uniqueId}" id="nonAc_${uniqueId}" value="non-ac">
+                            <label class="form-check-label" for="nonAc_${uniqueId}">Non-AC</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="room-details">
+                    <div class="price-text">Room Price: ${room.price}/-</div>
+                    <div>Available Rooms: ${room.available}</div>
+                    <div class="mb-3">
+                        <label class="form-label">Number of Rooms:</label>
+                        <input type="number" class="form-control" name="roomCount_${uniqueId}" min="1" max="${room.available}" value="1" required>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    function removeRoom(roomId) {
+        document.getElementById(roomId).remove();
+        updateTotalAmount();
+    }
+
+    function handleRoomSelection(e) {
+        e.preventDefault();
+        const selectedValue = this.getAttribute('data-value');
+        const selectedRoomsContainer = document.getElementById('selectedRooms');
+        
+        // Ensure the selectedValue corresponds to the correct room type
+        const roomType = roomTypes[selectedValue] ? selectedValue : null;
+        
+        if (roomType) {
+            const newRoomCard = createRoomCard(roomType);
+            selectedRoomsContainer.insertAdjacentHTML('beforeend', newRoomCard);
+            updateTotalAmount();
+        } else {
+            console.error(`Invalid room type selected: ${selectedValue}`);
+        }
+    }
+
+    function updateTotalAmount() {
+        let total = 0;
+        document.querySelectorAll('.room-card').forEach(card => {
+            const roomType = card.id.split('_')[0];
+            const roomCount = parseInt(card.querySelector('input[type="number"]').value);
+            total += roomTypes[roomType].price * roomCount;
+        });
+        document.getElementById('totalAmount').textContent = `${total}/-`;
+    }
+
+    // Form submission
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Here you would typically send the form data to your server
+        console.log('Form submitted');
+        // You can add your form submission logic here
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // ID Proof handling
+        const idProofRadios = document.querySelectorAll('input[name="idProof"]');
+        const idProofDetails = document.getElementById('idProofDetails');
+        const proofNumberInput = document.querySelector('input[name="proofNumber"]');
+
+        if (idProofRadios.length && idProofDetails) {
+            idProofRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    idProofDetails.style.display = 'block';
+                    
+                    // Update input pattern and maxlength based on selected proof type
+                    switch(this.value) {
+                        case 'aadhar':
+                            proofNumberInput.pattern = '[0-9]{12}';
+                            proofNumberInput.maxLength = 12;
+                            proofNumberInput.placeholder = 'Enter 12 digit Aadhar number';
+                            break;
+                        case 'pan':
+                            proofNumberInput.pattern = '[A-Z]{5}[0-9]{4}[A-Z]{1}';
+                            proofNumberInput.maxLength = 10;
+                            proofNumberInput.placeholder = 'Enter 10 character PAN number';
+                            break;
+                        case 'passport':
+                            proofNumberInput.pattern = '[A-Z]{1}[0-9]{7}';
+                            proofNumberInput.maxLength = 8;
+                            proofNumberInput.placeholder = 'Enter Passport number';
+                            break;
+                    }
+                });
+            });
+        }
+
+        // Initialize room selection handlers
+        const selectedRoomsContainer = document.getElementById('selectedRooms');
+        if (selectedRoomsContainer) {
+            selectedRoomsContainer.addEventListener('change', function(e) {
+                if (e.target.type === 'number') {
+                    updateTotalAmount();
+                }
+            });
+        }
+
+        // Initialize dropdown handlers
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.removeEventListener('click', handleRoomSelection);
+            item.addEventListener('click', handleRoomSelection);
+        });
+    });
+
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Gather selected rooms data
+        let selectedRooms = [];
+        document.querySelectorAll('.room-card').forEach(card => {
+            const roomType = card.id.split('_')[0];
+            const bedType = card.querySelector('input[name^="bedType"]:checked')?.value;
+            const acType = card.querySelector('input[name^="acType"]:checked')?.value;
+            const roomCount = parseInt(card.querySelector('input[type="number"]').value);
+            
+            selectedRooms.push({
+                roomType: roomType,
+                bedType: bedType,
+                acType: acType,
+                roomCount: roomCount
+            });
+        });
+        
+        // Add selected rooms data to form
+        const selectedRoomsInput = document.createElement('input');
+        selectedRoomsInput.type = 'hidden';
+        selectedRoomsInput.name = 'selectedRooms';
+        selectedRoomsInput.value = JSON.stringify(selectedRooms);
+        this.appendChild(selectedRoomsInput);
+        
+        // Submit the form
+        this.submit();
+    });
+</script>
+
+
+</body>
+</html>
+

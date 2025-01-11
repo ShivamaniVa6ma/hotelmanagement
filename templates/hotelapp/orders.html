@@ -1,0 +1,317 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+
+		<!-- main content -->
+		<div class="lh-main-content">
+			<div class="container-fluid">
+				<!-- Page title & breadcrumb -->
+				<div class="lh-page-title">
+					<div class="lh-breadcrumb">
+						<h5>Restaurant Orders</h5>
+						<ul>
+							<li><a href="{% url 'admin-panel:index' %}">Home</a></li>
+							<li>Restaurant Orders</li>
+						</ul>
+					</div>
+					<div class="lh-tools">
+						<a href="javascript:void(0)" title="Refresh" class="refresh"><i class="ri-refresh-line"></i></a>
+						<div id="pagedate">
+							<div class="lh-date-range" title="Date">
+								<span></span>
+							</div>
+						</div>
+						<div class="filter">
+							<div class="dropdown" title="Filter">
+								<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+									data-bs-toggle="dropdown" aria-expanded="false">
+									<i class="ri-sound-module-line"></i>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+									<li><a class="dropdown-item" href="#">Booking</a></li>
+									<li><a class="dropdown-item" href="#">Revenue</a></li>
+									<li><a class="dropdown-item" href="#">Expence</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="section-title">
+					<h4>Junior Suites Hall</h4>
+				</div>
+				<div class="row">
+					<div class="col-xl-3 col-md-6">
+						<div class="lh-card booked room-card" id="bookingtbl">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Table : 01</h4>
+								<div class="header-tools">
+									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
+										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="mdi mdi-dots-vertical"></i>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
+											<li><a class="dropdown-item" href="#">History</a></li>
+											<li><a class="dropdown-item" href="#">Details</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="lh-card-content card-default">
+								<div class="lh-room-details">
+									<ul class="list">
+										<li>Date : 15/05/23</li>
+										<li>Time : 9:30pm</li>
+										<li>Person : 4</li>
+										<li>Recipe 1 : Stuffed Bell Peppers</li>
+										<li>Recipe 2 :</li>
+										<li>Recipe 3 :</li>
+										<li>Recipe 4 :</li>
+										<li>Drinks : Fruit Beer</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-md-6">
+						<div class="lh-card room-card" id="bookingtbl">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Table : 02</h4>
+								<div class="header-tools">
+									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
+										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="mdi mdi-dots-vertical"></i>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
+											<li><a class="dropdown-item" href="#">History</a></li>
+											<li><a class="dropdown-item" href="#">Details</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="lh-card-content card-default">
+								<div class="lh-room-details">
+									<ul class="list">
+										<li>Date : 16/05/23</li>
+										<li>Time : 8:00pm</li>
+										<li>Person : 4</li>
+										<li>Recipe 1 : Roasted Vegetables</li>
+										<li>Recipe 2 : Grilled panini</li>
+										<li>Recipe 3 :</li>
+										<li>Recipe 4 :</li>
+										<li>Drinks : Softdrink</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-md-6">
+						<div class="lh-card room-card" id="bookingtbl">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Table : 03</h4>
+								<div class="header-tools">
+									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
+										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="mdi mdi-dots-vertical"></i>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
+											<li><a class="dropdown-item" href="#">History</a></li>
+											<li><a class="dropdown-item" href="#">Details</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="lh-card-content card-default">
+								<div class="lh-room-details">
+									<ul class="list">
+										<li>Date : 16/05/23</li>
+										<li>Time : 7:30pm</li>
+										<li>Person : 2</li>
+										<li>Recipe 1 : Grilled panini</li>
+										<li>Recipe 2 : Roasted Vegetables</li>
+										<li>Recipe 3 :</li>
+										<li>Recipe 4 :</li>
+										<li>Drinks : Softdrink</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-md-6">
+						<div class="lh-card booked room-card" id="bookingtbl">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Table : 04</h4>
+								<div class="header-tools">
+									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
+										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="mdi mdi-dots-vertical"></i>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
+											<li><a class="dropdown-item" href="#">History</a></li>
+											<li><a class="dropdown-item" href="#">Details</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="lh-card-content card-default">
+								<div class="lh-room-details">
+									<ul class="list">
+										<li>Date : 17/05/23</li>
+										<li>Time : 8:30pm</li>
+										<li>Person : 4</li>
+										<li>Recipe 1 : Grilled panini</li>
+										<li>Recipe 2 : Roasted Vegetables</li>
+										<li>Recipe 3 : Stuffed Bell Peppers</li>
+										<li>Recipe 4 : </li>
+										<li>Drinks : Softdrink</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="section-title">
+					<h4>AC Deluxe Suites Hall</h4>
+				</div>
+				<div class="row">
+					<div class="col-xl-3 col-md-6">
+						<div class="lh-card booked room-card" id="bookingtbl">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Table : 05</h4>
+								<div class="header-tools">
+									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
+										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="mdi mdi-dots-vertical"></i>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
+											<li><a class="dropdown-item" href="#">History</a></li>
+											<li><a class="dropdown-item" href="#">Details</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="lh-card-content card-default">
+								<div class="lh-room-details">
+									<ul class="list">
+										<li>Date : 16/05/23</li>
+										<li>Time : 8:30pm</li>
+										<li>Person : 4</li>
+										<li>Recipe 1 : Stuffed Bell Peppers</li>
+										<li>Recipe 2 : Waffles</li>
+										<li>Recipe 3 :</li>
+										<li>Recipe 4 :</li>
+										<li>Drinks : Softdrink</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-md-6">
+						<div class="lh-card booked room-card" id="bookingtbl">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Table : 06</h4>
+								<div class="header-tools">
+									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
+										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="mdi mdi-dots-vertical"></i>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
+											<li><a class="dropdown-item" href="#">History</a></li>
+											<li><a class="dropdown-item" href="#">Details</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="lh-card-content card-default">
+								<div class="lh-room-details">
+									<ul class="list">
+										<li>Date : 17/05/23</li>
+										<li>Time : 7:30pm</li>
+										<li>Person : 1</li>
+										<li>Recipe 1 : Bell Peppers</li>
+										<li>Recipe 2 :</li>
+										<li>Recipe 3 :</li>
+										<li>Recipe 4 :</li>
+										<li>Drinks : Fruit Beer</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-md-6">
+						<div class="lh-card room-card" id="bookingtbl">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Table : 07</h4>
+								<div class="header-tools">
+									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
+										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="mdi mdi-dots-vertical"></i>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
+											<li><a class="dropdown-item" href="#">History</a></li>
+											<li><a class="dropdown-item" href="#">Details</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="lh-card-content card-default">
+								<div class="lh-room-details">
+									<ul class="list">
+										<li>Date : 17/05/23</li>
+										<li>Time : 9:30pm</li>
+										<li>Person : 3</li>
+										<li>Recipe 1 : Grilled panini</li>
+										<li>Recipe 2 : Roasted Vegetables</li>
+										<li>Recipe 3 :</li>
+										<li>Recipe 4 :</li>
+										<li>Drinks : Fruit Beer</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-md-6">
+						<div class="lh-card booked room-card" id="bookingtbl">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Table : 08</h4>
+								<div class="header-tools">
+									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
+										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="mdi mdi-dots-vertical"></i>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
+											<li><a class="dropdown-item" href="#">History</a></li>
+											<li><a class="dropdown-item" href="#">Details</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="lh-card-content card-default">
+								<div class="lh-room-details">
+									<ul class="list">
+										<li>Date : 18/05/23</li>
+										<li>Time : 8:30pm</li>
+										<li>Person : 1</li>
+										<li>Recipe 1 : Grilled panini</li>
+										<li>Recipe 2 : Roasted Vegetables</li>
+										<li>Recipe 3 : Stuffed Bell Peppers</li>
+										<li>Recipe 4 : </li>
+										<li>Drinks : Softdrink</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+{% endblock %}

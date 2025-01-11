@@ -1,0 +1,106 @@
+{% extends 'hotelbase.html' %}
+{% block content %}
+{% load static %}
+
+<div class="main-content">
+    <!-- Banner -->
+    <section class="section-banner">
+        <div class="row banner-image">
+            <div class="banner-overlay"></div>
+            <div class="banner-section">
+                <div class="lh-banner-contain">
+                    <h2>Gallery</h2>
+                    <div class="lh-breadcrumb">
+                        <h5>
+                            <span class="lh-inner-breadcrumb">
+                                <a href="{% url 'user-panel:index' %}">Home</a>
+                            </span>
+                            <span> / </span>
+                            <span>
+                                <a href="javascript:void(0)">Gallery</a>
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="section-gallery padding-tb-100">
+        <div class="container">
+            <div class="row mb-m-24" data-aos="fade-up" data-aos-duration="1500">
+                <div class="banner">
+                    <h2>Latest <span>Gallery</span></h2>
+                </div>
+                <div class="card-columns">
+                    <figure class="magnific-img">
+                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_1.jpg" title="Mobile App">
+                            <img class="example-image" src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_1.jpg' %}"
+                                alt="portfolio img">
+                        </a>
+                    </figure>
+                    <figure>
+                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_5.jpg" title="Template Project">
+                            <img class="example-image" src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_5.jpg' %}"
+                                alt="portfolio img">
+                        </a>
+                    </figure>
+                    <figure>
+                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_9.jpg"
+                            title="Wordpress Development">
+                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_9.jpg' %}" alt="portfolio img">
+                        </a>
+                    </figure>
+                    <figure>
+                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_2.jpg" title="Magento Project">
+                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_2.jpg' %}" alt="portfolio img">
+                        </a>
+                    </figure>
+                    <figure>
+                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_6.jpg" title="Mobile App">
+                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_6.jpg' %}" alt="portfolio img">
+                        </a>
+                    </figure>
+                    <figure>
+                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_10.jpg" title="Template Project">
+                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_10.jpg' %}" alt="portfolio img">
+                        </a>
+                    </figure>
+                    <figure>
+                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_3.jpg" title="Web Development">
+                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_3.jpg' %}" alt="portfolio img">
+                        </a>
+                    </figure>
+                    <figure>
+                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_7.jpg" title="Shopify Project">
+                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_7.jpg' %}" alt="portfolio img">
+                        </a>
+                    </figure>
+                    <figure>
+                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_11.jpg" title="Prestashop site">
+                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_11.jpg' %}" alt="portfolio img">
+                        </a>
+                    </figure>
+                    <figure>
+                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_4.jpg" title="Python Development">
+                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_4.jpg' %}" alt="portfolio img">
+                        </a>
+                    </figure>
+                    <figure>
+                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_8.jpg" title="HTML Project">
+                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_8.jpg' %}" alt="portfolio img">
+                        </a>
+                    </figure>
+                    <figure>
+                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_12.jpg" title="Web Development">
+                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_12.jpg' %}" alt="portfolio img">
+                        </a>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

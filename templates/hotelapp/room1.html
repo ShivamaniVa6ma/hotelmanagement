@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+    <style>
+        
+            a{
+                text-decoration: none;
+            }
+      
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            box-shadow: 5px 5px 15px #d1d1d1, -5px -5px 15px #ffffff;
+        }
+        .price-card {
+            border: none;
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .room-image {
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .room-image:hover {
+            transform: scale(1.02);
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+            border: none;
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .badge {
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+        h1, h3 {
+            color: #2d3436;
+            font-weight: 600;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<div class="lh-main-content">
+    <div class="container-fluid">
+    
+        <!-- Room Header -->
+        <div class="row mb-4">
+            <div class="col-md-8 col-12">
+                <h1 class="mb-3 display-4">{{ room.get_room_type_display }}</h1>
+                <p class="text-muted mb-3">Room {{ room.room_number }}</p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <span class="badge bg-primary"><i class="fas fa-bed me-2"></i>{{ room.get_bed_type_display }}</span>
+                    <span class="badge bg-success"><i class="fas fa-snowflake me-2"></i>{{ room.get_ac_type_display }}</span>
+                    <span class="badge bg-info"><i class="fas fa-users me-2"></i>Max Occupancy: {{ room.max_occupancy }}</span>
+                </div>
+            </div>
+            <div class="col-md-4 col-12 g-2">
+                <div class="card price-card">
+                    <div class="card-body">
+                        <h5>Pricing Details</h5>
+                        <div class="row">
+                            <div class="col-6">
+                                <small class="text-muted">Base Price</small>
+                                <p class="fw-bold">₹{{ room.base_price }}/night</p>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Weekend</small>
+                                <p class="fw-bold">₹{{ room.weekend_price }}/night</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Room Images -->
+        <div class="row mb-5 g-2">
+            {% for image in room.images.all %}
+                <div class="col-md-4 col-12 mb-3">
+                    <img src="{{ image.image.url }}" 
+                         alt="Room View {{ forloop.counter }}" 
+                         class="img-fluid room-image w-100">
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <p>No images available for this room.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Room Features -->
+        <div class="container">
+            <h3 class="mb-4">Room Features</h3>
+            
+            <div class="row g-3 mb-5">
+                {% for feature in room.features %}
+                {% if feature == 'wifi' %}
+                <div class="col-md-3 col-6">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-wifi text-primary"></i>
+                            </div>
+                            <h6>Wi-Fi</h6>
+                            <small class="text-muted">High-speed internet</small>
+                        </div>
+                    </div>
+                </div>
+                {% elif feature == 'smart_tv' %}
+                <div class="col-md-3 col-6">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-tv text-primary"></i>
+                            </div>
+                            <h6>Smart TV</h6>
+                            <small class="text-muted">HD Entertainment</small>
+                        </div>
+                    </div>
+                </div>
+                {% elif feature == 'coffee_maker' %}
+                <div class="col-md-3 col-6">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-coffee text-primary"></i>
+                            </div>
+                            <h6>Coffee Maker</h6>
+                            <small class="text-muted">In-room coffee</small>
+                        </div>
+                    </div>
+                </div>
+                {% elif feature == 'swimming_pool' %}
+                <div class="col-md-3 col-6">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-swimming-pool text-primary"></i>
+                            </div>
+                            <h6>Swimming Pool</h6>
+                            <small class="text-muted">Access to pool</small>
+                        </div>
+                    </div>
+                </div>
+                {% elif feature == 'bath_tub' %}
+                <div class="col-md-3 col-6">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-shower text-primary"></i>
+                            </div>
+                            <h6>Bath Tub</h6>
+                            <small class="text-muted">Luxury shower experience</small>
+                        </div>
+                    </div>
+                </div>
+                {% elif feature == 'refrigerator' %}
+                <div class="col-md-3 col-6">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-snowflake text-primary"></i>
+                            </div>
+                            <h6>Refrigerator</h6>
+                            <small class="text-muted">Cool comfort</small>
+                        </div>
+                    </div>
+                </div>
+                {% elif feature == 'safe' %}
+                <div class="col-md-3 col-6">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-lock text-primary"></i>
+                            </div>
+                            <h6>Safe</h6>
+                            <small class="text-muted">In-room safe</small>
+                        </div>
+                    </div>
+                </div>
+                {% elif feature == 'room_service' %}
+                <div class="col-md-3 col-6">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-utensils text-primary"></i>
+                            </div>
+                            <h6>Room Service</h6>
+                            <small class="text-muted">24/7 dining</small>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p>No features available for this room.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Room Description -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <h3 class="mb-4">Room Description</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="mb-0">{{ room.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+   
+
+{% endblock %}

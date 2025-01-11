@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Room Booking System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+
+        .booking-container {
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+   
+    border-radius: 15px;
+    /* padding: 30px; */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+        }
+
+        .room-selection-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .room-checkbox {
+            margin-right: 10px;
+        }
+
+        .seat-layout {
+            background-color: #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .seat {
+            width: 40px;
+            height: 35px;
+            margin: 3px;
+            font-size: 12px;
+        }
+
+        .selected-rooms-info {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .seat {
+                width: 40px;
+                height: 30px;
+                font-size: 12px;
+            }
+
+            .seat-row {
+                flex-direction: column;
+            }
+        }
+
+
+        .available {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .bestseller {
+            background-color: rgb(235, 70, 133);
+            /* background-color: rgb(216, 228, 38); */
+            color: white;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .sold {
+            background-color: #aba5a5;
+            color: white;
+            border-radius: 10px;
+            cursor: progress;
+            border: none;
+        }
+
+        .selected {
+            background-color: blue;
+            color: white;
+            border-radius: 10px;
+            border: none;
+        }
+
+        /* Add button styles */
+        .container.mt-4.text-center button {
+            padding: 10px 20px;
+            margin: 5px;
+            margin-bottom: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            /* New styles */
+            font-weight: bold;
+            /* Make text bold */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            /* Add shadow */
+        }
+
+        .container.mt-4.text-center button:hover {
+            transform: scale(1.05);
+            /* New hover effect */
+            background-color: #0056b3;
+            /* Change background on hover */
+            color: white;
+            /* Change text color on hover */
+        }
+
+        /* New styles for room layout headings */
+        .seat-layout h2 {
+            font-size: 1.5rem; /* Adjust the font size as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="booking-container">
+        <h3 class="text-center mb-4">Room Booking System</h3>
+
+        <form method="post" action="{% url 'user-panel:create_booking' %}">
+            {% csrf_token %}
+            <div class="row">
+                <!-- Add Bed Type Selection -->
+
+                <!-- Add Check-in Date and Time -->
+                <div class="col-md-6 mb-2">
+                    <label for="checkIn" class="form-label">Check-in Date and Time</label>
+                    <input type="datetime-local" name="check_in"  id="checkIn" class="form-control">
+                </div>
+                <!-- Add Check-out Date and Time -->
+                <div class="col-md-6 mb-2">
+                    <label for="checkOut" class="form-label">Check-out Date and Time</label>
+                    <input type="datetime-local" name="check_out"  id="checkOut" class="form-control">
+                </div>
+            </div>
+            <!-- Room Selection -->
+            <div class="room-selection-container">
+                <h5>Select Room Types</h5>
+                <div class="row">
+                    <div class="col-md-3 col-6 mb-2">
+                        <div class="form-check">
+                            <input class="form-check-input room-checkbox" type="checkbox" value="standard"
+                                id="standardRoom">
+                            <label class="form-check-label" for="standardRoom">
+                                Standard Room (Rs. 200)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-2">
+                        <div class="form-check">
+                            <input class="form-check-input room-checkbox" type="checkbox" value="deluxe" id="deluxeRoom">
+                            <label class="form-check-label" for="deluxeRoom">
+                                Deluxe Room (Rs. 250)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-2">
+                        <div class="form-check">
+                            <input class="form-check-input room-checkbox" type="checkbox" value="vip" id="vipRoom">
+                            <label class="form-check-label" for="vipRoom">
+                                VIP Room (Rs. 300)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-2 ">
+                        <div class="form-check">
+                            <input class="form-check-input room-checkbox" type="checkbox" value="conference"
+                                id="conferenceRoom">
+                            <label class="form-check-label" for="conferenceRoom">
+                                Conference Room (Rs. 500)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="legend d-flex flex-wrap justify-content-start">
+                <div class="legend-item d-flex align-items-center mb-2 mx-2">
+                    <div class="legend-color"
+                        style="background-color: #4CAF50; width: 20px; height: 20px; margin-right: 5px;border-radius: 5px;">
+                    </div>
+                    <span>Available</span>
+                </div>
+                <div class="legend-item d-flex align-items-center mb-2 mx-2">
+                    <div class="legend-color"
+                        style="background-color:   rgb(235, 70, 133); width: 20px; height: 20px; margin-right: 5px;border-radius: 5px;">
+                    </div>
+                    <span>Bestseller</span>
+                </div>
+                <div class="legend-item d-flex align-items-center mb-2 mx-2">
+                    <div class="legend-color"
+                        style="background-color: #aba5a5; width: 20px; height: 20px; margin-right: 5px;border-radius: 5px;">
+                    </div>
+                    <span>Sold</span>
+                </div>
+                <div class="legend-item d-flex align-items-center mb-2 mx-2">
+                    <div class="legend-color"
+                        style="background-color: blue; width: 20px; height: 20px; margin-right: 5px;border-radius: 5px;">
+                    </div>
+                    <span>Selected</span>
+                </div>
+
+                <!-- <div class="col-md-6 mb-2">
+                    <label class="form-label">Select Bed Type</label>
+                    <div class="form-check " style="display: flex; gap: 35px;">
+                    <div>
+                        <input type="radio" id="singleBed" name="bedType" value="single" class="form-check-input">
+                        <label for="singleBed" class="form-check-label">Single Bed</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="doubleBed" name="bedType" value="double" class="form-check-input">
+                        <label for="doubleBed" class="form-check-label">Double Bed</label>
+                    </div></div>
+                </div> -->
+            </div>
+            <!-- <div class="container mt-4 text-center">
+            <button class="available">Available</button>
+            <button class="bestseller">Bestseller</button>
+            <button class="sold">Sold</button>
+            <button class="selected">Selected</button>
+            </div> -->
+            <!-- Seat Layouts Container -->
+            <div id="seatLayoutsContainer" style="display: flex
+            ;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                "></div>
+            <!-- Add Guest Information Section -->
+            <div class="guest-info-container mb-4">
+                <h5>Guest Information</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <label for="guestName" class="form-label">Guest Name</label>
+                        <input type="text" name="name" value="{{ guest_form.name.value|default:'' }}" id="guestName" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                        <input type="tel" id="phoneNumber" name="phone"  class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" name="email" id="email" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="address" name="address"  class="form-label">Address</label>
+                        <input type="text" id="address" class="form-control">
+                    </div>
+                </div>
+                <h5>Guest Count</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <label for="numberOfAdults" class="form-label">Number Of Adults</label>
+                        <input type="number" name="adults" id="numberOfAdults" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="children" class="form-label">Children</label>
+                        <input type="number" 
+                       name="children" 
+                       id="{{ booking_form.children.id_for_label }}" 
+                       class="form-control"
+                       value="{{ booking_form.children.value|default:0 }}"
+                       min="0" 
+                       max="10"
+                       {% if booking_form.children.field.required %}required{% endif %}
+                >
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <!-- Booking Details -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="selected-rooms-info">
+                        <h5>Selected Rooms</h5>
+                        <div id="selectedRoomsList"></div>
+                    </div>
+                    <div class="mt-3">
+                        <strong>Total Amount: </strong>
+                        <span id="totalAmount">₹{{ booking.total_amount }}</span>
+                    </div>
+                    <button id="bookButton" class="btn btn-primary mt-3" disabled>Book Now</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Room configurations (same as before)
+        const roomConfigs = {
+            standard: {
+                rows: '1,2,3',
+                seatsPerRow: 10,
+                price: 200
+            },
+            deluxe: {
+                rows: '1,2,3',
+                seatsPerRow: 10,
+                price: 250
+            },
+            vip: {
+                rows: '1,2,3',
+                seatsPerRow: 10,
+                price: 300
+            },
+            conference: {
+                rows: '1,2,3',
+                seatsPerRow: 10,
+                price: 500
+            }
+        };
+
+        // State management
+        const selectedRooms = {
+            standard: { seats: new Set(), layoutElement: null },
+            deluxe: { seats: new Set(), layoutElement: null },
+            vip: { seats: new Set(), layoutElement: null },
+            conference: { seats: new Set(), layoutElement: null }
+        };
+
+        // Initialize the booking system
+        document.addEventListener('DOMContentLoaded', function () {
+            const roomCheckboxes = document.querySelectorAll('.room-checkbox');
+            const seatLayoutsContainer = document.getElementById('seatLayoutsContainer');
+            const selectedRoomsList = document.getElementById('selectedRoomsList');
+            const totalAmountElement = document.getElementById('totalAmount');
+            const bookButton = document.getElementById('bookButton');
+
+            // Event listener for room type checkboxes
+            roomCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const roomType = this.value;
+                    const hasConferenceRoom = roomType === 'conference'
+
+                    if (this.checked) {
+                        // Create layout for selected room
+                        const layoutDiv = document.createElement('div');
+                        layoutDiv.className = 'seat-layout';
+                        layoutDiv.id = `${roomType}Layout`;
+
+                        const titleDiv = document.createElement('h2');
+                        titleDiv.textContent = `${roomType.charAt(0).toUpperCase() + roomType.slice(1)} Room`;
+                        layoutDiv.appendChild(titleDiv);
+
+
+                        if (!hasConferenceRoom) {
+                            const bedTypeDiv = document.createElement('div');
+                            bedTypeDiv.style.display = 'flex';
+                            bedTypeDiv.style.alignItems = 'center';
+                            bedTypeDiv.style.gap = '20px';
+                            bedTypeDiv.innerHTML = `
+                            <h4 style="font-size: 20px; margin: 0;">Bed Type</h4>
+                            <div>
+                                <input type="radio" id="singleBed" name="bedType" value="single" class="form-check-input">
+                                <label for="singleBed" class="form-check-label">Single Bed</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="doubleBed" name="bedType" value="double" class="form-check-input">
+                                <label for="doubleBed" class="form-check-label">Double Bed</label>
+                                </div>
+                                `;
+                            layoutDiv.appendChild(bedTypeDiv);
+                        }
+                        else {
+                            const sittingCapacity = document.createElement('div');
+                            sittingCapacity.style.display = 'flex';
+                            sittingCapacity.style.alignItems = 'center';
+                            sittingCapacity.style.gap = '20px';
+                            sittingCapacity.innerHTML = `
+                            <h4>Sitting Capacity</h4>
+                            <div style="margin-bottom: 10px;display: flex;align-items: center;">
+                               
+                                <select id="guestCount" class="form-select">
+                                    <option value="upTo10">Up to 10 members</option>
+                                    <option value="upTo30">Up to 30 members</option>
+                                    <option value="upTo40">Up to 40 members</option>
+                                </select>
+                            </div>
+                            `;
+                            layoutDiv.appendChild(sittingCapacity);
+                        }
+
+                        const acSeatsDiv = document.createElement('div');
+                        acSeatsDiv.id = `${roomType}ACSeats`;
+                        acSeatsDiv.innerHTML = '<h4 style="font-size: 1rem;">AC Rooms</h4>';
+                        layoutDiv.appendChild(acSeatsDiv);
+
+                        const nonAcSeatsDiv = document.createElement('div');
+                        nonAcSeatsDiv.id = `${roomType}NonACSeats`;
+                        nonAcSeatsDiv.innerHTML = '<h4 style="font-size: 1rem;margin-top: 5px;">Non-AC Rooms</h4>';
+                        layoutDiv.appendChild(nonAcSeatsDiv);
+
+                        seatLayoutsContainer.appendChild(layoutDiv);
+
+                        // Render seat layout
+                        renderSeatLayout(roomType);
+
+                        // Store reference to layout element
+                        selectedRooms[roomType].layoutElement = layoutDiv;
+                    } else {
+                        // Remove layout for unchecked room
+                        if (selectedRooms[roomType].layoutElement) {
+                            selectedRooms[roomType].layoutElement.remove();
+                            selectedRooms[roomType].layoutElement = null;
+                        }
+
+                        // Clear selected seats for this room type
+                        selectedRooms[roomType].seats.clear();
+                    }
+
+                    // Update booking info
+                    updateBookingInfo();
+                });
+            });
+
+            // Booking button event listener
+            bookButton.addEventListener('click', handleBooking);
+        });
+
+        // Render seat layout for a specific room type
+        function renderSeatLayout(roomType) {
+            const layout = roomConfigs[roomType];
+            const acSeats = document.getElementById(`${roomType}ACSeats`);
+            const nonAcSeats = document.getElementById(`${roomType}NonACSeats`);
+
+            // Generate seats for this room type
+            for (let row of layout.rows) {
+                const rowDivAC = document.createElement('div');
+                const rowDivNonAC = document.createElement('div');
+                rowDivAC.className = 'seat-row';
+                rowDivNonAC.className = 'seat-row';
+
+                // Create seats container
+                const seatsContainerAC = document.createElement('div');
+                const seatsContainerNonAC = document.createElement('div');
+                seatsContainerAC.className = 'seats-container';
+                seatsContainerNonAC.className = 'seats-container';
+
+                // Generate seats for this row
+                for (let i = (parseInt(row) - 1) * 10 + 1; i <= parseInt(row) * 10; i++) {
+                    const seatAC = createSeatElement(row, i, 'ac', roomType);
+                    const seatNonAC = createSeatElement(row, i, 'non-ac', roomType);
+                    seatsContainerAC.appendChild(seatAC);
+                    seatsContainerNonAC.appendChild(seatNonAC);
+                }
+
+                rowDivAC.appendChild(seatsContainerAC);
+                rowDivNonAC.appendChild(seatsContainerNonAC);
+                acSeats.appendChild(rowDivAC);
+                nonAcSeats.appendChild(rowDivNonAC);
+            }
+        }
+
+        // Create seat element
+        function createSeatElement(row, i, type, roomType) {
+            const seat = document.createElement('button');
+            const seatId = `${row}${i}`;
+            seat.className = 'seat';
+            seat.dataset.seatId = seatId;
+            seat.dataset.roomType = roomType;
+            seat.dataset.seatType = type;
+            seat.textContent = i;
+
+            // Randomly assign seat status
+            const random = Math.random();
+            if (random > 0.8) {
+                seat.classList.add('sold');
+            } else if (random > 0.6) {
+                seat.classList.add('bestseller');
+            } else {
+                seat.classList.add('available');
+            }
+
+            // Add click event listener
+            seat.addEventListener('click', () => handleSeatClick(seat));
+            return seat;
+        }
+
+        // Handle seat selection
+        function handleSeatClick(seatElement) {
+            if (seatElement.classList.contains('sold')) return;
+
+            const roomType = seatElement.dataset.roomType;
+            const seatType = seatElement.dataset.seatType;
+            const seatId = seatElement.dataset.seatId;
+            const roomTypeLabel = roomType.charAt(0).toUpperCase() + roomType.slice(1);
+            const seatLabel = `${roomTypeLabel} ${seatType === 'ac' ? 'AC' : 'NON AC'} ${seatId}`;
+
+            const roomSeats = selectedRooms[roomType].seats;
+
+            // Toggle seat selection
+            if (roomSeats.has(seatLabel)) {
+                roomSeats.delete(seatLabel);
+                seatElement.classList.remove('selected');
+            } else {
+                roomSeats.add(seatLabel);
+                seatElement.classList.add('selected');
+            }
+
+            // Update booking info
+            updateBookingInfo();
+        }
+
+        // Update booking information
+        function updateBookingInfo() {
+            const selectedRoomsList = document.getElementById('selectedRoomsList');
+            const totalAmountElement = document.getElementById('totalAmount');
+            const bookButton = document.getElementById('bookButton');
+
+            let totalAmount = 0;
+            let selectedRoomsContent = '';
+
+            // Iterate through room types
+            Object.keys(selectedRooms).forEach(roomType => {
+                const roomSeats = selectedRooms[roomType].seats;
+                if (roomSeats.size > 0) {
+                    const roomPrice = roomConfigs[roomType].price;
+                    totalAmount += roomSeats.size * roomPrice;
+
+                    selectedRoomsContent += `
+                        <div>
+                            <strong>${roomType.charAt(0).toUpperCase() + roomType.slice(1)} Room:</strong>
+                            ${Array.from(roomSeats).join(', ')} 
+                            (${roomSeats.size} rooms, Rs. ${roomSeats.size * roomPrice})
+                        </div>
+                    `;
+                }
+            });
+
+            // Update UI
+            selectedRoomsList.innerHTML = selectedRoomsContent || 'No rooms selected';
+            totalAmountElement.textContent = `Rs. ${totalAmount}`;
+            bookButton.disabled = totalAmount === 0;
+        }
+
+        // Handle booking
+        function handleBooking() {
+            const bookingDetails = {
+                rooms: {}
+            };
+
+            // Collect booking details for each room type
+            Object.keys(selectedRooms).forEach(roomType => {
+                const roomSeats = selectedRooms[roomType].seats;
+                if (roomSeats.size > 0) {
+                    bookingDetails.rooms[roomType] = {
+                        seats: Array.from(roomSeats),
+                        price: roomConfigs[roomType].price,
+                        totalAmount: roomSeats.size * roomConfigs[roomType].price
+                    };
+                }
+            });
+
+            // Total booking amount
+            bookingDetails.totalAmount = Object.values(bookingDetails.rooms)
+                .reduce((total, room) => total + room.totalAmount, 0);
+
+            // Here you would typically send this to a server
+            alert('Booking Successful!\n' + JSON.stringify(bookingDetails, null, 2));
+
+            // Reset selections
+            Object.values(selectedRooms).forEach(room => {
+                room.seats.clear();
+                if (room.layoutElement) {
+                    const seats = room.layoutElement.querySelectorAll('.seat');
+                    seats.forEach(seat => seat.classList.remove('selected'));
+                }
+            });
+
+            // Uncheck all room checkboxes
+            const roomCheckboxes = document.querySelectorAll('.room-checkbox');
+            roomCheckboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Clear layouts
+            document.getElementById('seatLayoutsContainer').innerHTML = '';
+
+            // Update booking info
+            updateBookingInfo();
+        }
+
+        // Function to create bed type button
+        function createBedTypeButton(bedType) {
+            const button = document.createElement('button');
+            button.textContent = bedType;
+            button.className = 'btn btn-secondary m-1';
+            button.addEventListener('click', () => {
+                alert(`${bedType} selected`);
+                // Additional logic for bed type selection can be added here
+            });
+            return button;
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>

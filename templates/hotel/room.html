@@ -1,0 +1,327 @@
+{% extends 'hotelbase.html' %}
+{% block content %}
+{% load static %}
+
+<div class="main-content">
+    <!-- Banner -->
+    <section class="section-banner">
+        <div class="row banner-image">
+            <div class="banner-overlay"></div>
+            <div class="banner-section">
+                <div class="lh-banner-contain">
+                    <h2>Room</h2>
+                    <div class="lh-breadcrumb">
+                        <h5>
+                            <span class="lh-inner-breadcrumb">
+                                <a href="{% url 'user-panel:index' %}">Home</a>
+                            </span>
+                            <span> / </span>
+                            <span>
+                                <a href="javascript:void(0)">Room</a>
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Room -->
+    <section class="section-room padding-tb-100" data-aos="fade-up" data-aos-duration="2000" id="rooms">
+        <div class="container">
+            <div class="banner">
+                <h2>Choose Your Luxurious <span>Room</span></h2>
+            </div>
+            <nav>
+                <div class="nav nav-tabs rooms lh-room" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-Deluxe-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-Deluxe" type="button" role="tab" aria-controls="nav-Deluxe"
+                        aria-selected="true">
+                        <img src="{% static 'hotel/assets/img/room/1.jpg' %}" alt="1">
+                        Deluxe Room
+                    </button>
+                    <button class="nav-link" id="nav-Single-tab" data-bs-toggle="tab" data-bs-target="#nav-Single"
+                        type="button" role="tab" aria-controls="nav-Single" aria-selected="false">
+                        <img src="{% static 'hotel/assets/img/room/2.jpg' %}" alt="2">
+                        Single Room
+                    </button>
+                    <button class="nav-link" id="nav-Super-tab" data-bs-toggle="tab" data-bs-target="#nav-Super"
+                        type="button" role="tab" aria-controls="nav-Super" aria-selected="false">
+                        <img src="{% static 'hotel/assets/img/room/3.jpg' %}" alt="3">
+                        Super Room
+                    </button>
+                    <button class="nav-link" id="nav-Presidential-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-Presidential" type="button" role="tab" aria-controls="nav-Presidential"
+                        aria-selected="false">
+                        <img src="{% static 'hotel/assets/img/room/4.jpg' %}" alt="4">
+                        Presidential Room
+                    </button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade active show" id="nav-Deluxe" role="tabpanel" aria-labelledby="nav-Deluxe-tab">
+                    <div class="container">
+                        <div class="row p-0 lh-d-block">
+                            <div class="col-xl-6 col-lg-12">
+                                <div class="lh-room-contain">
+                                    <div class="lh-contain-heading">
+                                        <h4>Deluxe Room</h4>
+                                        <div class="lh-room-price">
+                                            <h4>$30 /<span>Per night</span></h4>
+                                        </div>
+                                    </div>
+                                    <div class="lh-room-size d-flex">
+                                        <p>1100 sq.ft <span>|</span></p>
+                                        <p>1 king Bed <span>|</span></p>
+                                        <p>Up to 4 Guest</p>
+                                    </div>
+                                    <p>Our Deluxe Room is a perfect blend of comfort, sophistication, and style, 
+                                        designed to cater to the needs of discerning travelers. Whether you're visiting for business or
+                                         leisure, this room offers a tranquil retreat with premium amenities to ensure a truly memorable stay.
+
+                                    </p>
+                                    <div class="lh-main-features">
+                                        <div class="lh-contain-heading">
+                                            <h4>Room Features</h4>
+                                        </div>
+                                        <div class="lh-room-features">
+                                            <div class="lh-cols-room">
+                                                <ul>
+                                                    <li><i class="ri-tv-2-line icon"></i>42 Inch flat screen TV</li>
+                                                    <li><i class="ri-home-5-line icon"></i>Room Cleaning</li>
+                                                    <li><i class="ri-fridge-line icon"></i>refrigerator</li>
+                                                    <!-- <li><i class="mdi mdi-pool icon"></i>Swimming Pool</li> -->
+                                                    <li><i class="ri-magic-line icon"></i>Spa & Beauty</li>
+                                                    <li><i class="ri-ink-bottle-fill  icon"></i>complimeatary bottled water</li>
+                                                    <li><i class="ri-cup-line  icon"></i></i>Breakfast</li>
+                                                    <li><i class="ri-space  icon"></i>Our Parking Space</li>
+                                                    <li><i class="ri-sofa-line"></i> Soffa Set</li>
+                                                       
+                                                </ul>
+                                            </div>
+                                          
+                                                  
+                                                   
+
+                                            <div class="lh-cols-room">
+                                                <ul>
+                                                    <li><i class="ri-group-line  icon"></i>2  Persons</li>
+                                                    <li><i class="ri-hotel-bed-line  icon"></i>2 Double Bed</li>
+                                                    <li><i class="ri-walk-line  icon"></i>Fitness Zim</li>
+                                                    <li><i class="ri-wifi-line  icon"></i>Free Wifi</li>
+                                                    <li><i class="ri-leaf-line  icon"></i>Garden</li>
+                                                    <li><i class="ri-restaurant-line  icon"></i>Launch</li>
+                                                    <li><i class="ri-restaurant-2-line  icon"></i>Dinner</li>
+                                                 
+                                              
+                                                   
+                                                </ul>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <a href="{% url 'user-panel:room-details' %}"><button class="room-btn">Room Details</button></a> 
+                                </div>
+                               
+                            </div>
+                            <div class="col-xl-6 col-lg-12 p-0">
+                                <div class="room-img">
+                                    <img src="{% static 'hotel/assets/img/room/room-1.jpg' %}" alt="room-img" class="room-image">
+                                    <a href="{% url 'user-panel:room-details' %}" class="link"><i class="ri-arrow-right-line"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-Single" role="tabpanel" aria-labelledby="nav-Single-tab">
+                    <div class="container">
+                        <div class="row p-0 lh-d-block">
+                            <div class="col-xl-6 col-lg-12">
+                                <div class="lh-room-contain">
+                                    <div class="lh-contain-heading">
+                                        <h4>Single Room</h4>
+                                        <div class="lh-room-price">
+                                            <h4>$40 /<span>Per night</span></h4>
+                                        </div>
+                                    </div>
+                                    <div class="lh-room-size d-flex">
+                                        <p>1200 sq.ft <span>|</span></p>
+                                        <p>1 king Bed <span>|</span></p>
+                                        <p>Up to 6 Guest</p>
+                                    </div>
+                                    <p>Our Single Room is designed to provide maximum comfort and convenience for solo travelers. Perfect for business trips or short getaways,
+                                         it offers a cozy, private retreat with modern amenities to ensure a relaxing stay.</p>
+                                    <div class="lh-main-features">
+                                        <div class="lh-contain-heading">
+                                            <h4>Room Features</h4>
+                                        </div>
+                                        <div class="lh-room-features">
+                                            <div class="lh-cols-room">
+                                                <ul>
+                                                    <li><i class="ri-tv-2-line icon"></i>42 Inch flat screen TV</li>
+                                                    <li><i class="ri-home-5-line icon"></i>Room Cleaning</li>
+                                                    <li><i class="ri-fridge-line icon"></i>refrigerator</li>
+                                                    <!-- <li><i class="mdi mdi-pool icon"></i>Swimming Pool</li> -->
+                                                    <li><i class="ri-magic-line icon"></i>Spa & Beauty</li>
+                                                    <li><i class="ri-hotel-bed-line  icon"></i>1 Bed</li>
+                                                    <li><i class="ri-group-line  icon"></i>2  Persons</li>
+                                                </ul>
+                                            </div>
+                                            <div class="lh-cols-room">
+                                                <ul>
+                                                    <li><i class="ri-ink-bottle-fill  icon"></i>complimeatary bottled water</li>
+                                                    <li><i class="ri-cup-line  icon"></i></i>Breakfast</li>
+                                                    <li><i class="ri-restaurant-line  icon"></i>Launch</li>
+                                                    <li><i class="ri-restaurant-2-line  icon"></i>Dinner</li>
+                                                    <li><i class="ri-space  icon"></i>Our Parking Space</li>
+                                                    <li><i class="ri-wifi-line  icon"></i>Free Wifi</li>
+                                                    <!-- <li><i class="ri-leaf-line  icon"></i>Garden</li> -->
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'user-panel:room-details' %}"><button class="room-btn">Room Details</button></a> 
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 p-0">
+                                <div class="room-img">
+                                    <img src="{% static 'hotel/assets/img/room/room-2.jpg' %}" alt="room-img" class="room-image">
+                                    <a href="{% url 'user-panel:room-details' %}" class="link"><i class="ri-arrow-right-line"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-Super" role="tabpanel" aria-labelledby="nav-Super-tab">
+                    <div class="container">
+                        <div class="row p-0 lh-d-block">
+                            <div class="col-xl-6 col-lg-12">
+                                <div class="lh-room-contain">
+                                    <div class="lh-contain-heading">
+                                        <h4>Super Room</h4>
+                                        <div class="lh-room-price">
+                                            <h4>$50 /<span>Per night</span></h4>
+                                        </div>
+                                    </div>
+                                    <div class="lh-room-size d-flex">
+                                        <p>1350 sq.ft <span>|</span></p>
+                                        <p>2 king Bed <span>|</span></p>
+                                        <p>Up to 8 Guest</p>
+                                    </div>
+                                    <p>Step into the Super Room, where sophistication meets ultimate comfort. Designed for travelers who appreciate modern luxury, 
+                                        this room offers enhanced features and exclusive amenities to make your stay unforgettable.</p>
+                                    <div class="lh-main-features">
+                                        <div class="lh-contain-heading">
+                                            <h4>Room Features</h4>
+                                        </div>
+                                        <div class="lh-room-features">
+                                            <div class="lh-cols-room">
+                                                <ul>
+                                                    <li><i class="ri-tv-2-line icon"></i>42 Inch flat screen TV</li>
+                                                    <li><i class="ri-home-5-line icon"></i>Room Cleaning</li>
+                                                    <li><i class="ri-fridge-line icon"></i>refrigerator</li>
+                                                    <li><i class="mdi mdi-pool icon"></i>Swimming Pool</li>
+                                                    <li><i class="ri-magic-line icon"></i>Spa & Beauty</li>
+                                                    <li><i class="ri-hotel-bed-line  icon"></i>2 Double Bed</li>
+                                                    <li><i class="ri-group-line  icon"></i>2  Persons</li>
+                                                    <li><i class="ri-walk-line  icon"></i>Fitness Zim</li>
+                                                </ul>
+                                            </div>
+                                            <div class="lh-cols-room">
+                                                <ul>
+                                                    <li><i class="ri-ink-bottle-fill  icon"></i>complimeatary bottled water</li>
+                                                    <li><i class="ri-cup-line  icon"></i></i>Breakfast</li>
+                                                    <li><i class="ri-restaurant-line  icon"></i>Launch</li>
+                                                    <li><i class="ri-restaurant-2-line  icon"></i>Dinner</li>
+                                                    <li><i class="ri-space  icon"></i>Our Parking Space</li>
+                                                    <li><i class="ri-wifi-line  icon"></i>Free Wifi</li>
+                                                    <li><i class="ri-leaf-line  icon"></i>Garden</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'user-panel:room-details' %}"><button class="room-btn">Room Details</button></a> 
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 p-0">
+                                <div class="room-img">
+                                    <img src="{% static 'hotel/assets/img/room/room-3.jpg' %}" alt="room-img" class="room-image">
+                                    <a href="{% url 'user-panel:room-details' %}" class="link"><i class="ri-arrow-right-line"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-Presidential" role="tabpanel" aria-labelledby="nav-Presidential-tab">
+                    <div class="container">
+                        <div class="row p-0 lh-d-block">
+                            <div class="col-xl-6 col-lg-12">
+                                <div class="lh-room-contain">
+                                    <div class="lh-contain-heading">
+                                        <h4>Presidential Room</h4>
+                                        <div class="lh-room-price">
+                                            <h4>$100 /<span>Per night</span></h4>
+                                        </div>
+                                    </div>
+                                    <div class="lh-room-size d-flex">
+                                        <p>1500 sq.ft <span>|</span></p>
+                                        <p>2 king Bed <span>|</span></p>
+                                        <p>Up to 8 Guest</p>
+                                    </div>
+                                    <p>Experience the height of opulence in our Presidential Room, a haven of grandeur designed for guests who demand nothing but the best.
+                                         With spacious interiors, premium amenities, and impeccable service, this room redefines luxury living.
+
+                                    </p>
+                                    <div class="lh-main-features">
+                                        <div class="lh-contain-heading">
+                                            <h4>Room Features</h4>
+                                        </div>
+                                        <div class="lh-room-features">
+                                            <div class="lh-cols-room">
+                                                <ul>
+                                                    <li><i class="ri-tv-2-line icon"></i>42 Inch flat screen TV</li>
+                                                    <li><i class="ri-home-5-line icon"></i>Room Cleaning</li>
+                                                    <li><i class="ri-fridge-line icon"></i>refrigerator</li>
+                                                    <li><i class="mdi mdi-pool icon"></i>Swimming Pool</li>
+                                                    <li><i class="ri-magic-line icon"></i>Spa & Beauty</li>
+                                                    <li><i class="ri-hotel-bed-line  icon"></i>2 king Bed</li>
+                                                    <li><i class="ri-group-line  icon"></i>2  Persons</li>
+                                                    <li><i class="ri-walk-line  icon"></i>Fitness Zim</li>
+                                                    <li><i class="bi bi-bathtub" style="font-size: 24px;"></i>
+
+                                                        Bath Tub</li>
+                                                    
+                                                </ul>
+                                            </div>
+                                            <div class="lh-cols-room">
+                                                <ul>
+                                                    <li><i class="ri-ink-bottle-fill  icon"></i>complimeatary bottled water</li>
+                                                    <li><i class="ri-cup-line  icon"></i></i>Breakfast</li>
+                                                    <li><i class="ri-restaurant-line  icon"></i>Launch</li>
+                                                    <li><i class="ri-restaurant-2-line  icon"></i>Dinner</li>
+                                                    <li><i class="ri-space  icon"></i>Our Parking Space</li>
+                                                    <li><i class="ri-wifi-line  icon"></i>Free Wifi</li>
+                                                    <li><i class="ri-leaf-line  icon"></i>Garden</li>
+                                                    <li><i class="ri-customer-service-2-line"></i>Customer Service</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'user-panel:room-details' %}"><button class="room-btn">Room Details</button></a> 
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 p-0">
+                                <div class="room-img">
+                                    <img src="{% static 'hotel/assets/img/room/room-4.jpg' %}" alt="room-img" class="room-image">
+                                    <a href="{% url 'user-panel:room-details' %}" class="link"><i class="ri-arrow-right-line"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

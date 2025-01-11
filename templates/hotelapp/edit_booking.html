@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="lh-main-content">
+    <div class="container-fluid">
+        <div class="lh-page-title">
+            <div class="lh-breadcrumb">
+                <h5>Edit Booking</h5>
+                <ul>
+                    <li><a href="{% url 'admin-panel:index' %}">Home</a></li>
+                    <li><a href="{% url 'admin-panel:booking_list' %}">Bookings</a></li>
+                    <li>Edit Booking</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="lh-card">
+                    <div class="lh-card-header">
+                        <h4 class="lh-card-title">Edit Booking Details</h4>
+                    </div>
+                    <div class="lh-card-content">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            {% if messages %}
+                            <div class="messages">
+                                {% for message in messages %}
+                                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                                    {{ message }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="mb-4">Guest Information</h5>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Guest Name</label>
+                                        {{ guest_form.name }}
+                                        {% if guest_form.name.errors %}
+                                        <div class="invalid-feedback">{{ guest_form.name.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone</label>
+                                        {{ guest_form.phone }}
+                                        {% if guest_form.phone.errors %}
+                                        <div class="invalid-feedback">{{ guest_form.phone.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Email</label>
+                                        {{ guest_form.email }}
+                                        {% if guest_form.email.errors %}
+                                        <div class="invalid-feedback">{{ guest_form.email.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Address</label>
+                                        {{ guest_form.address }}
+                                        {% if guest_form.address.errors %}
+                                        <div class="invalid-feedback">{{ guest_form.address.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h5 class="mb-4">Booking Information</h5>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Check-in Date & Time</label>
+                                        {{ booking_form.check_in }}
+                                        {% if booking_form.check_in.errors %}
+                                        <div class="invalid-feedback">{{ booking_form.check_in.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Check-out Date & Time</label>
+                                        {{ booking_form.check_out }}
+                                        {% if booking_form.check_out.errors %}
+                                        <div class="invalid-feedback">{{ booking_form.check_out.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Adults</label>
+                                        {{ booking_form.adults }}
+                                        {% if booking_form.adults.errors %}
+                                        <div class="invalid-feedback">{{ booking_form.adults.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Children</label>
+                                        {{ booking_form.children }}
+                                        {% if booking_form.children.errors %}
+                                        <div class="invalid-feedback">{{ booking_form.children.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Payment Type</label>
+                                        {{ booking_form.payment_type }}
+                                        {% if booking_form.payment_type.errors %}
+                                        <div class="invalid-feedback">{{ booking_form.payment_type.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Save Changes
+                                    </button>
+                                    <a href="{% url 'admin-panel:booking_list' %}" class="btn btn-secondary">
+                                        <i class="fas fa-times me-2"></i>Cancel
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} 

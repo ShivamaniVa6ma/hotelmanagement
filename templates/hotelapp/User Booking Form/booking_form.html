@@ -1,0 +1,321 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="lh-main-content">
+    <div class="container-fluid">
+<div class="card">
+    <div class="card-body">
+        
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if guest_form.errors or booking_form.errors %}
+        <div class="alert alert-danger">
+            Please correct the errors below.
+        </div>
+        {% endif %}
+        
+        {% if guest %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Selected Guest</h4>
+            </div>
+            <div class="card-body">
+                <p><strong>Name:</strong> {{ guest.name }}</p>
+                <p><strong>Phone:</strong> {{ guest.phone }}</p>
+                <p><strong>Email:</strong> {{ guest.email }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if room %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Selected Room {{ room.room_no }}</h4>
+            </div>
+            <div class="card-body">
+                <p><strong>Room Number:</strong> {{ room.room_no }}</p>
+                <p><strong>Room Type:</strong> {{ room.get_room_type_display }}</p>
+                <p><strong>Price per Night:</strong> ${{ room.room_price }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <h2 class="mb-4">{% if room %}Book Room {{ room.room_no }}{% else %}New Booking{% endif %}</h2>
+        <form method="post" id="bookingForm">
+            {% csrf_token %}
+            
+            <!-- Guest Information -->
+            <h3>Guest Information</h3>
+            <div class="form-group">
+                <label for="{{ guest_form.name.id_for_label }}">Name</label>
+                <input type="text" 
+                       name="name" 
+                       id="{{ guest_form.name.id_for_label }}" 
+                       class="form-control"
+                       value="{{ guest_form.name.value|default:'' }}"
+                       placeholder="Enter guest name"
+                       {% if guest_form.name.field.required %}required{% endif %}
+                >
+                {% if guest_form.name.errors %}
+                    <div class="error">{{ guest_form.name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ guest_form.email.id_for_label }}">Email</label>
+                <input type="email" 
+                       name="email" 
+                       id="{{ guest_form.email.id_for_label }}" 
+                       class="form-control"
+                       value="{{ guest_form.email.value|default:'' }}"
+                       placeholder="Enter your email"
+                       {% if guest_form.email.field.required %}required{% endif %}
+                >
+                {% if guest_form.email.errors %}
+                    <div class="error">{{ guest_form.email.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ guest_form.phone.id_for_label }}">Phone Number</label>
+                <input type="tel" 
+                    name="phone" 
+                    id="{{ guest_form.phone.id_for_label }}" 
+                    class="form-control" 
+                    value="{{ guest_form.phone.value|default:'' }}"
+                    pattern="[0-9]{10}"
+                    placeholder="Enter 10-digit phone number"
+                    {% if guest_form.phone.field.required %}required{% endif %}
+                >
+                {% if guest_form.phone.errors %}
+                    <div class="error">{{ guest_form.phone.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ guest_form.address.id_for_label }}">Address</label>
+                <textarea name="address" 
+                          id="{{ guest_form.address.id_for_label }}" 
+                          class="form-control" 
+                          rows="3"
+                          placeholder="Enter complete address"
+                          {% if guest_form.address.field.required %}required{% endif %}
+                >{{ guest_form.address.value|default:'' }}</textarea>
+                {% if guest_form.address.errors %}
+                    <div class="error">{{ guest_form.address.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label>Proof Type</label><br>
+                <input type="radio" id="passport" name="proof_type" value="passport" onclick="toggleProofInput()">
+                <label for="passport">Passport</label><br>
+                <input type="radio" id="driving_license" name="proof_type" value="driving_license" onclick="toggleProofInput()">
+                <label for="driving_license">Driving License</label><br>
+                <input type="radio" id="national_id" name="proof_type" value="national_id" onclick="toggleProofInput()">
+                <label for="national_id">National ID</label><br>
+                <input type="radio" id="voter_id" name="proof_type" value="voter_id" onclick="toggleProofInput()">
+                <label for="voter_id">Voter ID</label><br>
+            </div>
+            
+            <div id="proofInput" class="form-group proof-input">
+                <label for="proof_no">Proof Number</label>
+                <input type="text" 
+                       name="proof_no" 
+                       id="proof_no"
+                       class="form-control"
+                       value="{{ proof_no|default:'' }}"
+                       placeholder="Enter ID proof number"
+                       required
+                >
+            </div>
+        
+            <!-- Booking Details -->
+            <h3>Booking Details</h3>
+            <div class="form-group">
+                <label for="{{ booking_form.check_in.id_for_label }}">Check In</label>
+                <input type="datetime-local" name="check_in" class="form-control" 
+                       value="{{ booking_form.check_in.value|date:'Y-m-d\TH:i' }}" required>
+                {% if booking_form.check_in.errors %}
+                    <div class="error">{{ booking_form.check_in.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ booking_form.check_out.id_for_label }}">Check Out</label>
+                <input type="datetime-local" name="check_out" class="form-control" 
+                       value="{{ booking_form.check_out.value|date:'Y-m-d\TH:i' }}" required>
+                {% if booking_form.check_out.errors %}
+                    <div class="error">{{ booking_form.check_out.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ booking_form.adults.id_for_label }}">Adults</label>
+                <input type="number" 
+                       name="adults" 
+                       id="{{ booking_form.adults.id_for_label }}" 
+                       class="form-control"
+                       value="{{ booking_form.adults.value|default:1 }}"
+                       min="1" 
+                       max="10"
+                       {% if booking_form.adults.field.required %}required{% endif %}
+                >
+                {% if booking_form.adults.errors %}
+                    <div class="error">{{ booking_form.adults.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ booking_form.children.id_for_label }}">Children</label>
+                <input type="number" 
+                       name="children" 
+                       id="{{ booking_form.children.id_for_label }}" 
+                       class="form-control"
+                       value="{{ booking_form.children.value|default:0 }}"
+                       min="0" 
+                       max="10"
+                       {% if booking_form.children.field.required %}required{% endif %}
+                >
+                {% if booking_form.children.errors %}
+                    <div class="error">{{ booking_form.children.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="payment_type">Payment Type</label>
+                <select name="payment_type" id="payment_type" class="form-control" required>
+                    <option value="">Choose Payment Type Type</option>
+                    <option value="cash" {% if payment_type == 'cash' %}selected{% endif %}>Cash</option>
+                    <option value="card" {% if payment_type == 'card' %}selected{% endif %}>card</option>
+                    <option value="upi" {% if payment_type == 'upi' %}selected{% endif %}>UPI</option>
+                    <option value="net_banking" {% if payment_type == 'net_banking' %}selected{% endif %}>Net Banking</option>
+                </select>
+            </div>
+            
+        {% if not room %}
+        <h3>Room Selection</h3>
+        <div class="form-group">
+            <label for="room_type">Room Type</label>
+            <select name="room_type" id="room_type" class="form-control" required>
+                <option value="">Choose Room Type</option>
+                <option value="standard" {% if room_type == 'standard' %}selected{% endif %}>Standard</option>
+                <option value="deluxe" {% if room_type == 'deluxe' %}selected{% endif %}>Deluxe</option>
+                <option value="vip" {% if room_type == 'vip' %}selected{% endif %}>VIP</option>
+                <option value="conference" {% if room_type == 'conference' %}selected{% endif %}>Conference</option>
+            </select>
+        </div>
+
+        <div id="bedTypeContainer" class="form-group">
+            <label for="bed_type">Bed Type</label>
+            <select name="bed_type" id="bed_type" class="form-control">
+                <option value="">Choose Bed Type</option>
+                <option value="single" {% if bed_type == 'single' %}selected{% endif %}>Single Bed</option>
+                <option value="double" {% if bed_type == 'double' %}selected{% endif %}>Double Bed</option>
+            </select>
+        </div>
+
+        <div id="seatingCapacityContainer" class="form-group" style="display: none;">
+            <label for="seating_capacity">Seating Capacity</label>
+            <select name="seating_capacity" id="seating_capacity" class="form-control">
+                <option value="">Choose Seating Capacity</option>
+                <option value="10" {% if seating_capacity == '10' %}selected{% endif %}>10 Members</option>
+                <option value="25" {% if seating_capacity == '25' %}selected{% endif %}>25 Members</option>
+                <option value="50" {% if seating_capacity == '50' %}selected{% endif %}>50 Members</option>
+                <option value="100" {% if seating_capacity == '100' %}selected{% endif %}>100 Members</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="ac_type">AC Preference</label>
+            <select name="ac_type" id="ac_type" class="form-control" required>
+                <option value="">Choose AC Type</option>
+                <option value="ac" {% if ac_type == 'ac' %}selected{% endif %}>AC</option>
+                <option value="non_ac" {% if ac_type == 'non_ac' %}selected{% endif %}>Non-AC</option>
+            </select>
+        </div>
+        {% endif %}
+        
+            <button type="submit" class="btn btn-primary">Confirm Booking</button>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const roomTypeSelect = document.getElementById('room_type');
+        const bedTypeContainer = document.getElementById('bedTypeContainer');
+        const seatingCapacityContainer = document.getElementById('seatingCapacityContainer');
+        const checkInInput = document.getElementById('id_check_in');
+        const submitButton = document.getElementById('submitButton');
+
+        function toggleFields() {
+            if (roomTypeSelect.value === 'conference') {
+                bedTypeContainer.style.display = 'none';
+                seatingCapacityContainer.style.display = 'block';
+            } else {
+                bedTypeContainer.style.display = 'block';
+                seatingCapacityContainer.style.display = 'none';
+            }
+        }
+        function validateCheckInTime() {
+            const checkInTime = new Date(checkInInput.value);
+            const currentTime = new Date();
+            
+            if (checkInTime < currentTime) {
+                alert('Check-in time must be greater than or equal to the current time.');
+                submitButton.disabled = true;
+            } else {
+                submitButton.disabled = false;
+            }
+        }
+    
+        if (roomTypeSelect) {
+            roomTypeSelect.addEventListener('change', toggleFields);
+            toggleFields(); // Call on page load
+        }
+        if (checkInInput) {
+        checkInInput.addEventListener('change', validateCheckInTime);
+        validateCheckInTime(); // Call on page load
+    }
+    });
+</script>
+
+<script>
+    function toggleProofInput() {
+        const selectedProofType = document.querySelector('input[name="proof_type"]:checked');
+        const inputDiv = document.getElementById('proofInput');
+        inputDiv.style.display = selectedProofType ? 'block' : 'none';
+    }
+</script>
+
+<script>
+    function updateOptions() {
+        const roomType = document.getElementById('room_type').value;
+        const bedTypeContainer = document.getElementById('bed_type_container');
+        const conferenceContainer = document.getElementById('conference_container');
+
+        if (roomType === 'conference') {
+            bedTypeContainer.style.display = 'none';
+            conferenceContainer.style.display = 'block';
+        } else {
+            bedTypeContainer.style.display = 'block';
+            conferenceContainer.style.display = 'none';
+        }
+    }
+</script>
+
+<script>
+    function toggleProofInput(inputId) {
+        const inputDiv = document.getElementById(inputId);
+        if (inputDiv.style.display === "none") {
+            inputDiv.style.display = "block";
+        } else {
+            inputDiv.style.display = "none";
+        }
+    }
+</script>
+{% endblock %} 

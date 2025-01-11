@@ -1,0 +1,1183 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+  /*Multi room booking form styles*/
+   /* .form-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+        } */
+        .room-card {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #e0e0ff;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        
+
+      .hidden {
+            display: none;
+        }
+
+        .room-type-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .room-type-header .form-check-input {
+            width: 20px;
+            height: 20px;
+        }
+        .room-details {
+            /* background: white; */
+            border-radius: 8px;
+            /* padding: 15px; */
+            /* box-shadow: 0 2px 4px rgba(0,0,0,0.05); */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .price-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .availability-text {
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .number-input {
+            width: 100px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 5px 10px;
+        }
+
+        .ac-options, .bed-options {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .form-check-input:checked {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+
+
+        .remove-btn {
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1.2rem;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+        }
+
+        .remove-btn:hover {
+            color: #bb2d3b;
+        }
+
+        .selected-rooms {
+            margin-top: 20px;
+        }
+
+        .room-card {
+            position: relative;
+        }
+
+
+        .btn-check:checked + .btn-outline-primary {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+
+        .dropdown-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+        }
+        .add-more-text {
+            color: #0d6efd;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: none;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .dropdown {
+            width: 21%;
+        }
+        .dropdown-toggle {
+            width: 100%;
+        }
+        .dropdown-menu {
+            width: 21%;
+        }
+        @media (min-width: 576px) {
+            .add-more-text {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (min-width: 320px) {
+            .add-more-text {
+                font-size: 13px;
+            }
+        }
+         
+         /* End Multi room booking form styles*/
+        .form-select-room{
+          width: 22%;
+          padding: 10px;
+        }
+         
+        @media (min-width: 1400px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 900px;
+    }
+  }
+
+/* Add this to your existing CSS */
+body {
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+
+
+/* Ensure all child elements are responsive */
+.room-card, .dropdown, .form-select-room {
+    width: 100%; /* Use 100% width for responsiveness */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+
+</style>
+
+  </head>
+
+  <body data-lh-mode="light">
+   
+     
+
+    <div class="lh-main-content">
+
+
+      <!-- Book room offcanva html -->
+      <div class="container">
+        <!-- Booking Form Offcanvas -->
+        <!-- <div
+          class="offcanvas offcanvas-end"
+          tabindex="-1"
+          id="bookingOffcanvas"
+          aria-labelledby="bookingOffcanvasLabel"> -->
+        
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="bookingOffcanvasLabel">
+              New Booking
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="offcanvas-body" style="border: 1px solid #9ea49e;
+          padding: 10px;
+          background-color: #eff1f4;">
+            <form id="bookingForm" class="booking-form" method="POST" action="{% url 'admin-panel:multiple_room_booking' %}">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="{{ booking_form.check_in.id_for_label }}">Check In</label>
+                <input type="datetime-local" name="check_in" class="form-control" 
+                       value="{{ booking_form.check_in.value|date:'Y-m-d\TH:i' }}" required>
+                {% if booking_form.check_in.errors %}
+                    <div class="error">{{ booking_form.check_in.errors }}</div>
+                {% endif %}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="{{ booking_form.check_out.id_for_label }}">Check Out</label>
+                <input type="datetime-local" name="check_out" class="form-control" 
+                       value="{{ booking_form.check_out.value|date:'Y-m-d\TH:i' }}" required>
+                {% if booking_form.check_out.errors %}
+                    <div class="error">{{ booking_form.check_out.errors }}</div>
+                {% endif %}
+                </div>
+
+               
+
+<!--Multi room booking-->
+
+<div class="container">
+  <div class="form-container">
+      <!-- Room Type Selection -->
+      <div class="mb-3">
+          <div class="dropdown-container">
+              <div style="flex: 1;">
+                  <label for="roomType" class="form-label">Add Room Type</label>
+                  <div class="dropdown">
+                      <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" onclick="toggleDropdown()"  style="width: 165px;">
+                          Choose Room Type
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <li><a class="dropdown-item" href="#" data-value="standard">Standard</a></li>
+                          <li><a class="dropdown-item" href="#" data-value="deluxe">Deluxe</a></li>
+                          <li><a class="dropdown-item" href="#" data-value="vip">VIP</a></li>
+                          <li><a class="dropdown-item" href="#" data-value="conference">Conference</a></li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="add-more-text" id="addMoreText" style="cursor: pointer;" onclick="toggleDropdown()">Add More</div>
+          </div>
+      </div>
+
+      <!-- Selected Rooms Container -->
+      <div id="selectedRooms" class="selected-rooms"></div>
+  </div>
+</div>
+
+<script>
+  // Room type configurations
+  const roomTypes = {
+      standard: {
+          title: 'Standard',
+          price: 400,
+          available: 50
+      },
+      deluxe: {
+          title: 'Deluxe',
+          price: 800,
+          available: 30
+      },
+      vip: {
+          title: 'VIP',
+          price: 1200,
+          available: 20
+      },
+      conference: {
+          title: 'Conference',
+          price: 2000,
+          available: 10
+      }
+  };
+
+
+
+
+  // Create unique IDs for elements
+  let roomCounter = 0;
+
+  function createRoomCard(roomType) {
+      const room = roomTypes[roomType];
+      const uniqueId = `${roomType}_${roomCounter++}`;
+      
+      const cardHtml = `
+          <div class="room-card" id="${uniqueId}">
+              <span class="remove-btn" onclick="removeRoom('${uniqueId}')">&times;</span>
+              <div class="room-type-header">
+                 
+                  <h5 class="mb-0">${room.title}</h5>
+              </div>
+
+              <!-- Bed Options -->
+              <div class="bed-options" style="display: ${roomType === 'conference' ? 'none' : 'block'};">
+                  <label class="mb-2">Bed Type</label>
+                  <div class="d-flex gap-2">
+                      <input type="radio" class="btn-check" name="bedType_${uniqueId}" id="single_${uniqueId}" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="single_${uniqueId}">Single Bed</label>
+
+                      <input type="radio" class="btn-check" name="bedType_${uniqueId}" id="double_${uniqueId}" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="double_${uniqueId}">Double Bed</label>
+                  </div>
+              </div>
+
+
+            
+              
+              <!-- AC Options -->
+               <div class="mb-3" style="display: ${roomType === 'conference' ? 'block' : 'none'};">
+                      <label class="form-label">Sitting Capacity:</label>
+                      <select class="form-select-room" name="sittingCapacity_${uniqueId}">
+                          <option value="1-10">Up to 10</option>
+                          <option value="11-20">Up to 20</option>
+                          <option value="21-30">Up to 30</option>
+                      </select>
+                  </div>
+              <div class="ac-options">
+                  <label class="mb-2">AC Preference</label>
+                  <div class="d-flex gap-3">
+                      <div class="form-check mb-2">
+                          <input class="form-check-input" type="radio" name="acType_${uniqueId}" id="ac_${uniqueId}">
+                          <label class="form-check-label" for="ac_${uniqueId}">AC</label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="acType_${uniqueId}" id="nonAc_${uniqueId}">
+                          <label class="form-check-label" for="nonAc_${uniqueId}">Non-AC</label>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="room-details">
+                  <div class="price-text" style="color: green;">Room Price: ${room.price}/-</div>
+                  <div class="availability-text">Available Rooms: ${room.available}</div>
+                  <div class="mb-3">
+                      <label class="form-label">Select No. Rooms:</label>
+                      <input type="number" name="room_ids" class="number-input" min="1" max="${room.available}" value="1">
+                  </div>
+                 
+              </div>
+
+            
+          </div>
+      `;
+      return cardHtml;
+  }
+
+      
+  function removeRoom(roomId) {
+      document.getElementById(roomId).remove();
+      // Hide "Add More" text if no rooms are selected
+      if (document.querySelectorAll('.room-card').length === 0) {
+          document.getElementById('addMoreText').style.display = 'none';
+      }
+  }
+
+
+
+  document.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', function() {
+          const selectedValue = this.getAttribute('data-value');
+          const selectedRoomsContainer = document.getElementById('selectedRooms');
+          const newRoomCard = createRoomCard(selectedValue);
+          selectedRoomsContainer.insertAdjacentHTML('beforeend', newRoomCard);
+          // Show "Add More" text
+          document.getElementById('addMoreText').style.display = 'block';
+      });
+  });
+
+  document.getElementById('addMoreText').addEventListener('click', function() {
+      const dropdownMenu = document.querySelector('.dropdown-menu');
+      dropdownMenu.classList.toggle('show');
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!--End Multi room booking-->
+
+
+
+
+
+
+
+                <!-- <div class="content">
+                  <h6>Room Details</h6>
+
+                  <div class="row">
+                    <div class="col-12 col-md-6 col-lg-3">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="Standard"
+                          id="standardCheckbox"
+                          onclick="displayRoomInfo('standard')"
+                        />
+                        <label class="form-check-label" for="standardCheckbox"
+                          >Standard</label
+                        >
+                        <div id="standardInfo" class="room-info">
+                          <p>Room Price: 400/-</p>
+                          <br />
+                          <p style="display: flex">
+                            Available Rooms: <span>50</span>
+                          </p>
+                          <div class="room-selection">
+                            <label for="standardSelect"
+                              >Select No. Rooms:</label
+                            >
+                            <input
+                              type="number"
+                              id="standardSelect"
+                              class="form-control con"
+                              min="0"
+                              max="10"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                   
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="Deluxe"
+                          id="deluxeCheckbox"
+                          onclick="displayRoomInfo('deluxe')"
+                        />
+                        <label class="form-check-label" for="deluxeCheckbox"
+                          >Deluxe</label
+                        >
+                        <div id="deluxeInfo" class="room-info">
+                          <p>Room Price: 500/-<br /></p>
+                          <p style="display: flex">
+                            Available Rooms: <span>40</span>
+                          </p>
+                          <div class="room-selection">
+                            <label for="deluxeSelect">Select No. Rooms:</label>
+                            <input
+                              type="number"
+                              id="deluxeSelect"
+                              class="form-control con"
+                              min="0"
+                              max="20"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="VIP"
+                          id="vipCheckbox"
+                          onclick="displayRoomInfo('vip')"
+                        />
+
+                        <label class="form-check-label" for="vipCheckbox"
+                          >VIP</label
+                        >
+                        <div id="vipInfo" class="room-info">
+                          <p>Room Price: 5000/-<br /></p>
+                          <p style="display: flex">
+                            Available Rooms: <span>50</span>
+                          </p>
+                          <div class="room-selection">
+                            <label for="vipSelect">Select No. Rooms:</label>
+                            <input
+                              type="number"
+                              id="vipSelect"
+                              class="form-control con"
+                              min="0"
+                              max="10"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="Premium"
+                          id="premiumCheckbox"
+                          onclick="displayRoomInfo('premium')"
+                        />
+
+                        <label class="form-check-label" for="premiumCheckbox"
+                          >Conference</label
+                        >
+                        <div id="premiumInfo" class="room-info">
+                          <p>Room Price: 6000/-<br /></p>
+                          <p style="display: flex">
+                            Available Rooms: <span>60</span>
+                          </p>
+                          <div class="room-selection">
+                            <label for="premiumSelect">Select No. Rooms:</label>
+                            <input
+                              type="number"
+                              id="premiumSelect"
+                              class="form-control con"
+                              min="0"
+                              max="50"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+
+                <!--end selected room and room no-->
+
+                <!-- <div class="col-md-6 mb-3">
+					   <label class="form-label"> Number Of Rooms</label>
+					   <input type="number" name="roomNo" class="form-control" required>
+				   </div> -->
+                <div class="col-md-6 mb-3">
+                  <label for="{{ guest_form.name.id_for_label }}">Name</label>
+                <input type="text" 
+                       name="name" 
+                       id="{{ guest_form.name.id_for_label }}" 
+                       class="form-control"
+                       value="{{ guest_form.name.value|default:'' }}"
+                       placeholder="Enter guest name"
+                       {% if guest_form.name.field.required %}required{% endif %}
+                >
+                {% if guest_form.name.errors %}
+                    <div class="error">{{ guest_form.name.errors }}</div>
+                {% endif %}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="{{ guest_form.phone.id_for_label }}">Phone Number</label>
+                <input type="tel" 
+                    name="phone" 
+                    id="{{ guest_form.phone.id_for_label }}" 
+                    class="form-control" 
+                    value="{{ guest_form.phone.value|default:'' }}"
+                    pattern="[0-9]{10}"
+                    placeholder="Enter 10-digit phone number"
+                    {% if guest_form.phone.field.required %}required{% endif %}
+                >
+                {% if guest_form.phone.errors %}
+                    <div class="error">{{ guest_form.phone.errors }}</div>
+                {% endif %}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="{{ guest_form.email.id_for_label }}">Email</label>
+                <input type="email" 
+                       name="email" 
+                       id="{{ guest_form.email.id_for_label }}" 
+                       class="form-control"
+                       value="{{ guest_form.email.value|default:'' }}"
+                       placeholder="Enter your email"
+                       {% if guest_form.email.field.required %}required{% endif %}
+                >
+                {% if guest_form.email.errors %}
+                    <div class="error">{{ guest_form.email.errors }}</div>
+                {% endif %}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="{{ guest_form.address.id_for_label }}">Address</label>
+                <textarea name="address" 
+                          id="{{ guest_form.address.id_for_label }}" 
+                          class="form-control" 
+                          rows="3"
+                          placeholder="Enter complete address"
+                          {% if guest_form.address.field.required %}required{% endif %}
+                >{{ guest_form.address.value|default:'' }}</textarea>
+                {% if guest_form.address.errors %}
+                    <div class="error">{{ guest_form.address.errors }}</div>
+                {% endif %}
+                </div>
+                 <!-- New Guest Information Section -->
+                 <div class="col-12">
+                  <div class="guest-info">
+                    <h6 class="mb-3">Guest Count</h6>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="{{ booking_form.adults.id_for_label }}">Adults</label>
+                <input type="number" 
+                       name="adults" 
+                       id="{{ booking_form.adults.id_for_label }}" 
+                       class="form-control"
+                       value="{{ booking_form.adults.value|default:1 }}"
+                       min="1" 
+                       max="10"
+                       {% if booking_form.adults.field.required %}required{% endif %}
+                >
+                        {% if booking_form.adults.errors %}
+                            <div class="error">{{ booking_form.adults.errors }}</div>
+                        {% endif %}
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="{{ booking_form.children.id_for_label }}">Children</label>
+                  <input type="number" 
+                       name="children" 
+                       id="{{ booking_form.children.id_for_label }}" 
+                       class="form-control"
+                       value="{{ booking_form.children.value|default:0 }}"
+                       min="0" 
+                       max="10"
+                       {% if booking_form.children.field.required %}required{% endif %}
+                >
+                {% if booking_form.children.errors %}
+                    <div class="error">{{ booking_form.children.errors }}</div>
+                {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+ 
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="payment_type">Payment Type</label>
+                    <select name="payment_type" id="payment_type" class="form-control" required>
+                        <option value="">Choose Payment Type Type</option>
+                        <option value="cash" {% if payment_type == 'cash' %}selected{% endif %}>Cash</option>
+                        <option value="card" {% if payment_type == 'card' %}selected{% endif %}>card</option>
+                        <option value="upi" {% if payment_type == 'upi' %}selected{% endif %}>UPI</option>
+                        <option value="net_banking" {% if payment_type == 'net_banking' %}selected{% endif %}>Net Banking</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-6 mb-3"> <!-- Added mb-3 for consistent spacing -->
+                      <div class="guest-info">
+                          <label class="form-label">Upload ID Proof</label> <!-- Added label for clarity -->
+                          <input type="file" name="aadharProof" class="form-control" accept=".jpg, .jpeg, .png, .pdf" style="width: 100%;" />
+                      </div>
+                  </div>
+              </div>
+                <div class="col-md-5 mb-3" style="width: 100%">
+                  <h6 class="card-title mb-4">ID Proof Selection</h6>
+
+                  <!-- ID Proof Radio Buttons -->
+                  <div class="mb-4">
+                    <div class="form-check form-check-inline">
+                      <input type="radio" id="aadharRadio" name="proof_type" value="aadhar" onclick="toggleProofInput()">
+                      <label class="form-check-label" for="aadharRadio"
+                        >Aadhar Card</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="idProof"
+                        id="panRadio"
+                        value="pan"
+                      />
+                      <label class="form-check-label" for="panRadio"
+                        >PAN Card</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="idProof"
+                        id="passportRadio"
+                        value="passport"
+                      />
+                      <label class="form-check-label" for="passportRadio"
+                        >Passport</label
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Aadhar Form -->
+                  <div id="aadharForm" class="proof-form">
+                    <!-- <button type="button" class="close-btn" aria-label="Close">&times;</button> -->
+                    <form id="aadharDetailsForm">
+                      <!-- Same Aadhar form fields as before -->
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label">Aadhar Number</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="aadharNumber"
+                            maxlength="15"
+                            pattern="\d{15}"
+                            required
+                          />
+                          <div class="form-text">
+                            Enter 12 digit Aadhar number
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- PAN Form -->
+                  <div id="panForm" class="proof-form">
+                    <!-- <button type="button" class="close-btn" aria-label="Close">&times;</button> -->
+                    <form id="panDetailsForm">
+                      <!-- Same PAN form fields as before -->
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label">PAN Number</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="panNumber"
+                            maxlength="10"
+                            pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
+                            required
+                          />
+                          <div class="form-text">
+                            Enter 10 character PAN number (e.g., ABCDE1234F)
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- New Passport Form -->
+                  <div id="passportForm" class="proof-form">
+                    <!-- <button type="button" class="close-btn" aria-label="Close">&times;</button> -->
+                    <form id="passportDetailsForm">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label">Passport Number</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="passportNumber"
+                            pattern="[A-Z]{1}[0-9]{7}"
+                            maxlength="8"
+                            required
+                          />
+                          <div class="form-text">
+                            Enter 8 character Passport number (e.g., A1234567)
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <hr />
+
+                <div class="col-md-6 mb-3" style="display: flex; gap: 9px">
+                  <p>Total Amount:</p>
+                  <h5 style="color: green">3000/-</h5>
+                </div>
+              </div>
+
+              <div
+                class="d-grid gap-2"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  width: 100%;
+                  margin-top: 40px;
+                "
+              >
+                <button
+                  type="submit"
+                  id="confirmBookingButton"
+                  class="btn btn-primary"
+                >
+                  <i class="fas fa-check-circle me-2"></i>Confirm Booking
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+    {% endblock %}
+
+    {% block script %}
+
+       <script>
+      // Form Validation
+      const form = document.getElementById("bookingForm");
+      const patterns = {
+        email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        phone: /^\d{10}$/,
+      };
+
+      function validateField(field) {
+        const value = field.value.trim();
+        const fieldName = field.name;
+
+        removeError(field);
+
+        if (!value && field.hasAttribute("required")) {
+          showError(
+            field,
+            `${
+              fieldName.charAt(0).toUpperCase() + fieldName.slice(1)
+            } is required`
+          );
+          return false;
+        }
+
+        if (fieldName === "email" && !patterns.email.test(value)) {
+          showError(field, "Please enter a valid email address");
+          return false;
+        }
+
+        if (fieldName === "phoneNo" && !patterns.phone.test(value)) {
+          showError(field, "Please enter a valid 10-digit phone number");
+          return false;
+        }
+
+        if (fieldName === "checkout") {
+          const checkin = document.querySelector('[name="checkin"]').value;
+          if (new Date(value) <= new Date(checkin)) {
+            showError(field, "Check-out date must be after check-in date");
+            return false;
+          }
+        }
+
+        // Validate adults count
+        if (fieldName === "adults" && value === "") {
+          showError(field, "Please select number of adults");
+          return false;
+        }
+
+        return true;
+      }
+
+      function showError(field, message) {
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "error-message";
+        errorDiv.textContent = message;
+        field.classList.add("is-invalid");
+
+        field.parentNode.appendChild(errorDiv);
+      }
+
+      function removeError(field) {
+        field.classList.remove("is-invalid");
+        const errorDiv = field.parentNode.querySelector(".error-message");
+        if (errorDiv) {
+          errorDiv.remove();
+        }
+      }
+
+      form.querySelectorAll("input, select").forEach((field) => {
+        field.addEventListener("blur", () => validateField(field));
+      });
+    </script>
+
+    <!--Aadhar and PAN script and passport-->
+    <script>
+      // Get form elements
+      const aadharRadio = document.getElementById("aadharRadio");
+      const panRadio = document.getElementById("panRadio");
+      const passportRadio = document.getElementById("passportRadio");
+      const aadharForm = document.getElementById("aadharForm");
+      const panForm = document.getElementById("panForm");
+      const passportForm = document.getElementById("passportForm");
+      const aadharDetailsForm = document.getElementById("aadharDetailsForm");
+      const panDetailsForm = document.getElementById("panDetailsForm");
+      const passportDetailsForm = document.getElementById(
+        "passportDetailsForm"
+      );
+
+      // Close buttons
+      const closeButtons = document.querySelectorAll(".close-btn");
+
+      // Function to close all forms
+      function closeAllForms() {
+        aadharForm.classList.remove("active");
+        panForm.classList.remove("active");
+        passportForm.classList.remove("active");
+        aadharRadio.checked = false;
+        panRadio.checked = false;
+        passportRadio.checked = false;
+        aadharDetailsForm?.reset();
+        panDetailsForm.reset();
+        passportDetailsForm.reset();
+      }
+
+      // Function to handle outside click
+      function handleOutsideClick(event) {
+        const formsClicked = [aadharForm, panForm, passportForm].some((form) =>
+          form?.contains(event.target)
+        );
+        const radioClicked = event.target.closest(".form-check-inline");
+
+        if (!formsClicked && !radioClicked) {
+          closeAllForms();
+        }
+      }
+
+      // Add click event listener to document
+      document.addEventListener("click", handleOutsideClick);
+
+      // Close button event listeners
+      closeButtons.forEach((button) => {
+        button.addEventListener("click", (e) => {
+          e.stopPropagation();
+          closeAllForms();
+        });
+      });
+
+      // Radio button event listeners
+      aadharRadio.addEventListener("change", function (e) {
+        e.stopPropagation();
+        if (this.checked) {
+          aadharForm.classList.add("active");
+          panForm.classList.remove("active");
+          passportForm.classList.remove("active");
+          panDetailsForm.reset();
+          passportDetailsForm.reset();
+        }
+      });
+
+      panRadio.addEventListener("change", function (e) {
+        e.stopPropagation();
+        if (this.checked) {
+          panForm.classList.add("active");
+          aadharForm.classList.remove("active");
+          passportForm.classList.remove("active");
+          aadharDetailsForm?.reset();
+          passportDetailsForm.reset();
+        }
+      });
+
+      passportRadio.addEventListener("change", function (e) {
+        e.stopPropagation();
+        if (this.checked) {
+          passportForm.classList.add("active");
+          aadharForm.classList.remove("active");
+          panForm.classList.remove("active");
+          aadharDetailsForm?.reset();
+          panDetailsForm.reset();
+        }
+      });
+
+      // Prevent form clicks from closing
+      [aadharForm, panForm, passportForm].forEach((form) => {
+        form.addEventListener("click", (e) => {
+          e.stopPropagation();
+        });
+      });
+
+      // Previous form validation for Aadhar and PAN remains the same
+
+      // Form Validation - Passport
+      document
+        .getElementById("confirmBookingButton")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          let isValid = true;
+
+          document
+            .getElementById("bookingForm")
+            .querySelectorAll("input, select")
+            .forEach((field) => {
+              if (!validateField(field)) {
+                isValid = false;
+              }
+            });
+
+          if (isValid) {
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            // Custom validation for Passport number
+            const passportNumber = data.passportNumber;
+            if (!/^[A-Z][0-9]{7}$/.test(passportNumber)) {
+              showError(
+                "passportNumber",
+                "Please enter a valid Passport number (e.g., A1234567)"
+              );
+              return;
+            }
+
+            // Custom validation for mobile
+            const mobile = data.mobile;
+            if (!/^\d{10}$/.test(mobile)) {
+              showError(
+                "mobile",
+                "Please enter a valid 10-digit mobile number"
+              );
+              return;
+            }
+
+            // Validate dates
+            const issueDate = new Date(data.issueDate);
+            const expiryDate = new Date(data.expiryDate);
+            const today = new Date();
+
+            if (issueDate > today) {
+              showError("issueDate", "Issue date cannot be in the future");
+              return;
+            }
+
+            if (expiryDate <= issueDate) {
+              showError("expiryDate", "Expiry date must be after issue date");
+              return;
+            }
+
+            // If all validations pass
+            alert("Passport form submitted successfully!");
+            closeAllForms();
+          } else {
+            this.reportValidity();
+          }
+        });
+
+      //   function showError(fieldName, message) {
+      //     const field = document.querySelector(`[name="${fieldName}"]`);
+      //     console.log(field.parentElement);
+
+      //     const existingError =
+      //       field.parentElement.querySelector(".error-message");
+
+      //     if (!existingError) {
+      //       const errorDiv = document.createElement("div");
+      //       errorDiv.className = "error-message";
+      //       errorDiv.textContent = message;
+      //       field.parentElement.appendChild(errorDiv);
+      //     }
+
+      //     field.focus();
+      //   }
+
+      // Clear error messages on input for all forms
+      document
+        .querySelectorAll("input, select, textarea")
+        .forEach((element) => {
+          element.addEventListener("input", function () {
+            const errorMessage =
+              this.parentElement.querySelector(".error-message");
+            if (errorMessage) {
+              errorMessage.remove();
+            }
+          });
+        });
+    </script>
+    <!--End Aadhar and PAN script-->
+
+    <script>
+      // Get payment form elements
+      const onlineRadio = document.getElementById("onlineRadio");
+      const offlineRadio = document.getElementById("offlineRadio");
+      const onlineForm = document.getElementById("onlineForm");
+      const offlineForm = document.getElementById("offlineForm");
+      const onlineDetailsForm = document.getElementById("onlineDetailsForm");
+      const offlineDetailsForm = document.getElementById("offlineDetailsForm");
+
+      // Function to close payment forms
+      function closePaymentForms() {
+        onlineForm?.classList.remove("active");
+        offlineForm?.classList.remove("active");
+
+        // Set radio buttons to unchecked state if they exist
+        if (onlineRadio) {
+          onlineRadio.checked = false;
+        }
+        if (offlineRadio) {
+          offlineRadio.checked = false;
+        }
+
+        // Reset the forms if they exist
+        onlineDetailsForm?.reset();
+        offlineDetailsForm?.reset();
+      }
+
+      // Function to handle outside click for payment forms
+      function handlePaymentOutsideClick(event) {
+        const paymentFormsClicked = [onlineForm, offlineForm].some((form) =>
+          form?.contains(event.target)
+        );
+        const paymentRadioClicked = event.target.closest(".form-check-inline");
+
+        if (!paymentFormsClicked && !paymentRadioClicked) {
+          closePaymentForms();
+        }
+      }
+
+      
+      // Add click event listener to document for payment forms
+      document.addEventListener("click", handlePaymentOutsideClick);
+
+      // Radio button event listeners for payment forms
+      onlineRadio?.addEventListener("change", function (e) {
+        e.stopPropagation();
+        if (this.checked) {
+          onlineForm?.classList.add("active");
+          offlineForm?.classList.remove("active");
+          offlineDetailsForm.reset();
+        }
+      });
+
+      offlineRadio?.addEventListener("change", function (e) {
+        e.stopPropagation();
+        if (this.checked) {
+          offlineForm?.classList.add("active");
+          onlineForm?.classList.remove("active");
+          onlineDetailsForm.reset();
+        }
+      });
+
+      // Prevent form clicks from closing
+      [onlineForm, offlineForm]?.forEach((form) => {
+        form?.addEventListener("click", (e) => {
+          e.stopPropagation();
+        });
+      });
+    </script>
+
+    <!--selected room no script-->
+    <script>
+      function displayRoomInfo(roomType) {
+        const roomInfoDivs = {
+          standard: document.getElementById("standardInfo"),
+          deluxe: document.getElementById("deluxeInfo"),
+          vip: document.getElementById("vipInfo"),
+          premium: document.getElementById("premiumInfo"),
+        };
+
+        const roomSelects = {
+          standard: document.getElementById("standardSelect"),
+          deluxe: document.getElementById("deluxeSelect"),
+          vip: document.getElementById("vipSelect"),
+          premium: document.getElementById("premiumSelect"),
+        };
+
+        for (let type in roomInfoDivs) {
+          const isChecked = document.getElementById(type + "Checkbox").checked;
+
+          // Show/hide room info and enable/disable select based on checkbox status
+          roomInfoDivs[type].style.display = isChecked ? "block" : "none";
+          roomSelects[type].disabled = !isChecked;
+        }
+      }
+    </script>
+    <!--end selected  room no script-->
+
+    <script>
+      // Function to toggle the dropdown
+      function toggleDropdown() {
+          const dropdown = document.querySelector('.dropdown-menu'); // Ensure this matches your dropdown's class or ID
+          if (dropdown) { // Check if dropdown exists
+              dropdown.classList.toggle('show');
+          } else {
+              console.error('Dropdown element not found');
+          }
+      }
+
+      // Event listener for the dropdown button
+      document.getElementById('dropdownMenuButton').addEventListener('click', function(event) {
+          event.stopPropagation(); // Prevent the click from bubbling up
+          toggleDropdown(); // Call the toggle function
+      });
+
+      // Close the dropdown if clicked outside
+      window.addEventListener('click', function(event) {
+          const dropdown = document.querySelector('.dropdown-menu'); // Ensure this matches your dropdown's class or ID
+          if (!event.target.matches('#dropdownMenuButton') && dropdown && dropdown.classList.contains('show')) {
+              dropdown.classList.remove('show');
+          }
+      });
+  
+      </script>
+{% endblock %}

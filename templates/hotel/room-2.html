@@ -1,0 +1,184 @@
+{% extends 'hotelbase.html' %}
+{% block content %}
+{% load static %}
+
+<div class="main-content">
+    <!-- Banner -->
+    <section class="section-banner">
+        <div class="row banner-image">
+            <div class="banner-overlay"></div>
+            <div class="banner-section">
+                <div class="lh-banner-contain">
+                    <h2>Room 2</h2>
+                    <div class="lh-breadcrumb">
+                        <h5>
+                            <span class="lh-inner-breadcrumb">
+                                <a href="{% url 'user-panel:index' %}">Home</a>
+                            </span>
+                            <span> / </span>
+                            <span>
+                                <a href="javascript:void(0)">Room 2</a>
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Rooms -->
+        <section class="section-rooms bg-gray padding-tb-100">
+            <div class="container">
+                <div class="banner" data-aos="fade-up" data-aos-duration="2000">
+                    <h2>Our Luxury <span>Rooms</span></h2>
+                    <p>Checkout our luxury rooms and enjoy!</p>
+                </div>
+                <div class="row" data-aos="fade-up" data-aos-duration="2000">
+                    <div class="rooms-slider">
+                        <div class="rooms-card">
+                            <img src="hotel/assets/img/room/6.jpg" alt="room">
+                            <div class="details">
+                                <h3>Junior Rooms</h3>
+                                <span>$400 / Night</span>
+                                <ul>
+                                    <li><i class="ri-group-line"></i>2 Persons</li>
+                                    <li><i class="ri-hotel-bed-line"></i>1 Double Bed</li>
+                                    <li><i class="ri-tv-2-line"></i>Television</li>
+                                   <li><i class="ri-home-5-line"></i>Room Cleaning</li>
+                                    <li><i class="mdi mdi-pool"></i>Swimming Pool</li>
+                                    <li><i class="ri-wifi-line"></i>Free Wifi</li>
+                                    <li><i class="ri-fridge-line"></i>refrigerator</li>
+                                    <li><i class="ri-ink-bottle-fill"></i>Water Bottle</li>
+                                    <li><i class="ri-cup-line"></i></i>Breakfast</li>
+                                    <li><i class="ri-restaurant-line"></i>Launch</li>
+                                    <li><i class="ri-restaurant-2-line"></i>Dinner</li>
+                                </ul>
+                                <a href="{% url 'user-panel:room-details' %}" class="lh-buttons-2">View More <i
+                                        class="ri-arrow-right-line"></i></a>
+                            </div>
+                        </div>
+                        <div class="rooms-card">
+                            <img src="hotel/assets/img/room/7.jpg" alt="room">
+                            <div class="details">
+                                <h3>Family Rooms</h3>
+                                <span>$600 / Night</span>
+                                <ul>
+                                    <li><i class="ri-group-line"></i>2 Persons</li>
+                                    <li><i class="ri-hotel-bed-line"></i>2 Double Bed</li>
+                                    <li><i class="ri-tv-2-line"></i>Television</li>
+                                    <li><i class="ri-home-5-line"></i>Room Cleaning</li>
+                                    <li><i class="mdi mdi-pool"></i>Swimming Pool</li>
+                                    <li><i class="ri-wifi-line"></i>Free Wifi</li>
+                                    <li><i class="ri-fridge-line"></i>refrigerator</li>
+                                    <li><i class="ri-ink-bottle-fill"></i>Water Bottle</li>
+                                    <li><i class="ri-cup-line"></i></i>Breakfast</li>
+                                    <li><i class="ri-restaurant-line"></i>Launch</li>
+                                    <li><i class="ri-restaurant-2-line"></i>Dinner</li>
+                                </ul>
+                                <a href="{% url 'user-panel:room-details' %}" class="lh-buttons-2">View More <i
+                                        class="ri-arrow-right-line"></i></a>
+                            </div>
+                        </div>
+                        <div class="rooms-card">
+                            <img src="hotel/assets/img/room/8.jpg" alt="room">
+                            <div class="details">
+                                <h3>Deluxe Rooms</h3>
+                                <span>$800 / Night</span>
+                                <ul>
+                                    <li><i class="ri-group-line"></i>2 Persons</li>
+                                    <li><i class="ri-hotel-bed-line"></i>1 Double Bed</li>
+                                    <li><i class="ri-tv-2-line"></i>Television</li>
+                                    <li><i class="ri-home-5-line"></i>Room Cleaning</li>
+                                    <!-- <li><i class="mdi mdi-pool"></i>Swimming Pool</li> -->
+                                    <li><i class="ri-wifi-line"></i>Free Wifi</li>
+                                    <li><i class="ri-fridge-line"></i>refrigerator</li>
+                                    <li><i class="ri-ink-bottle-fill"></i>Water Bottle</li>
+                                    <li><i class="ri-cup-line"></i></i>Breakfast</li>
+                                    <li><i class="ri-restaurant-line"></i>Launch</li>
+                                    <li><i class="ri-restaurant-2-line"></i>Dinner</li>
+                                    <li><i class="ri-sofa-line"></i> Soffa Set</li>
+
+                                </ul>
+                                <a href="{% url 'user-panel:room-details' %}" class="lh-buttons-2">View More <i
+                                        class="ri-arrow-right-line"></i></a>
+                            </div>
+                        </div>
+                        <div class="rooms-card">
+                            <img src="hotel/assets/img/room/9.jpg" alt="room">
+                            <div class="details">
+                                <h3>Premium Rooms</h3>
+                                <span>$1000 / Night</span>
+                                <ul>
+                                    <li><i class="ri-group-line"></i>2 Persons</li>
+                                    <li><i class="ri-hotel-bed-line"></i>1 Double Bed</li>
+                                    <li><i class="ri-tv-2-line"></i>Television</li>
+                                    <!-- <li><i class="ri-home-5-line"></i>Room Cleaning</li> -->
+                                    <li><i class="mdi mdi-pool"></i>Swimming Pool</li>
+                                    <li><i class="ri-wifi-line"></i>Free Wifi</li>
+                                    <li><i class="ri-fridge-line"></i>refrigerator</li>
+                                    <li><i class="ri-ink-bottle-fill"></i>Water Bottle</li>
+                                    <li><i class="ri-cup-line"></i></i>Breakfast</li>
+                                    <li><i class="ri-restaurant-line"></i>Launch</li>
+                                    <li><i class="ri-restaurant-2-line"></i>Dinner</li>
+                                    <li><i class="ri-cup-line"></i>Bath Tub </li>
+
+                                </ul>
+                                <a href="{% url 'user-panel:room-details' %}" class="lh-buttons-2">View More <i
+                                        class="ri-arrow-right-line"></i></a>
+                            </div>
+                        </div>
+                        <div class="rooms-card">
+                            <img src="hotel/assets/img/room/10.jpg" alt="room">
+                            <div class="details">
+                                <h3>VIP Rooms</h3>
+                                <span>$1200 / Night</span>
+                                <ul>
+                                    <li><i class="ri-group-line"></i>2 Persons</li>
+                                    <li><i class="ri-hotel-bed-line"></i>1 Double Bed</li>
+                                    <li><i class="ri-tv-2-line"></i>Television</li>
+                                    <!-- <li><i class="ri-home-5-line"></i>Room Cleaning</li> -->
+                                    <li><i class="mdi mdi-pool"></i>Swimming Pool</li>
+                                    <li><i class="ri-wifi-line"></i>Free Wifi</li>
+                                    <li><i class="ri-fridge-line"></i>refrigerator</li>
+                                    <!-- <li><i class="ri-ink-bottle-fill"></i>Water Bottle</li> -->
+                                    <li><i class="ri-cup-line"></i></i>Breakfast</li>
+                                    <li><i class="ri-restaurant-line"></i>Launch</li>
+                                    <li><i class="ri-restaurant-2-line"></i>Dinner</li>
+                                    <li><i class="ri-sofa-line"></i> Soffa Set</li>
+                                    <li><i class="ri-cup-line"></i>Bath Tub </li>
+
+                                </ul>
+                                <a href="{% url 'user-panel:room-details' %}" class="lh-buttons-2">View More <i
+                                        class="ri-arrow-right-line"></i></a>
+                            </div>
+                        </div>
+                        <div class="rooms-card">
+                            <img src="hotel/assets/img/room/11.jpg" alt="room">
+                            <div class="details">
+                                <h3>VVIP Rooms</h3>
+                                <span>$1600 / Night</span>
+                                <ul>
+                                    <li><i class="ri-group-line"></i>2 Persons</li>
+                                    <li><i class="ri-hotel-bed-line"></i>2 Double Bed</li>
+                                    <li><i class="ri-tv-2-line"></i>Television</li>
+                                    <!-- <li><i class="ri-home-5-line"></i>Room Cleaning</li> -->
+                                    <li><i class="mdi mdi-pool"></i>Swimming Pool</li>
+                                    <li><i class="ri-wifi-line"></i>Free Wifi</li>
+                                    <li><i class="ri-fridge-line"></i>refrigerator</li>
+                                    <li><i class="ri-ink-bottle-fill"></i>Water Bottle</li>
+                                    <li><i class="ri-cup-line"></i></i>Breakfast</li>
+                                    <li><i class="ri-restaurant-line"></i>Launch</li>
+                                    <li><i class="ri-restaurant-2-line"></i>Dinner</li>
+                                    <li><i class="ri-beer-line minibar-icon"></i>Mini baar</li>
+                                        
+                                </ul>
+                                <a href="{% url 'user-panel:room-details' %}" class="lh-buttons-2">View More <i
+                                        class="ri-arrow-right-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+</div>
+{% endblock %}

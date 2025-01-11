@@ -1,0 +1,371 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+{% load static %}
+<div class="lh-main-content">
+    <!-- Add error messages display -->
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="container-fluid">
+
+<a href="{% url 'admin-panel:room_create' %}" class="btn btn-primary mb-3">Add New Room</a>
+
+
+<form method="post" action="{% url 'admin-panel:check_availability' %}">
+    {% csrf_token %}
+    {% if guest_id %}
+    <input type="hidden" name="guest_id" value="{{ guest_id }}">
+    {% endif %}
+    <div class="form-group">
+        <label for="check_in">Check-in Date</label>
+        <input type="datetime-local" name="check_in" id="check_in" class="form-control" value="{{ booking_form.check_in.value|date:'Y-m-d\TH:i' }}" required>
+    </div>
+    <div class="form-group">
+        <label for="check_out">Check-out Date</label>
+        <input type="datetime-local" name="check_out" id="check_out" class="form-control" value="{{ booking_form.check_out.value|date:'Y-m-d\TH:i' }}" required>
+    </div>
+    <div class="form-group">
+        <label for="room_type">Room Type:</label>
+        <select name="room_type" id="room_type" class="form-control">
+            <option value="">Select Room Type</option>
+            <option value="standard" {% if room_type == 'standard' %}selected{% endif %}>Standard</option>
+            <option value="deluxe" {% if room_type == 'deluxe' %}selected{% endif %}>Deluxe</option>
+            <option value="vip" {% if room_type == 'vip' %}selected{% endif %}>VIP</option>
+            <option value="conference" {% if room_type == 'conference' %}selected{% endif %}>Conference</option>
+        </select>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Check Availability</button>
+</form>
+    
+    <div class="container mt-4">      
+        {% if available_rooms %}
+        <h2 class="text-center mb-4">Available Rooms</h2>
+        
+            {% if room_type %}
+            <h4>{{ room_type|title }} Rooms</h4>
+            <div class="container mt-4">
+                <div class="row">
+                    {% for room in available_rooms %}
+                        {% if room.room_type == room_type %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ room.get_room_type_display }}</h5>
+                                        <p class="card-text">
+                                            Room No: {{ room.room_number }}<br>
+                                            Bed Type: {{ room.get_bed_type_display }}<br>
+                                            AC: {{ room.get_ac_type_display }}<br>
+                                            Price: ₹{{ room.base_price }}
+                                        </p>
+                                        <a href="{% url 'admin-panel:room_detail' room.pk %}" class="btn btn-info">View Details</a>
+                                        
+                                        {% if guest_id %}
+                                            <a href="{% url 'admin-panel:guest_booking_create' %}?guest_id={{ guest_id }}&room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                        {% else %}
+                                            <a href="{% url 'admin-panel:multiple_bookings_create' %}?room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                        {% endif %}
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <h4>Standard Rooms</h4>
+            <div class="container mt-4">
+                <div class="row">
+                    {% for room in available_rooms %}
+                        {% if room.room_type == 'standard' %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ room.get_room_type_display }}</h5>
+                                        <p class="card-text">
+                                            Room No: {{ room.room_number }}<br>
+                                            Bed Type: {{ room.get_bed_type_display }}<br>
+                                            AC: {{ room.get_ac_type_display }}<br>
+                                            Price: ₹{{ room.base_price }}
+                                        </p>
+                                        <a href="{% url 'admin-panel:room_detail' room.pk %}" class="btn btn-info">View Details</a>
+                                        {% if room.is_available %}
+                                            {% if guest_id %}
+                                                <a href="{% url 'admin-panel:guest_booking_create' %}?guest_id={{ guest_id }}&room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                            {% else %}
+                                                <a href="{% url 'admin-panel:multiple_bookings_create' %}?room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+    
+            <h4>Deluxe Rooms</h4>
+            <div class="container mt-4">
+                <div class="row">
+                    {% for room in available_rooms %}
+                        {% if room.room_type == 'deluxe' %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ room.get_room_type_display }}</h5>
+                                        <p class="card-text">
+                                            Room No: {{ room.room_number }}<br>
+                                            Bed Type: {{ room.get_bed_type_display }}<br>
+                                            AC: {{ room.get_ac_type_display }}<br>
+                                            Price: ₹{{ room.base_price }}
+                                        </p>
+                                        <a href="{% url 'admin-panel:room_detail' room.pk %}" class="btn btn-info">View Details</a>
+                                        {% if room.is_available %}
+                                            {% if guest_id %}
+                                                <a href="{% url 'admin-panel:guest_booking_create' %}?guest_id={{ guest_id }}&room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                            {% else %}
+                                                <a href="{% url 'admin-panel:multiple_bookings_create' %}?room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+    
+            <h4>VIP Rooms</h4>
+            <div class="container mt-4">
+                <div class="row">
+                    {% for room in available_rooms %}
+                        {% if room.room_type == 'vip' %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ room.get_room_type_display }}</h5>
+                                        <p class="card-text">
+                                            Room No: {{ room.room_number }}<br>
+                                            Bed Type: {{ room.get_bed_type_display }}<br>
+                                            AC: {{ room.get_ac_type_display }}<br>
+                                            Price: ₹{{ room.base_price }}
+                                        </p>
+                                        <a href="{% url 'admin-panel:room_detail' room.pk %}" class="btn btn-info">View Details</a>
+                                        {% if room.is_available %}
+                                            {% if guest_id %}
+                                                <a href="{% url 'admin-panel:guest_booking_create' %}?guest_id={{ guest_id }}&room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                            {% else %}
+                                                <a href="{% url 'admin-panel:multiple_bookings_create' %}?room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+    
+            <h4>Conference Rooms</h4>
+            <div class="container mt-4">
+                <div class="row">
+                    {% for room in available_rooms %}
+                        {% if room.room_type == 'conference' %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ room.get_room_type_display }}</h5>
+                                        <p class="card-text">
+                                            Room No: {{ room.room_number }}<br>
+                                            Bed Type: {{ room.get_bed_type_display }}<br>
+                                            AC: {{ room.get_ac_type_display }}<br>
+                                            Price: ₹{{ room.base_price }}
+                                        </p>
+                                        <a href="{% url 'admin-panel:room_detail' room.pk %}" class="btn btn-info">View Details</a>
+                                    
+                                        {% if room.is_available %}
+                                            {% if guest_id %}
+                                                <a href="{% url 'admin-panel:guest_booking_create' %}?guest_id={{ guest_id }}&room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                                <a href="{% url 'admin-panel:guest_booking_create' %}?guest_id={{ guest_id }}&room={{ room.id }}" class="btn btn-success">Book this Room</a>
+                                            {% else %}
+                                                <a href="{% url 'admin-panel:multiple_bookings_create' %}?room={{ room.id }}" class="btn btn-success">Book this Room</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if not available_rooms %}
+                <h2 class="text-center mb-4">No Rooms Available</h2>
+            {% endif %}             
+        
+        {% else %}
+        <h2 class="text-center mb-4">All Rooms</h2>
+        <div class="container mt-4">
+            <div class="row">
+    
+            <h3>Standard Rooms</h3>
+            {% for room in rooms %}
+                {% if room.room_type == 'standard' %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ room.get_room_type_display }}</h5>
+                            <p class="card-text">
+                                Room No: {{ room.room_number }}<br>
+                                Bed Type: {{ room.get_bed_type_display }}<br>
+                                AC: {{ room.get_ac_type_display }}<br>
+                                Price: ₹{{ room.base_price }}
+                            </p>
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'admin-panel:room_detail' room.pk %}" class="btn btn-info">View Details</a>
+                                {% if room.is_available %}
+                                    {% if guest_id %}
+                                        <a href="{% url 'admin-panel:guest_booking_create' %}?guest_id={{ guest_id }}&room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                    {% else %}
+                                        <a href="{% url 'admin-panel:multiple_bookings_create' %}?room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                    {% endif %}
+                                {% endif %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 
+            {% endfor %}
+            <h3>Deluxe Rooms</h3>
+            {% for room in rooms %}
+                {% if room.room_type == 'deluxe' %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ room.get_room_type_display }}</h5>
+                            <p class="card-text">
+                                Room No: {{ room.room_number }}<br>
+                                Bed Type: {{ room.get_bed_type_display }}<br>
+                                AC: {{ room.get_ac_type_display }}<br>
+                                Price: ₹{{ room.base_price }}
+                            </p>
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'admin-panel:room_detail' room.pk %}" class="btn btn-info">View Details</a>
+                                {% if room.is_available %}
+                                    {% if guest_id %}
+                                        <a href="{% url 'admin-panel:guest_booking_create' %}?guest_id={{ guest_id }}&room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                    {% else %}
+                                        <a href="{% url 'admin-panel:multiple_bookings_create' %}?room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                    {% endif %}
+                                {% endif %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+            <h3>Vip Rooms</h3>
+            {% for room in rooms %}
+                {% if room.room_type == 'vip' %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ room.get_room_type_display }}</h5>
+                            <p class="card-text">
+                                Room No: {{ room.room_number }}<br>
+                                Bed Type: {{ room.get_bed_type_display }}<br>
+                                AC: {{ room.get_ac_type_display }}<br>
+                                Price: ₹{{ room.base_price }}
+                            </p>
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'admin-panel:room_detail' room.pk %}" class="btn btn-info">View Details</a>
+                                {% if room.is_available %}
+                                    {% if guest_id %}
+                                        <a href="{% url 'admin-panel:guest_booking_create' %}?guest_id={{ guest_id }}&room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                    {% else %}
+                                        <a href="{% url 'admin-panel:multiple_bookings_create' %}?room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                    {% endif %}
+                                {% endif %}
+                                
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+            <h3>Conference Rooms</h3>
+            {% for room in rooms %}
+                {% if room.room_type == 'conference' %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ room.get_room_type_display }}</h5>
+                            <p class="card-text">
+                                Room No: {{ room.room_number }}<br>
+                                Seating Capacity {{ room.seating_capacity }}<br>
+                                AC: {{ room.get_ac_type_display }}<br>
+                                Price: ₹{{ room.base_price }}
+                            </p>
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'admin-panel:room_detail' room.pk %}" class="btn btn-info">View Details</a>
+                                {% if room.is_available %}
+                                    {% if guest_id %}
+                                        <a href="{% url 'admin-panel:guest_booking_create' %}?guest_id={{ guest_id }}&room={{ room.id }}&check_in={{ check_in|urlencode }}&check_out={{ check_out|urlencode }}" class="btn btn-success">Book this Room</a>
+                                    {% else %}
+                                        <a href="{% url 'admin-panel:multiple_bookings_create' %}?room={{ room.id }}" class="btn btn-success">Book this Room</a>
+                                    {% endif %}
+                                {% endif %}
+                               
+                                   
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}            
+            {% endfor %}
+        </div>
+        {% endif %}        
+    </div>
+</div>
+</div>
+
+<script>
+    function toggleFields() {
+        const roomType = document.getElementById('room_type').value;
+        const bedTypeContainer = document.getElementById('bed_type_container');
+        const seatingCapacityContainer = document.getElementById('seating_capacity_container');
+
+        // Reset all fields to default
+        bedTypeContainer.style.display = 'none';
+        seatingCapacityContainer.style.display = 'none';
+
+        // Show/hide fields based on selected room type
+        if (roomType === 'conference') {
+            seatingCapacityContainer.style.display = 'block'; // Show seating capacity for conference
+        } else if (roomType) { // If any room type other than conference is selected
+            bedTypeContainer.style.display = 'block'; // Show bed type
+        }
+    }
+
+    // Call toggleFields on page load to set initial visibility based on selected room type
+    window.onload = function() {
+        toggleFields();
+    };
+</script>
+
+
+{% endblock %} 

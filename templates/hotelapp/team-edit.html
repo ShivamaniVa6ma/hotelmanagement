@@ -1,0 +1,517 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+
+<style>
+	.delete-modal .modal-content {
+		border: none;
+		/* padding: 2rem 1rem; */
+		border-radius: 15px;
+		
+	}
+
+	.delete-modal .delete-icon {
+		width: 85px;
+		height: 85px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #ffe4e4;
+		border-radius: 50%;
+		margin: 0 auto 1.5rem;
+	}
+
+	.delete-modal .delete-icon i {
+		font-size: 3rem;
+		color: #ff3b3b;
+	}
+
+	.delete-modal h4 {
+		color: #343434;
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.delete-modal p {
+		color: #666;
+		margin-bottom: 2rem;
+	}
+
+	.delete-modal .button-row {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+	}
+
+	.delete-modal .btn {
+		min-width: 120px;
+		padding: 0.6rem 1.5rem;
+		border-radius: 50px;
+		font-weight: 500;
+	}
+
+	.delete-modal .btn-danger {
+		background: #ff3b3b;
+		border-color: #ff3b3b;
+	}
+
+	.delete-modal .btn-danger:hover {
+		background: #ff1c1c;
+		border-color: #ff1c1c;
+	}
+
+	.delete-modal .btn-secondary {
+		background: #e4e6ef;
+		border-color: #e4e6ef;
+		color: #666;
+	}
+
+	.delete-modal .btn-secondary:hover {
+		background: #d5d7e3;
+		border-color: #d5d7e3;
+		color: #444;
+	}
+
+	.search-wrapper {
+		margin-right: 15px;
+		display: inline-block;
+	}
+
+	.search-box {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+
+	.search-input {
+		width: 280px;
+		height: 40px;
+		padding: 10px 45px 10px 20px;
+		border: 2px solid #e4e6ef;
+		border-radius: 50px;
+		font-size: 14px;
+		transition: all 0.3s ease;
+		background: #f5f8fa;
+	}
+
+	.search-input:focus {
+		border-color: #009ef7;
+		background: #fff;
+		outline: none;
+		box-shadow: 0 0 0 3px rgba(0, 158, 247, 0.1);
+	}
+
+	.search-button {
+		position: absolute;
+		right: 5px;
+		height: 34px;
+		width: 34px;
+		border: none;
+		background: transparent;
+		border-radius: 50%;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+	}
+
+	.search-button i {
+		font-size: 18px;
+		color: #5e6278;
+		transition: all 0.3s ease;
+	}
+
+	.search-button:hover {
+		background: #009ef7;
+	}
+
+	.search-button:hover i {
+		color: #fff;
+	}
+	#edit-btn{
+		color: black;
+		border: none;
+		background: none;
+		margin-left: 10px;
+	}
+	#delete-btn{
+		color: none;
+		border: none;
+		background: none;
+	}
+
+
+	/* Responsive adjustments */
+	@media (max-width: 768px) {
+		.search-input {
+			width: 200px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.search-wrapper {
+			margin-right: 10px;
+		}
+		
+		.search-input {
+			width: 160px;
+		}
+	}
+	</style>
+
+		<!-- main content -->
+		<div class="lh-main-content">
+			<div class="container-fluid">
+				<!-- Page title & breadcrumb -->
+				<div class="lh-page-title lh-page-title-2">
+					<div class="lh-breadcrumb">
+						<h5>Team Update</h5>
+						<ul>
+							<li><a href="{% url 'admin-panel:index' %}">Luxurious</a></li>
+							<li>Team Update</li>
+						</ul>
+					</div>
+				</div>
+				<form class="lh-profile-add" method="POST" enctype="multipart/form-data" action="{% url 'admin-panel:edit_team_member' team_member.id %}">
+					{% csrf_token %}
+						
+					<div class="row">
+						<div class="col-xxl-3 col-xl-4 col-md-12">
+							<div class="team-sticky-bar">
+								<div class="col-xl-12">
+									<div class="lh-card">
+										
+										<div class="lh-card-content">
+											<div class="lh-team-block-img">
+												<div class="lh-team-block-detail">
+													<div class="profile-img">
+														<div class="avatar-preview">
+															<div class="t-img" id="imagePreview"
+																style="background-image: url('{% if team_member.image %}{{ team_member.image.url }}{% else %}{% static 'assets/img/user/thumb.jpg' %}{% endif %}'); background-position: center;">
+															</div>
+														</div>
+														<span class="tag-label online"></span>
+														<div class="avatar-edit">
+															<input type="file" class="form-control" name="image" id="imageUpload" accept="image/*" onchange="previewImage(this)">
+															<label for="imageUpload"></label>
+														</div>
+													</div>
+													
+													<div class="form-group p-b-15">
+														<input type="text" class="form-control" id="name_profile" name="name"
+															placeholder="Enter name" value="{{ form.name.value|default:'' }}">
+														{% if form.name.errors %}
+															<div class="text-danger">{{ form.name.errors|join:", " }}</div>
+														{% endif %}
+													</div>
+													<div class="form-group p-b-15" >
+														<input type="text" class="form-control" id="designation" name="designation"
+															placeholder="Enter Designation" value="{{ form.designation.value|default:'' }}">
+														{% if form.designation.errors %}
+															<div class="text-danger">{{ form.designation.errors|join:", " }}</div>
+														{% endif %}
+
+													</div>
+													<div class="lh-settings">
+														<button type="submit" class="lh-btn-primary m-r-10" style="width: 100%;">Edit Profile</button>
+														<div class="dropdown" title="Status">
+															<button class="btn btn-secondary dropdown-toggle"
+																type="button" data-bs-toggle="dropdown"
+																aria-expanded="false" style="width: 40px;">
+																<i class="mdi mdi-dots-vertical"></i>
+															</button>
+															<ul class="dropdown-menu">
+																<li><a class="dropdown-item" href="#"><span
+																			class="tag-label online"></span>Online</a>
+																</li>
+																<li><a class="dropdown-item" href="#"><span
+																			class="tag-label offline"></span>Offline</a>
+																</li>
+																<li><a class="dropdown-item" href="#"><span
+																			class="tag-label busy"></span>Busy</a></li>
+															</ul>
+														</div>
+													</div>
+												</div>
+												<div class="form-group">
+													<textarea class="form-control" id="profile_detail" name="description" rows="9" placeholder="Enter Details">{{ form.description.value|default:'' }}</textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xxl-9 col-xl-8 col-md-12">
+							<div class="lh-card team-overview">
+								<div class="lh-card-content lh-card-team team-details">
+									<div class="row">
+										<div class="col-sm-12">
+											<h3>Account Details</h3>
+											<div class="lh-team-detail">
+												<p>From your account you can easily view and track Deals. You can manage
+													and change your account information like address, contact
+													information
+													and history of deals.</p>
+											</div>
+										</div>	
+										<div class="col-md-6 col-sm-12">
+											<div class="lh-team-detail">
+												<h6>E-mail address</h6>
+												<ul>
+													<li><strong>Email 1 : </strong>
+														<div class="form-group">
+															<input type="email" class="form-control" name="email1"
+																placeholder="Enter email" value="{{ form.email1.value|default:'' }}">
+															
+															{% if form.email1.errors %}
+																<div class="text-danger">{{ form.email1.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+													<li><strong>Email 2 : </strong>
+														<div class="form-group">
+															<input type="email" class="form-control" name="email2"
+																placeholder="Enter email" value="{{ form.email2.value|default:'' }}">
+															
+															{% if form.email2.errors %}
+																<div class="text-danger">{{ form.email2.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-12">
+											<div class="lh-team-detail">
+												<h6>Contact nubmer</h6>
+												<ul>
+													<li><strong>Phone Nubmer 1 : </strong>
+														<div class="form-group">
+															<input type="text" class="form-control" name="phone1"
+																placeholder="Enter phone number" value="{{ form.phone1.value|default:'' }}">
+															
+															{% if form.phone1.errors %}
+																<div class="text-danger">{{ form.phone1.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+													<li><strong>Phone Nubmer 2 : </strong>
+														<div class="form-group">
+															<input type="text" class="form-control" name="phone2"
+																placeholder="Enter phone number" value="{{ form.phone2.value|default:'' }}">
+															
+															{% if form.phone2.errors %}
+																<div class="text-danger">{{ form.phone2.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-12">
+											<div class="lh-team-detail">
+												<h6>Address</h6>
+												<ul>
+													<li>
+														<textarea class="form-control" id="profile_detail" name="address1" rows="9" placeholder="Enter Details">{{ form.address1.value|default:'' }}</textarea>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-12">
+											<div class="lh-team-detail">
+												<h6>Address 2</h6>
+												<ul>
+													<li>
+														<textarea class="form-control" id="profile_detail" name="address2" rows="9" placeholder="Enter Details">{{ form.address2.value|default:'' }}</textarea>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-12">
+											<div class="lh-team-detail">
+												<h6>Bank Accounts</h6>
+												<ul>
+													<li><strong>Account Name : </strong>
+														<div class="form-group">
+															<input type="text" class="form-control" name="account_name"
+																placeholder="Enter account name" value="{{ form.account_name.value|default:'' }}">
+															
+															{% if form.account_name.errors %}
+																<div class="text-danger">{{ form.account_name.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+													<li><strong>Account Nubmer : </strong>
+														<div class="form-group">
+															<input type="number" class="form-control" name="account_number"
+																placeholder="Enter account number" value="{{ form.account_number.value|default:'' }}">
+															
+															{% if form.account_number.errors %}
+																<div class="text-danger">{{ form.account_number.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+													<li><strong>IFSC Code : </strong>
+														<div class="form-group">
+															<input type="text" class="form-control" name="ifsc_code"
+																placeholder="Enter IFSC code" value="{{ form.ifsc_code.value|default:'' }}">
+															
+															{% if form.ifsc_code.errors %}
+																<div class="text-danger">{{ form.ifsc_code.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+													<li><strong>Bank name : </strong>
+														<div class="form-group">
+															<input type="text" class="form-control" name="bank_name"
+																placeholder="Enter bank name" value="{{ form.bank_name.value|default:'' }}">
+															
+															{% if form.bank_name.errors %}
+																<div class="text-danger">{{ form.bank_name.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-12">
+											<div class="lh-team-detail">
+												<h6>Social media</h6>
+												<ul>
+													<li><strong>Facebook</strong>
+														<div class="form-group">
+															<input type="text" class="form-control" name="facebook"
+																placeholder="Enter Facebook URL" value="{{ form.facebook.value|default:'' }}">
+															
+															{% if form.facebook.errors %}
+																<div class="text-danger">{{ form.facebook.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+													<li><strong>Twitter</strong>
+														<div class="form-group">
+															<input type="text" class="form-control" name="twitter"
+																placeholder="Enter Twitter URL" value="{{ form.twitter.value|default:'' }}">
+															
+															{% if form.twitter.errors %}
+																<div class="text-danger">{{ form.twitter.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+													<li><strong>Linkedin</strong>
+														<div class="form-group">
+															<input type="text" class="form-control" name="linkedin"
+																placeholder="Enter Linkedin URL" value="{{ form.linkedin.value|default:'' }}">
+															
+															{% if form.linkedin.errors %}
+																<div class="text-danger">{{ form.linkedin.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+													<li><strong>Github</strong>
+														<div class="form-group">
+															<input type="text" class="form-control" name="github"
+																placeholder="Enter Github URL" value="{{ form.github.value|default:'' }}">
+															
+															{% if form.github.errors %}
+																<div class="text-danger">{{ form.github.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-12">
+											<div class="lh-team-detail">
+												<h6>Aadhar Info</h6>
+												<ul>
+													<li><strong>Aadhar No : </strong>
+														<div class="form-group">
+															<input type="text" class="form-control"  name="aadhar_no" value="{{ form.aadhar_no.value|default:'' }}
+																placeholder="Aadhar No ">
+															{% if form.aadhar_no.errors %}
+																<div class="text-danger">{{ form.aadhar_no.errors|join:", " }}</div>
+															{% endif %}
+															
+														</div>
+													</li>
+													<li><strong>Aadhar File : </strong>
+														<div class="form-group">
+															<input type="file" class="form-control" name="aadhar_file" value="{{ form.aadhar_file.value|default:'' }}
+																placeholder="No file Choosen">
+																{% if form.aadhar_file.errors %}
+																<div class="text-danger">{{ form.aadhar_file.errors|join:", " }}</div>
+															{% endif %}
+															{% if member.aadhar_file %}
+															<strong>Aadhar Uploaded File: </strong>
+															<a href="{% url 'admin-panel:view_document' 'aadhar' member.id %}" target="_blank" class="document-link">
+																<i class="ri-file-text-line"></i> View Aadhar
+															</a>
+															{% endif %}
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-12">
+											<div class="lh-team-detail">
+												<h6>PAN Info</h6>
+												<ul>
+													<li><strong>PAN NO : </strong>
+														<div class="form-group">
+															<input type="text" class="form-control" name="pan_no" value="{{ form.pan_no.value|default:'' }}
+																placeholder="PAN No">
+																{% if form.pan_no.errors %}
+																<div class="text-danger">{{ form.pan_no.errors|join:", " }}</div>
+															{% endif %}
+														</div>
+													</li>
+													<li><strong>PAN File : </strong>
+														<div class="form-group">
+															<input type="file" class="form-control" name="pan_file" value="{{ form.pan_file.value|default:'' }}
+																	placeholder="No File Choosen" >
+																	{% if form.pan_file.errors %}
+																	<div class="text-danger">{{ form.pan_file.errors|join:", " }}</div>
+																{% endif %}
+																{% if member.pan_file %}
+																<strong>Uploaded PAN File: </strong>
+																<a href="{% url 'admin-panel:view_document' 'pan' member.id %}" target="_blank" class="document-link">
+																	<i class="ri-file-text-line"></i> View PAN
+																</a>
+																{% endif %}
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+		
+{% block script %}
+	<script>
+		function previewImage(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					document.getElementById('imagePreview').style.backgroundImage = "url('" + e.target.result + "')";
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+	</script>
+	<!-- Main Custom -->
+	<script src="{% static 'assets/js/main.js' %}"></script>
+{% endblock %}

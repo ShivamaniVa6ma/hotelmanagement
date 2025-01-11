@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="lh-main-content">
+<div class="container-fluid">
+<h2>Bookings</h2>
+<a href="{% url 'admin-panel:multiple_bookings_create' %}" class="btn btn-primary mb-3">Create New Booking</a>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Guest Name</th>
+                <th>Room</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.guest.name }}</td>
+                <td>{{ booking.room.room_number }} - {{ booking.room.get_room_type_display }}</td>
+                <td>{{ booking.check_in|date:"M d, Y H:i" }}</td>
+                <td>{{ booking.check_out|date:"M d, Y H:i" }}</td>
+                <td>${{ booking.total_amount }}</td>
+                <td>
+                    {% if booking.check_out > now %}
+                        <span class="badge bg-success">Active</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Completed</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'admin-panel:booking_detail' booking.pk %}" class="btn btn-sm btn-info">View Details</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">No bookings found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+{% endblock %} 

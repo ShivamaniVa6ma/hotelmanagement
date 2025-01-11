@@ -1,0 +1,164 @@
+{% extends 'hotelbase.html' %}
+{% block content %}
+{% load static %}
+    <!-- Banner -->
+
+    <div class="main-content">
+    <section class="section-banner">
+        <div class="row banner-image">
+            <div class="banner-overlay"></div>
+            <div class="banner-section">
+                <div class="lh-banner-contain">
+                    <h2>Hotel Facilities</h2>
+                    <div class="lh-breadcrumb">
+                        <h5>
+                            <span class="lh-inner-breadcrumb">
+                                <a href="{% url 'user-panel:index' %}">Home</a>
+                            </span>
+                            <span> / </span>
+                            <span>
+                                <a href="javascript:void(0)">Hotel Facilities</a>
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities -->
+    <section class="section-amenities padding-tb-100">
+        <div class="container">
+            <div class="row mtb-m-12">
+                <div class="col-md-6 col-sm-12 m-tb-12">
+                    <div class="lh-amenities" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="amenities-detail">
+                            <div class="amenities-box">
+                                <img src="{% static 'hotel/assets/img/amenities/1.jpg' %}" alt="amenities_1" class="amenities-left-image">
+                            </div>
+                            <div class="amenities-box">
+                                <div class="lh-amenities-in">
+                                    <h4 class="side-number">01</h4>
+                                    <div class="lh-top-dish">
+                                        <img src="{% static 'hotel/assets/img/amenities/amenities-dish-1.svg' %}" class="svg-img" alt="amenities-dish-1">
+                                    </div>
+                                    <div class="amenities-contain">
+                                        <h4 class="amenities-heading">Our Restaurant</h4>
+                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa. This is the dolor sit amet adipisicing elit.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 m-tb-12">
+                    <div class="lh-amenities" data-aos="fade-up" data-aos-duration="2000">
+                        <div class="amenities-detail">
+                            <div class="amenities-box">
+                                <img src="{% static 'hotel/assets/img/amenities/2.jpg' %}" alt="amenities_2" class="amenities-left-image">
+                            </div>
+                            <div class="amenities-box">
+                                <div class="lh-amenities-in">
+                                    <h4 class="side-number">02</h4>
+                                    <div class="lh-top-dish">
+                                        <img src="{% static 'hotel/assets/img/amenities/amenities-dish-2.svg' %}" class="svg-img" alt="amenities-dish-2">
+                                    </div>
+                                    <div class="amenities-contain">
+                                        <h4 class="amenities-heading">Spa & Beauty</h4>
+                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa. This is the dolor sit amet adipisicing elit.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 m-tb-12">
+                    <div class="lh-amenities" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="amenities-detail">
+                            <div class="amenities-box">
+                                <div class="lh-amenities-in lh-amenities-right">
+                                    <h4 class="side-number">03</h4>
+                                    <div class="lh-top-dish">
+                                        <img src="{% static 'hotel/assets/img/amenities/amenities-dish-4.svg' %}" class="svg-img" alt="amenities-dish-3">
+                                    </div>
+                                    <div class="amenities-contain">
+                                        <h4 class="amenities-heading">Golf & Garden</h4>
+                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa. This is the dolor sit amet adipisicing elit.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="amenities-box">
+                                <img src="{% static 'hotel/assets/img/amenities/3.jpg' %}" alt="amenities_3" class="amenities-right-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 m-tb-12">
+                    <div class="lh-amenities" data-aos="fade-up" data-aos-duration="2000">
+                        <div class="amenities-detail">
+                            <div class="amenities-box">
+                                <div class="lh-amenities-in lh-amenities-right">
+                                    <h4 class="side-number">04</h4>
+                                    <div class="lh-top-dish">
+                                        <img src="{% static 'hotel/assets/img/amenities/amenities-dish-3.svg' %}" class="svg-img" alt="amenities-dish-4">
+                                    </div>
+                                    <div class="amenities-contain">
+                                        <h4 class="amenities-heading">Fitness & Gym</h4>
+                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa. This is the dolor sit amet adipisicing elit.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="amenities-box">
+                                <img src="{% static 'hotel/assets/img/amenities/4.jpg' %}" alt="amenities_4" class="amenities-right-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 m-tb-12">
+                    <div class="lh-amenities" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="amenities-detail">
+                            <div class="amenities-box">
+                                <img src="{% static 'hotel/assets/img/amenities/5.jpg' %}" alt="amenities_5" class="amenities-left-image">
+                            </div>
+                            <div class="amenities-box">
+                                <div class="lh-amenities-in">
+                                    <h4 class="side-number">05</h4>
+                                    <div class="lh-top-dish">
+                                        <img src="{% static 'hotel/assets/img/amenities/amenities-dish-5.svg' %}" class="svg-img" alt="amenities-dish-5">
+                                    </div>
+                                    <div class="amenities-contain">
+                                        <h4 class="amenities-heading">Swimming Pool</h4>
+                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa. This is the dolor sit amet adipisicing elit.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 m-tb-12">
+                    <div class="lh-amenities" data-aos="fade-up" data-aos-duration="2000">
+                        <div class="amenities-detail">
+                            <div class="amenities-box">
+                                <img src="{% static 'hotel/assets/img/amenities/6.jpg' %}" alt="amenities_6" class="amenities-left-image">
+                            </div>
+                            <div class="amenities-box">
+                                <div class="lh-amenities-in">
+                                    <h4 class="side-number">06</h4>
+                                    <div class="lh-top-dish">
+                                        <img src="{% static 'hotel/assets/img/amenities/amenities-dish-6.svg' %}" class="svg-img" alt="amenities-dish-6">
+                                    </div>
+                                    <div class="amenities-contain">
+                                        <h4 class="amenities-heading">Our Parking</h4>
+                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa. This is the dolor sit amet adipisicing elit.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </div>
+{% endblock %}

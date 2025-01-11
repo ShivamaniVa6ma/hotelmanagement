@@ -1,0 +1,1174 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+  .offcanvas-backdrop.show {
+    opacity: 0;
+  }
+
+  .room-card {
+    background: #f8f9ff;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 15px;
+    border: 1px solid #e0e0ff;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .room-type-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .room-type-header .form-check-input {
+    width: 20px;
+    height: 20px;
+  }
+
+  .room-details {
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .price-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .availability-text {
+    color: #444;
+    margin-bottom: 15px;
+  }
+
+  .number-input {
+    width: 100px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 5px 10px;
+  }
+
+  .ac-options, .bed-options {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+  }
+
+  .form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+
+  .remove-btn {
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 1.2rem;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+  }
+
+  .remove-btn:hover {
+    color: #bb2d3b;
+  }
+
+  .selected-rooms {
+    margin-top: 20px;
+  }
+
+  .room-card {
+    position: relative;
+  }
+
+  .btn-check:checked + .btn-outline-primary {
+    background-color: #0d6efd;
+    color: white;
+  }
+
+  .dropdown-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+  }
+
+  .add-more-text {
+    color: #0d6efd;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .dropdown {
+    width: 21%;
+  }
+
+  .dropdown-toggle {
+    width: 100%;
+  }
+
+  .dropdown-menu {
+    width: 21%;
+  }
+
+  .form-select-room {
+    width: 22%;
+    padding: 10px;
+  }
+
+  @media (min-width: 576px) {
+    .add-more-text {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (min-width: 320px) {
+    .add-more-text {
+      font-size: 13px;
+    }
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css">
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+
+<div class="lh-main-content">
+  <div class="container-fluid">
+    <div class="lh-page-title">
+      <div class="lh-breadcrumb">
+        <h5>Bookings</h5>
+        <ul>
+          <li><a href="{% url 'admin-panel:index' %}">Home</a></li>
+          <li>Bookings</li>
+        </ul>
+      </div>
+      <div class="lh-tools">
+        <a href="javascript:void(0)" title="Refresh" class="refresh"
+                ><i class="ri-refresh-line"></i
+              ></a>
+              <div id="pagedate">
+                <div class="lh-date-range" title="Date">
+                  <span></span>
+                </div>
+              </div>
+
+              <div class="filter">
+                <div class="dropdown" title="Filter">
+                  <button
+                    class="btn dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    >
+                  
+                    <i class="ri-sound-module-line"></i>
+                  </button>
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    <li><a class="dropdown-item" href="#">Booking</a></li>
+                    <li><a class="dropdown-item" href="#">Revenue</a></li>
+                    <li><a class="dropdown-item" href="#">Expence</a></li>
+                  </ul>
+                </div>
+              </div>
+
+        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#bookingOffcanvas">
+          <i class="fas fa-plus-circle me-2"></i>Book Room
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 col-md-12">
+        <div class="lh-card" id="bookingtbl">
+          <div class="lh-card-header">
+            <h4 class="lh-card-title">Latest Bookings</h4>
+            <div class="header-tools">
+              <a href="javascript:void(0)" class="m-r-10 lh-full-card"
+                ><i class="ri-fullscreen-line" title="Full Screen"></i
+              ></a>
+              <div class="lh-date-range dots">
+                <span></span>
+              </div>
+            </div>
+          </div>
+          <div class="lh-card-content card-default">
+            <div class="booking-table">
+              <div class="table-responsive">
+                <table id="booking_table" class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Room Type</th>
+                      <th>RoomNo</th>
+                      <th>CheckIn</th>
+                      <th>CheckOut</th>
+                      <th>Proof</th>
+                      <th>Payment</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if bookings %}
+                    {% for booking in bookings %}
+
+                    <tr>
+                      <td class="token"> {{ booking.id}} </td>
+                      <td>
+                        <!-- <img
+                          class="cat-thumb"
+                          src="{% static 'assets/img/room/1.png' %}"
+                          alt="clients Image"
+                        /> -->
+                        <span class="name"> {{ booking.room.room_type }}</span>
+                      </td>
+                      <td>{{ booking.room.room_number }}</td>
+                      <td> {{ booking.check_in|date:"M d, Y H:i" }}</td>
+                      <td>{{ booking.check_out|date:"M d, Y H:i" }}</td>
+                      <td>{{ booking.guest.get_proof_type_display }} - {{ booking.guest.proof_no }}</td>
+
+                      <td class="active">{{ booking.payment_type }}</td>
+                      <td>₹{{ booking.total_amount }}</td>
+                      <td>
+                        {% if booking.check_out > now %}
+                            <span class="badge bg-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Completed</span>
+                        {% endif %}
+                    </td>
+                      
+                      <!-- <td class="rooms">
+                        <span class="mem">6 Member</span> /
+                        <span class="room">2 Room</span>
+                      </td> -->
+                      <td>
+                        <div class="d-flex justify-content-center">
+                          <a href="{% url 'admin-panel:booking_view' booking.id %}" class="btn btn-outline-primary me-2">
+                            <i class="ri-eye-line"></i>
+                          </a>
+                          <a href="{% url 'admin-panel:delete_booking' booking.id %}" class="btn btn-outline-danger">
+                            <i class="ri-delete-bin-line"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                    
+                  
+                    {% endfor %} 
+                  {% else %}
+                    <tr>
+                        <td colspan="10" class="text-center">No Bookings Found.</td>
+                    </tr>
+                {% endif %}                    
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="bookingOffcanvas" aria-labelledby="bookingOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="bookingOffcanvasLabel">New Booking</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+      <form id="bookingForm" method="post" action="{% url 'admin-panel:multiple_bookings_create' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+          <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+            {{ message }}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <input type="hidden" name="room_type" value="{{ room_type }}">
+        <input type="hidden" name="bed_type" value="{{ bed_type }}">
+        <input type="hidden" name="ac_type" value="{{ ac_type }}">
+        <input type="hidden" name="sitting_capacity" value="{{ sitting_capacity }}">
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Check-in Date & Time</label>
+            <input type="datetime-local" name="check_in" class="form-control" required>
+            {% if booking_form.check_in.errors %}
+            <div class="invalid-feedback">
+              {{ booking_form.check_in.errors }}
+            </div>
+            {% endif %}
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Check-out Date & Time</label>
+            <input type="datetime-local" name="check_out" class="form-control" required>
+            {% if booking_form.check_out.errors %}
+            <div class="invalid-feedback">
+              {{ booking_form.check_out.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="form-container">
+            <div class="mb-3">
+              <div class="dropdown-container">
+                <div style="flex: 1;">
+                  <label for="roomType" class="form-label">Add Room Type</label>
+                  <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" 
+                            data-bs-toggle="dropdown"  data-bs-auto-close="true" aria-expanded="false" style="width: 165px;">
+                      Choose Room Type
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <li><a class="dropdown-item" href="#" data-value="standard">Standard</a></li>
+                      <li><a class="dropdown-item" href="#" data-value="deluxe">Deluxe</a></li>
+                      <li><a class="dropdown-item" href="#" data-value="vip">VIP</a></li>
+                      <li><a class="dropdown-item" href="#" data-value="conference">Conference</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="add-more-text" id="addMoreText" style="cursor: pointer;">Add More</div>
+              </div>
+            </div>
+
+            <div id="selectedRooms" class="selected-rooms"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Guest Name</label>
+            <input type="text" id="name" name="name" class="form-control" value="{{ guest_form.name.value|default:'' }}">
+
+            {% if guest_form.name.errors %}
+            <div class="invalid-feedback">
+              {{ guest_form.name.errors }}
+            </div>
+            {% endif %}
+          </div>
+          
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Phone Number</label>
+            <input type="text" id="phone" name="phone" class="form-control" value="{{ guest_form.phone.value|default:'' }}">
+            {% if guest_form.phone.errors %}
+            <div class="invalid-feedback">
+              {{ guest_form.phone.errors }}
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-control" value="{{ guest_form.email.value|default:'' }}">
+            {% if guest_form.email.errors %}
+            <div class="invalid-feedback">
+              {{ guest_form.email.errors }}
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Address</label>
+            <textarea id="address" name="address" class="form-control">{{ guest_form.address.value|default:'' }}</textarea>
+            {% if guest_form.address.errors %}
+            <div class="invalid-feedback">
+              {{ guest_form.address.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="guest-info">
+              <h6 class="mb-3">Guest Count</h6>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Adults</label>
+                  <input type="text" id="adults" name="adults" class="form-control" value="{{ guest_form.adults.value|default:'' }}">
+                  {% if booking_form.adults.errors %}
+                  <div class="invalid-feedback">
+                    {{ booking_form.adults.errors }}
+                  </div>
+                  {% endif %}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Children</label>
+                  <input type="text" id="children" name="children" class="form-control" value="{{ guest_form.children.value|default:'' }}">
+                  {% if booking_form.children.errors %}
+                  <div class="invalid-feedback">
+                    {{ booking_form.children.errors }}
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="col-md-5 mb-3" style="width: 100%">
+          <h6 class="card-title mb-4">ID Proof Selection</h6>
+          <!-- Radio Buttons for Proof Type Selection -->
+        <!-- <div class="mb-4"> -->
+          <label class="form-label" for="proof_type">ID Proof Type <span class="text-danger">*</span></label>
+          <div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="proof_type" id="aadharRadio" value="aadhar">
+              <label class="form-check-label" for="aadharRadio">Aadhar Card</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="proof_type" id="panRadio" value="pan" >
+              <label class="form-check-label" for="panRadio">PAN Card</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="proof_type" id="passportRadio" value="passport" >
+              <label class="form-check-label" for="passportRadio">Passport</label>
+            </div>
+          </div>
+          {% if guest_form.proof_type.errors %}
+                            <div class="error-message">{{ guest_form.proof_type.errors.0 }}</div>
+                        {% endif %}
+        </div>
+
+        <!-- Proof Number Input Field -->
+        <div class="mb-4">
+          <label id="proofLabel" for="proofInput" class="form-label">Enter ID Proof Number <span class="text-danger">*</span></label>
+          <input 
+            type="text" 
+            id="proofInput" 
+            name="proof_no"
+            class="form-control" 
+            value="{{ guest_form.proof_no.value|default:'' }}"
+          >
+          <div id="proofText" class="form-text">Select an ID proof type above</div>
+          <div id="proofError" class="invalid-feedback"></div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="guest-info">
+              <label class="form-label">Upload ID Proof</label>
+              <input 
+                    type="file" 
+                    name="proof_file" 
+                    id="proofFile" 
+                    class="form-control"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    required
+                  >
+              <!-- {{ guest_form.proof_file }} -->
+              {% if guest_form.proof_file.errors %}
+              <div class="invalid-feedback">
+                {{ guest_form.proof_file.errors }}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Payment Type</label>
+            <select name="payment_type">
+              <option value="cash">Cash</option>
+              <option value="upi">UPI</option>
+              <option value="card">Card</option>
+              <option value="net_banking">Net Banking</option>
+          </select>
+            {% if booking_form.payment_type.errors %}
+            <div class="invalid-feedback">
+              {{ booking_form.payment_type.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <hr/>
+
+        <div class="col-md-6 mb-3" style="display: flex; gap: 9px">
+          <p>Total Amount:</p>
+          <h5 id="totalAmount" style="color: green">₹0/-</h5>
+        </div>
+
+        <div class="d-grid gap-2" style="display: flex; justify-content: center; width: 100%; margin-top: 40px;">
+          <button type="submit" id="confirmBookingButton" class="btn btn-primary">
+            <i class="fas fa-check-circle me-2"></i>Confirm Booking
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+const roomTypes = {};
+
+async function fetchRoomPrice(roomType, bedType, acType, sittingCapacity, checkIn, checkOut) {
+    try {
+        console.log('Fetching price for:', { roomType, bedType, acType, sittingCapacity, checkIn, checkOut });
+        
+        const response = await fetch('/admin-panel/get-room-price/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                room_type: roomType,
+                bed_type: bedType,
+                ac_type: acType,
+                sitting_capacity: sittingCapacity,
+                check_in: checkIn,
+                check_out: checkOut
+            })
+        });
+
+        const data = await response.json();
+        console.log('Response:', data);
+
+        if (data.success) {
+            return {
+                price: data.price,
+                available: data.available
+            };
+        } else {
+            console.error('Error fetching room price:', data.error);
+            return null;
+        }
+    } catch (error) {
+        console.error('Network error:', error);
+        return null;
+    }
+}
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+function addRoomCardListeners(cardElement) {
+    const inputs = cardElement.querySelectorAll('.bed-type, .ac-type, .sitting-capacity, .number-input');
+    inputs.forEach(input => {
+        input.addEventListener('change', () => {
+            const checkIn = document.querySelector('input[name="check_in"]').value;
+            const checkOut = document.querySelector('input[name="check_out"]').value;
+            updateRoomPrice(cardElement, checkIn, checkOut);
+        });
+    });
+}
+
+let roomCounter = 0;
+
+async function createRoomCard(roomType) {
+    const uniqueId = `${roomType}_${roomCounter++}`;
+    const checkIn = document.querySelector('input[name="check_in"]').value;
+    const checkOut = document.querySelector('input[name="check_out"]').value;
+
+    const cardHtml = `
+        <div class="room-card" id="${uniqueId}">
+            <span class="remove-btn" onclick="removeRoom('${uniqueId}')">&times;</span>
+            <div class="room-type-header">
+                <h5 class="mb-0">${roomType.charAt(0).toUpperCase() + roomType.slice(1)}</h5>
+            </div>
+            ${roomType !== 'conference' ? `
+            <div class="bed-options">
+                <label class="mb-2">Bed Type</label>
+                <div class="d-flex gap-2">
+                    <input type="radio" class="btn-check bed-type" name="bedType_${uniqueId}" id="single_${uniqueId}" value="single" required>
+                    <label class="btn btn-outline-primary" for="single_${uniqueId}">Single Bed</label>
+                    <input type="radio" class="btn-check bed-type" name="bedType_${uniqueId}" id="double_${uniqueId}" value="double">
+                    <label class="btn btn-outline-primary" for="double_${uniqueId}">Double Bed</label>
+                </div>
+            </div>
+            ` : ''}
+            ${roomType === 'conference' ? `
+            <div class="mb-3">
+                <label class="form-label">Sitting Capacity:</label>
+                <select class="form-select-room sitting-capacity" name="sittingCapacity_${uniqueId}" required>
+                    <option value="1-10">Up to 10</option>
+                    <option value="11-20">Up to 20</option>
+                    <option value="21-30">Up to 30</option>
+                </select>
+            </div>
+            ` : ''}
+            <div class="ac-options">
+                <label class="mb-2">AC Preference</label>
+                <div class="d-flex gap-3">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input ac-type" type="radio" name="acType_${uniqueId}" id="ac_${uniqueId}" value="ac" required>
+                        <label class="form-check-label" for="ac_${uniqueId}">AC</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input ac-type" type="radio" name="acType_${uniqueId}" id="nonAc_${uniqueId}" value="nonAc">
+                        <label class="form-check-label" for="nonAc_${uniqueId}">Non-AC</label>
+                    </div>
+                </div>
+            </div>
+            <div class="room-details">
+                <div class="price-text">Room Price: <span class="room-price">Fetching...</span></div>
+                <div class="availability-text">Available Rooms: <span class="room-availability">Fetching...</span></div>
+                <div class="mb-3">
+                    <label class="form-label">Select No. Rooms:</label>
+                    <input type="number" class="number-input" name="roomCount_${uniqueId}" min="1" value="1" required>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = cardHtml;
+    const cardElement = tempDiv.firstElementChild;
+
+    // Add event listeners
+    cardElement.querySelectorAll('.bed-type, .ac-type, .sitting-capacity').forEach(el => {
+        el.addEventListener('change', () => updateRoomPrice(cardElement, checkIn, checkOut));
+    });
+
+    // Initial price fetch
+    addRoomCardListeners(cardElement);
+    await updateRoomPrice(cardElement, checkIn, checkOut);
+
+    return cardElement;
+}
+
+async function updateRoomPrice(cardElement, checkIn, checkOut) {
+    const roomType = cardElement.id.split('_')[0];
+    const bedType = cardElement.querySelector('.bed-type:checked')?.value;
+    const acType = cardElement.querySelector('.ac-type:checked')?.value;
+    const sittingCapacity = cardElement.querySelector('.sitting-capacity')?.value;
+    const numberInput = cardElement.querySelector('.number-input');
+    const priceElement = cardElement.querySelector('.room-price');
+    const availabilityElement = cardElement.querySelector('.room-availability');
+
+    // Show loading state
+    priceElement.textContent = 'Fetching...';
+    availabilityElement.textContent = 'Fetching...';
+
+    // Get current dates if not provided
+    const currentCheckIn = checkIn || document.querySelector('input[name="check_in"]').value;
+    const currentCheckOut = checkOut || document.querySelector('input[name="check_out"]').value;
+
+    // Check if all required fields are selected
+    if (!bedType && roomType !== 'conference' || !acType || (roomType === 'conference' && !sittingCapacity)) {
+        priceElement.textContent = 'Select all options';
+        availabilityElement.textContent = '--';
+        numberInput.disabled = true;
+        return;
+    }
+
+    // Check if dates are selected
+    if (!currentCheckIn || !currentCheckOut) {
+        priceElement.textContent = 'Select dates first';
+        availabilityElement.textContent = '--';
+        numberInput.disabled = true;
+        return;
+    }
+
+    // Fetch room price and availability
+    const result = await fetchRoomPrice(roomType, bedType, acType, sittingCapacity, currentCheckIn, currentCheckOut);
+    
+    if (result && result.available > 0) {
+        priceElement.textContent = `₹${result.price}/-`;
+        availabilityElement.textContent = result.available;
+        
+        // Enable number input and limit max value to available rooms
+        numberInput.max = result.available;
+        numberInput.disabled = false;
+        
+        // If current value is more than available, adjust it
+        if (parseInt(numberInput.value) > result.available) {
+            numberInput.value = result.available;
+        }
+    } else {
+        priceElement.textContent = 'Not available';
+        availabilityElement.textContent = '0';
+        
+        // Disable number input when no rooms are available
+        numberInput.value = 0;
+        numberInput.disabled = true;
+    }
+    
+    // Update total amount
+    updateTotalAmount();
+}
+
+function removeRoom(roomId) {
+  document.getElementById(roomId).remove();
+  if (document.querySelectorAll('.room-card').length === 0) {
+    document.getElementById('addMoreText').style.display = 'none';
+  }
+  updateTotalAmount();
+}
+
+function updateTotalAmount() {
+  let total = 0;
+  document.querySelectorAll('.room-card').forEach(card => {
+    const priceText = card.querySelector('.room-price').textContent;
+    const price = parseInt(priceText.replace('₹', '').replace('/-', '')) || 0;
+    const roomCount = parseInt(card.querySelector('.number-input').value) || 0;
+    total += price * roomCount;
+  });
+  document.getElementById('totalAmount').textContent = `₹${total}/-`;
+}
+
+document.querySelectorAll('.dropdown-item').forEach(item => {
+  item.addEventListener('click', async function(e) {
+    e.preventDefault();
+    const selectedValue = this.getAttribute('data-value');
+    const selectedRoomsContainer = document.getElementById('selectedRooms');
+    const newRoomCard = await createRoomCard(selectedValue);
+    selectedRoomsContainer.appendChild(newRoomCard);
+    document.getElementById('addMoreText').style.display = 'block';
+
+    // Automatically fetch available rooms when a room type is selected
+    const checkIn = document.querySelector('input[name="check_in"]').value;
+    const checkOut = document.querySelector('input[name="check_out"]').value;
+
+    if (checkIn && checkOut) {
+        await updateRoomPrice(newRoomCard, checkIn, checkOut);
+    }
+  });
+});
+
+document.getElementById('addMoreText').addEventListener('click', function() {
+  const dropdownMenu = document.querySelector('.dropdown-menu');
+  dropdownMenu.classList.toggle('show');
+});
+
+
+// Add this before the form submit handler
+function validateRoomAvailability() {
+    let isValid = true;
+    const messages = [];
+    
+    // Check if dates are selected
+    const checkIn = document.querySelector('input[name="check_in"]').value;
+    const checkOut = document.querySelector('input[name="check_out"]').value;
+    
+    if (!checkIn || !checkOut) {
+        messages.push('Please select check-in and check-out dates');
+        isValid = false;
+    }
+
+    // Check each room card
+    document.querySelectorAll('.room-card').forEach(card => {
+        const roomType = card.id.split('_')[0];
+        const bedType = card.querySelector('.bed-type:checked')?.value;
+        const acType = card.querySelector('.ac-type:checked')?.value;
+        const availability = card.querySelector('.room-availability').textContent;
+        const roomCount = parseInt(card.querySelector('.number-input').value) || 0;
+
+        if (!bedType && roomType !== 'conference' || !acType || (roomType === 'conference' && !card.querySelector('.sitting-capacity').value)) {
+            messages.push(`Please select all options for ${roomType} room`);
+            isValid = false;
+        }
+
+        if (availability === '0' || availability === 'Not available' || roomCount === 0) {
+            messages.push(`${roomType} room is not available for the selected criteria`);
+            isValid = false;
+        }
+    });
+
+    if (!isValid) {
+        alert(messages.join('\n'));
+    }
+    return isValid;
+}
+
+// Update the form submit handler
+document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    if (!validateRoomAvailability()) {
+        return false;
+    }
+    
+    const selectedRooms = [];
+    document.querySelectorAll('.room-card').forEach(card => {
+        const roomId = card.id;
+        const roomType = roomId.split('_')[0];
+        const bedType = roomType !== 'conference' ? card.querySelector(`input[name="bedType_${roomId}"]:checked`)?.value : null;
+        const acType = card.querySelector(`input[name="acType_${roomId}"]:checked`)?.value;
+        const roomCount = card.querySelector('.number-input').value;
+        const sittingCapacity = roomType === 'conference' ? card.querySelector(`select[name="sittingCapacity_${roomId}"]`)?.value : null;
+
+        const roomData = {
+            roomType,
+            acType,
+            roomCount
+        };
+
+        if (roomType !== 'conference') {
+            roomData.bedType = bedType;
+        }
+        if (roomType === 'conference') {
+            roomData.sittingCapacity = sittingCapacity;
+        }
+
+        selectedRooms.push(roomData);
+    });
+
+    // Add the selected rooms data to the form
+    const roomsInput = document.createElement('input');
+    roomsInput.type = 'hidden';
+    roomsInput.name = 'selectedRooms';
+    roomsInput.value = JSON.stringify(selectedRooms);
+    this.appendChild(roomsInput);
+
+    try {
+        const formData = new FormData(this);
+        const response = await fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const result = await response.json();
+        if (result.success) {
+            window.location.href = result.redirect_url;
+        } else {
+            alert(result.error || 'An error occurred during booking');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred during booking. Please try again.');
+    }
+
+    // Get the selected proof type
+    const selectedProof = document.querySelector('input[name="idProof"]:checked');
+    // if (!selectedProof) {
+    //     alert('Please select an ID proof type');
+    //     return;
+    // }
+
+    // Set the proof_type hidden input value
+    // document.getElementById('proof_type').value = selectedProof.value;
+    
+    // const formData = new FormData(this);
+    
+    // Validate proof number
+    const proofNo = formData.get('proof_no');
+    if (!proofNo) {
+        alert('Please enter the ID proof number');
+        return false;
+    }
+    
+    try {
+        const response = await fetch('/bookings/create/', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        console.log('Response:', data); // Debug log
+        
+        if (data.success) {
+            // Handle success
+            window.location.href = 'admin-panel/bookings/';
+        } else {
+            // Handle error
+            alert(data.error || 'An error occurred while creating the booking');
+            console.error('Form submission errors:', data.errors);
+        }
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('An error occurred while submitting the form');
+    }
+});
+document.querySelectorAll('input[name="proof_type"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        const proofInput = document.getElementById('proofInput');
+        const proofLabel = document.getElementById('proofLabel');
+        const proofText = document.getElementById('proofText');
+        
+        switch(this.value) {
+            case 'aadhar':
+                proofLabel.textContent = 'Aadhar Number';
+                proofInput.placeholder = 'Enter 12 digit Aadhar number';
+                proofText.textContent = 'Enter 12 digit Aadhar number without spaces';
+                break;
+            case 'pan':
+                proofLabel.textContent = 'PAN Number';
+                proofInput.placeholder = 'Enter PAN number';
+                proofText.textContent = 'Enter 10 character PAN number';
+                break;
+            case 'passport':
+                proofLabel.textContent = 'Passport Number';
+                proofInput.placeholder = 'Enter Passport number';
+                proofText.textContent = 'Enter Passport number';
+                break;
+        }
+        
+        // Clear and enable input
+        proofInput.value = '';
+        proofInput.disabled = false;
+    });
+});
+
+// Input validation
+document.getElementById('proofInput').addEventListener('input', function() {
+    const proofType = document.querySelector('input[name="proof_type"]:checked')?.value;
+    let isValid = false;
+    
+    switch(proofType) {
+        case 'aadhar':
+            isValid = /^\d{12}$/.test(this.value);
+            this.value = this.value.replace(/\D/g, '').slice(0, 12);
+            break;
+        case 'pan':
+            isValid = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(this.value);
+            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 10);
+            break;
+        case 'passport':
+            isValid = /^[A-Z]{1}[0-9]{7}$/.test(this.value);
+            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
+            break;
+    }
+    
+    if (this.value && !isValid) {
+        this.classList.add('is-invalid');
+    } else {
+        this.classList.remove('is-invalid');
+    }
+});
+
+// ID Proof form handling
+// Map of proof form elements
+// const proofLabel = document.getElementById('proofLabel');
+// const proofText = document.getElementById('proofText');
+// const proofInput = document.getElementById('proofInput');
+// const proofError = document.getElementById('proofError');
+// const proofFile = document.getElementById('proofFile');
+// const proofTypeRadios = document.querySelectorAll('input[name="proof_type"]');
+
+
+//  // Validation patterns for different proof types
+// const proofPatterns = {
+//   aadhar: {
+//     pattern: /^\d{12}$/,
+//     label: 'Aadhar Number',
+//     placeholder: 'Enter 12 digit Aadhar number',
+//     helpText: 'Enter 12 digit Aadhar number without spaces',
+//     maxLength: 12,
+//     format: (value) => value.replace(/\D/g, '').slice(0, 12)
+//   },
+//   pan: {
+//     pattern: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
+//     label: 'PAN Number',
+//     placeholder: 'Enter PAN number (e.g., ABCDE1234F)',
+//     helpText: 'Enter 10 character PAN number in correct format',
+//     maxLength: 10,
+//     format: (value) => value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 10)
+//   },
+//   passport: {
+//     pattern: /^[A-Z]{1}[0-9]{7}$/,
+//     label: 'Passport Number',
+//     placeholder: 'Enter Passport number (e.g., A1234567)',
+//     helpText: 'Enter 8 character Passport number starting with a letter',
+//     maxLength: 8,
+//     format: (value) => value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8)
+//   }
+// };
+// // Handle proof type selection
+// proofTypeRadios.forEach(radio => {
+//   radio.addEventListener('change', function() {
+//     const proofType = this.value;
+//     const proofConfig = proofPatterns[proofType];
+    
+//     if (proofConfig) {
+//       // Update input attributes and help text
+//       proofLabel.textContent = proofConfig.label;
+//       proofInput.placeholder = proofConfig.placeholder;
+//       proofInput.maxLength = proofConfig.maxLength;
+//       proofText.textContent = proofConfig.helpText;
+      
+//       // Clear previous validation state
+//       proofInput.value = '';
+//       proofInput.classList.remove('is-invalid');
+//       proofError.style.display = 'none';
+      
+//       // Enable input
+//       proofInput.disabled = false;
+//     }
+//   });
+// });
+// // Handle proof number input validation
+// proofInput.addEventListener('input', function() {
+//   const selectedProofType = document.querySelector('input[name="proof_type"]:checked')?.value;
+//   const proofConfig = proofPatterns[selectedProofType];
+  
+//   if (proofConfig) {
+//     // Format input according to proof type
+//     this.value = proofConfig.format(this.value);
+    
+//     // Validate input
+//     const isValid = proofConfig.pattern.test(this.value);
+    
+//     if (this.value && !isValid) {
+//       this.classList.add('is-invalid');
+//       proofError.textContent = `Invalid ${proofConfig.label.toLowerCase()} format`;
+//       proofError.style.display = 'block';
+//     } else {
+//       this.classList.remove('is-invalid');
+//       proofError.style.display = 'none';
+//     }
+//   }
+// });
+//   // Optional: Trigger the event on page load to show the correct label and text if a value is pre-selected
+  // document.querySelector('input[name="proof_type"]:checked')?.dispatchEvent(new Event('change'));
+
+
+// Initialize Bootstrap dropdowns
+document.addEventListener('DOMContentLoaded', function() {
+  var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+  var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+    return new bootstrap.Dropdown(dropdownToggleEl)
+  })
+});
+
+// Function to fetch available rooms based on selected criteria
+async function fetchAvailableRooms() {
+    const checkIn = document.querySelector('input[name="check_in"]').value;
+    const checkOut = document.querySelector('input[name="check_out"]').value;
+
+    if (!checkIn || !checkOut) {
+        return; // Exit if any field is empty
+    }
+
+    const response = await fetch('/admin-panel/check-room-availability/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({ check_in: checkIn, check_out: checkOut })
+    });
+
+    const data = await response.json();
+    if (data.success) {
+        updateRoomDropdown(data.available_rooms);
+    } else {
+        console.error('Error fetching available rooms:', data.error);
+    }
+}
+
+// Call fetchAvailableRooms when check-in or check-out dates change
+document.querySelector('input[name="check_in"]').addEventListener('change', fetchAvailableRooms);
+document.querySelector('input[name="check_out"]').addEventListener('change', fetchAvailableRooms);
+
+// Add these event listeners after the existing date input listeners
+document.querySelectorAll('input[name="check_in"], input[name="check_out"]').forEach(input => {
+    input.addEventListener('change', async () => {
+        const checkIn = document.querySelector('input[name="check_in"]').value;
+        const checkOut = document.querySelector('input[name="check_out"]').value;
+        
+        // Update all existing room cards
+        document.querySelectorAll('.room-card').forEach(async card => {
+            await updateRoomPrice(card, checkIn, checkOut);
+        });
+    });
+});
+
+function storeRoomSelections() {
+    const selections = {};
+    document.querySelectorAll('.room-card').forEach(card => {
+        const id = card.id;
+        selections[id] = {
+            bedType: card.querySelector('.bed-type:checked')?.value,
+            acType: card.querySelector('.ac-type:checked')?.value,
+            roomCount: card.querySelector('.number-input').value
+        };
+    });
+    return selections;
+}
+
+function restoreRoomSelections(selections) {
+    Object.entries(selections).forEach(([id, data]) => {
+        const card = document.getElementById(id);
+        if (card) {
+            if (data.bedType) {
+                card.querySelector(`input[value="${data.bedType}"]`).checked = true;
+            }
+            if (data.acType) {
+                card.querySelector(`input[value="${data.acType}"]`).checked = true;
+            }
+            if (data.roomCount) {
+                card.querySelector('.number-input').value = data.roomCount;
+            }
+        }
+    });
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#booking_table').DataTable({
+        "order": [[0, "desc"]], // Order by ID descending
+        "pageLength": 10,       // Show 10 entries per page
+        "responsive": true,
+        "language": {
+            "emptyTable": "No bookings found"
+        },
+        "columnDefs": [
+            {
+                "targets": -1,  // Last column (Action)
+                "orderable": false
+            }
+        ]
+    });
+});
+</script>
+
+{% endblock %}
+

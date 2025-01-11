@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="lh-main-content">
+	<div class="container-fluid">
+		<div class="lh-page-title">
+			<div class="lh-breadcrumb">
+				<h5>Guest Details</h5>
+				<ul>
+					<li><a href="{% url 'admin-panel:index' %}">Home</a></li>
+					<li><a href="{% url 'admin-panel:guest_list' %}">Guests</a></li>
+					<li>{{ guest.name }}</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="row">
+			<!-- Guest Information Card -->
+			<div class="col-xl-4 col-md-6 mb-4">
+				<div class="lh-card">
+					<div class="lh-card-header">
+						<h4 class="lh-card-title">Guest Information</h4>
+					</div>
+					<div class="lh-card-content">
+						<div class="mb-3">
+							<label class="fw-bold">Name</label>
+							<p>{{ guest.name }}</p>
+						</div>
+						<div class="mb-3">
+							<label class="fw-bold">Contact</label>
+							<p>Phone:{{ guest.phone }}<br>Email:{{ guest.email }}</p>
+						</div>
+						<div class="mb-3">
+							<label class="fw-bold">ID Proof</label>
+							<p>{{ guest.get_proof_type_display }} - {{ guest.proof_no }}</p>
+							{% if guest.proof_file %}
+							<a href="{{ guest.proof_file.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+								<i class="ri-file-text-line me-2"></i>View Document
+							</a>
+							{% endif %}
+						</div>
+						<div>
+							<label class="fw-bold">Address</label>
+							<p>{{ guest.address }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Booking Statistics Card -->
+			<!-- <div class="col-xl-4 col-md-6 mb-4">
+				<div class="lh-card">
+					<div class="lh-card-header">
+						<h4 class="lh-card-title">Statistics</h4>
+					</div>
+					<div class="lh-card-content">
+						<div class="d-flex justify-content-between align-items-center mb-3">
+							<span>Total Bookings</span>
+							<span class="badge bg-primary">{{ total_bookings }}</span>
+						</div>
+						<div class="d-flex justify-content-between align-items-center">
+							<span>Total Amount Spent</span>
+							<span class="badge bg-success">₹{{ total_spent }}</span>
+						</div>
+					</div>
+				</div>
+			</div> -->
+
+			<!-- Booking History -->
+			<div class="col-xl-8 mb-4">
+				<div class="lh-card">
+					<div class="lh-card-header">
+						<h4 class="lh-card-title">Booking History</h4>
+					</div>
+					<div class="lh-card-content">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Booking ID</th>
+										<th>Room</th>
+										<th>Check In</th>
+										<th>Check Out</th>
+										<th>Amount</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for booking in bookings %}
+									<tr>
+										<td>#{{ booking.id }}</td>
+										<td>{{ booking.room.room_number }}</td>
+										<td>{{ booking.check_in|date:"M d, Y H:i" }}</td>
+										<td>{{ booking.check_out|date:"M d, Y H:i" }}</td>
+										<td>₹{{ booking.total_amount }}</td>
+										<td>
+											<span class="badge {% if booking.status == 'confirmed' %}bg-success{% elif booking.status == 'pending' %}bg-warning{% else %}bg-danger{% endif %}">
+												{{ booking.status|title }}
+											</span>
+										</td>
+									</tr>
+									{% empty %}
+									<tr>
+										<td colspan="6" class="text-center">No bookings found</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+        body {
+            /* background: linear-gradient(120deg, #2b5876, #4e4376); */
+            min-height: 100vh;
+            padding: 2rem 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        .booking-container {
+            max-width: 1000px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .header {
+           
+            background: linear-gradient(135deg, #000428, #004e92);
+            padding: 15px;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.1) 50%, transparent 55%);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .content {
+            padding: 2.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        .info-card {
+            /* background: white; */
+            border-radius: 20px;
+            /* padding: 1.5rem; */
+            margin-bottom: 2rem;
+            /* box-shadow: 0 10px 30px rgba(0,0,0,0.05); */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* border: 1px solid rgba(0,0,0,0.05); */
+        }
+        /* .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        } */
+        .info-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            /* margin-bottom: 0.5rem; */
+        }
+        .info-value {
+            color: #1f2937;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 0.75rem;
+            background: #e9eef4;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+        .date-section {
+            /* background: linear-gradient(135deg, #f6f8fc 0%, #f1f4f9 100%); */
+            border-radius: 20px;
+            /* padding: 2rem; */
+            margin-bottom: 2rem;
+            /* border: 1px solid rgba(59, 130, 246, 0.1); */
+        }
+        .room-type {
+            /* background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); */
+            color: rgb(19, 17, 17);
+            /* padding: 1rem; */
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .room-type::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine {
+            100% { transform: translateX(100%); }
+        }
+        .documents-section {
+            /* background: white;
+            border: 2px dashed #cbd5e1; */
+            border-radius: 20px;
+            /* padding: 2rem; */
+            /* margin-bottom: 2rem; */
+            position: relative;
+        }
+        /* .documents-section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            border-radius: 20px;
+            border: 2px dashed #93c5fd;
+            animation: borderDash 20s linear infinite;
+            pointer-events: none;
+        } */
+        @keyframes borderDash {
+            to { transform: rotate(360deg); }
+        }
+        .section-title {
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            /* margin-bottom: 1.5rem; */
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 24px;
+            background: linear-gradient(to bottom, #3b82f6, #1e40af);
+            border-radius: 4px;
+        }
+        .guest-count {
+            /* background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); */
+            /* border-radius: 20px; */
+            /* padding: 2rem; */
+            position: relative;
+            overflow: hidden;
+        }
+        /* .payment-method {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        } */
+        .status-badge {
+            /* position: absolute;
+            top: 1rem;
+            right: 1rem; */
+            background: #22c55e;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+    </style>
+
+<div class="lh-main-content">
+    <div class="container-fluid">
+  
+        <div class="booking-container">
+            <div class="header">
+                <div style="display: flex;justify-content: space-between;align-items: center;">
+                    <h4 class="h4">Booking Information</h4>
+                    <div class="status-badge">Confirmed</div>
+                </div>
+            </div>
+            
+            
+            <div class="content">
+                <div class="room-type">
+                    <h3 >{{ booking.room.room_type|title }}-{{ booking.room.room_number }}</h3>
+                </div>
+                <div class="date-section">
+                  
+                    <div class="row">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <div class="info-label">Check-in Date & Time</div>
+                            <div class="info-value">{{ booking.check_in|date:"M d, Y H:i" }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-label">Check-out Date & Time</div>
+                            <div class="info-value">{{ booking.check_out|date:"M d, Y H:i" }}</div>
+                        </div>
+                    </div>
+                </div>
+
+             
+
+                <div class="info-card">
+                    <h3 class="section-title">Guest Information</h3>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="info-label">Guest Name</div>
+                            <div class="info-value">{{ booking.guest.name }}</div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="info-label">Phone Number</div>
+                            <div class="info-value">{{ booking.guest.phone }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">{{ booking.guest.email }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-label">Address</div>
+                            <div class="info-value">{{ booking.guest.address }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="guest-count">
+                    <h3 class="section-title">Guest Count</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-label">Adults</div>
+                            <div class="info-value">{{ booking.adults }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-label">Children</div>
+                            <div class="info-value">{{ booking.children }}</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row mt-3">
+                    <div class="col-md-6 ">
+                <div class="documents-section">
+                    <h3 class="section-title">ID Verification</h3>
+                    <div class="info-label">{{ booking.guest.get_proof_type_display }}</div>
+                    <div class="info-value">{{ booking.guest.proof_no }}</div>
+                </div></div>
+
+                <div class="col-md-6 ">
+                <div class="payment-method">
+                    <h3 class="section-title">Payment Information</h3>
+                    <div class="info-label">Payment Method</div>
+                    <div class="info-value">{{ booking.payment_type }}</div>
+                </div></div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

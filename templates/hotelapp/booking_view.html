@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="lh-main-content ">
+    <div class="container-fluid bg-dark">
+        <!-- Breadcrumb -->
+        <div class="lh-page-title">
+            <div class="lh-breadcrumb">
+                <h5>Booking Details</h5>
+                <ul>
+                    <li><a href="{% url 'admin-panel:index' %}">Home</a></li>
+                    <li><a href="{% url 'admin-panel:booking_list' %}">Bookings</a></li>
+                    <li>Booking #{{ booking.id }}</li>
+                </ul>
+            </div>
+            <div class="lh-tools">
+                {% if is_active %}
+                <a href="{% url 'admin-panel:edit_booking' booking.id %}" class="btn btn-primary me-2">
+                    <i class="ri-edit-line me-2"></i>Edit Booking
+                </a>
+                {% endif %}
+                <a href="{% url 'admin-panel:booking_list' %}" class="btn btn-secondary">
+                    <i class="ri-arrow-left-line me-2"></i>Back to List
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Booking Status Card -->
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="lh-card">
+                    <div class="lh-card-header">
+                        <h4 class="lh-card-title">Booking Status</h4>
+                    </div>
+                    <div class="lh-card-content">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span>Status</span>
+                            <span class="badge {% if is_active %}bg-success{% else %}bg-secondary{% endif %}">
+                                {{ status }}
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span>Booking ID</span>
+                            <span class="fw-bold">#{{ booking.id }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Payment Status</span>
+                            <span class="badge bg-success">{{ booking.payment_type }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guest Information Card -->
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="lh-card">
+                    <div class="lh-card-header">
+                        <h4 class="lh-card-title">Guest Information</h4>
+                    </div>
+                    <div class="lh-card-content">
+                        <div class="mb-3">
+                            <label class="fw-bold">Name</label>
+                            <p>{{ guest.name }}</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold">Contact</label>
+                            <p>{{ guest.phone }}<br>{{ guest.email }}</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold">ID Proof</label>
+                            <p>{{ guest.get_proof_type_display }} - {{ guest.proof_no }}</p>
+                        </div>
+                        <div>
+                            <label class="fw-bold">Address</label>
+                            <p>{{ guest.address }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Room Details Card -->
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="lh-card">
+                    <div class="lh-card-header">
+                        <h4 class="lh-card-title">Room Details</h4>
+                    </div>
+                    <div class="lh-card-content">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span>Room Number</span>
+                            <span class="fw-bold">{{ room.room_number }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span>Room Type</span>
+                            <span>{{ room.room_type|title }}</span>
+                        </div>
+                        {% if room.room_type != 'conference' %}
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span>Bed Type</span>
+                            <span>{{ room.bed_type|title }}</span>
+                        </div>
+                        {% endif %}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>AC Type</span>
+                            <span>{{ room.ac_type|title }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stay Details Card -->
+            <div class="col-xl-8 col-md-12 mb-4">
+                <div class="lh-card">
+                    <div class="lh-card-header">
+                        <h4 class="lh-card-title">Stay Details</h4>
+                    </div>
+                    <div class="lh-card-content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="fw-bold">Check-in</label>
+                                    <p>{{ booking.check_in|date:"M d, Y H:i" }}</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="fw-bold">Duration</label>
+                                    <p>
+                                        {% if duration.days > 0 %}{{ duration.days }} day{{ duration.days|pluralize }}{% endif %}
+                                        {% if duration.hours > 0 %}{% if duration.days > 0 %}, {% endif %}{{ duration.hours }} hour{{ duration.hours|pluralize }}{% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="fw-bold">Check-out</label>
+                                    <p>{{ booking.check_out|date:"M d, Y H:i" }}</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="fw-bold">Guests</label>
+                                    <p>{{ booking.adults }} Adult{{ booking.adults|pluralize }}{% if booking.children %}, {{ booking.children }} Child{{ booking.children|pluralize }}{% endif %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Details Card -->
+            <div class="col-xl-4 col-md-12 mb-4">
+                <div class="lh-card">
+                    <div class="lh-card-header">
+                        <h4 class="lh-card-title">Price Details</h4>
+                    </div>
+                    <div class="lh-card-content">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span>Base Price (per night)</span>
+                            <span>₹{{ price_details.base_price }}</span>
+                        </div>
+                        {% if booking.room.room_type == 'conference' %}
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span>Seating Capacity</span>
+                            <span>{{ room.seating_capacity }} persons</span>
+                        </div>
+                        {% endif %}
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">Total Amount</span>
+                            <span class="fw-bold text-success">₹{{ price_details.total_price }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Room - Hotel Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .custom-card {
+            border: none;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .form-label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .required::after {
+            content: "*";
+            color: red;
+            margin-left: 4px;
+        }
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;
+        }
+        .custom-card-header {
+            background: linear-gradient(45deg, #1a237e, #283593);
+            color: white;
+            /* border-radius: 10px 10px 0 0; */
+        }
+        .btn-submit {
+            background: linear-gradient(45deg, #1a237e, #283593);
+            border: none;
+            padding: 10px 30px;
+        }
+        .btn-submit:hover {
+            background: linear-gradient(45deg, #283593, #1a237e);
+        }
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-right: none;
+        }
+        .form-control:focus {
+            border-color: #1a237e;
+            box-shadow: 0 0 0 0.2rem rgba(26,35,126,0.25);
+        }
+        .bed-type-btn {
+            width: 120px;
+            margin: 5px;
+        }
+        .bed-type-btn.active {
+            background-color: #1a237e;
+            border-color: #1a237e;
+        }
+        .price-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        .radio-group {
+            /* border: 1px solid #dee2e6;
+            border-radius: 8px; */
+            padding: 15px;
+        }
+.offcanvas{
+    width: 800px !important;
+}
+
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Add New Room Button -->
+    <button class="btn btn-primary m-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">
+        Add New Room
+    </button>
+
+    <!-- Off-canvas Component -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="addRoomOffcanvas" aria-labelledby="addRoomOffcanvasLabel" style="width: 600px;">
+        <div class="offcanvas-header custom-card-header">
+            <h4 class="offcanvas-title" id="addRoomOffcanvasLabel">Add New Room</h4>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Move your existing form here -->
+            <form id="addRoomForm" method="post" action="{% url 'admin-panel:room_create' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if form_errors %}
+                <div class="alert alert-danger">
+                    <strong>Room Submission Errors:</strong>
+                    <ul>
+                        {% for field, errors in form_errors.items %}
+                        <li>{{ field }}: {{ errors|join:", " }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if bulk_form_errors %}
+                <div class="alert alert-danger">
+                    <strong>Bulk Submission Errors:</strong>
+                    <ul>
+                        {% for field, errors in bulk_form_errors.items %}
+                        <li>{{ field }}: {{ errors|join:", " }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <div class="row g-3">
+                       <!-- Add Room Type Selection -->
+                    <div class="col-12">
+                        <label class="form-label required">Room Addition Type</label>
+                        <div class="radio-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="additionType" id="singleRoom" value="single" checked required>
+                                <label class="form-check-label" for="singleRoom">Add Single Room</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="additionType" id="bulkRooms" value="bulk">
+                                <label class="form-check-label" for="bulkRooms">Add Bulk Rooms</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" id="singleRoomNumber">
+                        <label class="form-label required">Room Number</label>
+                        <input type="text" class="form-control" name="room_number" required>
+                    </div>
+
+                    <!-- Bulk Room Number Section -->
+                    <div class="col-12" id="bulkRoomNumbers" style="display: none;">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label required">From Room Number</label>
+                                <input type="text" class="form-control" name="from_room_number">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label required">To Room Number</label>
+                                <input type="text" class="form-control" name="to_room_number">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label required">Block</label>
+                        <input type="text" class="form-control" name="block" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label required">Room Type</label>
+                        <select class="form-select" name="room_type" id="room_type" required>
+                            <option value="">Select Room Type</option>
+                            <option value="standard">Standard Room</option>
+                            <option value="deluxe">Deluxe Room</option>
+                            <option value="vip">VIP Room</option>
+                            <option value="conference">Conference Room</option>
+                        </select>
+                    </div>
+
+                    <!-- Bed Type Section -->
+                    <div class="col-md-6" id="bedTypeSection">
+                        <label class="form-label required">Bed Type</label>
+                        <select name="bed_type" id="bed_type" class="form-control">
+                                    <option value="">Choose Bed Type</option>
+                                    <option value="single">Single Bed</option>
+                                    <option value="double">Double Bed</option>
+                        </select>
+                    </div>
+
+                    <!-- Seating Capacity Section (Initially Hidden) -->
+                    <div class="col-md-6" id="seatingSection" style="display: none;">
+                        <label class="form-label required">Seating Capacity</label>
+                        <input type="number" class="form-control" name="seating_capacity" min="1">
+                    </div>
+
+                    <!-- AC/Non-AC Radio Buttons -->
+                    <div class="col-md-6">
+                        <label class="form-label required">Air Conditioning</label>
+                        <div class="radio-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="ac_type" id="ac" value="ac" required>
+                                <label class="form-check-label" for="ac">AC Room</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="ac_type" id="nonAc" value="nonAc">
+                                <label class="form-check-label" for="nonAc">Non-AC Room</label>
+                            </div>
+                        </div>
+                    </div>
+
+                 
+
+                    <!-- Enhanced Price Section -->
+                    <div class="col-12">
+                        <label class="form-label required">Room Pricing</label>
+                        <div class="price-card">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Base Price Per Night</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₹</span>
+                                        <input type="number" class="form-control" name="base_price" min="0" step="100" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Weekend Price</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₹</span>
+                                        <input type="number" class="form-control" name="weekend_price" min="0" step="100" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Holiday Price</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₹</span>
+                                        <input type="number" class="form-control" name="holiday_price" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Hourly Price</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₹</span>
+                                        <input type="number" class="form-control" name="hourly_price" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label required">Max Occupancy</label>
+
+                        <input type="number" class="form-control" name="max_occupancy" required>
+                    </div>
+                        <div class="col-12">
+                            <label class="form-label">Room Features</label>
+                            <div class="row g-2">
+                                <div class="col-md-3 col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="features" value="wifi">
+                                        <label class="form-check-label">Wi-Fi</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="features" value="tv">
+                                        <label class="form-check-label">TV</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="features" value="minibar">
+                                        <label class="form-check-label">Minibar</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="features" value="refrigerator">
+                                        <label class="form-check-label">Refrigerator</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="features" value="bathtub">
+                                        <label class="form-check-label">Bath Tub</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="features" value="parking">
+                                        <label class="form-check-label">Parking</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="features" value="pool">
+                                        <label class="form-check-label">Swimming Pool</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="features" value="cleaning">
+                                        <label class="form-check-label">Room Cleaning</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Room Description</label>
+                        <textarea class="form-control" name="description" rows="3"></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Room Images</label>
+                        <input type="file" class="form-control" name="images" accept="image/*" multiple onchange="previewImages(event)" id="imageInput">
+                        <small class="text-muted">You can upload multiple images</small>
+                        <div id="imagePreview" class="d-flex flex-wrap gap-2 mt-2"></div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-primary btn-submit">Add Room</button>
+                        <button type="button" class="btn btn-secondary ms-2" onclick="resetForm()">Reset Form</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const singleRoom = document.getElementById('singleRoom');
+            const bulkRooms = document.getElementById('bulkRooms');
+            const singleRoomNumber = document.getElementById('singleRoomNumber');
+            const bulkRoomNumbers = document.getElementById('bulkRoomNumbers');
+
+            function toggleRoomNumberInputs() {
+            if (singleRoom.checked) {
+                console.log("Single Room selected.");
+                singleRoomNumber.style.display = 'block';
+                bulkRoomNumbers.style.display = 'none';
+                singleRoomNumber.querySelector('input').required = true;
+                bulkRoomNumbers.querySelectorAll('input').forEach(input => {
+                    input.required = false;
+                    input.value = ''; // Clear hidden values
+                });
+            } else {
+                console.log("Bulk Rooms selected.");
+                singleRoomNumber.style.display = 'none';
+                bulkRoomNumbers.style.display = 'block';
+                singleRoomNumber.querySelector('input').required = false;
+                bulkRoomNumbers.querySelectorAll('input').forEach(input => input.required = true);
+            }
+        }
+
+            singleRoom.addEventListener('change', toggleRoomNumberInputs);
+            bulkRooms.addEventListener('change', toggleRoomNumberInputs);
+
+            // Add this new code for room type handling
+            const roomType = document.getElementById('room_type');
+            const bedTypeSection = document.getElementById('bedTypeSection');
+            const seatingSection = document.getElementById('seatingSection');
+            const bedTypeInputs = bedTypeSection.querySelectorAll('input[name="bed_type"]');
+
+            roomType.addEventListener('change', function() {
+                if (this.value === 'conference') {
+                    bedTypeSection.style.display = 'none';
+                    seatingSection.style.display = 'block';
+                    // Remove required attribute from bed type inputs
+                    bedTypeInputs.forEach(input => {
+                        input.required = false
+                        input.checked = false;
+                    });
+                    // Add required attribute to seating capacity
+                    seatingSection.querySelector('input').required = true;
+                } else {
+                    bedTypeSection.style.display = 'block';
+                    seatingSection.style.display = 'none';
+                    // Add required attribute back to bed type inputs
+                    bedTypeInputs.forEach(input => input.required = true);
+                    // Remove required attribute from seating capacity
+                    seatingSection.querySelector('input').required = false;
+                    seatingSection.querySelector('input').value = '';
+                }
+            });
+            // Initialize state based on default room type selection
+            if (roomType.value === 'conference') {
+                bedTypeSection.style.display = 'none';
+                seatingSection.style.display = 'block';
+                bedTypeInputs.forEach(input => input.required = false);
+                seatingSection.querySelector('input').required = true;
+            } else {
+                bedTypeSection.style.display = 'block';
+                seatingSection.style.display = 'none';
+                bedTypeInputs.forEach(input => input.required = true);
+                seatingSection.querySelector('input').required = false;
+            }
+                });
+
+                document.addEventListener('DOMContentLoaded', function() {
+    const imageInput = document.querySelector('input[name="images"]');
+    const preview = document.getElementById('imagePreview');
+    const maxImages = 10;
+
+    imageInput.addEventListener('change', function(event) {
+        // Clear previous previews
+        preview.innerHTML = '';
+
+        const files = event.target.files;
+        
+        // Check image limit
+        if (files.length > maxImages) {
+            alert(`You can only upload up to ${maxImages} images.`);
+            event.target.value = ''; // Clear the input
+            return;
+        }
+
+        for (const file of files) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'position-relative';
+                
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('preview-image', 'rounded');
+                img.style.maxWidth = '200px';
+                img.style.maxHeight = '200px';
+                img.style.objectFit = 'cover';
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.innerHTML = '×';
+                removeBtn.type = 'button';
+                removeBtn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
+                removeBtn.onclick = function() {
+                    imgContainer.remove();
+                };
+                
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(removeBtn);
+                preview.appendChild(imgContainer);
+            }
+            reader.readAsDataURL(file);
+        }
+        });
+    });
+
+        // function previewImages(event) {
+        //     const preview = document.getElementById('imagePreview');
+        //     const files = event.target.files;
+        //     const maxImages = 10;
+        //     const existingImages = preview.children.length;
+        //     const remainingSlots = maxImages - existingImages;
+
+        //     // Check if adding new images would exceed the limit
+        //     if (files.length > remainingSlots) {
+        //         alert(`You can only upload up to ${maxImages} images. You have ${existingImages} images already.`);
+        //         event.target.value = ''; // Clear the input
+        //         return;
+        //     }
+
+        //     for (const file of files) {
+        //         const reader = new FileReader();
+        //         reader.onload = function(e) {
+        //             const imgContainer = document.createElement('div');
+        //             imgContainer.className = 'position-relative';
+                    
+        //             const img = document.createElement('img');
+        //             img.src = e.target.result;
+        //             img.classList.add('preview-image', 'rounded');
+                    
+        //             const removeBtn = document.createElement('button');
+        //             removeBtn.innerHTML = '×';
+        //             removeBtn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
+        //             removeBtn.onclick = function() {
+        //                 imgContainer.remove();
+        //                 // Enable input if images are less than max
+        //                 const imageInput = document.getElementById('imageInput');
+        //                 if (preview.children.length < maxImages) {
+        //                     imageInput.disabled = false;
+        //                 }
+        //             };
+                    
+        //             imgContainer.appendChild(img);
+        //             imgContainer.appendChild(removeBtn);
+        //             preview.appendChild(imgContainer);
+
+        //             // Disable input if max images reached
+        //             if (preview.children.length >= maxImages) {
+        //                 document.getElementById('imageInput').disabled = true;
+        //             }
+        //         }
+        //         reader.readAsDataURL(file);
+        //     }
+        // }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Get selected features
+            data.features = Array.from(formData.getAll('features'));
+            
+            // Here you would typically send the data to your backend
+            console.log('Form Data:', data);
+            
+            // Show success message
+            alert('Room added successfully!');
+            event.target.reset();
+            document.getElementById('imagePreview').innerHTML = '';
+        }
+
+        function resetForm() {
+            // Reset the form
+            document.getElementById('addRoomForm').reset();
+            
+            // Clear image preview
+            document.getElementById('imagePreview').innerHTML = '';
+            
+            // Enable image input
+            document.getElementById('imageInput').disabled = false;
+            
+            // Reset room number display (show single room, hide bulk)
+            document.getElementById('singleRoomNumber').style.display = 'block';
+            document.getElementById('bulkRoomNumbers').style.display = 'none';
+            
+            // Reset radio button to single room
+            document.getElementById('singleRoom').checked = true;
+            
+            // Reset required attributes
+            document.querySelector('#singleRoomNumber input').required = true;
+            document.querySelectorAll('#bulkRoomNumbers input').forEach(input => input.required = false);
+            
+            // Reset room type related sections
+            const bedTypeSection = document.getElementById('bedTypeSection');
+            const seatingSection = document.getElementById('seatingSection');
+            bedTypeSection.style.display = 'block';
+            seatingSection.style.display = 'none';
+            
+            // Reset bed type required attributes
+            bedTypeSection.querySelectorAll('input[name="bedType"]').forEach(input => input.required = true);
+            seatingSection.querySelector('input').required = false;
+        }
+    </script>
+
+
+
+
+</body>
+</html>
