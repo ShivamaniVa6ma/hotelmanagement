@@ -12,7 +12,7 @@
                     <div class="lh-breadcrumb">
                         <h5>
                             <span class="lh-inner-breadcrumb">
-                                <a href="{% url 'user-panel:index' %}">Home</a>
+                                <a href="{% url 'user-panel:index' company_name=company_name %}">Home</a>
                             </span>
                             <span> / </span>
                             <span>
@@ -34,13 +34,22 @@
                             <i class="fas fa-check-circle fa-5x text-success"></i>
                         </div>
                         <h1 class="text-center mb-4">Booking Confirmed!</h1>
-                        <p class="text-center mb-4">Thank you for choosing our hotel. Your booking has been successfully processed.</p>
-                        {% for booking_id in bookng_id%}
+                        <p class="text-center mb-4">Thank you for choosing our hotel. Your booking has been successfully processed.
+                            please check your email for the confirmation details.
+                        </p>
+                        <!-- {% for booking_id in bookng_id%}
                             <p class="text-center mb-4">Your booking ID is: <strong>{{ booking_id }}</strong></p>
-                        {% endfor %}
+                        {% endfor %} -->
                         <div class="text-center">
-                            <a href="{% url 'user-panel:index' %}" class="btn btn-primary">Return to Home</a>
+                            <a href="{% url 'user-panel:index' company_name=company_name %}" class="btn btn-primary">Return to Home</a>
                         </div>
+                        <!-- <div class="text-center">
+                            {% if booking_id %}
+                                <a href="{% url 'admin-panel:booking_invoice' booking_id=booking_id %}" class="btn btn-primary">Invoice</a>
+                            {% else %}
+                                <span class="text-danger">Invoice not available</span>
+                            {% endif %}
+                        </div> -->
                     </div>
                 </div>
             </div>

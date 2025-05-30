@@ -2,297 +2,552 @@
 {% block content %}
 {% load static %}
 
+<!-- Include SweetAlert CSS and JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- Add Bootstrap (if not already included) -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+<script src="{% static 'assets/js/sweetalert2.all.min.js' %}"></script>
+
+
 <style>
-	 .custom-card {
-            border: none;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        .form-label {
-            font-weight: 500;
-            color: #2c3e50;
-			font-size: 14px;
-        }
-        .required::after {
-            content: "*";
-            color: red;
-            margin-left: 4px;
-        }
-        .preview-image {
-            max-width: 200px;
-            max-height: 200px;
-            object-fit: cover;
-        }
-        .custom-card-header {
-            background: linear-gradient(45deg, #1a237e, #283593);
-            color: white;
-            /* border-radius: 10px 10px 0 0; */
-        }
-        .btn-submit {
-            background: linear-gradient(45deg, #1a237e, #283593);
-            border: none;
-            padding: 10px 30px;
-        }
-        .btn-submit:hover {
-            background: linear-gradient(45deg, #283593, #1a237e);
-        }
-        .input-group-text {
-            background-color: #f8f9fa;
-            border-right: none;
-        }
-        .form-control:focus {
-            border-color: #1a237e;
-            box-shadow: 0 0 0 0.2rem rgba(26,35,126,0.25);
-        }
-        .bed-type-btn {
-            /* width: 120px; */
-            margin: 10px;
-        }
-        .bed-type-btn.active {
-            background-color: #1a237e;
-            border-color: #1a237e;
-        }
-        .price-card {
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 10px;
-        }
-        .radio-group {
-            /* border: 1px solid #dee2e6;
-            border-radius: 8px; */
-            padding: 15px;
-        }
-.offcanvas{
-    width: 800px !important;
-}
+	
 
-/* Add these styles to your existing CSS */
-.lh-room-details {
-    padding: 15px;
-}
-
-.room-info-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.room-info-item {
-    display: flex;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px dashed #e0e0e0;
-}
-
-.room-info-item:last-child {
-    border-bottom: none;
-}
-
-.info-icon {
-    width: 35px;
-    height: 35px;
-    background: #033981;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 12px;
-}
-
-.info-icon i {
-    color: white;
-    font-size: 1.1rem;
-}
-
-.info-content {
-    flex: 1;
-}
-
-.info-label {
-    font-size: 0.85rem;
-    color: #666;
-    margin-bottom: 2px;
-}
-
-.info-value {
-    font-weight: 500;
-    color: #2c3e50;
-}
-
-.price-value {
-    color: #1a237e;
-    font-weight: 600;
-}
-
-.status-badge {
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    font-weight: 500;
-}
-
-.status-available {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-}
-
-.status-occupied {
-    background-color: #ffebee;
-    color: #c62828;
-}
-.lh-card .lh-card-content {
-    padding: 0px;
-}
-
-/* Add this to your existing CSS file */
-.room-column {
-    background-color: #f0f4ff; /* Light blue background */
-    border-radius: 8px; /* Rounded corners */
-    padding: 15px; /* Padding inside the column */
-    margin-bottom: 20px; /* Space between rows */
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-}
-
-.room-column:hover {
-    background-color: #e0e7ff; /* Darker blue on hover */
-}
-
-/* Optional: Add a shadow effect for depth */
-.lh-card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-
-.lh-card {
-    height: calc(100% - 24px);
-    margin-bottom: 24px;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid #eee;
-    border-bottom: 3px solid #eee;
-    border-top: 3px solid #eee;
-}
-
-
-.lh-card.booked {
-    background-color:#fff;
-}
-
-
-.offcanvas-backdrop.show {
-    opacity: 0;
-}
-.dropdown .dropdown-toggle i  {
-    color: #ffffff;
-}
-
-.form-select-sm {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
-    border-radius: 0.2rem;
-    background-color: #f8f9fa;
+	/* offcanva updated styles */
+/*new styles*/
+.price-card {
     border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 10px;
+    background-color: #ffffff;
 }
+ 
+.offcanvas-body {
+    flex-grow: 1;
+    padding: var(--bs-offcanvas-padding-y) var(--bs-offcanvas-padding-x);
+    overflow-y: auto;
+    background-color: #e2f1f8;
+}
+ 
+ 
 
-.form-select-sm:focus {
-    border-color: #1a237e;
-    box-shadow: 0 0 0 0.2rem rgba(26,35,126,0.25);
-}
+/* .offcanvas-backdrop.show {
+    opacity: 0.25;
+} */
+ /* offcanvas end updated style */
 
-.info-content .form-select {
-    display: inline-block;
-    margin-left: 10px;
-}
-.form-control, .form-select {
-    border: 2px solid #e3e6f0;
-    border-radius: 10px;
-    /* padding: 12px; */
-    transition: all 0.3s;
-}
-.lh-page-title  {
-	padding: 0px;
+	.custom-card {
+		border: none;
+		box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+	}
 
-    
-}
+	.form-label {
+		font-weight: 500;
+		color: #2c3e50;
+		font-size: 14px;
+	}
 
-/* Add these styles to your existing CSS */
-.room-filter-item {
-    height: 100%;
-    min-height: 70px;
-    display: flex;
-    flex-direction: column;
-}
+	.hidden {
+		display: none;
+	}
 
-.filter-content {
-    display: flex;
-    flex-direction: column;
-}
+	.required::after {
+		content: "*";
+		color: red;
+		margin-left: 4px;
+	}
 
-.search-btn {
-    background: linear-gradient(45deg, #1a237e, #283593) !important;
-    border: none;
-    height: 38px;
-    margin-bottom: 2px;
-}
+	.preview-image {
+		max-width: 200px;
+		max-height: 200px;
+		object-fit: cover;
+	}
 
-/* Responsive adjustments */
-@media (max-width: 1199px) {
-    .search-btn {
+	.custom-card-header {
+		background: #330481;
+		color: white;
+		/* border-radius: 10px 10px 0 0; */
+	}
+
+	.btn-submit {
+		background: linear-gradient(45deg, #1a237e, #283593);
+		border: none;
+		padding: 10px 30px;
+	}
+
+	.btn-submit:hover {
+		background: linear-gradient(45deg, #283593, #1a237e);
+	}
+
+	.input-group-text {
+		background-color: #f8f9fa;
+		border-right: none;
+	}
+
+	.form-control:focus {
+		border-color: #1a237e;
+		box-shadow: 0 0 0 0.2rem rgba(26, 35, 126, 0.25);
+	}
+
+	.bed-type-btn {
+		/* width: 120px; */
+		margin: 10px;
+	}
+
+	.bed-type-btn.active {
+		background-color: #1a237e;
+		border-color: #1a237e;
+	}
+
+	.price-card {
+		border: 1px solid #dee2e6;
+		border-radius: 8px;
+		padding: 15px;
+		margin-top: 10px;
+	}
+
+	.radio-group {
+		/* border: 1px solid #dee2e6;
+            border-radius: 8px; */
+		padding: 15px;
+	}
+
+	.offcanvas {
+		width: 800px !important;
+	}
+
+	.offcanvas_content{
+    width: 450px !important;
+ }
+
+	/* Add these styles to your existing CSS */
+	.lh-room-details {
+		padding: 15px;
+	}
+
+	.room-info-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.room-info-item {
+		display: flex;
+		align-items: center;
+		padding: 8px 0;
+		border-bottom: 1px dashed #e0e0e0;
+	}
+
+	.room-info-item:last-child {
+		border-bottom: none;
+	}
+
+	.info-icon {
+		width: 35px;
+		height: 35px;
+		background: #330481;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-right: 12px;
+	}
+
+	.info-icon i {
+		color: white;
+		font-size: 1.1rem;
+	}
+
+	.info-content {
+		flex: 1;
+	}
+
+	.info-label {
+		font-size: 0.85rem;
+		color: var(--text-color);
+		margin-bottom: 2px;
+	}
+
+	.info-value {
+		font-weight: 500;
+		color: #2c3e50;
+	}
+
+	.price-value {
+		color: #1a237e;
+		font-weight: 600;
+	}
+
+	.status-badge {
+		padding: 4px 12px;
+		border-radius: 15px;
+		font-size: 0.85rem;
+		font-weight: 500;
+	}
+
+	.status-available {
+		background-color: #e8f5e9;
+		color: #2e7d32;
+	}
+
+	.status-occupied {
+		background-color: #ffebee;
+		color: #c62828;
+	}
+
+	.lh-card .lh-card-content {
+		padding: 0px;
+	}
+
+	/* Add this to your existing CSS file */
+	.room-column {
+		background-color: #f0f4ff;
+		/* Light blue background */
+		border-radius: 8px;
+		/* Rounded corners */
+		padding: 15px;
+		/* Padding inside the column */
+		margin-bottom: 20px;
+		/* Space between rows */
+		transition: background-color 0.3s ease;
+		/* Smooth transition for hover effect */
+	}
+
+	.room-column:hover {
+		background-color: #e0e7ff;
+		/* Darker blue on hover */
+	}
+
+	/* Optional: Add a shadow effect for depth */
+	.lh-card {
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		/* Subtle shadow */
+	}
+
+
+	.lh-card {
+		height: calc(100% - 24px);
+		margin-bottom: 24px;
+		background-color: #fff;
+		border-radius: 5px;
+		border: 1px solid #eee;
+		border-bottom: 3px solid #eee;
+		border-top: 3px solid #eee;
+	}
+
+
+	.lh-card.booked {
+		background-color: #fff;
+	}
+
+
+	.offcanvas-backdrop.show {
+		opacity: 0.5;
+	}
+
+	/* .offcanvas-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f7f0f0 !important;
+} */
+	.dropdown .dropdown-toggle i {
+		color: #ffffff;
+	}
+
+	.form-select-sm {
+		padding: 0.25rem 0.5rem;
+		font-size: 0.875rem;
+		border-radius: 0.2rem;
+		background-color: #f8f9fa;
+		border: 1px solid #dee2e6;
+	}
+
+	.form-select-sm:focus {
+		border-color: #1a237e;
+		box-shadow: 0 0 0 0.2rem rgba(26, 35, 126, 0.25);
+	}
+
+	.info-content .form-select {
+		display: inline-block;
+		margin-left: 10px;
+	}
+
+	.form-control,
+	.form-select {
+		border: 2px solid #e3e6f0;
+		border-radius: 10px;
+		/* padding: 12px; */
+		transition: all 0.3s;
+	}
+
+	.lh-page-title {
+		padding: 0px;
+
+
+	}
+
+	/* Add these styles to your existing CSS */
+	.room-filter-item {
+		height: 100%;
+		min-height: 70px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.filter-content {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.search-btn {
+		background: linear-gradient(45deg, #1a237e, #283593) !important;
+		border: none;
+		height: 38px;
+		margin-bottom: 2px;
+	}
+
+	/* Responsive adjustments */
+	@media (max-width: 1199px) {
+		.search-btn {
+			margin-top: 1rem;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.room-filter-item {
+			min-height: 60px;
+		}
+
+		.info-icon {
+			min-width: 35px;
+		}
+	}
+
+	/* Ensure form controls are consistent */
+	.form-control-sm,
+	.form-select-sm {
+		height: 38px;
+		width: 100%;
+	}
+
+	/* Icon styling */
+	.info-icon {
+		width: 35px;
+		height: 35px;
+		min-width: 35px;
+		background: #330481;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+	}
+
+	.btn-primary {
+		margin-top: 20px;
+	}
+
+	.tooltip .tooltip-arrow::before {
+		position: absolute;
+		content: "";
+		border-color: transparent;
+		border-style: solid;
+	}
+
+	/* new styles */
+	.room_check{
+		margin-top: 50px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+    /* Offcanvas Form Styling */
+    .offcanvas-body {
+        background-color: #e2f1f8 !important;
+		;
+        padding: 2rem;
+    }
+
+    .offcanvas-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .form-section {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .form-section.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .form-control, .form-select {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #1a237e;
+        box-shadow: 0 0 0 0.2rem rgba(26, 35, 126, 0.15);
+    }
+
+    .radio-group {
+        display: flex;
+        gap: 1.5rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .form-check {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .price-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .input-group {
+        margin-bottom: 1rem;
+    }
+
+    .input-group-text {
+        background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        color: #2c3e50;
+    }
+
+    .btn-submit {
+        background: linear-gradient(45deg, #1a237e, #283593);
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background: linear-gradient(45deg, #283593, #1a237e);
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        color: #2c3e50;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+        background: #e9ecef;
+    }
+
+    .image-preview-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
         margin-top: 1rem;
     }
-}
 
-@media (max-width: 767px) {
-    .room-filter-item {
-        min-height: 60px;
+    .preview-image {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    
-    .info-icon {
-        min-width: 35px;
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
     }
-}
 
-/* Ensure form controls are consistent */
-.form-control-sm, .form-select-sm {
-    height: 38px;
-    width: 100%;
-}
+    .form-check {
+        background: #f8f9fa;
+        padding: 0.75rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
 
-/* Icon styling */
-.info-icon {
-    width: 35px;
-    height: 35px;
-    min-width: 35px;
-    background: #033981;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-}
+    .form-check:hover {
+        background: #e9ecef;
+    }
 
-.btn-primary{
-	margin-top: 20px;
-}
+    .alert {
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
 
+    @media (max-width: 768px) {
+        .offcanvas-form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+	@media (max-width: 320px) {
+	    .lh-breadcrumb{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: var(--text-color);
+		}
+	}
+
+	.breadcrumb_color{
+		color: var(--text-color) !important;
+	}
+
+	
 </style>
 
 
 
 
-		<!-- main content -->
-		<div class="lh-main-content">
-			<div class="container-fluid">
-				<!-- Page title & breadcrumb -->
-				<div class="lh-page-title">
-					<div class="lh-breadcrumb">
-						<h5>Rooms</h5>
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li>Rooms</li>
-						</ul>
-					</div>
-					<!-- <div class="lh-tools">
+<!-- main content -->
+<div class="lh-main-content">
+	<div class="container-fluid">
+		<!-- Page title & breadcrumb -->
+		<div class="lh-page-title">
+			<div class="lh-breadcrumb">
+				<h5>Rooms</h5>
+				<!-- <ul>
+					<li><a href="{% url 'admin-panel:index' %}">Home</a></li>
+					<li>Rooms</li>
+				</ul> -->
+			</div>
+			<!-- <div class="lh-tools">
 						<a href="javascript:void(0)" title="Refresh" class="refresh"><i class="ri-refresh-line"></i></a>
 						<div id="pagedate">
 							<div class="lh-date-range" title="Date">
@@ -311,1484 +566,1018 @@
 								</div>
 							</div>
 						</div> -->
-					
 
-						<!-- Add Room Button -->
-						<div class="lh-tools">
-							{% if user.is_authenticated %}
-								{% if user.is_superuser %}
-									<button class="btn btn-primary m-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">
-										<i class="fas fa-plus-circle me-2"></i>Add New Room
-									</button>
-								{% endif %}
-							{% endif %}
-						</div>
+			<!-- Add Room Button -->
+			<div class="lh-tools">
+				<div class="lh-breadcrumb me-3  ">
+					<!-- <h5>Rooms</h5> -->
+					<ul class="breadcrumb_color">
+						<li class="breadcrumb_color"><a href="{% url 'admin-panel:index' %}">Home</a></li>
+						<li>Rooms</li>
+					</ul>
+				</div>
+				<a href="{% url 'admin-panel:room_list' %}" class="refresh" data-bs-toggle="tooltip" aria-label="Refresh"
+					data-bs-original-title="Refresh"><i class="ri-refresh-line"></i></a>
 
-					</div></div>
-					<div class="lh-card-content card-default">
-						<div class="lh-room-details">
-							<!-- Add container-fluid for better responsiveness -->
-							<div class="container-fluid p-0">
-								<form id="roomFilterForm" action="{% url 'admin-panel:check_availability' %}" method="POST">
-									{% csrf_token %}
-									<div class="row g-3">
-										<!-- Check In -->
-										<div class="col-xl-3 col-lg-4 col-md-6">
-											<div class="room-filter-item">
-												<div class="d-flex align-items-center gap-2">
-													<div class="info-icon">
-														<i class="ri-login-circle-line"></i>
-													</div>
-													<div class="filter-content flex-grow-1">
-														<label class="info-label mb-1">Check In:</label>
-														<input type="datetime-local" name="check_in" value="{{ booking_form.check_in.value|date:'Y-m-d\TH:i' }}" class="form-control form-control-sm" required>
-													</div>
-												</div>
-											</div>
-										</div>
-										
-										<!-- Check Out -->
-										<div class="col-xl-3 col-lg-4 col-md-6">
-											<div class="room-filter-item">
-												<div class="d-flex align-items-center gap-2">
-													<div class="info-icon">
-														<i class="ri-logout-circle-line"></i>
-													</div>
-													<div class="filter-content flex-grow-1">
-														<label class="info-label mb-1">Check Out:</label>
-														<input type="datetime-local" name="check_out" value="{{ booking_form.check_out.value|date:'Y-m-d\TH:i' }}" class="form-control form-control-sm" required>
-													</div>
-												</div>
-											</div>
-										</div>
-										
-										<!-- Room Type -->
-										<div class="col-xl-3 col-lg-4 col-md-6">
-											<div class="room-filter-item">
-												<div class="d-flex align-items-center gap-2">
-													<div class="info-icon">
-														<i class="ri-hotel-bed-line"></i>
-													</div>
-													<div class="filter-content flex-grow-1">
-														<label class="info-label mb-1" for="room_type">Room Type:</label>
-														<select id="roomTypeSelect" name="room_type" class="form-control" required>
-															<option value="">Select Room Type</option>
-															<option value="standard">Standard</option>
-															<option value="deluxe">Deluxe</option>
-															<option value="vip">VIP</option>
-															<option value="conference">Conference</option>
-														</select>
-													</div>
-												</div>
-											</div>
-										</div>
-										
-										<!-- Check Availability Button -->
-										<div class="col-xl-3 col-lg-4 col-md-6">
-											<div class="room-filter-item">
-												<button type="submit" class="btn btn-primary" style="background: linear-gradient(45deg, #1a237e, #283593); border: none;">
-													<i class="ri-search-line me-1"></i> Check Availability
-												</button>
-											</div>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-		
-					<div class="container mt-4">
-						{% if available_rooms %}
-							<div class="section-title d-flex justify-content-between">
-								<h4>Available Rooms</h4>
-							</div>
-							{% if room_type %}
-								<h4>{{ room_type|title }} Rooms</h4>
-								<div class="row">
-									{% for room in available_rooms %}
-										{% if room.room_type == room_type %}
-											<div class="col-xl-3 col-md-6">
-												<div class="lh-card booked room-card" id="bookingtbl">
-													<div class="lh-card-header">
-														<h4 class="lh-card-title">{{ room.room_number }}</h4>
-														<div class="header-tools">
-															<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-																<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-																	<i class="mdi mdi-dots-vertical"></i>
-																</button>
-																<ul class="dropdown-menu">
-																	{% if user.is_superuser %}
-																	<li><a class="dropdown-item" href="#" onclick="editRoom('{{ room.pk }}'); return false;" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">Edit</a></li>
-																	<li><a class="dropdown-item" href="#" onclick="deleteRoom('{{ room.pk }}'); return false;">Delete</a></li>
-																	{% endif %}
-																	<li><a class="dropdown-item" href="{% url 'admin-panel:room_detail' room.pk %}">View More</a></li>
-																</ul>
-															</div>
-														</div>
-													</div>
-													<div class="lh-card-content card-default">
-														<div class="lh-room-details">
-															<ul class="room-info-list">
-																<li class="room-info-item">
-																	<div class="info-icon">
-																		<span class="text-white">₹</span>
-																	</div>
-																	<div class="info-content d-flex justify-content-between">
-																		<div class="info-label">Basic Price:</div>
-																		<div class="info-value price-value">₹{{ room.base_price }}/-</div>
-																	</div>
-																</li>
-																<li class="room-info-item">
-																	<div class="info-icon">
-																		<i class="ri-space"></i>
-																	</div>
-																	<div class="info-content d-flex justify-content-between">
-																		<div class="info-label">Air Conditioning:</div>
-																		<div class="info-value">{{ room.get_ac_type_display }}</div>
-																	</div>
-																</li>
-																<li class="room-info-item">
-																	<div class="info-icon">
-																		<i class="ri-hotel-bed-line"></i>
-																	</div>
-																	<div class="info-content d-flex justify-content-between">
-																		<div class="info-label">Bed Type:</div>
-																		<div class="info-value">{{ room.get_bed_type_display }}</div>
-																	</div>
-																</li>
-																<li class="room-info-item">
-																	<div class="info-icon">
-																		<i class="ri-group-line"></i>
-																	</div>
-																	<div class="info-content d-flex justify-content-between">
-																		<div class="info-label">Max Occupancy:</div>
-																		<div class="info-value"> {{ room.max_occupancy }} </div>
-																	</div>
-																</li>
-															</ul>
-															
-														</div>
-													</div>
-												</div>
-											</div>
-										{% endif %}
-									{% endfor %}
-								</div>
-							{% else %}
-								<div class="row">
-									<div class="section-title">
-										<h4>Standard Rooms</h4>
-									</div>
-									{% for room in available_rooms %}
-										{% if room.room_type == 'standard' %}
-										<div class="col-xl-3 col-md-6">
-											<div class="lh-card booked room-card" id="bookingtbl">
-												<div class="lh-card-header">
-													<h4 class="lh-card-title">{{ room.room_number }}</h4>
-													<div class="header-tools">
-														<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-															<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-																<i class="mdi mdi-dots-vertical"></i>
-															</button>
-															<ul class="dropdown-menu">
-																{% if user.is_superuser %}
-																<li><a class="dropdown-item" href="#" onclick="editRoom('{{ room.pk }}'); return false;" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">Edit</a></li>
-																<li><a class="dropdown-item" href="#" onclick="deleteRoom('{{ room.pk }}'); return false;">Delete</a></li>
-																{% endif %}
-																<li><a class="dropdown-item" href="{% url 'admin-panel:room_detail' room.pk %}">View More</a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="lh-card-content card-default">
-													<div class="lh-room-details">
-														<ul class="room-info-list">
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<span class="text-white">₹</span>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Basic Price:</div>
-																	<div class="info-value price-value">₹{{ room.base_price }}/-</div>
-																</div>
-															</li>
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<i class="ri-space"></i>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Air Conditioning:</div>
-																	<div class="info-value">{{ room.get_ac_type_display }}</div>
-																</div>
-															</li>
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<i class="ri-hotel-bed-line"></i>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Bed Type:</div>
-																	<div class="info-value">{{ room.get_bed_type_display }}</div>
-																</div>
-															</li>
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<i class="ri-group-line"></i>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Max Occupancy:</div>
-																	<div class="info-value"> {{ room.max_occupancy }} </div>
-																</div>
-															</li>
-														</ul>
-														
-													</div>
-												</div>
-											</div>
-										</div>
-											
-										{% endif %}
-									{% endfor %}
-								</div>
-								<div class="row">
-									<div class="section-title">
-										<h4>Deluxe Rooms</h4>
-									</div>
-									{% for room in available_rooms %}
-										{% if room.room_type == 'deluxe' %}
-										<div class="col-xl-3 col-md-6">
-											<div class="lh-card booked room-card" id="bookingtbl">
-												<div class="lh-card-header">
-													<h4 class="lh-card-title">{{ room.room_number }}</h4>
-													<div class="header-tools">
-														<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-															<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-																<i class="mdi mdi-dots-vertical"></i>
-															</button>
-															<ul class="dropdown-menu">
-																{% if user.is_superuser %}
-																<li><a class="dropdown-item" href="#" onclick="editRoom('{{ room.pk }}'); return false;" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">Edit</a></li>
-																<li><a class="dropdown-item" href="#" onclick="deleteRoom('{{ room.pk }}'); return false;">Delete</a></li>
-																{% endif %}
-																<li><a class="dropdown-item" href="{% url 'admin-panel:room_detail' room.pk %}">View More</a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="lh-card-content card-default">
-													<div class="lh-room-details">
-														<ul class="room-info-list">
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<span class="text-white">₹</span>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Basic Price:</div>
-																	<div class="info-value price-value">₹{{ room.base_price }}/-</div>
-																</div>
-															</li>
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<i class="ri-space"></i>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Air Conditioning:</div>
-																	<div class="info-value">{{ room.get_ac_type_display }}</div>
-																</div>
-															</li>
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<i class="ri-hotel-bed-line"></i>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Bed Type:</div>
-																	<div class="info-value">{{ room.get_bed_type_display }}</div>
-																</div>
-															</li>
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<i class="ri-group-line"></i>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Max Occupancy:</div>
-																	<div class="info-value"> {{ room.max_occupancy }} </div>
-																</div>
-															</li>
-														</ul>
-														
-													</div>
-												</div>
-											</div>
-										</div>
-											
-										{% endif %}
-									{% endfor %}
-								</div>
-								<div class="row">
-									<div class="section-title">
-										<h4>VIP Rooms</h4>
-									</div>
-									{% for room in available_rooms %}
-										{% if room.room_type == 'vip' %}
-										<div class="col-xl-3 col-md-6">
-											<div class="lh-card booked room-card" id="bookingtbl">
-												<div class="lh-card-header">
-													<h4 class="lh-card-title">{{ room.room_number }}</h4>
-													<div class="header-tools">
-														<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-															<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-																<i class="mdi mdi-dots-vertical"></i>
-															</button>
-															<ul class="dropdown-menu">
-																{% if user.is_superuser %}
-																<li><a class="dropdown-item" href="#" onclick="editRoom('{{ room.pk }}'); return false;" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">Edit</a></li>
-																<li><a class="dropdown-item" href="#" onclick="deleteRoom('{{ room.pk }}'); return false;">Delete</a></li>
-																{% endif %}
-																<li><a class="dropdown-item" href="{% url 'admin-panel:room_detail' room.pk %}">View More</a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="lh-card-content card-default">
-													<div class="lh-room-details">
-														<ul class="room-info-list">
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<span class="text-white">₹</span>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Basic Price:</div>
-																	<div class="info-value price-value">₹{{ room.base_price }}/-</div>
-																</div>
-															</li>
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<i class="ri-space"></i>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Air Conditioning:</div>
-																	<div class="info-value">{{ room.get_ac_type_display }}</div>
-																</div>
-															</li>
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<i class="ri-hotel-bed-line"></i>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Bed Type:</div>
-																	<div class="info-value">{{ room.get_bed_type_display }}</div>
-																</div>
-															</li>
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<i class="ri-group-line"></i>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Max Occupancy:</div>
-																	<div class="info-value"> {{ room.max_occupancy }} </div>
-																</div>
-															</li>
-														</ul>
-														
-													</div>
-												</div>
-											</div>
-										</div>
-											
-										{% endif %}
-									{% endfor %}
-								</div>
-								<div class="row">
-									<div class="section-title">
-										<h4>Conference Rooms</h4>
-									</div>
-									{% for room in available_rooms %}
-										{% if room.room_type == 'conference' %}
-										<div class="col-xl-3 col-md-6">
-											<div class="lh-card booked room-card" id="bookingtbl">
-												<div class="lh-card-header">
-													<h4 class="lh-card-title">{{ room.room_number }}</h4>
-													<div class="header-tools">
-														<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-															<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-																<i class="mdi mdi-dots-vertical"></i>
-															</button>
-															<ul class="dropdown-menu">
-																{% if user.is_superuser %}
-																<li><a class="dropdown-item" href="#" onclick="editRoom('{{ room.pk }}'); return false;" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">Edit</a></li>
-																<li><a class="dropdown-item" href="#" onclick="deleteRoom('{{ room.pk }}'); return false;">Delete</a></li>
-																{% endif %}
-																<li><a class="dropdown-item" href="{% url 'admin-panel:room_detail' room.pk %}">View More</a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="lh-card-content card-default">
-													<div class="lh-room-details">
-														<ul class="room-info-list">
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<span class="text-white">₹</span>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Basic Price:</div>
-																	<div class="info-value price-value">₹{{ room.base_price }}/-</div>
-																</div>
-															</li>
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<i class="ri-space"></i>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Air Conditioning:</div>
-																	<div class="info-value">{{ room.get_ac_type_display }}</div>
-																</div>
-															</li>
-															<li class="room-info-item">
-																<div class="info-icon">
-																	<i class="ri-group-line"></i>
-																</div>
-																<div class="info-content d-flex justify-content-between">
-																	<div class="info-label">Max Occupancy:</div>
-																	<div class="info-value"> {{ room.max_occupancy }} </div>
-																</div>
-															</li>
-														</ul>
-														
-													</div>
-												</div>
-											</div>
-										</div>
-											
-										{% endif %}
-									{% endfor %}
-								</div>
-							{% endif %}
-						{% else %}
-						<div class="row">
-							<div class="section-title">
-								<h4>Standard Rooms</h4>
-							</div>
-							{% for room in rooms %}
-								{% if room.room_type == 'standard' %}
-								<div class="col-xl-3 col-md-6">
-									<div class="lh-card booked room-card" id="bookingtbl">
-										<div class="lh-card-header">
-											<h4 class="lh-card-title">{{ room.room_number }}</h4>
-											<div class="header-tools">
-												<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-													<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														<li><a class="dropdown-item" href="#" onclick="editRoom('{{ room.pk }}'); return false;" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">Edit</a></li>
-														<li><a class="dropdown-item" href="#" onclick="deleteRoom('{{ room.pk }}'); return false;">Delete</a></li>
-														<li><a class="dropdown-item" href="{% url 'admin-panel:room_detail' room.pk %}">View More</a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="lh-card-content card-default">
-											<div class="lh-room-details">
-												<ul class="room-info-list">
-													<li class="room-info-item">
-														<div class="info-icon">
-															<span class="text-white">₹</span>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Basic Price:</div>
-															<div class="info-value price-value">₹{{ room.base_price }}/-</div>
-														</div>
-													</li>
-													<li class="room-info-item">
-														<div class="info-icon">
-															<i class="ri-space"></i>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Air Conditioning:</div>
-															<div class="info-value">{{ room.get_ac_type_display }}</div>
-														</div>
-													</li>
-													<li class="room-info-item">
-														<div class="info-icon">
-															<i class="ri-hotel-bed-line"></i>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Bed Type:</div>
-															<div class="info-value">{{ room.get_bed_type_display }}</div>
-														</div>
-													</li>
-													<li class="room-info-item">
-														<div class="info-icon">
-															<i class="ri-group-line"></i>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Max Occupancy:</div>
-															<div class="info-value"> {{ room.max_occupancy }} </div>
-														</div>
-													</li>
-												</ul>
-												
-											</div>
-										</div>
-									</div>
-								</div>
-									<!-- Room Card (Same structure as above) -->
-									<!-- Add details dynamically for each room type (Deluxe, VIP, Conference) -->
-								{% endif %}
-							{% endfor %}
-						</div>
-						<div class="row">
-							<div class="section-title">
-								<h4>Deluxe Rooms</h4>
-							</div>
-							{% for room in rooms %}
-								{% if room.room_type == 'deluxe' %}
-								<div class="col-xl-3 col-md-6">
-									<div class="lh-card booked room-card" id="bookingtbl">
-										<div class="lh-card-header">
-											<h4 class="lh-card-title">{{ room.room_number }}</h4>
-											<div class="header-tools">
-												<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-													<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														{% if request.user.is_superuser %}
-														<li><a class="dropdown-item" href="#" onclick="editRoom('{{ room.pk }}'); return false;" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">Edit</a></li>
-														<li><a class="dropdown-item" href="#" onclick="deleteRoom('{{ room.pk }}'); return false;">Delete</a></li>
-														{% endif %}
-														<li><a class="dropdown-item" href="{% url 'admin-panel:room_detail' room.pk %}">View More</a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="lh-card-content card-default">
-											<div class="lh-room-details">
-												<ul class="room-info-list">
-													<li class="room-info-item">
-														<div class="info-icon">
-															<span class="text-white">₹</span>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Basic Price:</div>
-															<div class="info-value price-value">₹{{ room.base_price }}/-</div>
-														</div>
-													</li>
-													<li class="room-info-item">
-														<div class="info-icon">
-															<i class="ri-space"></i>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Air Conditioning:</div>
-															<div class="info-value">{{ room.get_ac_type_display }}</div>
-														</div>
-													</li>
-													<li class="room-info-item">
-														<div class="info-icon">
-															<i class="ri-hotel-bed-line"></i>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Bed Type:</div>
-															<div class="info-value">{{ room.get_bed_type_display }}</div>
-														</div>
-													</li>
-													<li class="room-info-item">
-														<div class="info-icon">
-															<i class="ri-group-line"></i>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Max Occupancy:</div>
-															<div class="info-value"> {{ room.max_occupancy }} </div>
-														</div>
-													</li>
-												</ul>
-												
-											</div>
-										</div>
-									</div>
-								</div>
-									<!-- Room Card (Same structure as above) -->
-									<!-- Add details dynamically for each room type (Deluxe, VIP, Conference) -->
-								{% endif %}
-							{% endfor %}
-						</div>
-						<div class="row">
-							<div class="section-title">
-								<h4>VIP Rooms</h4>
-							</div>
-							{% for room in rooms %}
-								{% if room.room_type == 'vip' %}
-								<div class="col-xl-3 col-md-6">
-									<div class="lh-card booked room-card" id="bookingtbl">
-										<div class="lh-card-header">
-											<h4 class="lh-card-title">{{ room.room_number }}</h4>
-											<div class="header-tools">
-												<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-													<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														{% if request.user.is_superuser %}
-														<li><a class="dropdown-item" href="#" onclick="editRoom('{{ room.pk }}'); return false;" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">Edit</a></li>
-														<li><a class="dropdown-item" href="#" onclick="deleteRoom('{{ room.pk }}'); return false;">Delete</a></li>
-														{% endif %}
-														<li><a class="dropdown-item" href="{% url 'admin-panel:room_detail' room.pk %}">View More</a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="lh-card-content card-default">
-											<div class="lh-room-details">
-												<ul class="room-info-list">
-													<li class="room-info-item">
-														<div class="info-icon">
-															<span class="text-white">₹</span>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Basic Price:</div>
-															<div class="info-value price-value">₹{{ room.base_price }}/-</div>
-														</div>
-													</li>
-													<li class="room-info-item">
-														<div class="info-icon">
-															<i class="ri-space"></i>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Air Conditioning:</div>
-															<div class="info-value">{{ room.get_ac_type_display }}</div>
-														</div>
-													</li>
-													<li class="room-info-item">
-														<div class="info-icon">
-															<i class="ri-hotel-bed-line"></i>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Bed Type:</div>
-															<div class="info-value">{{ room.get_bed_type_display }}</div>
-														</div>
-													</li>
-													<li class="room-info-item">
-														<div class="info-icon">
-															<i class="ri-group-line"></i>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Max Occupancy:</div>
-															<div class="info-value"> {{ room.max_occupancy }} </div>
-														</div>
-													</li>
-												</ul>
-												
-											</div>
-										</div>
-									</div>
-								</div>
-									<!-- Room Card (Same structure as above) -->
-									<!-- Add details dynamically for each room type (Deluxe, VIP, Conference) -->
-								{% endif %}
-							{% endfor %}
-						</div>
-						<div class="row">
-							<div class="section-title">
-								<h4>Conference Rooms</h4>
-							</div>
-							{% for room in rooms %}
-								{% if room.room_type == 'conference' %}
-								<div class="col-xl-3 col-md-6">
-									<div class="lh-card booked room-card" id="bookingtbl">
-										<div class="lh-card-header">
-											<h4 class="lh-card-title">{{ room.room_number }}</h4>
-											<div class="header-tools">
-												<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-													<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														{% if request.user.is_superuser %}
-														<li><a class="dropdown-item" href="#" onclick="editRoom('{{ room.pk }}'); return false;" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">Edit</a></li>
-														<li><a class="dropdown-item" href="#" onclick="deleteRoom('{{ room.pk }}'); return false;">Delete</a></li>
-														{% endif %}
-														<li><a class="dropdown-item" href="{% url 'admin-panel:room_detail' room.pk %}">View More</a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="lh-card-content card-default">
-											<div class="lh-room-details">
-												<ul class="room-info-list">
-													<li class="room-info-item">
-														<div class="info-icon">
-															<span class="text-white">₹</span>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Basic Price:</div>
-															<div class="info-value price-value">₹{{ room.base_price }}/-</div>
-														</div>
-													</li>
-													<li class="room-info-item">
-														<div class="info-icon">
-															<i class="ri-space"></i>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Air Conditioning:</div>
-															<div class="info-value">{{ room.get_ac_type_display }}</div>
-														</div>
-													</li>
-													<li class="room-info-item">
-														<div class="info-icon">
-															<i class="ri-group-line"></i>
-														</div>
-														<div class="info-content d-flex justify-content-between">
-															<div class="info-label">Max Occupancy:</div>
-															<div class="info-value"> {{ room.max_occupancy }} </div>
-														</div>
-													</li>
-												</ul>
-												
-											</div>
-										</div>
-									</div>
-								</div>
-									
-								{% endif %}
-							{% endfor %}
-						</div>						{% endif %}
-					</div>
-					
-		
+				<div class="tooltip bs-tooltip-auto fade show" role="tooltip" id="tooltip882448"
+					data-popper-placement="top"
+					style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(577.5px, -233.5px, 0px);">
+					<!-- <div class="tooltip-arrow"
+						style="position: absolute;left: 0px;transform: translate3d(24.5px, 0px, 0px);"></div>
+					<div class="tooltip-inner">Refresh</div> -->
+				</div>
 
-		
-		<!-- Feature tools -->
-		<div class="lh-tools-sidebar-overlay"></div>
-		<div class="lh-tools-sidebar">
-			<a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
-				<i class="ri-settings-4-line"></i>
-			</a>
-			<div class="lh-bar-title">
-				<h6>Tools</h6>
-				<a href="javascript:void(0)" class="close-tools"><i class="ri-close-line"></i></a>
+				<div class="tooltip-arrow"
+					style="position: absolute;left: 0px;transform: translate3d(24.5px, 0px, 0px);"></div>
+
+
+				<button class="btn btn-primary m-3" type="button" data-bs-toggle="offcanvas"
+					data-bs-target="#addRoomOffcanvas">
+					<i class="fas fa-plus-circle me-2"></i>Add New Room
+				</button>
+				<!-- {% if user.is_authenticated %}
+								{% if user.is_superuser %} -->
+
+				<!-- {% endif %}
+							{% endif %} -->
 			</div>
-			<div class="lh-tools-detail">
-				<div class="lh-tools-block">
-					<h3>Modes</h3>
-					<div class="lh-tools-info">
-						<div class="lh-tools-item mode active" data-lh-mode-tool="light">
-							<img src="{% static 'assets/img/tools/light.png' %}" alt="light">
-							<p>light</p>
+
+		</div>
+	</div>
+	<div class="lh-card-content card-default">
+		<div class="lh-room-details">
+			<!-- Add container-fluid for better responsiveness -->
+			<div class="container-fluid p-0">
+				<form id="roomFilterForm" method="GET">
+					{% csrf_token %}
+					<div class="row g-3 room_check">
+						<!-- Check In -->
+						<div class="col-xl-3 col-lg-4 col-md-6">
+							<div class="room-filter-item">
+								<div class="d-flex align-items-center gap-2">
+									<div class="info-icon">
+										<i class="ri-login-circle-line"></i>
+									</div>
+									<div class="filter-content flex-grow-1">
+										<label class="info-label mb-1">Check In:</label>
+										<input type="datetime-local" name="check_in"
+											value="{{ booking_form.check_in.value|date:'Y-m-d\TH:i' }}"
+											class="form-control form-control-sm" required>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="lh-tools-item mode" data-lh-mode-tool="dark">
-							<img src="{% static 'assets/img/tools/dark.png' %}" alt="dark">
-							<p>dark</p>
+
+						<!-- Check Out -->
+						<div class="col-xl-3 col-lg-4 col-md-6">
+							<div class="room-filter-item">
+								<div class="d-flex align-items-center gap-2">
+									<div class="info-icon">
+										<i class="ri-logout-circle-line"></i>
+									</div>
+									<div class="filter-content flex-grow-1">
+										<label class="info-label mb-1">Check Out:</label>
+										<input type="datetime-local" name="check_out"
+											value="{{ booking_form.check_out.value|date:'Y-m-d\TH:i' }}"
+											class="form-control form-control-sm" required>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				<div class="lh-tools-block">
-					<h3>Sidebar</h3>
-					<div class="lh-tools-info">
-						<div class="lh-tools-item sidebar active" data-sidebar-mode-tool="light">
-							<img src="{% static 'assets/img/tools/side-light.png' %}" alt="light">
-							<p>light</p>
+
+						<!-- Room Type -->
+						<div class="col-xl-3 col-lg-4 col-md-6">
+							<div class="room-filter-item">
+								<div class="d-flex align-items-center gap-2">
+									<div class="info-icon">
+										<i class="ri-hotel-bed-line"></i>
+									</div>
+									<div class="filter-content flex-grow-1">
+										<div class="mb-3">
+											<label for="room_type" class="form-label">Room Type</label>
+											<select id="room_type" name="room_type"
+												class="form-select">
+												<option value="">Loading...</option>
+											</select>
+										</div>
+										
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="dark">
-							<img src="{% static 'assets/img/tools/side-dark.png' %}" alt="dark">
-							<p>dark</p>
-						</div>
-						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-1">
-							<img src="{% static 'assets/img/tools/side-bg-1.png' %}" alt="background">
-							<p>Bg-1</p>
-						</div>
-						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-2">
-							<img src="{% static 'assets/img/tools/side-bg-2.png' %}" alt="background">
-							<p>Bg-2</p>
-						</div>
-						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-3">
-							<img src="{% static 'assets/img/tools/side-bg-3.png' %}" alt="background">
-							<p>Bg-3</p>
-						</div>
-						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-4">
-							<img src="{% static 'assets/img/tools/side-bg-4.png' %}" alt="background">
-							<p>Bg-4</p>
-						</div>
-					</div>
-				</div>
-				<div class="lh-tools-block">
-					<h3>Header</h3>
-					<div class="lh-tools-info">
-						<div class="lh-tools-item header active" data-header-mode="light">
-							<img src="{% static 'assets/img/tools/header-light.png' %}" alt="light">
-							<p>light</p>
-						</div>
-						<div class="lh-tools-item header" data-header-mode="dark">
-							<img src="{% static 'assets/img/tools/header-dark.png' %}" alt="dark">
-							<p>dark</p>
-						</div>
-					</div>
-				</div>
-				<div class="lh-tools-block">
-					<h3>Backgrounds</h3>
-					<div class="lh-tools-info">
-						<div class="lh-tools-item bg active" data-bg-mode="default">
-							<img src="{% static 'assets/img/tools/bg-0.png' %}" alt="default">
-							<p>Default</p>
-						</div>
-						<div class="lh-tools-item bg" data-bg-mode="bg-1">
-							<img src="{% static 'assets/img/tools/bg-1.png' %}" alt="bg-1">
-							<p>Bg-1</p>
-						</div>
-						<div class="lh-tools-item bg" data-bg-mode="bg-2">
-							<img src="{% static 'assets/img/tools/bg-2.png' %}" alt="bg-2">
-							<p>Bg-2</p>
-						</div>
-						<div class="lh-tools-item bg" data-bg-mode="bg-3">
-							<img src="{% static 'assets/img/tools/bg-3.png' %}" alt="bg-3">
-							<p>Bg-3</p>
-						</div>
-						<div class="lh-tools-item bg" data-bg-mode="bg-4">
-							<img src="{% static 'assets/img/tools/bg-4.png' %}" alt="bg-4">
-							<p>Bg-4</p>
-						</div>
-						<div class="lh-tools-item bg" data-bg-mode="bg-5">
-							<img src="{% static 'assets/img/tools/bg-5.png' %}" alt="bg-5">
-							<p>Bg-5</p>
+
+						<!-- Check Availability Button -->
+						<div class="col-xl-3 col-lg-4 col-md-6">
+							<div class="room-filter-item">
+								<button type="submit" class="btn btn-primary"
+									style=" border: none;">
+									<i class="ri-search-line me-1"></i> Check Availability
+								</button>
+							</div>
 						</div>
 					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="container mt-4">
+		<!-- Debug information -->
+		<div class="debug-info" style="display: none;">
+			<p>available_rooms: {{ available_rooms|length }}</p>
+			<p>grouped_rooms: {{ grouped_rooms|length }}</p>
+			<p>check_in: {{ check_in }}</p>
+			<p>check_out: {{ check_out }}</p>
+		</div>
+
+		{% if available_rooms is not None %}
+			{% if available_rooms %}
+				<div class="row">
+					<div class="section-title">
+						<h4>{{ selected_room_type|default:"Available Rooms" }}</h4>
+					</div>
+					{% for room in available_rooms %}
+						<div class="col-xl-3 col-md-6">
+							<div class="lh-card booked room-card" id="bookingtbl">
+								<div class="lh-card-header room_number">
+									<h4 class="lh-card-title ">{{ room.room_number }} - {{ room.block }}</h4>
+									<div class="header-tools">
+										<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
+											<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+												<i class="mdi mdi-dots-vertical"></i>
+											</button>
+											<ul class="dropdown-menu">
+												<li>
+													<a class="dropdown-item" href="#" onclick="editRoom('{{ room.pk }}'); return false;"
+													   data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">Edit</a>
+												</li>
+												<li>
+													<button class="btn btn-danger delete-room-btn" data-room-id="{{ room.id }}">
+														Delete
+													</button>
+												</li>
+												<li>
+													<a class="dropdown-item" href="{% url 'admin-panel:room_detail' room.pk %}">View More</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="lh-card-content card-default">
+									<div class="lh-room-details">
+										<ul class="room-info-list">
+											<li class="room-info-item">
+												<div class="info-icon"><span class="text-white">₹</span></div>
+												<div class="info-content d-flex justify-content-between">
+													<div class="info-label">Basic Price:</div>
+													<div class="info-value price-value">₹{{ room.base_price }}/-</div>
+												</div>
+											</li>
+											<li class="room-info-item">
+												<div class="info-icon"><i class="ri-space"></i></div>
+												<div class="info-content d-flex justify-content-between">
+													<div class="info-label">Air Conditioning:</div>
+													<div class="info-value">{{ room.get_ac_type_display }}</div>
+												</div>
+											</li>
+											<li class="room-info-item">
+												<div class="info-icon"><i class="ri-hotel-bed-line"></i></div>
+												<div class="info-content d-flex justify-content-between">
+													<div class="info-label">Bed Type:</div>
+													<div class="info-value">{{ room.get_bed_type_display }}</div>
+												</div>
+											</li>
+											<li class="room-info-item">
+												<div class="info-icon"><i class="ri-group-line"></i></div>
+												<div class="info-content d-flex justify-content-between">
+													<div class="info-label">Max Occupancy:</div>
+													<div class="info-value">{{ room.max_occupancy }}</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
 				</div>
-				<div class="lh-tools-block">
-					<h3>Box Design</h3>
-					<div class="lh-tools-info">
-						<div class="lh-tools-item box active" data-box-mode-tool="default">
-							<img src="{% static 'assets/img/tools/box-0.png' %}" alt="default">
-							<p>Default</p>
+			{% else %}
+				<div class="row">
+					<div class="section-title">
+						<h4>No available rooms for the selected date.</h4>
+					</div>
+				</div>
+			{% endif %}
+		{% else %}
+			{% if grouped_rooms %}
+				{% for room_type, rooms in grouped_rooms.items %}
+					<div class="row mb-4">
+						<div class="section-title">
+							<h4>{{ room_type.name }}</h4>
 						</div>
-						<div class="lh-tools-item box" data-box-mode-tool="box-1">
-							<img src="{% static 'assets/img/tools/box-1.png' %}" alt="box-1">
-							<p>Box-1</p>
-						</div>
-						<div class="lh-tools-item box" data-box-mode-tool="box-2">
-							<img src="{% static 'assets/img/tools/box-2.png' %}" alt="box-2">
-							<p>Box-2</p>
-						</div>
-						<div class="lh-tools-item box" data-box-mode-tool="box-3">
-							<img src="{% static 'assets/img/tools/box-3.png' %}" alt="box-3">
-							<p>Box-3</p>
-						</div>
+						{% for room in rooms %}
+							<div class="col-xl-3 col-md-6">
+								<div class="lh-card booked room-card" id="bookingtbl">
+									<div class="lh-card-header">
+										<h4 class="lh-card-title">{{ room.room_number }} - {{ room.block }}</h4>
+										<div class="header-tools">
+											<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
+												<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+													<i class="mdi mdi-dots-vertical"></i>
+												</button>
+												<ul class="dropdown-menu">
+													<li>
+														<a class="dropdown-item" href="#" onclick="editRoom('{{ room.pk }}'); return false;"
+														   data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">Edit</a>
+													</li>
+													<li>
+														<button class="btn btn-danger delete-room-btn" data-room-id="{{ room.id }}">
+															Delete
+														</button>
+													</li>
+													<li>
+														<a class="dropdown-item" href="{% url 'admin-panel:room_detail' room.pk %}">View More</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="lh-card-content card-default">
+										<div class="lh-room-details">
+											<ul class="room-info-list">
+												<li class="room-info-item">
+													<div class="info-icon"><span class="text-white">₹</span></div>
+													<div class="info-content d-flex justify-content-between">
+														<div class="info-label">Basic Price:</div>
+														<div class="info-value price-value">₹{{ room.base_price }}/-</div>
+													</div>
+												</li>
+												<li class="room-info-item">
+													<div class="info-icon"><i class="ri-space"></i></div>
+													<div class="info-content d-flex justify-content-between">
+														<div class="info-label">Air Conditioning:</div>
+														<div class="info-value">{{ room.get_ac_type_display }}</div>
+													</div>
+												</li>
+												<li class="room-info-item">
+													<div class="info-icon"><i class="ri-hotel-bed-line"></i></div>
+													<div class="info-content d-flex justify-content-between">
+														<div class="info-label">Bed Type:</div>
+														<div class="info-value">{{ room.get_bed_type_display }}</div>
+													</div>
+												</li>
+												<li class="room-info-item">
+													<div class="info-icon"><i class="ri-group-line"></i></div>
+													<div class="info-content d-flex justify-content-between">
+														<div class="info-label">Max Occupancy:</div>
+														<div class="info-value">{{ room.max_occupancy }}</div>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="row">
+					<div class="section-title">
+						<h4>No rooms available.</h4>
+					</div>
+				</div>
+			{% endif %}
+		{% endif %}
+	</div>
+	
+
+
+
+
+	<!-- Feature tools -->
+	<!-- <div class="lh-tools-sidebar-overlay"></div>
+	<div class="lh-tools-sidebar">
+		<a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
+			<i class="ri-settings-4-line"></i>
+		</a>
+		<div class="lh-bar-title">
+			<h6>Tools</h6>
+			<a href="javascript:void(0)" class="close-tools"><i class="ri-close-line"></i></a>
+		</div>
+		<div class="lh-tools-detail">
+			<div class="lh-tools-block">
+				<h3>Modes</h3>
+				<div class="lh-tools-info">
+					<div class="lh-tools-item mode active" data-lh-mode-tool="light">
+						<img src="{% static '/assets/img/tools/light.png' %}" alt="light">
+						<p>light</p>
+					</div>
+					<div class="lh-tools-item mode" data-lh-mode-tool="dark">
+						<img src="{% static '/assets/img/tools/dark.png' %}" alt="dark">
+						<p>dark</p>
+					</div>
+				</div>
+			</div>
+			<div class="lh-tools-block">
+				<h3>Sidebar</h3>
+				<div class="lh-tools-info">
+					<div class="lh-tools-item sidebar active" data-sidebar-mode-tool="light">
+						<img src="{% static '/assets/img/tools/side-light.png' %}" alt="light">
+						<p>light</p>
+					</div>
+					<div class="lh-tools-item sidebar" data-sidebar-mode-tool="dark">
+						<img src="{% static '/assets/img/tools/side-dark.png' %}" alt="dark">
+						<p>dark</p>
+					</div>
+					<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-1">
+						<img src="{% static '/assets/img/tools/side-bg-1.png' %}" alt="background">
+						<p>Bg-1</p>
+					</div>
+					<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-2">
+						<img src="{% static '/assets/img/tools/side-bg-2.png' %}" alt="background">
+						<p>Bg-2</p>
+					</div>
+					<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-3">
+						<img src="{% static '/assets/img/tools/side-bg-3.png' %}" alt="background">
+						<p>Bg-3</p>
+					</div>
+					<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-4">
+						<img src="{% static '/assets/img/tools/side-bg-4.png' %}" alt="background">
+						<p>Bg-4</p>
+					</div>
+				</div>
+			</div>
+			<div class="lh-tools-block">
+				<h3>Header</h3>
+				<div class="lh-tools-info">
+					<div class="lh-tools-item header active" data-header-mode="light">
+						<img src="{% static '/assets/img/tools/header-light.png' %}" alt="light">
+						<p>light</p>
+					</div>
+					<div class="lh-tools-item header" data-header-mode="dark">
+						<img src="{% static '/assets/img/tools/header-dark.png' %}" alt="dark">
+						<p>dark</p>
+					</div>
+				</div>
+			</div>
+			<div class="lh-tools-block">
+				<h3>Backgrounds</h3>
+				<div class="lh-tools-info">
+					<div class="lh-tools-item bg active" data-bg-mode="default">
+						<img src="{% static '/assets/img/tools/bg-0.png' %}" alt="default">
+						<p>Default</p>
+					</div>
+					<div class="lh-tools-item bg" data-bg-mode="bg-1">
+						<img src="{% static '/assets/img/tools/bg-1.png' %}" alt="bg-1">
+						<p>Bg-1</p>
+					</div>
+					<div class="lh-tools-item bg" data-bg-mode="bg-2">
+						<img src="{% static '/assets/img/tools/bg-2.png' %}" alt="bg-2">
+						<p>Bg-2</p>
+					</div>
+					<div class="lh-tools-item bg" data-bg-mode="bg-3">
+						<img src="{% static '/assets/img/tools/bg-3.png' %}" alt="bg-3">
+						<p>Bg-3</p>
+					</div>
+					<div class="lh-tools-item bg" data-bg-mode="bg-4">
+						<img src="{% static '/assets/img/tools/bg-4.png' %}" alt="bg-4">
+						<p>Bg-4</p>
+					</div>
+					<div class="lh-tools-item bg" data-bg-mode="bg-5">
+						<img src="{% static '/assets/img/tools/bg-5.png' %}" alt="bg-5">
+						<p>Bg-5</p>
+					</div>
+				</div>
+			</div>
+			<div class="lh-tools-block">
+				<h3>Box Design</h3>
+				<div class="lh-tools-info">
+					<div class="lh-tools-item box active" data-box-mode-tool="default">
+						<img src="{% static '/assets/img/tools/box-0.png' %}" alt="default">
+						<p>Default</p>
+					</div>
+					<div class="lh-tools-item box" data-box-mode-tool="box-1">
+						<img src="{% static '/assets/img/tools/box-1.png' %}" alt="box-1">
+						<p>Box-1</p>
+					</div>
+					<div class="lh-tools-item box" data-box-mode-tool="box-2">
+						<img src="{% static '/assets/img/tools/box-2.png' %}" alt="box-2">
+						<p>Box-2</p>
+					</div>
+					<div class="lh-tools-item box" data-box-mode-tool="box-3">
+						<img src="{% static '/assets/img/tools/box-3.png' %}" alt="box-3">
+						<p>Box-3</p>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div> -->
 	</main>
 
 
 
- <!-- start Add New Room -->
+	<!-- start Add New Room -->
 
-<!-- Off-canvas Component -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="addRoomOffcanvas" aria-labelledby="addRoomOffcanvasLabel" style="width: 600px;">
-	<div class="offcanvas-header custom-card-header">
-		<h4 class="offcanvas-title" id="addRoomOffcanvasLabel">Add New Room</h4>
-		<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-	</div>
-	<div class="offcanvas-body">
-		<!-- Move your existing form here -->
-		<form id="addRoomForm" method="post" action="{% url 'admin-panel:room_create' %}" enctype="multipart/form-data">
-			{% csrf_token %}
-			{% if form_errors %}
-			<div class="alert alert-danger">
-				<strong>Room Submission Errors:</strong>
-				<ul>
-					{% for field, errors in form_errors.items %}
-					<li>{{ field }}: {{ errors|join:", " }}</li>
-					{% endfor %}
-				</ul>
-			</div>
-			{% endif %}
-
-			{% if bulk_form_errors %}
-			<div class="alert alert-danger">
-				<strong>Bulk Submission Errors:</strong>
-				<ul>
-					{% for field, errors in bulk_form_errors.items %}
-					<li>{{ field }}: {{ errors|join:", " }}</li>
-					{% endfor %}
-				</ul>
-			</div>
-			{% endif %}
-
-			<div class="row g-3">
-				   <!-- Add Room Type Selection -->
-				<div class="col-12">
-					<label class="form-label required">Room Addition Type</label>
-					<div class="radio-group">
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="additionType" id="singleRoom" value="single" checked required>
-							<label class="form-check-label" for="singleRoom">Add Single Room</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="additionType" id="bulkRooms" value="bulk">
-							<label class="form-check-label" for="bulkRooms">Add Bulk Rooms</label>
-						</div>
-					</div>
+	<!-- Off-canvas Component -->
+	<div class="offcanvas offcanvas-end" tabindex="-1" id="addRoomOffcanvas" aria-labelledby="addRoomOffcanvasLabel"
+		style="width: 800px;">
+		<div class="offcanvas-header custom-card-header">
+			<h4 class="offcanvas-title" id="addRoomOffcanvasLabel">Add New Room</h4>
+			<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+				aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<form id="addRoomForm" method="post" action="{% if room %}{% url 'admin-panel:room_edit' room.id %}{% else %}{% url 'admin-panel:room_create' %}{% endif %}"
+				enctype="multipart/form-data">
+				{% csrf_token %}
+				{% if form_errors %}
+				<div class="alert alert-danger">
+					<strong>Room Submission Errors:</strong>
+					<ul>
+						{% for field, errors in form_errors.items %}
+						<li>{{ field }}: {{ errors|join:", " }}</li>
+						{% endfor %}
+					</ul>
 				</div>
+				{% endif %}
 
-				<div class="col-md-6" id="singleRoomNumber">
-					<label class="form-label required">Room Number</label>
-					<input type="text" class="form-control" name="room_number" required>
+				{% if bulk_form_errors %}
+				<div class="alert alert-danger">
+					<strong>Bulk Submission Errors:</strong>
+					<ul>
+						{% for field, errors in bulk_form_errors.items %}
+						<li>{{ field }}: {{ errors|join:", " }}</li>
+						{% endfor %}
+					</ul>
 				</div>
+				{% endif %}
 
-				<!-- Bulk Room Number Section -->
-				<div class="col-12" id="bulkRoomNumbers" style="display: none;">
-					<div class="row g-3">
-						<div class="col-md-6">
-							<label class="form-label required">From Room Number</label>
-							<input type="text" class="form-control" name="from_room_number">
-						</div>
-						<div class="col-md-6">
-							<label class="form-label required">To Room Number</label>
-							<input type="text" class="form-control" name="to_room_number">
+				<div class="offcanvas-form-grid">
+					<!-- Room Addition Type -->
+					<div class="form-section full-width">
+						<label class="form-label required">Room Addition Type</label>
+						<div class="radio-group">
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="additionType" id="singleRoom" value="single" checked required>
+								<label class="form-check-label" for="singleRoom">Add Single Room</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="additionType" id="bulkRooms" value="bulk">
+								<label class="form-check-label" for="bulkRooms">Add Bulk Rooms</label>
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="col-md-6">
-					<label class="form-label required">Block</label>
-					<input type="text" class="form-control" name="block" required>
-				</div>
-				<div class="col-md-6">
-					<label class="form-label required">Room Type</label>
-					<select class="form-select" name="room_type" id="room_type" required>
-						<option value="">Select Room Type</option>
-						<option value="standard">Standard Room</option>
-						<option value="deluxe">Deluxe Room</option>
-						<option value="vip">VIP Room</option>
-						<option value="conference">Conference Room</option>
-					</select>
-				</div>
-
-				<!-- Bed Type Section -->
-				<div class="col-md-6" id="bedTypeSection">
-					<label class="form-label required">Bed Type</label>
-					<select name="bed_type" id="bed_type" class="form-control">
-								<option value="">Choose Bed Type</option>
-								<option value="single">Single Bed</option>
-								<option value="double">Double Bed</option>
-					</select>
-				</div>
-
-				<!-- Seating Capacity Section (Initially Hidden) -->
-				<div class="col-md-6" id="seatingSection" style="display: none;">
-					<label class="form-label required">Seating Capacity</label>
-					<input type="number" class="form-control" name="seating_capacity" min="1">
-				</div>
-
-				<!-- AC/Non-AC Radio Buttons -->
-				<div class="col-md-6">
-					<label class="form-label required">Air Conditioning</label>
-					<div class="radio-group">
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="ac_type" id="ac" value="ac" required>
-							<label class="form-check-label" for="ac">AC Room</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="ac_type" id="nonAc" value="nonAc">
-							<label class="form-check-label" for="nonAc">Non-AC Room</label>
-						</div>
+					<!-- Room Number Section -->
+					<div class="form-section" id="singleRoomNumber">
+						<label class="form-label required">Room Number</label>
+						<input type="text" class="form-control" name="room_number" required>
 					</div>
-				</div>
 
-			 
-
-				<!-- Enhanced Price Section -->
-				<div class="col-12">
-					<label class="form-label required">Room Pricing</label>
-					<div class="price-card">
+					<!-- Bulk Room Numbers -->
+					<div class="form-section full-width" id="bulkRoomNumbers" style="display: none;">
 						<div class="row g-3">
 							<div class="col-md-6">
-								<label class="form-label">Base Price Per Night</label>
-								<div class="input-group">
-									<span class="input-group-text">₹</span>
-									<input type="number" class="form-control" name="base_price" min="0" step="100" required>
-								</div>
+								<label class="form-label required">From Room Number</label>
+								<input type="text" class="form-control" name="from_room_number">
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Weekend Price</label>
-								<div class="input-group">
-									<span class="input-group-text">₹</span>
-									<input type="number" class="form-control" name="weekend_price" min="0" step="100" required>
-								</div>
+								<label class="form-label required">To Room Number</label>
+								<input type="text" class="form-control" name="to_room_number">
 							</div>
-							<div class="col-md-6">
-								<label class="form-label">Holiday Price</label>
-								<div class="input-group">
-									<span class="input-group-text">₹</span>
-									<input type="number" class="form-control" name="holiday_price" required>
-								</div>
+						</div>
+					</div>
+
+					<!-- Block -->
+					<div class="form-section">
+						<label class="form-label required">Block</label>
+						<input type="text" class="form-control" name="block" required>
+					</div>
+
+					<!-- Room Type -->
+					<div class="form-section">
+						<label class="form-label required">Room Type</label>
+						<select id="id_room_type" name="room_type" class="form-select">
+							<option value="">Loading...</option>
+						</select>
+					</div>
+
+					<!-- Bed Type / Seating Capacity -->
+					<div class="form-section" id="bedTypeSection">
+						<label class="form-label required">Bed Type</label>
+						<select id="id_bed_type" name="bed_type" class="form-select">
+							<option value="">Select Bed Type</option>
+							<option value="single">Single Bed</option>
+							<option value="double">Double Bed</option>
+							<option value="king">King type Bed</option>
+							<option value="queen">Queen type Bed</option>
+						</select>
+					</div>
+
+					<div class="form-section hidden" id="seatingSection">
+						<label class="form-label required">Seating Capacity</label>
+						<input type="number" id="id_seating_capacity" name="seating_capacity" class="form-control">
+					</div>
+
+					<!-- AC Type -->
+					<div class="form-section">
+						<label class="form-label required">Air Conditioning</label>
+						<div class="radio-group">
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="ac_type" id="ac" value="ac" required>
+								<label class="form-check-label" for="ac">AC Room</label>
 							</div>
-							<div class="col-md-6">
-								<label class="form-label">Hourly Price</label>
-								<div class="input-group">
-									<span class="input-group-text">₹</span>
-									<input type="number" class="form-control" name="hourly_price" required>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="ac_type" id="nonAc" value="nonAc">
+								<label class="form-check-label" for="nonAc">Non-AC Room</label>
+							</div>
+						</div>
+					</div>
+
+						<!-- Max Occupancy -->
+						<div class="form-section">
+							<label class="form-label required">Max Occupancy</label>
+							<input type="number" class="form-control" name="max_occupancy" required>
+						</div>
+
+					<!-- Pricing Section -->
+					<div class="form-section full-width">
+						<label class="form-label required">Room Pricing</label>
+						<div class="price-card">
+							<div class="row g-3">
+								<div class="col-md-6">
+									<label class="form-label">Base Price Per Night</label>
+									<div class="input-group">
+										<span class="input-group-text">₹</span>
+										<input type="number" class="form-control" name="base_price" min="0" step="100" required>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Weekend Price</label>
+									<div class="input-group">
+										<span class="input-group-text">₹</span>
+										<input type="number" class="form-control" name="weekend_price" min="0" step="100" required>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Holiday Price</label>
+									<div class="input-group">
+										<span class="input-group-text">₹</span>
+										<input type="number" class="form-control" name="holiday_price" required>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Hourly Price</label>
+									<div class="input-group">
+										<span class="input-group-text">₹</span>
+										<input type="number" class="form-control" name="hourly_price" required>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="col-md-6">
-					<label class="form-label required">Max Occupancy</label>
+				
 
-					<input type="number" class="form-control" name="max_occupancy" required>
-				</div>
-					<div class="col-12">
+					<!-- Room Features -->
+					<div class="form-section full-width">
 						<label class="form-label">Room Features</label>
-						<div class="row g-2">
-							<div class="col-md-3 col-6">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" name="features" value="wifi">
-									<label class="form-check-label">Wi-Fi</label>
-								</div>
-							</div>
-							<div class="col-md-3 col-6">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" name="features" value="tv">
-									<label class="form-check-label">TV</label>
-								</div>
-							</div>
-							<div class="col-md-3 col-6">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" name="features" value="minibar">
-									<label class="form-check-label">Minibar</label>
-								</div>
-							</div>
-							<div class="col-md-3 col-6">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" name="features" value="refrigerator">
-									<label class="form-check-label">Refrigerator</label>
-								</div>
-							</div>
-							<div class="col-md-3 col-6">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" name="features" value="bathtub">
-									<label class="form-check-label">Bath Tub</label>
-								</div>
-							</div>
-							<div class="col-md-3 col-6">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" name="features" value="parking">
-									<label class="form-check-label">Parking</label>
-								</div>
-							</div>
-							<div class="col-md-3 col-6">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" name="features" value="pool">
-									<label class="form-check-label">Swimming Pool</label>
-								</div>
-							</div>
-							<div class="col-md-3 col-6">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" name="features" value="cleaning">
-									<label class="form-check-label">Room Cleaning</label>
-								</div>
-							</div>
+						<div class="features-grid" id="featuresContainer">
+							<!-- Features will be dynamically inserted here -->
 						</div>
 					</div>
-				</div>
-				<div class="col-12">
-					<label class="form-label">Room Description</label>
-					<textarea class="form-control" name="description" rows="3"></textarea>
-				</div>
 
-				<div class="col-12">
-					<label class="form-label">Room Images</label>
-					<input type="file" class="form-control" name="images" accept="image/*" multiple onchange="previewImages(event)" id="imageInput">
-					<small class="text-muted">You can upload multiple images</small>
-					<div id="imagePreview" class="d-flex flex-wrap gap-2 mt-2"></div>
-				</div>
+					<!-- Description -->
+					<div class="form-section full-width">
+						<label class="form-label">Room Description</label>
+						<textarea class="form-control" name="description" rows="3"></textarea>
+					</div>
 
-				<div class="col-12 mt-4">
-					<button type="submit" class="btn btn-primary btn-submit">Add Room</button>
-					<button type="button" class="btn btn-secondary ms-2" onclick="resetForm()">Reset Form</button>
+					<!-- Images -->
+					<div class="form-section full-width">
+						<label class="form-label">Room Images</label>
+						<input type="file" class="form-control" name="images" accept="image/*" multiple
+							onchange="previewImages(event)" id="imageInput">
+						<small class="text-muted">You can upload multiple images</small>
+						<div class="image-preview-container" id="imagePreview"></div>
+					</div>
+
+					<!-- Submit Buttons -->
+					<div class="form-section full-width text-center">
+						<button type="submit" class="btn btn-submit">Add Room</button>
+						<button type="button" class="btn btn-secondary ms-2" onclick="resetForm()">Reset Form</button>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
-</div>
-<!--add new room form end-->
+	<!--add new room form end-->
 
-<!--add new room script-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-	document.addEventListener('DOMContentLoaded', function() {
-		const singleRoom = document.getElementById('singleRoom');
-		const bulkRooms = document.getElementById('bulkRooms');
-		const singleRoomNumber = document.getElementById('singleRoomNumber');
-		const bulkRoomNumbers = document.getElementById('bulkRoomNumbers');
+	<script>
 
-		function toggleRoomNumberInputs() {
-		if (singleRoom.checked) {
-			console.log("Single Room selected.");
-			singleRoomNumber.style.display = 'block';
-			bulkRoomNumbers.style.display = 'none';
-			singleRoomNumber.querySelector('input').required = true;
-			bulkRoomNumbers.querySelectorAll('input').forEach(input => {
-				input.required = false;
-				input.value = ''; // Clear hidden values
-			});
-		} else {
-			console.log("Bulk Rooms selected.");
-			singleRoomNumber.style.display = 'none';
-			bulkRoomNumbers.style.display = 'block';
-			singleRoomNumber.querySelector('input').required = false;
-			bulkRoomNumbers.querySelectorAll('input').forEach(input => input.required = true);
-		}
-	}
 
-		singleRoom.addEventListener('change', toggleRoomNumberInputs);
-		bulkRooms.addEventListener('change', toggleRoomNumberInputs);
 
-		// Add this new code for room type handling
-		const roomType = document.getElementById('room_type');
-		const bedTypeSection = document.getElementById('bedTypeSection');
-		const seatingSection = document.getElementById('seatingSection');
-		const bedTypeInputs = bedTypeSection.querySelectorAll('input[name="bed_type"]');
 
-		roomType.addEventListener('change', function() {
-			if (this.value === 'conference') {
-				bedTypeSection.style.display = 'none';
-				seatingSection.style.display = 'block';
-				// Remove required attribute from bed type inputs
-				bedTypeInputs.forEach(input => {
-					input.required = false
-					input.checked = false;
-				});
-				// Add required attribute to seating capacity
-				seatingSection.querySelector('input').required = true;
-			} else {
-				bedTypeSection.style.display = 'block';
-				seatingSection.style.display = 'none';
-				// Add required attribute back to bed type inputs
-				bedTypeInputs.forEach(input => input.required = true);
-				// Remove required attribute from seating capacity
-				seatingSection.querySelector('input').required = false;
-				seatingSection.querySelector('input').value = '';
-			}
-		});
-		// Initialize state based on default room type selection
-		if (roomType.value === 'conference') {
-			bedTypeSection.style.display = 'none';
-			seatingSection.style.display = 'block';
-			bedTypeInputs.forEach(input => input.required = false);
-			seatingSection.querySelector('input').required = true;
-		} else {
-			bedTypeSection.style.display = 'block';
-			seatingSection.style.display = 'none';
-			bedTypeInputs.forEach(input => input.required = true);
-			seatingSection.querySelector('input').required = false;
-		}
-			});
+$(document).ready(function () {
+    function fetchRoomData(formSelector) {
+        $.ajax({
+            url: "{% url 'admin-panel:fetch_room_data' %}",
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+                let roomTypeDropdown = $(formSelector).find("select[name='room_type']");
+                let featureContainer = $(formSelector).find("#featuresContainer"); // Ensure this exists in your HTML
 
-			document.addEventListener('DOMContentLoaded', function() {
-const imageInput = document.querySelector('input[name="images"]');
-const preview = document.getElementById('imagePreview');
-const maxImages = 10;
+                // Clear existing options
+                roomTypeDropdown.empty().append(`<option value="">Select Room Type</option>`);
 
-imageInput.addEventListener('change', function(event) {
-	// Clear previous previews
-	preview.innerHTML = '';
+                // Populate Room Types
+                $.each(response.room_types, function (index, roomType) {
+                    roomTypeDropdown.append(`
+                        <option value="${roomType.id}" data-bedtype="${roomType.bed_type}">
+                            ${roomType.name}
+                        </option>
+                    `);
+                });
 
-	const files = event.target.files;
-	
-	// Check image limit
-	if (files.length > maxImages) {
-		alert(`You can only upload up to ${maxImages} images.`);
-		event.target.value = ''; // Clear the input
-		return;
-	}
+                // Clear and Populate Features
+                featureContainer.empty();
+                $.each(response.features, function (index, feature) {
+                    featureContainer.append(`
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="features" value="${feature.id}" id="feature_${feature.id}">
+                            <label class="form-check-label ms-2" for="feature_${feature.id}">
+                                ${feature.name}
+                            </label>
+                        </div>
+                    `);
+                });
 
-	for (const file of files) {
-		const reader = new FileReader();
-		reader.onload = function(e) {
-			const imgContainer = document.createElement('div');
-			imgContainer.className = 'position-relative';
-			
-			const img = document.createElement('img');
-			img.src = e.target.result;
-			img.classList.add('preview-image', 'rounded');
-			img.style.maxWidth = '200px';
-			img.style.maxHeight = '200px';
-			img.style.objectFit = 'cover';
-			
-			const removeBtn = document.createElement('button');
-			removeBtn.innerHTML = '×';
-			removeBtn.type = 'button';
-			removeBtn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
-			removeBtn.onclick = function() {
-				imgContainer.remove();
-			};
-			
-			imgContainer.appendChild(img);
-			imgContainer.appendChild(removeBtn);
-			preview.appendChild(imgContainer);
-		}
-		reader.readAsDataURL(file);
-	}
-	});
+                // Only toggle fields for addRoomForm
+                if (formSelector === "#addRoomForm") {
+                    toggleFields();
+                }
+            },
+            error: function (xhr, status, error) {  // ✅ Moved error function outside success
+                console.error("AJAX Error:", xhr.responseText);
+                alert("Error fetching room data. Please check the console for details.");
+            }
+        });
+    }
+
+    function toggleFields() {
+        let selectedRoomType = $("#addRoomForm #id_room_type option:selected");
+        let selectedBedType = selectedRoomType.attr("data-bedtype")?.trim().toLowerCase() || "";
+
+        let seatingSection = $("#seatingSection");
+        let bedTypeSection = $("#bedTypeSection");
+
+        if (selectedBedType === "conference") {
+            seatingSection.removeClass("hidden"); // Show Seating Capacity
+            bedTypeSection.addClass("hidden"); // Hide Bed Type
+        } else {
+            seatingSection.addClass("hidden"); // Hide Seating Capacity
+            bedTypeSection.removeClass("hidden"); // Show Bed Type
+        }
+    }
+
+    // Fetch Room Types and Features for both forms
+    fetchRoomData("#roomFilterForm"); // Only fetch room types
+    fetchRoomData("#addRoomForm"); // Fetch room types + features
+
+    // Handle Room Type Change (only for addRoomForm)
+    $("#addRoomForm #id_room_type").change(function () {
+        toggleFields();
+    });
 });
 
-	// function previewImages(event) {
-	//     const preview = document.getElementById('imagePreview');
-	//     const files = event.target.files;
-	//     const maxImages = 10;
-	//     const existingImages = preview.children.length;
-	//     const remainingSlots = maxImages - existingImages;
+		
+	document.addEventListener('DOMContentLoaded', function () {
+				const singleRoom = document.getElementById('singleRoom');
+				const bulkRooms = document.getElementById('bulkRooms');
+				const singleRoomNumber = document.getElementById('singleRoomNumber');
+				const bulkRoomNumbers = document.getElementById('bulkRoomNumbers');
 
-	//     // Check if adding new images would exceed the limit
-	//     if (files.length > remainingSlots) {
-	//         alert(`You can only upload up to ${maxImages} images. You have ${existingImages} images already.`);
-	//         event.target.value = ''; // Clear the input
-	//         return;
-	//     }
-
-	//     for (const file of files) {
-	//         const reader = new FileReader();
-	//         reader.onload = function(e) {
-	//             const imgContainer = document.createElement('div');
-	//             imgContainer.className = 'position-relative';
-				
-	//             const img = document.createElement('img');
-	//             img.src = e.target.result;
-	//             img.classList.add('preview-image', 'rounded');
-				
-	//             const removeBtn = document.createElement('button');
-	//             removeBtn.innerHTML = '×';
-	//             removeBtn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
-	//             removeBtn.onclick = function() {
-	//                 imgContainer.remove();
-	//                 // Enable input if images are less than max
-	//                 const imageInput = document.getElementById('imageInput');
-	//                 if (preview.children.length < maxImages) {
-	//                     imageInput.disabled = false;
-	//                 }
-	//             };
-				
-	//             imgContainer.appendChild(img);
-	//             imgContainer.appendChild(removeBtn);
-	//             preview.appendChild(imgContainer);
-
-	//             // Disable input if max images reached
-	//             if (preview.children.length >= maxImages) {
-	//                 document.getElementById('imageInput').disabled = true;
-	//             }
-	//         }
-	//         reader.readAsDataURL(file);
-	//     }
-	// }
-
-	function handleSubmit(event) {
-		event.preventDefault();
-		const formData = new FormData(event.target);
-		const data = Object.fromEntries(formData.entries());
-		
-		// Get selected features
-		data.features = Array.from(formData.getAll('features'));
-		
-		// Here you would typically send the data to your backend
-		console.log('Form Data:', data);
-		
-		// Show success message
-		alert('Room added successfully!');
-		event.target.reset();
-		document.getElementById('imagePreview').innerHTML = '';
-	}
-
-	function resetForm() {
-		// Reset the form
-		document.getElementById('addRoomForm').reset();
-		
-		// Clear image preview
-		document.getElementById('imagePreview').innerHTML = '';
-		
-		// Enable image input
-		document.getElementById('imageInput').disabled = false;
-		
-		// Reset room number display (show single room, hide bulk)
-		document.getElementById('singleRoomNumber').style.display = 'block';
-		document.getElementById('bulkRoomNumbers').style.display = 'none';
-		
-		// Reset radio button to single room
-		document.getElementById('singleRoom').checked = true;
-		
-		// Reset required attributes
-		document.querySelector('#singleRoomNumber input').required = true;
-		document.querySelectorAll('#bulkRoomNumbers input').forEach(input => input.required = false);
-		
-		// Reset room type related sections
-		const bedTypeSection = document.getElementById('bedTypeSection');
-		const seatingSection = document.getElementById('seatingSection');
-		bedTypeSection.style.display = 'block';
-		seatingSection.style.display = 'none';
-		
-		// Reset bed type required attributes
-		bedTypeSection.querySelectorAll('input[name="bedType"]').forEach(input => input.required = true);
-		seatingSection.querySelector('input').required = false;
-	}
-
-	function editRoom(roomId) {
-		// Change form title and button text
-		document.querySelector('#addRoomOffcanvasLabel').textContent = 'Edit Room';
-		document.querySelector('.btn-submit').textContent = 'Update Room';
-		
-		// Update form action with correct URL namespace
-		const form = document.getElementById('addRoomForm');
-		form.action = `/admin-panel/rooms/${roomId}/edit/`;
-		
-		// Hide bulk room options when editing
-		document.querySelector('.radio-group').style.display = 'none';
-		document.getElementById('bulkRoomNumbers').style.display = 'none';
-		document.getElementById('singleRoomNumber').style.display = 'block';
-		
-		// Add error handling for the fetch request
-		fetch(`/admin-panel/rooms/${roomId}/edit/`)
-			.then(response => {
-				if (!response.ok) {
-					throw new Error('Network response was not ok');
+				function toggleRoomNumberInputs() {
+					if (singleRoom.checked) {
+						console.log("Single Room selected.");
+						singleRoomNumber.style.display = 'block';
+						bulkRoomNumbers.style.display = 'none';
+						singleRoomNumber.querySelector('input').required = true;
+						bulkRoomNumbers.querySelectorAll('input').forEach(input => {
+							input.required = false;
+							input.value = ''; // Clear hidden values
+						});
+					} else {
+						console.log("Bulk Rooms selected.");
+						singleRoomNumber.style.display = 'none';
+						bulkRoomNumbers.style.display = 'block';
+						singleRoomNumber.querySelector('input').required = false;
+						bulkRoomNumbers.querySelectorAll('input').forEach(input => input.required = true);
+					}
 				}
-				return response.json();
-			})
-			.then(data => {
-				if (!data) {
-					throw new Error('No data received');
-				}
-				
-				// Populate form fields
-				document.querySelector('input[name="room_number"]').value = data.room_number || '';
-				document.querySelector('input[name="block"]').value = data.block || '';
-				document.querySelector('select[name="room_type"]').value = data.room_type || '';
-				document.querySelector('select[name="bed_type"]').value = data.bed_type || '';
-				
-				// Handle AC type radio buttons
-				const acTypeRadio = document.querySelector(`input[name="ac_type"][value="${data.ac_type}"]`);
-				if (acTypeRadio) {
-					acTypeRadio.checked = true;
-				}
-				
-				// Handle numeric fields
-				document.querySelector('input[name="base_price"]').value = data.base_price || '';
-				document.querySelector('input[name="weekend_price"]').value = data.weekend_price || '';
-				document.querySelector('input[name="holiday_price"]').value = data.holiday_price || '';
-				document.querySelector('input[name="hourly_price"]').value = data.hourly_price || '';
-				document.querySelector('input[name="max_occupancy"]').value = data.max_occupancy || '';
-				document.querySelector('textarea[name="description"]').value = data.description || '';
-				
-				// Handle features
-				const featureCheckboxes = document.querySelectorAll('input[name="features"]');
-				featureCheckboxes.forEach(checkbox => {
-					checkbox.checked = data.features && data.features.includes(checkbox.value);
-				});
-				
-				// Handle room type specific fields
-				const roomTypeSelect = document.querySelector('select[name="room_type"]');
-				if (data.room_type === 'conference') {
-					document.getElementById('bedTypeSection').style.display = 'none';
-					document.getElementById('seatingSection').style.display = 'block';
-					document.querySelector('input[name="seating_capacity"]').value = data.seating_capacity || '';
-				} else {
-					document.getElementById('bedTypeSection').style.display = 'block';
-					document.getElementById('seatingSection').style.display = 'none';
-				}
-				// Handle existing images
-				const imagePreview = document.getElementById('imagePreview');
-            imagePreview.innerHTML = ''; // Clear existing preview
-            
-            if (data.images && data.images.length > 0) {
-                data.images.forEach(image => {
-                    const imgContainer = document.createElement('div');
-                    imgContainer.className = 'position-relative d-inline-block me-2 mb-2';
-                    
-                    const img = document.createElement('img');
-                    img.src = image.url;
-                    img.classList.add('preview-image', 'rounded');
-                    img.style.width = '100px';
-                    img.style.height = '100px';
-                    img.style.objectFit = 'cover';
-                    
-                    const removeBtn = document.createElement('button');
-                    removeBtn.innerHTML = '×';
-                    removeBtn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
-                    removeBtn.onclick = function() {
-                        if (confirm('Are you sure you want to remove this image?')) {
-                            imgContainer.remove();
-                        }
-                    };
-                    
-                    imgContainer.appendChild(img);
-                    imgContainer.appendChild(removeBtn);
-                    imagePreview.appendChild(imgContainer);
-                });
-            }
-				
-				// Trigger room type change event
-				roomTypeSelect.dispatchEvent(new Event('change'));
-			})
-			.catch(error => {
-				console.error('Error fetching room data:', error);
-				alert('Error loading room data. Please try again.');
-			});
-	}
 
-	function deleteRoom(roomId) {
-		if (confirm('Are you sure you want to delete this room? This action cannot be undone.')) {
-			// Get CSRF token from the cookie
-			function getCookie(name) {
-				let cookieValue = null;
-				if (document.cookie && document.cookie !== '') {
-					const cookies = document.cookie.split(';');
-					for (let i = 0; i < cookies.length; i++) {
-						const cookie = cookies[i].trim();
-						if (cookie.substring(0, name.length + 1) === (name + '=')) {
-							cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-							break;
+				singleRoom.addEventListener('change', toggleRoomNumberInputs);
+				bulkRooms.addEventListener('change', toggleRoomNumberInputs);
+			
+			
+			function previewImages(event) {
+				const preview = document.getElementById('imagePreview');
+				const files = event.target.files;
+				const maxImages = 10;
+				const existingImages = preview.children.length;
+				const remainingSlots = maxImages - existingImages;
+
+				// Check if adding new images would exceed the limit
+				if (files.length > remainingSlots) {
+					alert(`You can only upload up to ${maxImages} images. You have ${existingImages} images already.`);
+					event.target.value = ''; // Clear the input
+					return;
+				}
+
+				for (const file of files) {
+					const reader = new FileReader();
+					reader.onload = function (e) {
+						const imgContainer = document.createElement('div');
+						imgContainer.className = 'position-relative';
+
+						const img = document.createElement('img');
+						img.src = e.target.result;
+						img.classList.add('preview-image', 'rounded');
+
+						const removeBtn = document.createElement('button');
+						removeBtn.innerHTML = '×';
+						removeBtn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
+						removeBtn.onclick = function () {
+							imgContainer.remove();
+							// Enable input if images are less than max
+							const imageInput = document.getElementById('imageInput');
+							if (preview.children.length < maxImages) {
+								imageInput.disabled = false;
+							}
+						};
+
+						imgContainer.appendChild(img);
+						imgContainer.appendChild(removeBtn);
+						preview.appendChild(imgContainer);
+
+						// Disable input if max images reached
+						if (preview.children.length >= maxImages) {
+							document.getElementById('imageInput').disabled = true;
 						}
+					}
+					reader.readAsDataURL(file);
+				}
+			}
+
+			function handleSubmit(event) {
+				event.preventDefault();
+				const formData = new FormData(event.target);
+				const data = Object.fromEntries(formData.entries());
+
+				// Get selected features
+				data.features = Array.from(formData.getAll('features'));
+
+				// Here you would typically send the data to your backend
+				console.log('Form Data:', data);
+
+				// Show success message
+				alert('Room added successfully!');
+				event.target.reset();
+				document.getElementById('imagePreview').innerHTML = '';
+			}
+
+			function resetForm() {
+				// Reset the form
+				document.getElementById('addRoomForm').reset();
+
+				// Clear image preview
+				document.getElementById('imagePreview').innerHTML = '';
+
+				// Enable image input
+				document.getElementById('imageInput').disabled = false;
+
+				// Reset room number display (show single room, hide bulk)
+				document.getElementById('singleRoomNumber').style.display = 'block';
+				document.getElementById('bulkRoomNumbers').style.display = 'none';
+
+				// Reset radio button to single room
+				document.getElementById('singleRoom').checked = true;
+
+				// Reset required attributes
+				document.querySelector('#singleRoomNumber input').required = true;
+				document.querySelectorAll('#bulkRoomNumbers input').forEach(input => input.required = false);
+
+				// Reset room type related sections
+				const bedTypeSection = document.getElementById('bedTypeSection');
+				const seatingSection = document.getElementById('seatingSection');
+				bedTypeSection.style.display = 'block';
+				seatingSection.style.display = 'none';
+
+				// Reset bed type required attributes
+				bedTypeSection.querySelectorAll('input[name="bedType"]').forEach(input => input.required = true);
+				seatingSection.querySelector('input').required = false;
+			}
+
+			function editRoom(roomId) {
+				console.log("Editing Room ID:", roomId);
+
+				fetch(`/edit-room/${roomId}/`)
+					.then(response => response.json())   
+					.then(data => {
+						console.log("Fetched Room Data:", data);
+
+						const form = document.getElementById('roomForm');
+						form.reset();
+
+						// Set basic form values
+						form.room_id.value = roomId;
+						form.room_number.value = data.room_number;
+						form.description.value = data.description;
+						form.price.value = data.price;
+						form.hourly_price.value = data.hourly_price;
+						form.weekend_price.value = data.weekend_price;
+						form.holiday_price.value = data.holiday_price;
+
+						// Set room type and trigger the change event to load correct UI (bed/seating)
+						form.room_type.value = data.room_type;
+						const event = new Event('change');
+						form.room_type.dispatchEvent(event);
+
+						// Set dependent fields based on mode
+						if (data.room_type_mode === 'bed') {
+							document.getElementById('bedTypeSection').style.display = 'block';
+							document.getElementById('seatingSection').style.display = 'none';
+							form.bed_type.value = data.bed_type || '';
+						} else {
+							document.getElementById('bedTypeSection').style.display = 'none';
+							document.getElementById('seatingSection').style.display = 'block';
+							form.seating_capacity.value = data.seating_capacity || '';
+						}
+
+						// Set status
+						form.status.value = data.status;
+
+						// Load existing images
+						const preview = document.getElementById('imagePreview');
+						preview.innerHTML = '';
+						if (data.images && data.images.length > 0) {
+							data.images.forEach(imageUrl => {
+								const img = document.createElement('img');
+								img.src = imageUrl;
+								img.classList.add('preview-img');
+								preview.appendChild(img);
+							});
+						}
+
+						// Show the form modal (if using modal)
+						$('#roomModal').modal('show');
+					})
+					.catch(error => {
+						console.error("Error fetching room data:", error);
+					});
+			}
+
+				
+
+			function getCSRFToken() {
+				let cookieValue = null;
+				let cookies = document.cookie.split(';');
+				for (let i = 0; i < cookies.length; i++) {
+					let cookie = cookies[i].trim();
+					if (cookie.startsWith('csrftoken=')) {
+						cookieValue = cookie.substring('csrftoken='.length, cookie.length);
+						break;
 					}
 				}
 				return cookieValue;
 			}
-			const csrftoken = getCookie('csrftoken');
 
-			// Make the delete request
-			fetch(`/admin-panel/rooms/${roomId}/delete/`, {
-				method: 'POST',
-				headers: {
-					'X-CSRFToken': csrftoken,
-					'Content-Type': 'application/json',
-				},
-				credentials: 'same-origin'  // This is important for cookies
-			})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error('Network response was not ok');
+			// Assign CSRF token to a global variable
+			const csrftoken = getCSRFToken();
+
+
+			document.addEventListener('click', function (event) {
+				if (event.target.classList.contains('delete-room-btn')) {
+					let roomId = event.target.dataset.roomId;
+					console.log("Button clicked, Room ID:", roomId);  // ✅ Debugging
+					deleteRoom(roomId);
 				}
-				return response.json();
-			})
-			.then(data => {
-				if (data.success) {
-					// Show success message using Bootstrap toast or alert
-					alert('Room deleted successfully!');
-					// Reload the page to reflect changes
-					window.location.reload();
-				} else {
-					alert('Error deleting room: ' + (data.error || 'Unknown error'));
-				}
-			})
-			.catch(error => {
-				console.error('Error:', error);
-				alert('Error deleting room. Please try again.');
 			});
-		}
-	}
-</script>
 
-<!--end add new room script-->	
-{% endblock %}
+			function deleteRoom(roomId) {
+				console.log("Delete function triggered for Room ID:", roomId);  // ✅ Debugging
+
+				Swal.fire({
+					title: "Are you sure?",
+					text: "You won't be able to recover this room!",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#d33",
+					cancelButtonColor: "#3085d6",
+					confirmButtonText: "Yes, delete it!"
+				}).then((result) => {
+					if (result.isConfirmed) {
+						console.log("Confirmed! Sending delete request...");
+
+						fetch(`/admin-panel/room/${roomId}/delete/`, {
+							method: 'POST',
+							headers: {
+								'X-CSRFToken': csrftoken,
+								'Content-Type': 'application/json',
+							},
+							credentials: 'same-origin'
+						})
+						.then(response => response.json())
+						.then(data => {
+							console.log("Delete response:", data);  // ✅ Debugging
+
+							if (data.success) {
+								Swal.fire({
+									title: "Deleted!",
+									text: "Room has been deleted successfully.",
+									icon: "success",
+									timer: 2000,
+									showConfirmButton: false
+								}).then(() => {
+									window.location.reload();
+								});
+							} else {
+								throw new Error(data.error || "Unknown error.");
+							}
+						})
+						.catch(error => {
+							console.error("Delete error:", error);
+							Swal.fire({
+								title: "Error!",
+								text: error.message || "Error deleting room.",
+								icon: "error",
+								confirmButtonText: "OK"
+							});
+						});
+					}
+				});
+			}
+
+
+
+
+		})
+			
+			document.getElementById('addRoomForm').addEventListener('submit', function (event) {
+				event.preventDefault(); // Prevent the default form submission
+
+				const formData = new FormData(this);
+
+				fetch(this.action, {
+					method: 'POST',
+					body: formData,
+					headers: {
+						'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token
+					}
+				})
+					.then(response => response.json())
+					.then(data => {
+						if (data.success === false) {
+							// Show SweetAlert for error message
+							Swal.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.message,
+								confirmButtonText: 'OK'
+							});
+						} else {
+							// Show success message
+							Swal.fire({
+								icon: 'success',
+								title: 'Success',
+								text: 'Room added successfully!',
+								confirmButtonText: 'OK'
+							}).then(() => {
+								window.location.href = "{% url 'admin-panel:room_list' %}"; // Redirect to rooms page
+							});
+						}
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: 'An unexpected error occurred. Please try again.',
+							confirmButtonText: 'OK'
+						});
+					});
+			});
+
+
+
+
+
+	</script>
+
+
+	{% endblock %}

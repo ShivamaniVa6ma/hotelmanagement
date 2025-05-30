@@ -1,0 +1,3049 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+
+	<!-- Add this CSS to your stylesheet -->
+<!-- <style>
+	.delete-modal .modal-content {
+		border: none;
+		/* padding: 2rem 1rem; */
+		border-radius: 15px;
+		
+	}
+
+	.delete-modal .delete-icon {
+		width: 85px;
+		height: 85px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #ffe4e4;
+		border-radius: 50%;
+		margin: 0 auto 1.5rem;
+	}
+
+	.delete-modal .delete-icon i {
+		font-size: 3rem;
+		color: #ff3b3b;
+	}
+
+	.delete-modal h4 {
+		color: #343434;
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.delete-modal p {
+		color: #666;
+		margin-bottom: 2rem;
+	}
+
+	.delete-modal .button-row {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+	}
+
+	.delete-modal .btn {
+		min-width: 120px;
+		padding: 0.6rem 1.5rem;
+		border-radius: 50px;
+		font-weight: 500;
+	}
+
+	.delete-modal .btn-danger {
+		background: #ff3b3b;
+		border-color: #ff3b3b;
+	}
+
+	.delete-modal .btn-danger:hover {
+		background: #ff1c1c;
+		border-color: #ff1c1c;
+	}
+
+	.delete-modal .btn-secondary {
+		background: #e4e6ef;
+		border-color: #e4e6ef;
+		color: #666;
+	}
+
+	.delete-modal .btn-secondary:hover {
+		background: #d5d7e3;
+		border-color: #d5d7e3;
+		color: #444;
+	}
+
+	.search-wrapper {
+		margin-right: 15px;
+		display: inline-block;
+	}
+
+	.search-box {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+
+	.search-input {
+		width: 280px;
+		height: 40px;
+		padding: 10px 45px 10px 20px;
+		border: 2px solid #e4e6ef;
+		border-radius: 50px;
+		font-size: 14px;
+		transition: all 0.3s ease;
+		background: #f5f8fa;
+	}
+
+	.search-input:focus {
+		border-color: darkblue;
+		background: #fff;
+		outline: none;
+		box-shadow: 0 0 0 3px rgba(0, 158, 247, 0.1);
+	}
+
+	.search-button {
+		position: absolute;
+		right: 5px;
+		height: 34px;
+		width: 34px;
+		border: none;
+		background: transparent;
+		border-radius: 50%;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+	}
+
+	.search-button i {
+		font-size: 18px;
+		color: #5e6278;
+		transition: all 0.3s ease;
+	}
+
+	.search-button:hover {
+		background: #009ef7;
+	}
+
+	.search-button:hover i {
+		color: #fff;
+	}
+
+	/* Responsive adjustments */
+	@media (max-width: 768px) {
+		.search-input {
+			width: 200px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.search-wrapper {
+			margin-right: 10px;
+		}
+		
+		.search-input {
+			width: 160px;
+		}
+	}
+
+	/*room type settings*/
+	.booking-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+            border-color: #86b7fe;
+        }
+
+        .btn-submit {
+            background: darkblue;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            border: none;
+            width: 100%;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: darkblue;
+            transform: translateY(-2px);
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .button-wrapper{
+            display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  margin: 0 auto; /* Center the div itself */
+        }
+	/*room type settings*/
+
+	/*logo settings styles*/
+	.main-container {
+            min-height: 100vh;
+            padding: 2rem 0;
+            /* background: linear-gradient(135deg, #f6f8f9 0%, #e5ebee 100%); */
+			
+        }
+
+        .settings-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .settings-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 1.5rem;
+            border-bottom: none;
+        }
+
+        .header-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: white;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .favicon-preview {
+            max-width: 48px;
+            max-height: 48px;
+            border-radius: 8px;
+        }
+
+        .logo-card {
+            border-radius: 12px;
+            border: 2px dashed #dee2e6;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 1rem;
+        }
+
+        .logo-card:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .dark-mode {
+            background-color: var(--dark-bg);
+            color: white;
+        }
+
+        .dark-mode .logo-card {
+            background: #2d2d2d;
+            border-color: #404040;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .file-upload-wrapper {
+			display: flex;
+			justify-content: center;
+
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .custom-file-upload {
+            display: block;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .custom-file-upload:hover {
+            background: #e9ecef;
+        }
+
+        .upload-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 150px;
+            /* background: #f8f9fa; */
+            border-radius: 8px;
+            margin-top: 1rem;
+            padding: 1rem;
+        }
+
+        .btn-primary {
+            background: darkblue;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .success-animation {
+            animation: successPulse 0.5s ease-out;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .settings-card {
+                margin: 1rem;
+            }
+            
+            .preview-image {
+                max-width: 150px;
+                max-height: 150px;
+            }
+            
+            .card-header {
+                padding: 1rem;
+            }
+            
+            .header-icon {
+                font-size: 1.5rem;
+            }
+        }
+
+		.dark-mode {
+			
+    background-color: darkblue;
+    color: white;
+}
+a{
+	text-decoration: none;
+}
+	/*end logo settings styles*/
+
+	/*Calender form styles*/
+	.settings-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        .nav-pills .nav-link.active {
+            background-color: darkblue;
+        }
+        .nav-pills .nav-link {
+            color: #495057;
+            padding: 10px 20px;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+        }
+        .selected-date {
+            background-color: #e3f2fd;
+            border-radius: 5px;
+        }
+        .calendar-grid .btn {
+            width: 40px;
+            height: 40px;
+            margin: 2px;
+            padding: 0;
+        }
+        .blackout-date {
+            background-color: #ffebee !important;
+            color: #d32f2f !important;
+        }
+        .seasonal-date {
+            background-color: #e8f5e9 !important;
+            color: #2e7d32 !important;
+        }
+        .settings-header {
+            background:darkblue;
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+        }
+        .custom-tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .custom-tooltip .tooltip-text {
+            visibility: hidden;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .custom-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+	/*end calender form styles*/
+	/*Features styles*/
+	.feature-form-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .form-header {
+            background: darkblue;
+            /* padding: 30px; */
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+        }
+        .feature-icon {
+            font-size: 15px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: darkblue;
+            box-shadow: 0 0 0 0.2rem rgba(26, 115, 232, 0.1);
+        }
+        .feature-preview {
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .feature-preview:hover {
+            border-color: darkblue;
+            background: rgba(26, 115, 232, 0.05);
+        }
+        .feature-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .btn-submit {
+            background:darkblue;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3);
+        }
+        .category-tag {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+			color: darkblue;
+            transition: .4s;
+            border-radius: 34px;
+			height: 30px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 6px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: darkblue;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+	/*end features styles*/
+</style>
+
+ -->
+
+
+ <style>
+	.delete-modal .modal-content {
+		border: none;
+		/* padding: 2rem 1rem; */
+		border-radius: 15px;
+		
+	}
+
+	.delete-modal .delete-icon {
+		width: 85px;
+		height: 85px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #ffe4e4;
+		border-radius: 50%;
+		margin: 0 auto 1.5rem;
+	}
+
+	.delete-modal .delete-icon i {
+		font-size: 3rem;
+		color: #ff3b3b;
+	}
+
+	.delete-modal h4 {
+		color: #343434;
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.delete-modal p {
+		color: #666;
+		margin-bottom: 2rem;
+	}
+
+	.delete-modal .button-row {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+	}
+
+	.delete-modal .btn {
+		min-width: 120px;
+		padding: 0.6rem 1.5rem;
+		border-radius: 50px;
+		font-weight: 500;
+	}
+
+	.delete-modal .btn-danger {
+		background: #ff3b3b;
+		border-color: #ff3b3b;
+	}
+
+	.delete-modal .btn-danger:hover {
+		background: #ff1c1c;
+		border-color: #ff1c1c;
+	}
+
+	.delete-modal .btn-secondary {
+		background: #e4e6ef;
+		border-color: #e4e6ef;
+		color: #666;
+	}
+
+	.delete-modal .btn-secondary:hover {
+		background: #d5d7e3;
+		border-color: #d5d7e3;
+		color: #444;
+	}
+
+	.search-wrapper {
+		margin-right: 15px;
+		display: inline-block;
+	}
+
+	.search-box {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+
+	.search-input {
+		width: 280px;
+		height: 40px;
+		padding: 10px 45px 10px 20px;
+		border: 2px solid #e4e6ef;
+		border-radius: 50px;
+		font-size: 14px;
+		transition: all 0.3s ease;
+		background: #f5f8fa;
+	}
+
+	.search-input:focus {
+		border-color: darkblue;
+		background: #fff;
+		outline: none;
+		box-shadow: 0 0 0 3px rgba(0, 158, 247, 0.1);
+	}
+
+	.search-button {
+		position: absolute;
+		right: 5px;
+		height: 34px;
+		width: 34px;
+		border: none;
+		background: transparent;
+		border-radius: 50%;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+	}
+
+	.search-button i {
+		font-size: 18px;
+		color: #5e6278;
+		transition: all 0.3s ease;
+	}
+
+	.search-button:hover {
+		background: #009ef7;
+	}
+
+	.search-button:hover i {
+		color: #fff;
+	}
+
+	/* Responsive adjustments */
+	@media (max-width: 768px) {
+		.search-input {
+			width: 200px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.search-wrapper {
+			margin-right: 10px;
+		}
+		
+		.search-input {
+			width: 160px;
+		}
+	}
+
+	/*room type settings*/
+	.booking-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+            border-color: #86b7fe;
+        }
+
+        .btn-submit {
+            background: darkblue;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            border: none;
+            /* width: 100%; */
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: darkblue;
+            transform: translateY(-2px);
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .button-wrapper{
+            display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto; /* Center the div itself */
+        }
+	/*room type settings*/
+
+	/*logo settings styles*/
+	.main-container {
+            min-height: 100vh;
+            padding: 2rem 0;
+			
+        }
+
+        .settings-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .settings-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 1.5rem;
+            border-bottom: none;
+        }
+
+        .header-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: white;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .favicon-preview {
+            max-width: 48px;
+            max-height: 48px;
+            border-radius: 8px;
+        }
+
+        .logo-card {
+            border-radius: 12px;
+            border: 2px dashed #dee2e6;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 1rem;
+        }
+
+        .logo-card:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .dark-mode {
+            background-color: var(--dark-bg);
+            color: white;
+        }
+
+        .dark-mode .logo-card {
+            background: #2d2d2d;
+            border-color: #404040;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .file-upload-wrapper {
+			display: flex;
+			justify-content: center;
+
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .custom-file-upload {
+            display: block;
+            padding: 1rem;
+            /* background: #f8f9fa; */
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .custom-file-upload:hover {
+            background: #e9ecef;
+        }
+
+        .upload-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 150px;
+            /* background: #f8f9fa; */
+            border-radius: 8px;
+            margin-top: 1rem;
+            padding: 1rem;
+        }
+
+        .btn-primary {
+            background: darkblue;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .success-animation {
+            animation: successPulse 0.5s ease-out;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .settings-card {
+                margin: 1rem;
+            }
+            
+            .preview-image {
+                max-width: 150px;
+                max-height: 150px;
+            }
+            
+            .card-header {
+                padding: 1rem;
+            }
+            
+            .header-icon {
+                font-size: 1.5rem;
+            }
+        }
+
+		.dark-mode {
+			
+    background-color: darkblue;
+    color: white;
+}
+a{
+	text-decoration: none;
+}
+	/*end logo settings styles*/
+
+	/*Calender form styles*/
+	
+	.form-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            background-color: #fff;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        
+        .events-list {
+            margin-top: 2rem;
+        }
+        
+        .event-card {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+	/*end calender form styles*/
+	/*Features styles*/
+	.feature-form-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .form-header {
+            background: darkblue;
+            /* padding: 30px; */
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+        }
+        .feature-icon {
+            font-size: 15px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: darkblue;
+            box-shadow: 0 0 0 0.2rem rgba(26, 115, 232, 0.1);
+        }
+        .feature-preview {
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .feature-preview:hover {
+            border-color: darkblue;
+            background: rgba(26, 115, 232, 0.05);
+        }
+        .feature-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .btn-submit {
+            background:darkblue;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3);
+        }
+        .category-tag {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+			color: darkblue;
+            transition: .4s;
+            border-radius: 34px;
+			height: 30px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 6px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: darkblue;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+	/*end features styles*/
+
+	/*rooms styles*/
+	@media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 95%;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 992px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                max-width: 768px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                max-width: 576px;
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                width: 85%;
+                padding: 10px;
+            }
+        }
+
+        .room-list {
+            margin-bottom: 20px;
+        }
+
+        .room-row {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+			align-items: flex-start;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 576px) {
+            .room-row {
+                flex-direction: column;
+            }
+        }
+
+        .room-row:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .room-number {
+            background: #002B5B;
+            color: white;
+            padding: 6px;
+			padding-left: 10px;
+            border-radius: 8px ;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* min-width: 120px; */
+			width: 100%;
+        }
+
+        @media (max-width: 576px) {
+            .room-number {
+                border-radius: 8px 8px 0 0;
+                width: 100%;
+            }
+        }
+		
+
+        .room-details {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            flex-grow: 1;
+            /* gap: 20px; */
+            flex-wrap: wrap;
+			/* margin-bottom: 20px; */
+        }
+
+        .detail-item {
+            display: flex;
+			align-items: flex-start;
+            gap: 10px;
+			width: 25%;
+            /* flex: 1 1 200px;
+            min-width: 200px; */
+        }
+
+        @media (max-width: 992px) {
+            .detail-item {
+                flex: 1 1 calc(50% - 10px);
+                min-width: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .room-details {
+                gap: 15px;
+                padding: 12px;
+            }
+            
+            .detail-item {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* .icon-circle {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            background: #002B5B;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        } */
+
+        @media (max-width: 768px) {
+            .icon-circle {
+                width: 32px;
+                height: 32px;
+                min-width: 32px;
+            }
+        }
+
+        .detail-content {
+            display: flex;
+            flex-direction: row;
+            gap: 3px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .detail-label {
+            color: #6c757d;
+            font-size: 0.85em;
+            margin-bottom: 0;
+            white-space: nowrap;
+        }
+
+        .detail-value {
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+		
+
+        .settings-btn {
+            background: none;
+            border: none;
+            color: white;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .settings-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .settings-btn {
+                padding: 10px;
+            }
+        }
+
+        .section-title {
+            color: #002B5B;
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #002B5B;
+            font-size: 1.5em;
+        }
+
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.3em;
+                margin: 20px 0 12px;
+            }
+        }
+
+        .action-buttons {
+            display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+            /* gap: 10px; */
+            align-items: center;
+            margin-left: auto;
+            padding: 0 5px;
+        }
+
+        @media (max-width: 576px) {
+            .action-buttons {
+                padding: 10px 15px;
+                justify-content: flex-end;
+                background: #f8f9fa;
+                border-radius: 0 0 8px 8px;
+            }
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+            color: #002B5B;
+        }
+
+        .action-btn:hover {
+            background-color: rgba(0, 43, 91, 0.1);
+        }
+
+        .action-btn.edit:hover {
+            color: #0056b3;
+        }
+
+        .action-btn.delete:hover {
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .action-btn {
+                padding: 10px;
+            }
+        }
+	/*end rooms styles*/
+	
+	/* Add new room styles */
+
+	.custom-card {
+            border: none;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .form-label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .required::after {
+            content: "*";
+            color: red;
+            margin-left: 4px;
+        }
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;
+        }
+        .custom-card-header {
+            background: linear-gradient(45deg, #1a237e, #283593);
+            color: white;
+            /* border-radius: 10px 10px 0 0; */
+        }
+        .btn-submit {
+            background: linear-gradient(45deg, #1a237e, #283593);
+            border: none;
+            padding: 10px 30px;
+        }
+        .btn-submit:hover {
+            background: linear-gradient(45deg, #283593, #1a237e);
+        }
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-right: none;
+        }
+        .form-control:focus {
+            border-color: #1a237e;
+            box-shadow: 0 0 0 0.2rem rgba(26,35,126,0.25);
+        }
+        .bed-type-btn {
+            width: 120px;
+            margin: 5px;
+        }
+        .bed-type-btn.active {
+            background-color: #1a237e;
+            border-color: #1a237e;
+        }
+        .price-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+			
+        }
+        .radio-group {
+            /* border: 1px solid #dee2e6;
+            border-radius: 8px; */
+            padding: 15px;
+        }
+.offcanvas{
+    width: 827px !important;
+	
+}
+
+
+.offcanvas-backdrop {
+	position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+	background-color: none;
+	 
+}
+.offcanvas-backdrop.show {
+    opacity: -1;
+}
+	/*end Add new room styles */
+	</style>
+
+		<!-- main content -->
+		<div class="lh-main-content team-list">
+			<div class="container-fluid">
+				<!-- Page title & breadcrumb -->
+				<div class="lh-page-title lh-page-title-2">
+					<div class="lh-breadcrumb">
+						<h5>Settings</h5>
+						<ul>
+							<li><a href="{% url 'admin-panel:index' %}">Luxurious</a></li>
+							<li>Team List</li>
+						</ul>
+					</div>
+				</div>
+
+			
+
+				<div class="row">
+					<div class="col-xxl-4 col-lg-5 col-md-12">
+						<div class="team-sticky-bar">
+							<div class="lh-card">
+								
+								<div class="search-wrapper" style="margin: 31px 50px 0px;">
+									<div class="search-box">
+										<input type="text" class="search-input" placeholder="Search ...">
+										<button class="search-button">
+											<i class="ri-search-line"></i>
+										</button>
+									</div>
+								</div>
+
+
+
+
+								<div class="lh-card-content">
+									
+									<ul class="nav nav-tabs" role="tablist">
+										<li class="nav-item" role="presentation">
+											<a class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab1" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Guest List</span>
+													<!-- <img class="team-img" src="{% static '/assets/img/user/1.jpg' %}" alt="team">
+													<span>Moris Waites</span> -->
+												</div>
+											</a>
+											
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab2" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Team List</span>
+													<!-- <img class="team-img" src="{% static '/assets/img/user/2.jpg' %}" alt="team">
+													<span>Emma Grater</span> -->
+												</div>
+											</a>
+										
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab3" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Room Type</span>
+													<!-- <img class="team-img" src="{% static '/assets/img/user/3.jpg' %}" alt="team">
+													<span>Olive Yew</span> -->
+												</div>
+											</a>
+											
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab4" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                 <span>Logo</span>
+													
+												</div>
+											</a>
+											
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab5" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Team Designation</span>
+													<!-- <img class="team-img" src="{% static '/assets/img/user/5.jpg' %}" alt="team">
+													<span>Martin vegasu</span> -->
+												</div>
+											</a>
+											
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab6" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Add New Room</span>
+													<!-- <img class="team-img" src="{% static '/assets/img/user/6.jpg' %}" alt="team">
+													<span>Lily wilson</span> -->
+												</div>
+											</a>
+										
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab7" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Rooms</span>
+													<!-- <img class="team-img" src="{% static '/assets/img/user/7.jpg' %}" alt="team">
+													<span>Nancy thomas</span> -->
+												</div>
+											</a>
+											
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab8" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Bookings</span>
+													<!-- <img class="team-img" src="{% static '/assets/img/user/8.jpg' %}" alt="team">
+													<span>Mecov Maira</span> -->
+												</div>
+											</a>
+										
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab9" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Calender</span>
+													<!-- <img class="team-img" src="{% static '/assets/img/user/9.jpg' %}" alt="team">
+													<span>Boris Whisli</span> -->
+												</div>
+											</a>
+										
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab10" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Add New Features</span>
+													<!-- <img class="team-img" src="{% static '/assets/img/user/10.jpg' %}" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+											
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab11" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Add New Menu</span>
+													<!-- <img class="team-img" src="{% static '/assets/img/user/10.jpg' %}" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+											
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xxl-8 col-lg-7 col-md-12">
+						<div class="lh-card" id="assigntbl">
+
+							<div class="lh-card-content card-default">
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="tab1" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Guest List</h4>
+												</div>
+												<!-- <div class="row"> -->
+													
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tab2" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Team List</h4>
+												</div>
+												<!-- <div class="row"> -->
+													
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+
+									<div class="tab-pane fade" id="tab3" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Room Type</h4>
+												</div>
+												<div class="container">
+													<div class="booking-form">
+														<h2 class="text-center mb-4">Room Type</h2>
+														<form id="room-type-form">
+															{% csrf_token %}
+														
+															<div class="mb-4">
+																<label for="name" class="form-label">Room Type</label>
+																<input type="text" 
+																	   class="form-control" 
+																	   id="name" 
+																	   name="name" 
+																	   placeholder="Enter room type" 
+																	   required>
+															</div>
+														
+															<div class="mb-4">
+																<label for="available_from" class="form-label">Available From</label>
+																<input type="date" 
+																	   class="form-control" 
+																	   id="available_from" 
+																	   name="available_from" 
+																	   required>
+															</div>
+														
+															<div class="button-wrapper">
+																<button type="submit" class="btn-submit">Submit</button>
+															</div>
+														</form>
+														
+														{% if error %}
+															<div class="alert alert-danger mt-3">{{ error }}</div>
+														{% endif %}
+													</div>
+												</div>
+											</div>
+										</div>
+									
+                                    </div>
+
+									<div class="tab-pane fade" id="tab4" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Logos</h4>
+												</div>
+												<div class="row">
+													<div class="main-container">
+														<div class="container">
+															<div class="row justify-content-center">
+																<div class="col-lg-10">
+																	<div class="settings-card card">
+																		<div class="card-body p-4">
+																			<form id="logoSettingsForm" method="post" enctype="multipart/form-data">
+																				{% csrf_token %}
+																				
+																				<!-- Site Name -->
+																				<div class="mb-4">
+																					<label for="siteName" class="form-label fw-bold">
+																						<i class="fas fa-signature me-2"></i>Site Name
+																					</label>
+																					<input type="text" name="site_name" class="form-control" id="siteName" required placeholder="Enter your hotel name" value="{{ logo_settings.site_name }}">
+																				</div>
+																			
+																				<!-- Favicon -->
+																				<div class="mb-4">
+																					<label class="form-label fw-bold"><i class="fas fa-bookmark me-2"></i>Favicon</label>
+																					<div class="logo-card">
+																						<div class="file-upload-wrapper">
+																							<label class="custom-file-upload">
+																								<i class="fas fa-upload upload-icon"></i>
+																								<span>Choose Favicon</span>
+																								<input type="file" name="favicon" class="form-control file-input" id="favicon" accept=".ico,.png,.jpg,.jpeg" style="display: none;">
+																							</label>
+																						</div>
+																						<div class="preview-container">
+																							<img id="faviconPreview" 
+																							src="{% if logo_settings.favicon %}{{ logo_settings.favicon.url }}{% else %}{% static '/assets/img/logo/collapse-logo.png' %}{% endif %}" 
+																							class="favicon-preview" alt="Favicon preview">																						</div>
+																					</div>
+																				</div>
+																			
+																				<!-- Light Logo -->
+																				<div class="mb-4">
+																					<label class="form-label fw-bold"><i class="fas fa-sun me-2"></i>Light Mode Logo</label>
+																					<div class="logo-card">
+																						<div class="file-upload-wrapper">
+																							<label class="custom-file-upload">
+																								<i class="fas fa-upload upload-icon"></i>
+																								<span>Choose Light Logo</span>
+																								<input type="file" name="light_logo" class="form-control file-input" id="lightLogo" accept="image/*" style="display: none;">
+																							</label>
+																						</div>
+																						<div class="preview-container">
+																							<img id="lightLogoPreview" 
+																							src="{% if logo_settings.light_logo %}{{ logo_settings.light_logo.url }}{% else %}{% static '/assets/img/logo/logo-3.png' %}{% endif %}" 
+																							class="preview-image" alt="Light logo preview">																						</div>
+																					</div>
+																				</div>
+																			
+																				<!-- Dark Logo -->
+																				<div class="mb-4">
+																					<label class="form-label fw-bold"><i class="fas fa-moon me-2"></i>Dark Mode Logo</label>
+																					<div class="logo-card dark-mode">
+																						<div class="file-upload-wrapper">
+																							<label class="custom-file-upload">
+																								<i class="fas fa-upload upload-icon"></i>
+																								<span>Choose Dark Logo</span>
+																								<input type="file" name="dark_logo" class="form-control file-input" id="darkLogo" accept="image/*" style="display: none;">
+																							</label>
+																						</div>
+																						<div class="preview-container">
+																							<img id="darkLogoPreview" 
+																							src="{% if logo_settings.dark_logo %}{{ logo_settings.dark_logo.url }}{% else %}{% static '/assets/img/logo/full-logo.png' %}{% endif %}" 
+																							class="preview-image" alt="Dark logo preview">																						</div>
+																					</div>
+																				</div>
+																			
+																				<!-- Submit Button -->
+																				<div class="d-flex justify-content-center">
+																					<button type="submit" class="btn btn-primary">
+																						<i class="fas fa-save me-2"></i>Save Settings
+																					</button>
+																				</div>
+																			
+																				<!-- Success Message -->
+																				<!-- <div id="successMessage" class="alert alert-success mt-3" style="display: none;">
+																					Settings saved successfully!
+																				</div> -->
+																			</form>
+																			
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="tab-pane fade" id="tab5" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Team Designation</h4>
+												</div>
+												<div class="row">
+													
+													<div class="container">
+														<div class="booking-form">
+															<h2 class="text-center mb-4">Team Designation</h2>
+															<form id="bookingForm" method="post" action="{% url 'admin-panel:team_designation' %}">
+																{% csrf_token %}
+																<div class="mb-4">
+																	<label for="Team Designation" class="form-label">Team Designation</label>
+																	<input type="text" 
+																		   class="form-control" 
+																		   id="teamDesignation" 
+																		   name="teamDesignation" 
+																		   placeholder="Enter Designation"
+																		   required>
+																</div>
+																<div class="mb-4">
+																	<label for="dateTime" class="form-label">Date and Time</label>
+																	<input type="datetime-local" 
+																		   class="form-control" 
+																		   id="dateTimes"
+																		   name="dateTimes"
+																		   required>
+																</div>
+																<div class="button-wrapper">
+																	<button type="submit" class="btn-submit">Submit</button>
+																</div>
+															</form>
+														</div>
+													</div>
+												
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="tab-pane fade" id="tab6" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Add New Rooms</h4>
+												</div>
+												<!-- <div class="row"> -->
+													
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tab7" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Rooms</h4>
+												</div>
+												<!-- <div class="row"> -->
+	
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tab8" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Bookings</h4>
+												</div>
+												<!-- <div class="row"> -->
+
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tab9" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Calender</h4>
+												</div>
+												<div class="row">
+													<div class="container py-5" style="max-width: 850px;">
+        <div class="card settings-card">
+            <div class="settings-header">
+                <h4 class="mb-0"><i class="fas fa-cog me-2"></i>Calendar Settings</h4>
+                <p class="mb-0" style="color: white;">Configure your booking calendar and reservation rules</p>
+            </div>
+            
+            <div class="card-body p-4">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="nav flex-column nav-pills" role="tablist">
+                            <button class="nav-link active mb-2" data-bs-toggle="pill" data-bs-target="#general">
+                                <i class="fas fa-sliders-h me-2"></i>General Settings
+                            </button>
+                            <button class="nav-link mb-2" data-bs-toggle="pill" data-bs-target="#blackout">
+                                <i class="fas fa-calendar-times me-2"></i>Blackout Dates
+                            </button>
+                            <button class="nav-link mb-2" data-bs-toggle="pill" data-bs-target="#seasonal">
+                                <i class="fas fa-sun me-2 "></i>Seasonal Rates
+                            </button>
+                            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#advanced">
+                                <i class="fas fa-tools me-2"></i>Advanced
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-9">
+                        <div class="tab-content">
+                            <!-- General Settings -->
+                            <div class="tab-pane fade show active" id="general">
+                                <h4 class="mb-4">General Calendar Settings</h4>
+                                <form id="generalSettingsForm">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Minimum Stay (Nights)</label>
+                                            <input type="number" class="form-control" value="1" min="1">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Maximum Stay (Nights)</label>
+                                            <input type="number" class="form-control" value="30" min="1">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Check-in Time</label>
+                                            <input type="time" class="form-control" value="14:00">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Check-out Time</label>
+                                            <input type="time" class="form-control" value="11:00">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Advance Booking Window (Days)</label>
+                                        <input type="number" class="form-control" value="365" min="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" checked>
+                                            <label class="form-check-label">Enable Automatic Confirmation</label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Blackout Dates -->
+                            <div class="tab-pane fade" id="blackout">
+                                <h4 class="mb-4">Manage Blackout Dates</h4>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="calendar-grid mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <h5 id="currentMonth">September 2024</h5>
+                                                <div>
+                                                    <button class="btn btn-outline-primary btn-sm me-2" onclick="previousMonth()">
+                                                        <i class="fas fa-chevron-left"></i>
+                                                    </button>
+                                                    <button class="btn btn-outline-primary btn-sm" onclick="nextMonth()">
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div id="calendarGrid"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6>Selected Dates</h6>
+                                                <div id="selectedDates" class="mb-3">
+                                                    No dates selected
+                                                </div>
+                                                <button class="btn btn-danger w-100">
+                                                    Set as Blackout Dates
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Seasonal Rates -->
+                            <div class="tab-pane fade" id="seasonal">
+                                <h4 class="mb-4">Seasonal Rate Configuration</h4>
+                                <div class="mb-4">
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#seasonModal">
+                                        <i class="fas fa-plus me-2"></i>Add New Season
+                                    </button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Season Name</th>
+                                                <th>Date Range</th>
+                                                <th>Rate Modifier</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Peak Season</td>
+                                                <td>Jun 1 - Aug 31</td>
+                                                <td>+50%</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary me-2">Edit</button>
+                                                    <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Off Season</td>
+                                                <td>Nov 1 - Mar 31</td>
+                                                <td>-20%</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary me-2">Edit</button>
+                                                    <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Advanced Settings -->
+                            <div class="tab-pane fade" id="advanced">
+                                <h4 class="mb-4">Advanced Settings</h4>
+                                <form>
+                                    <div class="mb-3">
+                                        <label class="form-label">Buffer Time Between Bookings (Hours)</label>
+                                        <input type="number" class="form-control" value="2" min="0">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Cancellation Policy</label>
+                                        <select class="form-select">
+                                            <option>24 hours before check-in</option>
+                                            <option>48 hours before check-in</option>
+                                            <option>72 hours before check-in</option>
+                                            <option>7 days before check-in</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Default Room Block Release Time (Hours)</label>
+                                        <input type="number" class="form-control" value="24" min="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" checked>
+                                            <label class="form-check-label">Enable Waiting List</label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" checked>
+                                            <label class="form-check-label">Allow Split Stays</label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end mt-4">
+                    <button class="btn btn-secondary me-2 mt-3">Cancel Changes</button>
+                    <button class="btn me-3 mt-3 " style="background-color: darkblue; color: white;">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Season Modal -->
+    <div class="modal fade" id="seasonModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Season</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Season Name</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Start Date</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">End Date</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Rate Modifier (%)</label>
+                            <input type="number" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" style="display: flex;flex-wrap: wrap;">
+                    <div><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button></div>
+                    <div><button type="button" class="btn btn-primary">Add Season</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tab10" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Features</h4>
+												</div>
+												<div class="row">
+
+													
+														<div class="container py-5" style="width: 700px;">
+															<div class="feature-form-card">
+																<!-- Form Header -->
+																<div class="form-header" style="display: flex;align-items: center;justify-content: start;gap: 5px;padding: 8px;padding-top: 18px;">
+																	<div class="feature-icon">
+																		<i class="fas fa-plus"></i>
+																	</div>
+																	<h3 style="color: white;">Add New Feature</h3>
+																	<!-- <p class="mb-0">Add and configure new features for your hotel</p> -->
+																</div>
+													
+																<!-- Form Body -->
+																<div class="p-4">
+																	<form id="featureForm">
+																		<!-- Basic Information -->
+																		<div class="row mb-4">
+																			<div class="col-md-6">
+																				<label class="form-label">Feature Name</label>
+																				<input type="text" class="form-control" placeholder="e.g., Swimming Pool">
+																			</div>
+																			<div class="col-md-6">
+																				<label class="form-label">Feature Category</label>
+																				<select class="form-select">
+																					<option>Amenities</option>
+																					<option>Services</option>
+																					<option>Facilities</option>
+																					<option>Entertainment</option>
+																					<option>Food & Beverage</option>
+																				</select>
+																			</div>
+																		</div>
+													
+																		<!-- Description -->
+																		<div class="mb-4">
+																			<label class="form-label">Description</label>
+																			<textarea class="form-control" rows="3" placeholder="Describe the feature..."></textarea>
+																		</div>
+													
+																		<!-- Feature Image -->
+																		<div class="mb-4">
+																			<label class="form-label">Feature Image</label>
+																			<div class="feature-preview" id="dropZone">
+																				<i class="fas fa-cloud-upload-alt mb-3" style="font-size: 2rem; color: #1a73e8;"></i>
+																				<p class="mb-0">Drag & drop your image here or <span class="text-primary">browse</span></p>
+																				<input type="file" id="fileInput" hidden accept="image/*">
+																				<div id="imagePreview" class="mt-3" style="display: none;">
+																					<img src="" alt="Preview" style="max-width: 200px;">
+																				</div>
+																			</div>
+																		</div>
+													
+																		<!-- Feature Details -->
+																		<div class="row mb-4">
+																			<div class="col-md-6">
+																				<label class="form-label">Availability</label>
+																				<select class="form-select">
+																					<option>24/7</option>
+																					<option>Scheduled Hours</option>
+																					<option>On Request</option>
+																					<option>Seasonal</option>
+																				</select>
+																			</div>
+																			<div class="col-md-6">
+																				<label class="form-label">Location</label>
+																				<input type="text" class="form-control" placeholder="e.g., Ground Floor">
+																			</div>
+																		</div>
+													
+																		<!-- Feature Settings -->
+																		<div class="mb-4">
+																			<label class="form-label">Feature Settings</label>
+																			<div class="row g-3">
+																				<div class="col-md-4">
+																					<div class="d-flex justify-content-between align-items-center">
+																						<span>Chargeable</span>
+																						<label class="toggle-switch">
+																							<input type="checkbox">
+																							<span class="slider"></span>
+																						</label>
+																					</div>
+																				</div>
+																				<div class="col-md-4">
+																					<div class="d-flex justify-content-between align-items-center">
+																						<span>Requires Booking</span>
+																						<label class="toggle-switch">
+																							<input type="checkbox">
+																							<span class="slider"></span>
+																						</label>
+																					</div>
+																				</div>
+																				<div class="col-md-4">
+																					<div class="d-flex justify-content-between align-items-center">
+																						<span>Featured</span>
+																						<label class="toggle-switch">
+																							<input type="checkbox">
+																							<span class="slider"></span>
+																						</label>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+													
+																		<!-- Submit Button -->
+																		<div class="text-end">
+																			<button type="button" class="btn btn-light me-2">Cancel</button>
+																			<button type="submit" class="btn btn-light me-2">Save
+																				<!-- <i class="fas fa-save me-2"></i>Save -->
+																			</button>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="tab-pane fade" id="tab11" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Add New Menu</h4>
+												</div>
+												<!-- <div class="row"> -->
+													
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		
+		<!-- Feature tools -->
+		<div class="lh-tools-sidebar-overlay"></div>
+		<div class="lh-tools-sidebar">
+			<a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
+				<i class="ri-settings-4-line"></i>
+			</a>
+			<div class="lh-bar-title">
+				<h6>Tools</h6>
+				<a href="javascript:void(0)" class="close-tools"><i class="ri-close-line"></i></a>
+			</div>
+			<div class="lh-tools-detail">
+				<div class="lh-tools-block">
+					<h3>Modes</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item mode active" data-lh-mode-tool="light">
+							<img src="{% static '/assets/img/tools/light.png' %}" alt="light">
+							<p>light</p>
+						</div>
+						<div class="lh-tools-item mode" data-lh-mode-tool="dark">
+							<img src="{% static '/assets/img/tools/dark.png' %}" alt="dark">
+							<p>dark</p>
+						</div>
+					</div>
+				</div>
+				<div class="lh-tools-block">
+					<h3>Sidebar</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item sidebar active" data-sidebar-mode-tool="light">
+							<img src="{% static '/assets/img/tools/side-light.png' %}" alt="light">
+							<p>light</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="dark">
+							<img src="{% static '/assets/img/tools/side-dark.png' %}" alt="dark">
+							<p>dark</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-1">
+							<img src="{% static '/assets/img/tools/side-bg-1.png' %}" alt="background">
+							<p>Bg-1</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-2">
+							<img src="{% static '/assets/img/tools/side-bg-2.png' %}" alt="background">
+							<p>Bg-2</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-3">
+							<img src="{% static '/assets/img/tools/side-bg-3.png' %}" alt="background">
+							<p>Bg-3</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-4">
+							<img src="{% static '/assets/img/tools/side-bg-4.png' %}" alt="background">
+							<p>Bg-4</p>
+						</div>
+					</div>
+				</div>
+				<div class="lh-tools-block">
+					<h3>Header</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item header active" data-header-mode="light">
+							<img src="{% static '/assets/img/tools/header-light.png' %}" alt="light">
+							<p>light</p>
+						</div>
+						<div class="lh-tools-item header" data-header-mode="dark">
+							<img src="{% static '/assets/img/tools/header-dark.png' %}" alt="dark">
+							<p>dark</p>
+						</div>
+					</div>
+				</div>
+				<div class="lh-tools-block">
+					<h3>Backgrounds</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item bg active" data-bg-mode="default">
+							<img src="{% static '/assets/img/tools/bg-0.png' %}" alt="default">
+							<p>Default</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-1">
+							<img src="{% static '/assets/img/tools/bg-1.png' %}" alt="bg-1">
+							<p>Bg-1</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-2">
+							<img src="{% static '/assets/img/tools/bg-2.png' %}" alt="bg-2">
+							<p>Bg-2</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-3">
+							<img src="{% static '/assets/img/tools/bg-3.png' %}" alt="bg-3">
+							<p>Bg-3</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-4">
+							<img src="{% static '/assets/img/tools/bg-4.png' %}" alt="bg-4">
+							<p>Bg-4</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-5">
+							<img src="{% static '/assets/img/tools/bg-5.png' %}" alt="bg-5">
+							<p>Bg-5</p>
+						</div>
+					</div>
+				</div>
+				<div class="lh-tools-block">
+					<h3>Box Design</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item box active" data-box-mode-tool="default">
+							<img src="{% static '/assets/img/tools/box-0.png' %}" alt="default">
+							<p>Default</p>
+						</div>
+						<div class="lh-tools-item box" data-box-mode-tool="box-1">
+							<img src="{% static '/assets/img/tools/box-1.png' %}" alt="box-1">
+							<p>Box-1</p>
+						</div>
+						<div class="lh-tools-item box" data-box-mode-tool="box-2">
+							<img src="{% static '/assets/img/tools/box-2.png' %}" alt="box-2">
+							<p>Box-2</p>
+						</div>
+						<div class="lh-tools-item box" data-box-mode-tool="box-3">
+							<img src="{% static '/assets/img/tools/box-3.png' %}" alt="box-3">
+							<p>Box-3</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<!-- Vendor Custom -->
+	<script src="{% static '/assets/js/vendor/jquery-3.6.4.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/simplebar.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/apexcharts.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/jquery-jvectormap-1.2.2.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/jquery-jvectormap-world-mill-en.js' %}"></script>
+	<!-- Data Tables -->
+	<script src='{% static '/assets/js/vendor/jquery.datatables.min.js' %}'></script>
+	<script src='{% static '/assets/js/vendor/datatables.bootstrap5.min.js' %}'></script>
+	<script src='{% static '/assets/js/vendor/datatables.responsive.min.js' %}'></script>
+	<!-- Caleddar -->
+	<script src="{% static '/assets/js/vendor/jquery.simple-calendar.js' %}"></script>
+	<!-- Date Range Picker -->
+	<script src="{% static '/assets/js/vendor/moment.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/daterangepicker.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/date-range.js' %}"></script>
+
+	<!-- Main Custom -->
+	<script src="{% static '/assets/js/main.js' %}"></script>
+
+	<!-- Add this modal HTML at the end of your file, before closing body tag -->
+	<div class="modal fade delete-modal" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body text-center">
+					<div class="delete-icon">
+						<i class="ri-error-warning-line"></i>
+					</div>
+					<h4>Are you sure?</h4>
+					<p>Do you really want to delete this record? This process cannot be undone.</p>
+					<div class="button-row">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-danger">Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Add this JavaScript before the closing body tag -->
+	<script>
+	document.getElementById('confirmDelete').addEventListener('click', function() {
+		// Add your delete logic here
+		alert('Team member deleted successfully!');
+		
+		// Close the modal
+		var modal = bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal'));
+		modal.hide();
+	});
+	</script>
+
+
+<!-- room type settings script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		// Example of an AJAX call to retrieve room types
+		const roomTypeForm = document.getElementById('bookingForm');
+
+		roomTypeForm.addEventListener('submit', function(event) {
+			event.preventDefault(); // Prevent the default form submission
+
+			const formData = new FormData(roomTypeForm);
+
+			fetch("{% url 'admin-panel:room_type' %}", {  // Use the correct URL
+				method: 'POST',
+				body: formData,
+				headers: {
+					'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token
+				}
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					// Handle success (e.g., show a success message or redirect)
+					Swal.fire({
+						icon: 'success',
+						title: 'Success',
+						text: 'Room type added successfully!',
+						confirmButtonText: 'OK'
+					});
+					// Optionally reload or update the UI
+				} else {
+					// Handle error
+					Swal.fire({
+						icon: 'error',
+						title: 'Error',
+						text: data.error,
+						confirmButtonText: 'OK'
+					});
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				Swal.fire({
+					icon: 'error',
+					title: 'Error',
+					text: 'An unexpected error occurred. Please try again.',
+					confirmButtonText: 'OK'
+				});
+			});
+		});
+	});
+</script>
+ <!--end room type settings script-->
+
+ <!--start team settings script-->
+ <script>
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const roomType = document.getElementById('name').value;
+        const dateTime = document.getElementById('available_from').value;
+
+        // You can handle the form submission here
+        console.log('Room Type:', teamDesignation);
+        console.log('Date and Time:', dateTimes);
+        
+        // Optional: Show success message
+        alert('Booking submitted successfully!');
+        this.reset();
+    });
+</script>
+
+<!--logo settings script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Preview image functions with animation
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            const file = input.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.add('success-animation');
+                    setTimeout(() => {
+                        preview.classList.remove('success-animation');
+                    }, 500);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Update file input labels
+        function updateFileLabel(input) {
+            const label = input.parentElement.querySelector('span');
+            if (input.files.length > 0) {
+                label.textContent = input.files[0].name;
+            }
+        }
+
+        // Setup file input listeners
+        ['favicon', 'lightLogo', 'darkLogo'].forEach(id => {
+            const input = document.getElementById(id);
+            input.addEventListener('change', function() {
+                previewImage(this, `${id}Preview`);
+                updateFileLabel(this);
+            });
+        });
+
+        // Dark mode toggle with smooth transition
+        document.getElementById('darkModeToggle').addEventListener('change', function() {
+            document.body.style.transition = 'background-color 0.3s ease';
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Form submission with animation
+        document.getElementById('settingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('siteName', document.getElementById('siteName').value);
+            formData.append('favicon', document.getElementById('favicon').files[0]);
+            formData.append('lightLogo', document.getElementById('lightLogo').files[0]);
+            formData.append('darkLogo', document.getElementById('darkLogo').files[0]);
+
+            // Add success animation to button
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.classList.add('success-animation');
+            // setTimeout(() => {
+            //     submitButton.classList.remove('success-animation');
+				Swal.fire({
+					icon: 'success',
+					title: 'Success',
+					text: data.message,
+					showConfirmButton: false,
+					timer: 2000
+				});            // }, 500);
+        });
+    </script>
+<!--end logo settings script-->
+
+<!--calender form script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+	let currentDate = new Date();
+	let selectedDates = new Set();
+
+	function generateCalendar() {
+		const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+		const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+		const monthLength = lastDay.getDate();
+		const startingDay = firstDay.getDay();
+
+		document.getElementById('currentMonth').textContent = 
+			firstDay.toLocaleString('default', { month: 'long', year: 'numeric' });
+
+		const calendarGrid = document.getElementById('calendarGrid');
+		calendarGrid.innerHTML = '';
+
+		// Create day headers
+		const daysHeader = document.createElement('div');
+		daysHeader.className = 'd-flex justify-content-between mb-2';
+		['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
+			const dayEl = document.createElement('div');
+			dayEl.className = 'text-center';
+			dayEl.style.width = '40px';
+			dayEl.textContent = day;
+			daysHeader.appendChild(dayEl);
+		});
+		calendarGrid.appendChild(daysHeader);
+
+		// Create calendar days
+		let currentRow = document.createElement('div');
+		currentRow.className = 'd-flex justify-content-between mb-2';
+
+		// Add empty cells for days before the first of the month
+		for (let i = 0; i < startingDay; i++) {
+			const emptyCell = document.createElement('button');
+
+
+
+			emptyCell.className = 'btn btn-outline-light disabled';
+			emptyCell.style.visibility = 'hidden';
+			currentRow.appendChild(emptyCell);
+		}
+
+		// Add calendar days
+		for (let i = 1; i <= monthLength; i++) {
+			const dateBtn = document.createElement('button');
+			dateBtn.className = 'btn btn-outline-secondary';
+			dateBtn.textContent = i;
+			
+			// Check if date is selected
+			const dateString = `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${i}`;
+			if (selectedDates.has(dateString)) {
+				dateBtn.classList.add('selected-date');
+			}
+
+			dateBtn.onclick = () => toggleDateSelection(dateString, dateBtn);
+			currentRow.appendChild(dateBtn);
+
+			if ((i + startingDay) % 7 === 0 || i === monthLength) {
+				calendarGrid.appendChild(currentRow);
+				currentRow = document.createElement('div');
+				currentRow.className = 'd-flex justify-content-between mb-2';
+			}
+		}
+	}
+
+	function toggleDateSelection(dateString, button) {
+		if (selectedDates.has(dateString)) {
+			selectedDates.delete(dateString);
+			button.classList.remove('selected-date');
+		} else {
+			selectedDates.add(dateString);
+			button.classList.add('selected-date');
+		}
+		updateSelectedDatesDisplay();
+	}
+
+	function updateSelectedDatesDisplay() {
+		const displayElement = document.getElementById('selectedDates');
+		if (selectedDates.size === 0) {
+			displayElement.textContent = 'No dates selected';
+		} else {
+			displayElement.innerHTML = Array.from(selectedDates)
+				.map(date => `<div class="selected-date p-2 mb-1">${formatDate(date)}</div>`)
+				.join('');
+		}
+	}
+
+	function formatDate(dateString) {
+		const [year, month, day] = dateString.split('-');
+		return new Date(year, month-1, day).toLocaleDateString('en-US', {
+			month: 'short',
+			day: 'numeric',
+			year: 'numeric'
+		});
+	}
+
+	function previousMonth() {
+		currentDate.setMonth(currentDate.getMonth() - 1);
+		generateCalendar();
+	}
+
+	function nextMonth() {
+		currentDate.setMonth(currentDate.getMonth() + 1);
+		generateCalendar();
+	}
+
+	// Save Settings Handler
+	document.querySelectorAll('form').forEach(form => {
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+			// Add your save logic here
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: data.message,
+				showConfirmButton: false,
+				timer: 2000
+			});		
+		});
+	});
+
+	// Initialize Tooltips
+	const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+	const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+		return new bootstrap.Tooltip(tooltipTriggerEl);
+	});
+
+	// Initialize Calendar
+	generateCalendar();
+
+	// Handle Form Submission
+	document.getElementById('generalSettingsForm').addEventListener('submit', function(e) {
+		e.preventDefault();
+		// Add your form submission logic here
+		alert('General settings updated successfully!');
+	});
+
+	// Season Management
+	function addNewSeason() {
+		const modal = document.getElementById('seasonModal');
+		// Add your season creation logic here
+		bootstrap.Modal.getInstance(modal).hide();
+		alert('New season added successfully!');
+	}
+
+	// Initialize Event Listeners
+	document.addEventListener('DOMContentLoaded', function() {
+		// Add any additional initialization code here
+		const saveButton = document.querySelector('.btn-primary');
+		saveButton.addEventListener('click', function() {
+			// Add your save all settings logic here
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: data.message,
+				showConfirmButton: false,
+				timer: 2000
+			});	
+		});	
+	});
+</script>
+<!--end calender form script-->
+
+<!--features form script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // File Upload Handling
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImg = imagePreview.querySelector('img');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#1a73e8';
+            dropZone.style.backgroundColor = 'rgba(26, 115, 232, 0.05)';
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.borderColor = '#e0e0e0';
+            dropZone.style.backgroundColor = 'transparent';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        });
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            handleFile(file);
+        });
+
+        function handleFile(file) {
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    previewImg.src = reader.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Form Submission
+        document.getElementById('featureForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Feature saved successfully!');
+        });
+    </script>
+<!--end features form script-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>   
+	$(document).ready(function(){
+		// Show Room Type form when clicked
+		$("#room-type-link").click(function(e){
+			e.preventDefault();
+			$("#room-type-form-container").slideToggle();
+		});
+	
+		// Handle form submission with AJAX
+		$("#room-type-form").submit(function(e){
+			e.preventDefault();
+			var formData = $(this).serialize();
+	
+			$.ajax({
+				url: "{% url 'admin-panel:room_type' %}",  // Ensure this matches urls.py
+				type: "POST",
+				data: formData,
+				success: function(response) {
+					if (response.success) {
+						$("#form-message").text(response.message).css("color", "green");
+						$("#room-type-form")[0].reset();  // Clear form
+					} else {
+						$("#form-message").text("Error: " + JSON.stringify(response.errors)).css("color", "red");
+					}
+				},
+				error: function() {
+					$("#form-message").text("Something went wrong!").css("color", "red");
+				}
+			});
+		});
+	});
+	</script>	
+
+<script>
+    function previewImage(input, previewId) {
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById(previewId).src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    document.getElementById('favicon').addEventListener('change', function() {
+        previewImage(this, 'faviconPreview');
+    });
+
+    document.getElementById('lightLogo').addEventListener('change', function() {
+        previewImage(this, 'lightLogoPreview');
+    });
+
+    document.getElementById('darkLogo').addEventListener('change', function() {
+        previewImage(this, 'darkLogoPreview');
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+    $("#logoSettingsForm").on("submit", function(event) {
+        event.preventDefault();  // Prevent full page reload
+
+        var formData = new FormData(this);
+        
+        $.ajax({
+            url: "{% url 'admin-panel:logo_settings_view' %}",  // Ensure this is the correct URL
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            success: function(response) {
+                if (response.message) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: response.message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: xhr.responseText || "Something went wrong!",
+                });
+            }
+        });
+    });
+
+    // File input preview
+    $(".file-input").on("change", function(event) {
+        let reader = new FileReader();
+        let target = $(this).closest(".logo-card").find("img");
+        reader.onload = function(e) {
+            target.attr("src", e.target.result);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    });
+});
+
+</script>
+
+
+<script>
+	$(document).ready(function() {
+		$(".file-input").on("change", function(event) {
+			let reader = new FileReader();
+			let target = $(this).closest(".logo-card").find("img");
+	
+			reader.onload = function(e) {
+				target.attr("src", e.target.result);
+			};
+	
+			reader.readAsDataURL(event.target.files[0]);
+		});
+	});
+	</script>
+
+<script>
+    document.getElementById("room-type-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        let formData = new FormData(this);
+
+        fetch("{% url 'admin-panel:room_type' %}", {  // Ensure the correct URL name
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: data.message,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
+                // Optionally, clear form fields after submission
+                document.getElementById("room-type-form").reset();
+            } else {
+                let errorMessage = data.errors 
+                    ? Object.values(data.errors).join("\n") 
+                    : "Something went wrong";
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage
+                });
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to submit form. Please try again.'
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const roomTypeForm = document.getElementById('settingsForm');
+
+        roomTypeForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const formData = new FormData(roomTypeForm);
+
+            fetch("{% url 'admin-panel:logo_settings_view' %}", {  // Use the correct URL
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Use SweetAlert for success message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Logos updated successfully!',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.reload(); // Optionally reload the page
+                    });
+                } else {
+                    // Use SweetAlert for error message
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error,
+                        confirmButtonText: 'OK'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An unexpected error occurred. Please try again.',
+                    confirmButtonText: 'OK'
+                });
+            });
+        });
+    });
+</script>
+
+<script>
+	$(document).ready(function() {
+		$("#bookingForm").on("submit", function(event) {
+			event.preventDefault();  // Prevent full page reload
+	
+			var formData = new FormData(this);  // Create FormData object
+	
+			$.ajax({
+				url: "{% url 'admin-panel:team_designation' %}",  // Ensure correct URL
+				type: "POST",
+				data: formData,
+				processData: false,
+				contentType: false,
+				headers: {
+					"X-CSRFToken": "{{ csrf_token }}"  // CSRF Token for security
+				},
+				success: function(response) {
+					Swal.fire({
+						icon: 'success',
+						title: 'Success!',
+						text: response.message || 'Team designation saved successfully!',
+						showConfirmButton: false,
+						timer: 2000
+					});
+	
+					// Reset the form fields after successful submission
+					$("#bookingForm")[0].reset();
+				},
+				error: function(xhr) {
+					let errorMessage = "Something went wrong!";
+					
+					if (xhr.responseJSON && xhr.responseJSON.error) {
+						errorMessage = xhr.responseJSON.error;
+					}
+	
+					Swal.fire({
+						icon: 'error',
+						title: 'Error!',
+						text: errorMessage,
+					});
+				}
+			});
+		});
+	});
+	</script>
+	
+
+{% endblock %}

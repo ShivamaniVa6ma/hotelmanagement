@@ -13,7 +13,7 @@
                     <div class="lh-breadcrumb">
                         <h5>
                             <span class="lh-inner-breadcrumb">
-                                <a href="{% url 'user-panel:index' %}">Home</a>
+                                <a href="{% url 'user-panel:index' company_name=company_name %}">Home</a>
                             </span>
                             <span> / </span>
                             <span>
@@ -36,7 +36,7 @@
                 <div class="row" data-aos="fade-up" data-aos-duration="2000">
                     <div class="rooms-slider">
                         <div class="rooms-card">
-                            <img src="hotel/assets/img/room/6.jpg" alt="room">
+                            <img src="{% static '/hotel/assets/img/room/6.jpg' %}" alt="room">
                             <div class="details">
                                 <h3>Junior Rooms</h3>
                                 <span>$400 / Night</span>
@@ -53,12 +53,12 @@
                                     <li><i class="ri-restaurant-line"></i>Launch</li>
                                     <li><i class="ri-restaurant-2-line"></i>Dinner</li>
                                 </ul>
-                                <a href="{% url 'user-panel:room-details' %}" class="lh-buttons-2">View More <i
+                                <a href="{% url 'user-panel:room-details' company_name=company_name %}" class="lh-buttons-2">View More <i
                                         class="ri-arrow-right-line"></i></a>
                             </div>
                         </div>
                         <div class="rooms-card">
-                            <img src="hotel/assets/img/room/7.jpg" alt="room">
+                            <img src="{% static '/hotel/assets/img/room/7.jpg' %}" alt="room">
                             <div class="details">
                                 <h3>Family Rooms</h3>
                                 <span>$600 / Night</span>
@@ -75,12 +75,12 @@
                                     <li><i class="ri-restaurant-line"></i>Launch</li>
                                     <li><i class="ri-restaurant-2-line"></i>Dinner</li>
                                 </ul>
-                                <a href="{% url 'user-panel:room-details' %}" class="lh-buttons-2">View More <i
+                                <a href="{% url 'user-panel:room-details' company_name=company_name %}" class="lh-buttons-2">View More <i
                                         class="ri-arrow-right-line"></i></a>
                             </div>
                         </div>
                         <div class="rooms-card">
-                            <img src="hotel/assets/img/room/8.jpg" alt="room">
+                            <img src="{% static '/hotel/assets/img/room/8.jpg' %}" alt="room">
                             <div class="details">
                                 <h3>Deluxe Rooms</h3>
                                 <span>$800 / Night</span>
@@ -99,12 +99,12 @@
                                     <li><i class="ri-sofa-line"></i> Soffa Set</li>
 
                                 </ul>
-                                <a href="{% url 'user-panel:room-details' %}" class="lh-buttons-2">View More <i
+                                <a href="{% url 'user-panel:room-details' company_name=company_name %}" class="lh-buttons-2">View More <i
                                         class="ri-arrow-right-line"></i></a>
                             </div>
                         </div>
                         <div class="rooms-card">
-                            <img src="hotel/assets/img/room/9.jpg" alt="room">
+                            <img src="{% static '/hotel/assets/img/room/9.jpg' %}" alt="room">
                             <div class="details">
                                 <h3>Premium Rooms</h3>
                                 <span>$1000 / Night</span>
@@ -123,12 +123,12 @@
                                     <li><i class="ri-cup-line"></i>Bath Tub </li>
 
                                 </ul>
-                                <a href="{% url 'user-panel:room-details' %}" class="lh-buttons-2">View More <i
+                                <a href="{% url 'user-panel:room-details' company_name=company_name %}" class="lh-buttons-2">View More <i
                                         class="ri-arrow-right-line"></i></a>
                             </div>
                         </div>
                         <div class="rooms-card">
-                            <img src="hotel/assets/img/room/10.jpg" alt="room">
+                            <img src="{% static '/hotel/assets/img/room/10.jpg' %}" alt="room">
                             <div class="details">
                                 <h3>VIP Rooms</h3>
                                 <span>$1200 / Night</span>
@@ -148,12 +148,12 @@
                                     <li><i class="ri-cup-line"></i>Bath Tub </li>
 
                                 </ul>
-                                <a href="{% url 'user-panel:room-details' %}" class="lh-buttons-2">View More <i
+                                <a href="{% url 'user-panel:room-details' company_name=company_name %}" class="lh-buttons-2">View More <i
                                         class="ri-arrow-right-line"></i></a>
                             </div>
                         </div>
                         <div class="rooms-card">
-                            <img src="hotel/assets/img/room/11.jpg" alt="room">
+                            <img src="{% static '/hotel/assets/img/room/11.jpg' %}" alt="room">
                             <div class="details">
                                 <h3>VVIP Rooms</h3>
                                 <span>$1600 / Night</span>
@@ -172,7 +172,7 @@
                                     <li><i class="ri-beer-line minibar-icon"></i>Mini baar</li>
                                         
                                 </ul>
-                                <a href="{% url 'user-panel:room-details' %}" class="lh-buttons-2">View More <i
+                                <a href="{% url 'user-panel:room-details' company_name=company_name %}" class="lh-buttons-2">View More <i
                                         class="ri-arrow-right-line"></i></a>
                             </div>
                         </div>

@@ -13,7 +13,7 @@
                     <div class="lh-breadcrumb">
                         <h5>
                             <span class="lh-inner-breadcrumb">
-                                <a href="{% url 'user-panel:index' %}">Home</a>
+                                <a href="{% url 'user-panel:index' company_name=company_name %}">Home</a>
                             </span>
                             <span> / </span>
                             <span>
@@ -30,132 +30,67 @@
     <section class="section-amenities padding-tb-100">
         <div class="container">
             <div class="row mtb-m-12">
-                <div class="col-md-6 col-sm-12 m-tb-12">
-                    <div class="lh-amenities" data-aos="fade-up" data-aos-duration="1500">
-                        <div class="amenities-detail">
-                            <div class="amenities-box">
-                                <img src="{% static 'hotel/assets/img/amenities/1.jpg' %}" alt="amenities_1" class="amenities-left-image">
-                            </div>
-                            <div class="amenities-box">
-                                <div class="lh-amenities-in">
-                                    <h4 class="side-number">01</h4>
-                                    <div class="lh-top-dish">
-                                        <img src="{% static 'hotel/assets/img/amenities/amenities-dish-1.svg' %}" class="svg-img" alt="amenities-dish-1">
+                {% for facility in facilities %}
+                    {% if forloop.counter|divisibleby:2 %}
+                        <!-- Even numbered facilities (right-aligned) -->
+                        <div class="col-md-6 col-sm-12 m-tb-12">
+                            <div class="lh-amenities" data-aos="fade-up" data-aos-duration="2000">
+                                <div class="amenities-detail">
+                                    <div class="amenities-box">
+                                        <div class="lh-amenities-in lh-amenities-right">
+                                            <h4 class="side-number">{{ forloop.counter|stringformat:"02d" }}</h4>
+                                            <div class="lh-top-dish">
+                                                {% if facility.icon %}
+                                                    <img src="{{ facility.icon.url }}" class="svg-img" alt="{{ facility.name }}">
+                                                {% endif %}
+                                            </div>
+                                            <div class="amenities-contain">
+                                                <h4 class="amenities-heading">{{ facility.name }}</h4>
+                                                <p>{{ facility.description }}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="amenities-contain">
-                                        <h4 class="amenities-heading">Our Restaurant</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa. This is the dolor sit amet adipisicing elit.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-12 m-tb-12">
-                    <div class="lh-amenities" data-aos="fade-up" data-aos-duration="2000">
-                        <div class="amenities-detail">
-                            <div class="amenities-box">
-                                <img src="{% static 'hotel/assets/img/amenities/2.jpg' %}" alt="amenities_2" class="amenities-left-image">
-                            </div>
-                            <div class="amenities-box">
-                                <div class="lh-amenities-in">
-                                    <h4 class="side-number">02</h4>
-                                    <div class="lh-top-dish">
-                                        <img src="{% static 'hotel/assets/img/amenities/amenities-dish-2.svg' %}" class="svg-img" alt="amenities-dish-2">
-                                    </div>
-                                    <div class="amenities-contain">
-                                        <h4 class="amenities-heading">Spa & Beauty</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa. This is the dolor sit amet adipisicing elit.</p>
+                                    <div class="amenities-box">
+                                        {% if facility.image %}
+                                            <img src="{{ facility.image.url }}" alt="{{ facility.name }}" class="amenities-right-image">
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-12 m-tb-12">
-                    <div class="lh-amenities" data-aos="fade-up" data-aos-duration="1500">
-                        <div class="amenities-detail">
-                            <div class="amenities-box">
-                                <div class="lh-amenities-in lh-amenities-right">
-                                    <h4 class="side-number">03</h4>
-                                    <div class="lh-top-dish">
-                                        <img src="{% static 'hotel/assets/img/amenities/amenities-dish-4.svg' %}" class="svg-img" alt="amenities-dish-3">
+                    {% else %}
+                        <!-- Odd numbered facilities (left-aligned) -->
+                        <div class="col-md-6 col-sm-12 m-tb-12">
+                            <div class="lh-amenities" data-aos="fade-up" data-aos-duration="1500">
+                                <div class="amenities-detail">
+                                    <div class="amenities-box">
+                                        {% if facility.image %}
+                                            <img src="{{ facility.image.url }}" alt="{{ facility.name }}" class="amenities-left-image">
+                                        {% endif %}
                                     </div>
-                                    <div class="amenities-contain">
-                                        <h4 class="amenities-heading">Golf & Garden</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa. This is the dolor sit amet adipisicing elit.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="amenities-box">
-                                <img src="{% static 'hotel/assets/img/amenities/3.jpg' %}" alt="amenities_3" class="amenities-right-image">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-12 m-tb-12">
-                    <div class="lh-amenities" data-aos="fade-up" data-aos-duration="2000">
-                        <div class="amenities-detail">
-                            <div class="amenities-box">
-                                <div class="lh-amenities-in lh-amenities-right">
-                                    <h4 class="side-number">04</h4>
-                                    <div class="lh-top-dish">
-                                        <img src="{% static 'hotel/assets/img/amenities/amenities-dish-3.svg' %}" class="svg-img" alt="amenities-dish-4">
-                                    </div>
-                                    <div class="amenities-contain">
-                                        <h4 class="amenities-heading">Fitness & Gym</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa. This is the dolor sit amet adipisicing elit.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="amenities-box">
-                                <img src="{% static 'hotel/assets/img/amenities/4.jpg' %}" alt="amenities_4" class="amenities-right-image">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-12 m-tb-12">
-                    <div class="lh-amenities" data-aos="fade-up" data-aos-duration="1500">
-                        <div class="amenities-detail">
-                            <div class="amenities-box">
-                                <img src="{% static 'hotel/assets/img/amenities/5.jpg' %}" alt="amenities_5" class="amenities-left-image">
-                            </div>
-                            <div class="amenities-box">
-                                <div class="lh-amenities-in">
-                                    <h4 class="side-number">05</h4>
-                                    <div class="lh-top-dish">
-                                        <img src="{% static 'hotel/assets/img/amenities/amenities-dish-5.svg' %}" class="svg-img" alt="amenities-dish-5">
-                                    </div>
-                                    <div class="amenities-contain">
-                                        <h4 class="amenities-heading">Swimming Pool</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa. This is the dolor sit amet adipisicing elit.</p>
+                                    <div class="amenities-box">
+                                        <div class="lh-amenities-in">
+                                            <h4 class="side-number">{{ forloop.counter|stringformat:"02d" }}</h4>
+                                            <div class="lh-top-dish">
+                                                {% if facility.icon %}
+                                                    <img src="{{ facility.icon.url }}" class="svg-img" alt="{{ facility.name }}">
+                                                {% endif %}
+                                            </div>
+                                            <div class="amenities-contain">
+                                                <h4 class="amenities-heading">{{ facility.name }}</h4>
+                                                <p>{{ facility.description }}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    {% endif %}
+                {% empty %}
+                    <div class="col-12 text-center">
+                        <p>No facilities available at the moment.</p>
                     </div>
-                </div>
-                <div class="col-md-6 col-sm-12 m-tb-12">
-                    <div class="lh-amenities" data-aos="fade-up" data-aos-duration="2000">
-                        <div class="amenities-detail">
-                            <div class="amenities-box">
-                                <img src="{% static 'hotel/assets/img/amenities/6.jpg' %}" alt="amenities_6" class="amenities-left-image">
-                            </div>
-                            <div class="amenities-box">
-                                <div class="lh-amenities-in">
-                                    <h4 class="side-number">06</h4>
-                                    <div class="lh-top-dish">
-                                        <img src="{% static 'hotel/assets/img/amenities/amenities-dish-6.svg' %}" class="svg-img" alt="amenities-dish-6">
-                                    </div>
-                                    <div class="amenities-contain">
-                                        <h4 class="amenities-heading">Our Parking</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa. This is the dolor sit amet adipisicing elit.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>

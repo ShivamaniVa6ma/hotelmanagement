@@ -1,0 +1,679 @@
+{% extends 'super_admin_base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    /* Main Container Styling */
+    .tax-dashboard {
+        padding: 1.5rem;
+        background-color: var(--card-bg, #fff);
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+    }
+    
+    /* Page Header */
+    .dashboard-header {
+        margin-bottom: 2rem;
+        position: relative;
+    }
+    
+    .dashboard-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: var(--heading-color, #333);
+        margin-bottom: 0.5rem;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dashboard-title:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        height: 3px;
+        width: 40px;
+        background: var(--primary-color, #3498db);
+        border-radius: 2px;
+    }
+    
+    /* Form Styling */
+    .tax-form-container {
+        background: linear-gradient(145deg, var(--card-bg, #fff), var(--card-bg-light, #f8f9fa));
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+        border-left: 4px solid var(--primary-color, #3498db);
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .tax-form-container:hover {
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+    
+    .form-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--heading-color, #333);
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border-color, #eee);
+    }
+    
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-color, #555);
+        font-size: 0.95rem;
+    }
+    
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--text-color, #495057);
+        background-color: var(--input-bg, #fff);
+        background-clip: padding-box;
+        border: 1px solid var(--border-color, #ced4da);
+        border-radius: 6px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    
+    .form-control:focus {
+        color: var(--text-color, #495057);
+        background-color: var(--input-bg, #fff);
+        border-color: var(--primary-color, #3498db);
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+    
+    /* Custom Checkbox Styling */
+    .custom-control {
+        position: relative;
+        display: block;
+        min-height: 1.5rem;
+        padding-left: 1.5rem;
+    }
+    
+    .custom-control-input {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+    }
+    
+    .custom-control-label {
+        position: relative;
+        margin-bottom: 0;
+        vertical-align: top;
+        cursor: pointer;
+    }
+    
+    .custom-control-label::before {
+        position: absolute;
+        top: 0.25rem;
+        left: -1.5rem;
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        pointer-events: none;
+        content: "";
+        background-color: var(--input-bg, #fff);
+        border: 1px solid var(--border-color, #adb5bd);
+        border-radius: 0.25rem;
+    }
+    
+    .custom-control-input:checked ~ .custom-control-label::before {
+        color: #fff;
+        border-color: var(--primary-color, #3498db);
+        background-color: var(--primary-color, #3498db);
+    }
+    
+    .custom-control-label::after {
+        position: absolute;
+        top: 0.25rem;
+        left: -1.5rem;
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        content: "";
+        background: no-repeat 50% / 50% 50%;
+    }
+    
+    .custom-control-input:checked ~ .custom-control-label::after {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+    }
+    
+    /* Button Styling */
+    .btn-primary {
+        color: #fff;
+        background-color: var(--primary-color, #3498db);
+        border-color: var(--primary-color, #3498db);
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(52, 152, 219, 0.2);
+    }
+    
+    .btn-primary:hover {
+        background-color: var(--primary-hover, #2980b9);
+        border-color: var(--primary-hover, #2980b9);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+    }
+    
+    .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .btn-icon i {
+        margin-right: 0.5rem;
+    }
+    
+    /* Table Styling */
+    .tax-table-container {
+        background-color: var(--card-bg, #fff);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .table-header {
+        background-color: var(--card-header-bg, #f8f9fa);
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--border-color, #eee);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .table-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--heading-color, #333);
+        margin-bottom: 0;
+    }
+    
+    .table {
+        width: 100%;
+        margin-bottom: 0;
+        color: var(--text-color, #212529);
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+    
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid var(--border-color, #dee2e6);
+        background-color: var(--table-header-bg, #f8f9fa);
+        color: var(--heading-color, #333);
+        font-weight: 600;
+        padding: 1rem;
+        font-size: 0.95rem;
+    }
+    
+    .table tbody tr:nth-of-type(odd) {
+        background-color: var(--table-stripe-bg, rgba(0, 0, 0, 0.02));
+    }
+    
+    .table tbody tr:hover {
+        background-color: var(--table-hover-bg, rgba(0, 0, 0, 0.04));
+    }
+    
+    .table td {
+        padding: 1rem;
+        vertical-align: middle;
+        border-top: 1px solid var(--border-color, #dee2e6);
+    }
+    
+    /* Badge Styling */
+    .badge {
+        display: inline-block;
+        padding: 0.4em 0.65em;
+        font-size: 0.75em;
+        font-weight: 500;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 50rem;
+    }
+    
+    .badge-success {
+        color: #fff;
+        background-color: #2ecc71;
+    }
+    
+    .badge-secondary {
+        color: #fff;
+        background-color: #7f8c8d;
+    }
+    
+    /* Action Buttons */
+    .action-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        border-radius: 4px;
+        margin-right: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+    
+    .action-btn i {
+        margin-right: 0.25rem;
+        font-size: 0.875rem;
+    }
+    
+    .btn-edit {
+        color: #fff;
+        background: linear-gradient(135deg,#4100ff 0%, #22d13f 100%);
+        border-color:#4100ff;
+    }
+    
+    .btn-edit:hover {
+        background: linear-gradient(135deg,#4100ff 0%, #22d13f 100%);
+        border-color: #4100ff;
+    }
+    
+    .btn-delete {
+        color: #fff;
+        background: linear-gradient(135deg, #da1b0d 0%, #ff5252 100%);
+        border-color: #e74c3c;
+    }
+    
+    .btn-delete:hover {
+        background:linear-gradient(135deg, #da1b0d 0%, #ff5252 100%);
+        border-color: #c0392b;
+    }
+    
+    /* Empty State */
+    .empty-state {
+        padding: 3rem 1rem;
+        text-align: center;
+    }
+    
+    .empty-icon {
+        font-size: 3rem;
+        color: var(--text-muted, #adb5bd);
+        margin-bottom: 1rem;
+    }
+    
+    .empty-text {
+        color: var(--text-muted, #6c757d);
+        font-size: 1rem;
+    }
+    
+    /* Alert Styling */
+    .alert {
+        position: relative;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid transparent;
+        border-radius: 6px;
+    }
+    
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+    
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+    
+    /* SweetAlert Customization */
+    .swal2-styled.swal2-confirm {
+        background-color: var(--primary-color, #3498db) !important;
+    }
+    
+    .swal2-styled.swal2-cancel {
+        background-color: #7f8c8d !important;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+        .dashboard-title {
+            font-size: 1.5rem;
+        }
+        
+        .form-title, .table-title {
+            font-size: 1.15rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .tax-dashboard {
+            padding: 1rem;
+        }
+        
+        .tax-form-container, .tax-table-container {
+            padding: 1rem;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .table thead th, .table td {
+            padding: 0.75rem;
+        }
+        
+        .action-btn {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.8rem;
+        }
+        
+        .action-btn i {
+            margin-right: 0.2rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .dashboard-title {
+            font-size: 1.35rem;
+        }
+        
+        .form-title, .table-title {
+            font-size: 1.1rem;
+        }
+        
+        .btn-primary {
+            padding: 0.6rem 1.2rem;
+        }
+        
+        .action-btn {
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    @media (min-width: 992px) {
+    .col-lg-8 {
+        flex: 0 0 auto;
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-md-5 {
+        flex: 0 0 auto;
+        width: 100% !important;
+    }
+}
+
+
+
+</style>
+
+<div class="lh-main-content">
+    <div class="container-fluid">
+        <div class="tax-dashboard">
+            <div class="dashboard-header">
+                <h2 class="dashboard-title">Tax Management</h2>
+                <p class="text-muted">Create and manage tax rates for your hotel bookings</p>
+            </div>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %} me-2"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-5 mb-4 mb-md-0">
+                    <div class="tax-form-container">
+                        <h4 class="form-title">Add New Tax</h4>
+                        <form method="POST" style="display: flex;justify-content: space-between;align-items: center;flex-wrap: wrap;gap: 10px;">
+                            {% csrf_token %}
+                            
+                            <div class="form-group">
+                                <label for="id_name">Tax Name</label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                    <div class="text-danger mt-1 small">{{ form.name.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="id_percentage">Tax Percentage (%)</label>
+                                {{ form.percentage }}
+                                {% if form.percentage.errors %}
+                                    <div class="text-danger mt-1 small">{{ form.percentage.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Is Platform Fee?</label>
+                                <div class="mt-2">
+                                    {{ form.is_platform_fee }}
+                                </div>
+                                {% if form.is_platform_fee.errors %}
+                                    <div class="text-danger mt-1 small">{{ form.is_platform_fee.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary btn-icon">
+                                <i class="fas fa-plus-circle"></i> Add Tax
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="col-lg-8 col-md-7">
+                    <div class="tax-table-container lh-card">
+                        <div class="table-header">
+                            <h4 class="table-title">Tax List</h4>
+                            <div class="header-tools">
+                                <a href="javascript:void(0)" class="m-r-10 lh-full-card">
+                                    <i class="ri-fullscreen-line" title="Full Screen"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tax Name</th>
+                                        <th>Percentage</th>
+                                        <th>Platform Fee</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for tax in taxes %}
+                                    <tr>
+                                        <td>{{ tax.id }}</td>
+                                        <td>{{ tax.name }}</td>
+                                        <td><span class="fw-medium">{{ tax.percentage }}%</span></td>
+                                        <td>
+                                            <span class="badge {% if tax.is_platform_fee %}badge-success{% else %}badge-secondary{% endif %}">
+                                                {{ tax.is_platform_fee|yesno:"Yes,No" }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <button class="btn action-btn btn-edit edit-tax-btn"
+                                                data-id="{{ tax.id }}"
+                                                data-name="{{ tax.name }}"
+                                                data-percentage="{{ tax.percentage }}"
+                                                data-platform="{{ tax.is_platform_fee }}">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+                                            <button class="btn action-btn btn-delete delete-tax-btn" data-id="{{ tax.id }}">
+                                                <i class="fas fa-trash-alt"></i> Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="empty-state">
+                                                <div class="empty-icon">
+                                                    <i class="fas fa-percentage"></i>
+                                                </div>
+                                                <p class="empty-text">No tax records found. Add your first tax using the form.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // DELETE
+    $(document).on('click', '.delete-tax-btn', function () {
+    const taxId = $(this).data('id');
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        confirmButtonColor: '#e74c3c',
+        cancelButtonColor: '#7f8c8d',
+        borderRadius: '10px'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '{% url "subscription:delete_tax" %}',
+                method: 'POST',
+                data: {
+                    id: taxId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonColor: '#3498db'
+                        }).then(() => {
+                            location.reload();  // 🔁 Page will auto-refresh here
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: response.message,
+                            icon: 'error',
+                            confirmButtonColor: '#3498db'
+                        });
+                    }
+                }
+            });
+        }
+    });
+});
+
+   $(document).on('click', '.edit-tax-btn', function () {
+    const id = $(this).data('id');
+    const name = $(this).data('name');
+    const percentage = $(this).data('percentage');
+    const isPlatform = $(this).data('platform') === true || $(this).data('platform') === 'True';
+
+    Swal.fire({
+        title: 'Edit Tax',
+        html:
+            `<div class="mb-3">
+                <label class="form-label fw-medium">Tax Name</label>
+                <input id="tax-name" class="swal2-input" placeholder="Name" value="${name}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-medium">Tax Percentage (%)</label>
+                <input id="tax-percentage" class="swal2-input" placeholder="Percentage" value="${percentage}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-medium d-block">Is Platform Fee?</label>
+                <div class="form-check form-check-inline mt-2">
+                    <input class="form-check-input" type="radio" name="tax-platform" id="platform-yes" value="true" ${isPlatform ? 'checked' : ''}>
+                    <label class="form-check-label" for="platform-yes">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tax-platform" id="platform-no" value="false" ${!isPlatform ? 'checked' : ''}>
+                    <label class="form-check-label" for="platform-no">No</label>
+                </div>
+            </div>`,
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: '<i class="fas fa-save me-1"></i> Update',
+        confirmButtonColor: '#3498db',
+        cancelButtonText: '<i class="fas fa-times me-1"></i> Cancel',
+        cancelButtonColor: '#7f8c8d',
+        preConfirm: () => {
+            return {
+                id: id,
+                name: $('#tax-name').val(),
+                percentage: $('#tax-percentage').val(),
+                is_platform_fee: $('input[name="tax-platform"]:checked').val()
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '{% url "subscription:edit_tax" %}',  // Update this URL in your view
+                method: 'POST',
+                data: {
+                    id: result.value.id,
+                    name: result.value.name,
+                    percentage: result.value.percentage,
+                    is_platform_fee: result.value.is_platform_fee,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: 'Updated!',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonColor: '#3498db'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: response.message,
+                            icon: 'error',
+                            confirmButtonColor: '#3498db'
+                        });
+                    }
+                }
+            });
+        }
+    });
+});
+</script>
+
+{% endblock %}

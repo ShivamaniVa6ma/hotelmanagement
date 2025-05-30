@@ -1,0 +1,624 @@
+{% extends 'hotelbase.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+   
+
+.heading {
+  font-family: "Funnel Sans", sans-serif;
+
+}
+
+.link{
+    color: #f32078;
+}
+ .mb-0{
+    color: white;
+
+}
+
+
+
+.nav_tab{
+   display: flex; /* Use flexbox for the button */
+    flex-direction: row; /* Stack the image and text vertically */
+    align-items: center; /* Center items horizontally */
+    text-align: center; /* Center text */
+    padding: 10px;  
+}
+
+
+.nav-link {
+    display: flex; /* Use flexbox for the button */
+    flex-direction: column; /* Stack the image and text vertically */
+    align-items: center; /* Center items horizontally */
+    text-align: center; /* Center text */
+    padding: 10px; /* Add some padding for better spacing */
+}
+
+
+.nav-tab-image {
+    width: 2775px; /* Set the width to 2775px */
+    height: 150px; /* Set the height to 150px */
+    object-fit: cover; /* Crop the image to fit the dimensions */
+}
+.price-room{
+    width: 305px; /* Set the width to 2775px */
+    height: 200px; /* Set the height to 150px */
+    object-fit: cover; /* Crop the image to fit the dimensions */
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center the items horizontally */
+    align-items: center; /* Center the items vertically */
+}
+.room-img {
+    width: 800px; /* Set the width to 2775px */
+    height: 500px; /* Set the height to 737px */
+    object-fit: cover; /* Crop the image to fit the dimensions */
+}
+
+.lh-room-contain .lh-contain-heading  {
+    padding-bottom: 5px;
+   
+    display: flex;
+justify-content: center;
+}
+
+.lh-room-contain {
+    position: relative;
+    padding: 0px;
+}
+</style>
+
+    <!-- Hero -->
+    <section class="section-hero">
+        <div class="container-fulid">
+            <div class="row hero-image">
+                <div class="hero-section">
+                    <div class="particles-bg" id="particles-js"></div>
+                    <div class="lh-hero-contain container">
+                        <h4 data-aos="fade-up" data-aos-duration="1000">Luxury Hotel & Best Resort</h4>
+                        <h1 class="heading" data-aos="fade-up" data-aos-duration="1500">A Symphony of Comfort & Convenience.</h1>
+                        <a class="lh-buttons result-placeholder" href="#rooms">
+                            Room & suites
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- search-control -->
+    <section class="section-search-control">
+        <div class="container">
+            <form action="{% url 'user-panel:check_availability' company_name=company_name %}" method="POST">
+                {% csrf_token %}
+                <div class="search-control-boxing">
+                    <div class="lh-col">
+                        <div class="search-box">    
+                            
+                            <div class="col-md-6 mb-2">
+                                <label for="checkIn" class="form-label"><h4 class="heading">
+                                    Check in
+                                </h4></label>
+                                <input type="datetime-local" name="check_in" id="checkIn" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lh-col">
+                        <div class="search-box">
+                            
+                            <div class="col-md-6 mb-2">
+                                <label for="checkOut" class="form-label"><h4 class="heading">
+                                    Check out
+                                </h4></label>
+                                <input type="datetime-local" name="check_out" id="checkOut" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lh-col">
+                        <div class="search-box"> 
+                            <h4 class="heading">
+                                Room Type
+                            </h4>
+                            <div class="custom-select">
+                                <select name="room_type">
+                                    <option value="">Select Room Type</option>
+									<option value="standard">Standard</option>
+									<option value="deluxe">Deluxe</option>
+									<option value="vip">VIP</option>
+									<option value="conference">Conference</option>						
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="lh-col">
+                        <div class="search-box">
+                            <h4 class="heading">
+                                Children
+                            </h4>
+                            <div class="custom-select">
+                                <select>
+                                    <option value="option1">Select</option>
+                                    <option value="option2">One</option>
+                                    <option value="option3">Two</option>
+                                    <option value="option4">Three</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="lh-col-check">
+                        <div class="search-control-button">
+                            <button type="submit" class="lh-buttons result-placeholder">
+                                Check Now
+                            </button>
+                            <!-- <a class="lh-buttons result-placeholder" href="#">
+                                Check Now
+                            </a> -->
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Room -->
+    <section class="section-room padding-tb-100" data-aos="fade-up" data-aos-duration="2000" id="rooms">
+        <div class="container">
+            <div class="banner">
+                <h2>Choose Your Luxurious <span>Room</span></h2>
+            </div>
+            {% if room_types %}
+
+                <nav>
+                    <div class="nav nav-tabs rooms lh-room nav_tab" id="nav-tab" role="tablist">
+                        {% for room_type in room_types %}
+                            <button class="nav-link {% if forloop.first %}active{% endif %}" id="nav-{{ room_type.room.room_type.name }}-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-{{ room_type.room.room_type.name }}" type="button" role="tab" aria-controls="nav-{{ room_type.room.room_type.name }}"
+                                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                                <img src="{{ room_type.image }}" alt="{{ room_type.room.room_type.name }}" class="nav-tab-image">
+                                {{ room_type.room.room_type.name }} Room
+                            </button>
+                        {% endfor %}
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    {% for room_type in room_types %}
+                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="nav-{{ room_type.room.room_type.name }}" role="tabpanel" aria-labelledby="nav-{{ room_type.room.room_type.name }}-tab">
+                            <div class="container">
+                                <div class="row p-0 lh-d-block">
+                                    <div class="col-xl-6 col-lg-12">
+                                        <div class="lh-room-contain">
+                                            <div class="lh-contain-heading">
+                                                <h4>{{ room_type.room.room_type.name }} Room</h4>
+                                                <div class="lh-room-price">
+                                                    <h4>{{ room_type.room.base_price }} /<span>Per night</span></h4>
+                                                </div>
+                                            </div>
+                                            <div class="lh-room-size d-flex">
+                                                <p>{{ room_type.room.bed_type }} Bed </p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                <p>{{ room_type.room.max_occupancy }} Guest</p>
+
+                                            </div>
+                                            <p>{{ room_type.room.description }}</p>
+                                            <div class="lh-main-features">
+                                                <div class="lh-contain-heading">
+                                                    <h4>Room Features</h4>
+                                                </div>
+                                                <div class="lh-room-features">
+                                                    <div class="lh-cols-room">
+                                                        <ul>
+                                                            {% for feature in room_type.features %}
+                                                                <li><i class="ri-check-line icon"></i>{{ feature.name }}</li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 p-0">
+                                        <div class="room-img">
+                                            <img src="{{ room_type.image }}" alt="room-img" class="room-image">
+                                            <!-- <a href="{% url 'user-panel:room-details' company_name=company_name %}" class="link"><i class="ri-arrow-right-line"></i></a> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="lh-room-contain">
+                                <div class="lh-contain-heading text-center roomimage">
+                                    <h4 >No Rooms Available Please Add rooms in Admin Section</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- About -->
+    <!-- <section class="section-about bg-gray padding-tb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 rs-pb-24" data-aos="fade-up" data-aos-duration="1500">
+                    <img src="{% static '/hotel/assets/img/about/about.png' %}" alt="about" class="w-100">
+                </div>
+                <div class="col-lg-6 rs-pb-24" data-aos="fade-up" data-aos-duration="2000">
+                    <div class="lh-about-detail">
+                        <div class="banner t-left">
+                            <h2>Find The Best City <span>Branches</span></h2>
+                        </div>
+                        <div class="lh-branches-paragraph">
+                            <p>This is the dolor sit amet consectetur adipisicing elit. Quasi eos ducimus magnam unde
+                                fugit qui perferendis repudiandae modi officia. Quae eaque fugiat minima quasi sapiente,
+                                vel
+                                dolore numquam quo!</p>
+                        </div>
+                        <div class="lh-branches">
+                            <div class="cols">
+                                <h4> <i class="ri-arrow-right-up-line"></i> Trusted Partners</h4>
+                                <p>This is the dolor sit amet consectetur adipisicing elit. Laborum, porro.</p>
+                            </div>
+                            <div class="cols">
+                                <h4> <i class="ri-arrow-right-up-line"></i> Laxury amenities</h4>
+                                <p>This is the dolor sit amet consectetur adipisicing elit. Laborum, porro.</p>
+                            </div>
+                        </div>
+                        <div class="lh-abouts-buttons">
+                            <a class="lh-buttons result-placeholder" href="{% url 'user-panel:about' company_name=company_name %}">
+                                View More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Amenities -->
+    <section class="section-amenities padding-tb-100">
+        <div class="container">
+            <div class="banner" data-aos="fade-up" data-aos-duration="2000">
+                <h2>Amenities At <span>Hotel</span></h2>
+            </div>
+            <p>Facilities count: {{ facilities|length }}</p>
+    
+            <div class="row mtb-m-12">
+                {% for index, facility in facilities %}
+                    {% if index|divisibleby:2 %}
+                        <!-- Even-indexed facilities (content first, then image) -->
+                        <div class="col-md-6 col-sm-12 m-tb-12">
+                            <div class="lh-amenities" data-aos="fade-up" data-aos-duration="1500">
+                                <div class="amenities-detail">
+                                    <div class="amenities-box">
+                                        <div class="lh-amenities-in">
+                                            <h4 class="side-number">{{ index|stringformat:"02d" }}</h4>
+                                            <div class="lh-top-dish">
+                                                {% if facility.icon %}
+                                                    <img src="{{ facility.icon.url }}" class="svg-img" alt="{{ facility.name }}">
+                                                {% endif %}
+                                            </div>
+                                            <div class="amenities-contain">
+                                                <h4 class="amenities-heading">{{ facility.name }}</h4>
+                                                <p>{{ facility.description }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="amenities-box">
+                                        {% if facility.image %}
+                                            <img src="{{ facility.image.url }}" alt="{{ facility.name }}" class="amenities-left-image">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <!-- Odd-indexed facilities (image first, then content) -->
+                        <div class="col-md-6 col-sm-12 m-tb-12">
+                            <div class="lh-amenities" data-aos="fade-up" data-aos-duration="1500">
+                                <div class="amenities-detail">
+                                    <div class="amenities-box">
+                                        {% if facility.image %}
+                                            <img src="{{ facility.image.url }}" alt="{{ facility.name }}" class="amenities-left-image">
+                                        {% endif %}
+                                    </div>
+                                    <div class="amenities-box">
+                                        <div class="lh-amenities-in">
+                                            <h4 class="side-number">{{ index|stringformat:"02d" }}</h4>
+                                            <div class="lh-top-dish">
+                                                {% if facility.icon %}
+                                                    <img src="{{ facility.icon.url }}" class="svg-img" alt="{{ facility.name }}">
+                                                {% endif %}
+                                            </div>
+                                            <div class="amenities-contain">
+                                                <h4 class="amenities-heading">{{ facility.name }}</h4>
+                                                <p>{{ facility.description }}</p>
+                                                <a href="{% url 'user-panel:facilities' company_name=company_name %}">Read more <i class="ri-arrow-right-line"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.section-amenities -->
+
+    <!-- Prices -->
+    <section class="section-prices bg-gray padding-tb-100">
+        <div class="container">
+            <div class="row">
+                
+                
+                    
+                <div class="banner" data-aos="fade-up" data-aos-duration="1000">
+                    <h2>The Best <span>Prices</span></h2>
+                </div>
+                {% if room_types %}
+                    {% for room_type in room_types %}
+                    <div class="col-lg-3 rs-pb-24">
+                        <div class="lh-prices" data-aos="fade-up" data-aos-duration="1000">
+                            <img src="{{ room_type.image }}" alt="{{ room_type.room.room_type.name }}" class="price-room">
+                            <div class="lh-prices-out">
+                                <div class="lh-prices-in">
+                                    <h4 class="lh-price-dollar"><span>$</span>{{ room_type.room.base_price }} <code> / Per night</code></h4>
+                                    <h4 class="lh-prices-heading">{{ room_type.room.room_type.name }} Room</h4>
+                                </div>
+                                <div class="lh-prices-viwe">
+                                    <ul>
+                                        {% for feature in room_type.features %}
+                                            <li>{{ feature.name }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="price-buttons">
+                                    <a href="{% url 'user-panel:checkout' company_name=company_name %}" class="lh-buttons result-placeholder">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="lh-room-contain">
+                                <div class="lh-contain-heading text-center">
+                                    <h4 >No Rooms Available Please Add rooms in Admin Section</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <!-- <section class="section-testimonials padding-tb-100">
+        <div class="container">
+            <div class="row">
+                <div class="lh-testimonials-banner d-none" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="banner">
+                        <h2>What Our Client <span>Says</span></h2>
+                    </div>
+                </div>
+                <div class="col-lg-12" data-aos="fade-up" data-aos-duration="2000">
+                    <div class="lh-slider">
+                        <div class="lh-slide slide-1">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6 p-0 align-self-center">
+                                        <div class="lh-testimonials">
+                                            <div class="row">
+                                                <div class="lh-testimonials-contain">
+                                                    <div class="d-flex">
+                                                        <div class="lh-testimonials-inner">
+                                                            <img src="{% static '/hotel/assets/img/businessman/businessman-1.jpg' %}"
+                                                                alt="businessman" class="businessman">
+                                                            <div class="lh-testimonials-name-detalis">
+                                                                <h5>Jenifer Brown</h5>
+                                                                <span>Bristol, Uk</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lh-testimonials-side-image">
+                                                            <img src="{% static '/hotel/assets/img/testimonials/quotes.svg' %}"
+                                                                class="testimonials svg-img" alt="quotes">
+                                                        </div>
+                                                    </div>
+                                                    <p>
+                                                        "This is the dolor sit amet consectetur adipisicing elit. Cumque
+                                                        odit,
+                                                        voluptatum quibusdam fugiat ratione exercitationem, voluptates
+                                                        deserunt
+                                                        atque sint veniam sit ducimus optio! Blanditiis earum nesciunt
+                                                        exercitationem, animi alias ab!"
+                                                    </p>
+                                                    <div class="lh-testimonials-holiday">
+                                                        <span>"Amenities At Hotel"</span>
+                                                        <div class="lh-star">
+                                                            <i class="ri-star-fill"></i>
+                                                            <i class="ri-star-fill"></i>
+                                                            <i class="ri-star-fill"></i>
+                                                            <i class="ri-star-fill"></i>
+                                                            <i class="ri-star-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lh-slide slide-2">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6 p-0 align-self-center">
+                                        <div class="lh-testimonials">
+                                            <div class="row">
+                                                <div class="lh-testimonials-contain">
+                                                    <div class="d-flex">
+                                                        <div class="lh-testimonials-inner">
+                                                            <img src="{% static '/hotel/assets/img/businessman/businessman-2.jpg' %}"
+                                                                alt="businessman" class="businessman">
+                                                            <div class="lh-testimonials-name-detalis">
+                                                                <h5>John Doe</h5>
+                                                                <span>Bristol, Uk</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lh-testimonials-side-image">
+                                                            <img src="{% static '/hotel/assets/img/testimonials/quotes.svg' %}"
+                                                                class="testimonials svg-img" alt="quotes">
+                                                        </div>
+                                                    </div>
+                                                    <p>
+                                                        "This is the dolor sit amet consectetur adipisicing elit. Cumque
+                                                        odit,
+                                                        voluptatum quibusdam fugiat ratione exercitationem, voluptates
+                                                        deserunt
+                                                        atque sint veniam sit ducimus optio! Blanditiis earum nesciunt
+                                                        exercitationem, animi alias ab!"
+                                                    </p>
+                                                    <div class="lh-testimonials-holiday">
+                                                        <span>"Room Service"</span>
+                                                        <div class="lh-star">
+                                                            <i class="ri-star-fill"></i>
+                                                            <i class="ri-star-fill"></i>
+                                                            <i class="ri-star-fill"></i>
+                                                            <i class="ri-star-fill"></i>
+                                                            <i class="ri-star-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lh-slide slide-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6 p-0 align-self-center">
+                                        <div class="lh-testimonials">
+                                            <div class="row">
+                                                <div class="lh-testimonials-contain">
+                                                    <div class="d-flex">
+                                                        <div class="lh-testimonials-inner">
+                                                            <img src="{% static '/hotel/assets/img/businessman/businessman-3.jpg' %}"
+                                                                alt="businessman" class="businessman">
+                                                            <div class="lh-testimonials-name-detalis">
+                                                                <h5>Moris Selemen</h5>
+                                                                <span>Bristol, Uk</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lh-testimonials-side-image">
+                                                            <img src="{% static '/hotel/assets/img/testimonials/quotes.svg' %}"
+                                                                class="testimonials svg-img" alt="quotes">
+                                                        </div>
+                                                    </div>
+                                                    <p>
+                                                        "This is the dolor sit amet consectetur adipisicing elit. Cumque
+                                                        odit,
+                                                        voluptatum quibusdam fugiat ratione exercitationem, voluptates
+                                                        deserunt
+                                                        atque sint veniam sit ducimus optio! Blanditiis earum nesciunt
+                                                        exercitationem, animi alias ab!"
+                                                    </p>
+                                                    <div class="lh-testimonials-holiday">
+                                                        <span>"Restaurants Dessert"</span>
+                                                        <div class="lh-star">
+                                                            <i class="ri-star-fill"></i>
+                                                            <i class="ri-star-fill"></i>
+                                                            <i class="ri-star-fill"></i>
+                                                            <i class="ri-star-fill"></i>
+                                                            <i class="ri-star-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Blog -->
+    <!-- <section class="section-blog bg-gray padding-tb-100">
+        <div class="container">
+            <div class="banner" data-aos="fade-up" data-aos-duration="2000">
+                <h2>Stay Update With <span>Us</span></h2>
+            </div>
+            <div class="slick-slider blog-slider" data-aos="fade-up" data-aos-duration="2000">
+                <div class="blog-card">
+                    <figure><img src="{% static '/hotel/assets/img/blog/2.jpg' %}" alt="blog-img" class="blog-image-top"></figure>
+                    <div class="lh-blog">
+                        <div class="lh-blog-date">
+                            <span><code>Restaurant</code> - 09 Jan 2024 - 05 Comment</span>
+                        </div>
+                        <a class="top-heding" href="blog-details.html">Offers Exclusive amenities & Facilities To Guests
+                            and free offers.</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <figure><img src="{% static '/hotel/assets/img/blog/3.jpg' %}" alt="blog-img" class="blog-image-top"></figure>
+                    <div class="lh-blog">
+                        <div class="lh-blog-date">
+                            <span><code>Marketing</code> - 15 Feb 2024 - 22 Comment</span>
+                        </div>
+                        <a class="top-heding" href="blog-details.html">Announces A Private Island Hotel In The Maldives
+                            for couple.</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <figure><img src="{% static '/hotel/assets/img/blog/4.jpg' %}" alt="blog-img" class="blog-image-top"></figure>
+                    <div class="lh-blog">
+                        <div class="lh-blog-date">
+                            <span><code>Hotel</code> - 22 Dec 2024 - 00 Comment</span>
+                        </div>
+                        <a class="top-heding" href="blog-details.html">Exclusive amenities Facilities to Guests Offers
+                            rooms free.</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <figure><img src="{% static '/hotel/assets/img/blog/5.jpg' %}" alt="blog-img" class="blog-image-top"></figure>
+                    <div class="lh-blog">
+                        <div class="lh-blog-date">
+                            <span><code>Rooms</code> - 11 Nov 2024 - 01 Comment</span>
+                        </div>
+                        <a class="top-heding" href="blog-details.html">Island Hotel In The Maldives Exclusive amenities
+                            Facilities.</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <figure><img src="{% static '/hotel/assets/img/blog/6.jpg' %}" alt="blog-img" class="blog-image-top"></figure>
+                    <div class="lh-blog">
+                        <div class="lh-blog-date">
+                            <span><code>Spa</code> - 02 Mar 2024 - 25 Comment</span>
+                        </div>
+                        <a class="top-heding" href="blog-details.html">Amenities Facilities to Guests Offers rooms free
+                            Exclusive.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+{% endblock %}

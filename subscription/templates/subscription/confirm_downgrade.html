@@ -1,0 +1,156 @@
+{% extends 'sub_base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="mb-0">Confirm Plan Change</h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <h4 class="alert-heading">Please Review Your Plan Change</h4>
+                        <p>Please review the changes carefully before proceeding:</p>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Current Plan</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ current_plan.name }}</h5>
+                                    
+                                    <!-- Current Plan Details -->
+                                    <div class="pricing-details mb-3">
+                                        <h6 class="text-muted">Current Subscription Details</h6>
+                                        <p class="mb-1"><strong>Monthly Price:</strong> ${{ current_plan.monthly_price }}/month</p>
+                                        <p class="mb-1"><strong>Subscription Period:</strong> Until {{ user_details.subscription_end_date|date:"F j, Y" }}</p>
+                                        {% if last_payment %}
+                                        <p class="mb-1"><strong>Last Payment:</strong> ${{ last_payment.amount }}</p>
+                                        <p class="mb-1"><strong>Payment Date:</strong> {{ last_payment.created_at|date:"F j, Y" }}</p>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Current Plan Features -->
+                                    <h6 class="text-muted">Current Features</h6>
+                                    <ul class="list-unstyled">
+                                        {% for feature in current_plan.get_feature_list %}
+                                        <li><i class="fas fa-check text-success"></i> {{ feature }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header {% if new_plan.monthly_price > current_plan.monthly_price %}bg-success{% else %}bg-secondary{% endif %} text-white">
+                                    <h5 class="mb-0">{% if new_plan.monthly_price > current_plan.monthly_price %}Upgrade to{% else %}Downgrade to{% endif %} New Plan</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ new_plan.name }}</h5>
+                                    
+                                    <!-- New Plan Pricing -->
+                                    <div class="pricing-details mb-3">
+                                        <h6 class="text-muted">New Subscription Details</h6>
+                                        <p class="mb-1"><strong>Monthly Price:</strong> ${{ new_plan.monthly_price }}/month</p>
+                                        <p class="mb-1"><strong>Selected Duration:</strong> {{ duration_months }} month{{ duration_months|pluralize }}</p>
+                                        <p class="mb-1"><strong>Total Amount:</strong> ${{ new_plan_total }}</p>
+                                        {% if discount_percentage > 0 %}
+                                        <p class="mb-1 text-success">
+                                            <strong>Discounted Total:</strong> ${{ new_plan_discounted }}
+                                            <small>({{ discount_percentage }}% off)</small>
+                                        </p>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Price Comparison -->
+                                    <div class="price-comparison alert {% if price_difference > 0 %}alert-success{% else %}alert-info{% endif %} mb-3">
+                                        <h6 class="mb-2">Price Comparison</h6>
+                                        <p class="mb-1">
+                                            {% if price_difference > 0 %}
+                                            Additional Cost: ${{ price_difference }}
+                                            {% else %}
+                                            You'll Save: ${{ price_difference_absolute  }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    
+                                    <!-- New Plan Features -->
+                                    <h6 class="text-muted">New Features</h6>
+                                    <ul class="list-unstyled">
+                                        {% for feature in new_plan.get_feature_list %}
+                                        <li>
+                                            {% if feature in current_plan.get_feature_list %}
+                                            <i class="fas fa-check text-success"></i>
+                                            {% else %}
+                                            <i class="fas fa-plus text-primary"></i>
+                                            {% endif %}
+                                            {{ feature }}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <h6 class="alert-heading">Important Notes:</h6>
+                        <ul class="mb-0">
+                            {% if new_plan.monthly_price > current_plan.monthly_price %}
+                            <li>Your new plan will start immediately upon payment.</li>
+                            <li>You'll have access to all new features right away.</li>
+                            {% else %}
+                            <li>Your current plan benefits will continue until the end of your billing period.</li>
+                            <li>The new plan will take effect after your current subscription ends.</li>
+                            <li>You may lose access to some features available in your current plan.</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                    <form method="post" action="{% url 'subscription:upgrade_subscription' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="plan" value="{{ new_plan.id }}">
+                        <input type="hidden" name="duration_months" value="{{ duration_months }}">
+                        <input type="hidden" name="confirm_downgrade" value="true">
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn {% if new_plan.monthly_price > current_plan.monthly_price %}btn-success{% else %}btn-warning{% endif %} btn-lg mr-2">
+                                {% if new_plan.monthly_price > current_plan.monthly_price %}
+                                Confirm Upgrade
+                                {% else %}
+                                Confirm Downgrade
+                                {% endif %}
+                            </button>
+                            <a href="{% url 'subscription:upgrade_subscription' %}" class="btn btn-secondary btn-lg">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add custom styles -->
+<style>
+    .pricing-details {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        border-radius: 0.25rem;
+    }
+    .price-comparison {
+        border-left: 4px solid;
+    }
+    .card-header h5 {
+        margin-bottom: 0;
+    }
+    .list-unstyled li {
+        margin-bottom: 0.5rem;
+    }
+</style>
+{% endblock %}

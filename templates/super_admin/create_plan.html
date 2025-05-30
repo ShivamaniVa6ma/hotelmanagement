@@ -1,0 +1,423 @@
+{% extends 'super_admin_base.html' %}
+{% block content %}
+{% load static %}
+
+
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --text-color: #2b2d42;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 2rem 0;
+        }
+
+        .form-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .card-section {
+            background: var(--light-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            gap: 10px;
+        }
+
+        .feature-item i {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .feature-item .form-control {
+            flex-grow: 1;
+        }
+
+        .feature-item .btn-link {
+            flex-shrink: 0;
+            padding: 0.25rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        @media(max-width: 768px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .form-container {
+                margin: 1rem auto;
+                padding: 1.5rem;
+            }
+
+            .card-section {
+                padding: 1rem;
+            }
+        }
+
+        @media(max-width: 576px) {
+            .form-container {
+                padding: 1rem;
+            }
+
+            .card-section {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+
+
+<div class="lh-main-content">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="form-container">
+                <h2 class="section-title">{% if edit_mode %}Edit{% else %}Create{% endif %} Subscription Plan</h2>
+
+                <!-- {% if messages %}
+                <div class="messages mb-4">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %} -->
+
+                <form method="POST" class="needs-validation" novalidate>
+                    {% csrf_token %}
+
+                    <div class="card-section">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label for="{{ form.name.id_for_label }}" class="form-label">Plan Name</label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                <div class="invalid-feedback d-block">{{ form.name.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.monthly_price.id_for_label }}" class="form-label">Monthly Price (₹)</label>
+                                {{ form.monthly_price }}
+                                {% if form.monthly_price.errors %}
+                                <div class="invalid-feedback d-block">{{ form.monthly_price.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                        </div>
+                        <div class="row g-4">
+
+                            <div class="col-md-6">
+                                <label for="{{ form.max_rooms.id_for_label }}" class="form-label">Total Rooms</label>
+                                {{ form.max_rooms }}
+                                {% if form.max_rooms.errors %}
+                                <div class="invalid-feedback d-block">{{ form.max_rooms.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.max_team_members.id_for_label }}" class="form-label">Team members:</label>
+                                {{ form.max_team_members }}
+                                {% if form.max_team_members.errors %}
+                                <div class="invalid-feedback d-block">{{ form.max_team_members.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.max_bookings_per_month.id_for_label }}" class="form-label">Bookings per month:</label>
+                                {{ form.max_bookings_per_month }}
+                                {% if form.max_bookings_per_month.errors %}
+                                <div class="invalid-feedback d-block">{{ form.max_bookings_per_month.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="pricing-toggle card-section">
+                        <h4>Subscription Discounts</h4>
+                        {{ discount_formset.management_form }}
+                        <div class="pricing-rows" id="subscriptionPricingRows">
+                            {% for discount_form in discount_formset %}
+                                <div class="pricing-row mb-3">
+                                    {% if discount_form.instance.pk %}{{ discount_form.id }}{% endif %}
+                                    <div class="row g-4">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Duration</label>
+                                            {{ discount_form.duration_months }}
+                                            {% if discount_form.duration_months.errors %}
+                                                <div class="invalid-feedback d-block">{{ discount_form.duration_months.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Discount (%)</label>
+                                            <div class="input-group">
+                                                {{ discount_form.discount_percentage }}
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                            {% if discount_form.discount_percentage.errors %}
+                                                <div class="invalid-feedback d-block">{{ discount_form.discount_percentage.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% if discount_form.instance.pk %}
+                                        {{ discount_form.DELETE }}
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="button" class="btn btn-primary" id="addDiscountBtn">
+                                <i class="fas fa-plus me-2"></i>Add More Discounts
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-section">
+                        <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                        <div class="invalid-feedback d-block">{{ form.description.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-section">
+                        <label class="form-label">Features</label>
+                        {{ feature_formset.management_form }}
+                        <div id="featuresList">
+                            {% for feature_form in feature_formset %}
+                                <div class="feature-item">
+                                    {% if feature_form.instance.pk %}{{ feature_form.id }}{% endif %}
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="fas fa-check-circle"></i>
+                                        {{ feature_form.feature_text }}
+                                        {% if feature_form.feature_text.errors %}
+                                            <div class="invalid-feedback d-block">{{ feature_form.feature_text.errors }}</div>
+                                        {% endif %}
+                                        {% if feature_form.instance.pk %}
+                                            {{ feature_form.DELETE }}
+                                            <button type="button" class="btn btn-link text-danger delete-feature">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        {% else %}
+                                            <button type="button" class="btn btn-link text-danger remove-feature">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button type="button" class="btn btn-outline-primary mt-3" id="addFeatureBtn">
+                            <i class="fas fa-plus me-2"></i>Add Feature
+                        </button>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        {{ form.is_popular }}
+                        <label class="form-check-label" for="{{ form.is_popular.id_for_label }}">
+                            Mark as Popular Plan
+                        </label>
+                    </div>
+                    <div class="form-check mb-4">
+                        {{ form.is_free_trial }}
+                        <label class="form-check-label" for="{{ form.is_free_trial.id_for_label }}">
+                            Free Trail
+                        </label>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        {{ form.is_active }}
+                        <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
+                            Active Plan
+                        </label>
+                    </div>
+                    <div class="form-check mb-4">
+                        {{ form.is_logo_change }}
+                        <label class="form-check-label" for="{{ form.is_logo_change.id_for_label }}">
+                            Logo Change
+                        </label>
+                    </div>
+
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-check me-2"></i>{% if edit_mode %}Update{% else %}Create{% endif %} Plan
+                        </button>
+                        <a href="{% url 'subscription:super_admin' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </a>
+                    </div> 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Features handling
+            const addFeatureBtn = document.getElementById('addFeatureBtn');
+            const featuresList = document.getElementById('featuresList');
+            
+            if (addFeatureBtn && featuresList) {
+                addFeatureBtn.addEventListener('click', function() {
+                    const forms = featuresList.getElementsByClassName('feature-item');
+                    const totalForms = document.getElementById('id_features-TOTAL_FORMS');
+                    
+                    if (forms.length > 0) {
+                        const newForm = forms[0].cloneNode(true);
+                        const formNum = forms.length;
+                        
+                        // Update form index
+                        newForm.innerHTML = newForm.innerHTML.replace(
+                            /features-\d+-/g,
+                            `features-${formNum}-`
+                        );
+                        
+                        // Clear input values and remove ID field
+                        newForm.querySelectorAll('input').forEach(input => {
+                            if (input.type === 'hidden' && input.name.includes('id')) {
+                                input.remove(); // Remove ID field for new forms
+                            } else if (input.type !== 'hidden') {
+                                input.value = '';
+                            }
+                        });
+                        
+                        featuresList.appendChild(newForm);
+                        totalForms.value = formNum + 1;
+                        
+                        // Add remove button handler
+                        const removeBtn = newForm.querySelector('.remove-feature');
+                        if (removeBtn) {
+                            removeBtn.addEventListener('click', function() {
+                                newForm.remove();
+                                updateFeatureFormIndices();
+                            });
+                        }
+                    }
+                });
+                
+                // Add handlers for existing remove/delete buttons
+                document.querySelectorAll('.remove-feature, .delete-feature').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const formItem = button.closest('.feature-item');
+                        if (button.classList.contains('delete-feature')) {
+                            // For existing features, check the DELETE checkbox
+                            const deleteCheckbox = formItem.querySelector('input[type="checkbox"][name*="DELETE"]');
+                            if (deleteCheckbox) {
+                                deleteCheckbox.checked = true;
+                                formItem.style.display = 'none';
+                            }
+                        } else {
+                            // For new features, just remove the form
+                            formItem.remove();
+                        }
+                        updateFeatureFormIndices();
+                    });
+                });
+            }
+            
+            // Discounts handling
+            const addDiscountBtn = document.getElementById('addDiscountBtn');
+            const discountContainer = document.getElementById('subscriptionPricingRows');
+            
+            if (addDiscountBtn && discountContainer) {
+                addDiscountBtn.addEventListener('click', function() {
+                    const forms = discountContainer.getElementsByClassName('pricing-row');
+                    const totalForms = document.getElementById('id_discounts-TOTAL_FORMS');
+                    
+                    if (forms.length > 0) {
+                        const newForm = forms[0].cloneNode(true);
+                        const formNum = forms.length;
+                        
+                        // Update form index
+                        newForm.innerHTML = newForm.innerHTML.replace(
+                            /discounts-\d+-/g,
+                            `discounts-${formNum}-`
+                        );
+                        
+                        // Clear input values and remove ID field
+                        newForm.querySelectorAll('input').forEach(input => {
+                            if (input.type === 'hidden' && input.name.includes('id')) {
+                                input.remove(); // Remove ID field for new forms
+                            } else if (input.type !== 'hidden') {
+                                input.value = '';
+                            }
+                        });
+                        
+                        // Reset select elements
+                        newForm.querySelectorAll('select').forEach(select => {
+                            select.selectedIndex = 0;
+                        });
+                        
+                        discountContainer.appendChild(newForm);
+                        totalForms.value = formNum + 1;
+                    }
+                });
+            }
+            
+            function updateFeatureFormIndices() {
+                const forms = featuresList.getElementsByClassName('feature-item');
+                const totalForms = document.getElementById('id_features-TOTAL_FORMS');
+                totalForms.value = forms.length;
+                
+                Array.from(forms).forEach((form, idx) => {
+                    form.querySelectorAll('[name^="features-"]').forEach(input => {
+                        input.name = input.name.replace(/features-\d+-/, `features-${idx}-`);
+                        if (input.id) {
+                            input.id = input.id.replace(/features-\d+-/, `features-${idx}-`);
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+    
+
+{% endblock %}

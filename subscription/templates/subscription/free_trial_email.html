@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Free Trial Plan</title>
+</head>
+<body>
+    <h1>Welcome, {{ user_name }}!</h1>
+    <p>Thank you for signing up for the <strong>{{ plan_name }}</strong> Plan!</p>
+    <p>Your free trial will last until {{ subscription_end_date|date:"F j, Y" }}.</p>
+    <p>To complete your registration, please click the link below:</p>
+    <p><a href="{{ signup_url }}">Complete Your Signup</a></p>
+    <p>Enjoy exploring all the features we offer!</p>
+    <p>Best regards,<br>Bloom Up Luxuary Stay</p>
+</body>
+</html>

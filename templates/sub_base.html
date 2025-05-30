@@ -1,0 +1,1353 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en-US" class="no-js">
+
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon/fav.png' %}">
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon/favicon.png' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="codepixer">
+    <!-- Meta Description -->
+    <meta name="description" content="Bloom UpHotel Software is the most comprehensive property management software for hotels, resorts, clubs, restaurants & hotel chains.">
+    <meta name="keywords" content="hotel software, software for hotels, Bloom Upsoftware, bestman, india, hotel software in india, software in india, hotel software in tally, hotel accounting software, motel software, software development, website, restaurant software, property management system, property management software, pms software, hospitality management system, restaurant pos, cloud hotel software, online hotel software, Hotel Billing Software, online pms, Software for Restaurants, hotel software, hotel booking software, hotel reservation software, hotel management system, hotel, Property Management, PMS, Online Hotel Management Software, front desk software, hotel software systems, hotel management software, hotel maintenance, hotel accommodation, hotel software solutions, cloud based hotel management software, online, accommodation, website designer, channel manager, hospitality, hotel pms software, hotel pos software, best hotel pms, best hotel software, software exceed, hotel front office software, hotel front office software, property management software">
+    <meta name="robots" content="index, follow">
+    <meta charset="UTF-8">
+    <title>Bloom Up- Best Hotel Management System | #1 Hotel Software on Cloud</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Add this in the <head> section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="{% static 'subscription/assets/css/linearicons.css' %}">
+    <link rel="stylesheet" href="{% static 'subscription/assets/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'subscription/assets/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'subscription/assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'subscription/assets/css/main9055.css' %}">
+    <link rel="stylesheet" href="{% static 'subscription/assets/css/responsive.css' %}">
+    
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CL6FNEMREJ"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-958701517"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-CL6FNEMREJ');
+    </script>
+     <style>
+
+
+        @media (max-width: 1000px) {
+
+            .banner-content h3,
+            .banner-content h4 {
+                font-size: 20px;
+                margin-top: 150px;
+            }
+        }
+
+        /* @media (max-width: 576px) {
+            #header {
+                padding: 10px !important;
+            }
+
+            #mobile-nav-toggle i {
+                margin-right: 20px;
+            }
+
+            .container-navbar {
+                padding: 0px !important;
+            }
+
+    
+        } */
+
+
+
+      
+
+@media (max-width: 1024px)
+{
+.banner-content h3,
+.banner-content h4 {
+    font-size: 16px;
+    margin-top: 20px;
+}
+}
+
+
+        @media (max-width: 800px) 
+        {
+
+            .banner-content h3,
+            .banner-content h4 {
+                font-size: 20px;
+                /* margin-top: 100px; */
+            }
+        }
+
+        /* .footer-area 
+        {
+            background: #120a8f;
+            position: relative;
+        }
+
+        .footer-link {
+            color: #ffffff;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            line-height: 2;
+        }
+
+        .footer-link:hover {
+            opacity: 1;
+            color: #e1258c;
+            padding-left: 5px;
+        }
+
+        .social-icon {
+            color: #ffffff;
+            
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: #e1258c;
+            transform: translateY(-3px);
+        }
+
+        .footer-cta .btn {
+            background: #e1258c;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .footer-cta .btn:hover {
+            background: #c41577;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(225, 37, 140, 0.3);
+        }
+
+        .footer-info {
+            color: #ffffff;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            margin-top: 15px;
+        }
+
+        .single-footer-widget h4 {
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .single-footer-widget h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: #e1258c;
+        }
+
+        .single-footer-widget.text-center h4::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .single-footer-widget.text-md-end h4::after {
+            left: auto;
+            right: 0;
+        } */
+
+        .header-container-fluid {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @media screen and (max-width: 800px) {
+            .header-container-fluid {
+                padding: 0px;
+            }
+        }
+
+     
+   
+    
+    .header-upper-left i,
+    .social-links i {
+        margin-right: 5px;
+    }
+    
+    .social-links a {
+        font-size: 16px;
+    }
+
+  
+    
+    
+    
+    
+   
+    
+    /* .button-upper {
+        background: #e1258c;
+        color: white !important;
+        padding: 8px 20px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+     */
+    /* .button-upper:hover {
+        background: #c41577;
+        transform: translateY(-2px);
+    } */
+    
+    @media (max-width: 768px) {
+        .top-area {
+            flex-direction: column;
+            gap: 15px;
+            /* padding: 15px 0; */
+        }
+        
+        .header-upper-left,
+        .header-upper-right {
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px !important;
+        }
+    }
+
+    /* .top-header-bg {
+        background-color: #0a8f34;
+        width: 100%;
+        padding: 10px 0;
+    } */
+    
+    .top-header-bg .top-area {
+        padding: 0;
+    }
+    
+    .top-header-bg .header-upper-left a,
+    .top-header-bg .header-upper-right a,
+    .top-header-bg span {
+        color: #ffffff;
+    }
+    
+    .top-header-bg .button-upper {
+        background: #e1258c;
+        color: white !important;
+        padding: 8px 20px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+    
+    .top-header-bg .button-upper:hover {
+        background: #c41577;
+        transform: translateY(-2px);
+    }
+    
+    @media (max-width: 768px) {
+        .top-header-bg {
+            padding: 15px 0;
+        }
+    }
+
+
+    @media (max-width: 576px) {
+        .top-header-bg {
+            padding: 10px 0;
+            display: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .top-header-bg {
+            padding: 10px 0;
+            display: none;
+        }
+    }
+    @media (max-width: 900px) {
+        .top-header-bg {
+            padding: 10px 0;
+            display: none;
+        }
+    }
+
+    .underline{
+        color: #ffffff;
+    
+    }
+.header-upper-left .fa {
+    color: #ffffff;
+    margin-top: 1px;
+    
+}
+
+.header-upper-right .fa 
+{
+    color: #ffffff;
+    margin-top: 1px;
+    /* font-size: 20px; */
+}
+
+.banner-content {
+    text-align: start !important;
+}
+
+@media  (max-width: 768px) {
+    .banner-content {
+        text-align: center !important;
+        margin-top: 15px;
+    }
+}
+
+
+/* Solutions Section Styling */
+.service-area {
+    padding: 80px 0;
+    background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+}
+
+.service-area .title {
+    margin-bottom: 50px;
+}
+
+.service-area h1 {
+    color: #2224ad;
+    font-size: 2.5rem;
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.service-area h1:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #e1258c;
+}
+
+.sigle-service {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.sigle-service:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, #2224ad, #e1258c);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.sigle-service:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.sigle-service:hover:before {
+    transform: scaleX(1);
+}
+
+.sigle-service h4 {
+    color: #2224ad;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.sigle-service p {
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.primary-btn.primary-border.circle {
+    background: transparent;
+    border: 2px solid #e1258c;
+    color: #e1258c;
+    /* padding: 10px 25px; */
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.primary-btn.primary-border.circle:hover {
+    background: #e1258c;
+    color: #ffffff;
+    transform: translateX(5px);
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+    .service-area {
+        padding: 60px 0;
+    }
+
+    .service-area h1 {
+        font-size: 2rem;
+    }
+
+    .sigle-service {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-area h1 {
+        font-size: 1.8rem;
+    }
+
+    .sigle-service {
+        padding: 25px;
+    }
+
+    .sigle-service h4 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .service-area {
+        padding: 40px 0;
+    }
+
+    .service-area h1 {
+        font-size: 1.5rem;
+    }
+
+    .sigle-service {
+        padding: 20px;
+    }
+
+    .primary-btn.primary-border.circle {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+/* Header Full Width with Contained Content */
+.header-top-bg {
+    background: #150637;
+    width: 100%;
+    padding: 0;
+    margin: 0px;
+}
+
+.header-nav-bg {
+    background: #2224ad;
+    width: 100%;
+    padding: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+@media (max-width: 991px) {
+    .header-nav-bg {
+        padding:  0;
+        margin: 0px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-top-bg {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .hide-logo {
+            display: none !important;
+        }
+    }
+
+    .mobile-nav-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        .mobile-nav-toggle {
+            display: block;
+        }
+        .hide-logo {
+            display: none !important;
+        }
+    }
+
+    @media (max-width: 568px) {
+    .header-nav-bg {
+        padding: 10px 0;
+    }
+
+    /* #mobile-nav-toggle {
+        margin-right: 35px;
+    } */
+
+    #logo {
+        padding-left: 25px;
+    }
+
+    #logo img {
+        max-width: 120px;
+    }
+
+    .nav-menu {
+        padding: 10px;
+    }
+
+    .hide-logo {
+        display: none !important;
+    }
+}
+
+@media (max-width: 769px) {
+    .header-nav-bg {
+        padding: 10px 0;
+    }
+
+    #mobile-nav-toggle {
+        /* margin-right: 45px; */
+        display: block;
+    }
+
+    #logo {
+        padding-left: 35px;
+    }
+
+    #logo img {
+        max-width: 120px;
+    }
+
+    .nav-menu {
+        padding: 10px;
+        display: none;
+    }
+
+    .nav-menu.show {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #2224ad;
+    }
+
+    .hide-logo {
+        display: none !important;
+    }
+}
+
+/* Header styling fixes */
+@media (max-width: 769px) {
+    .header-nav-bg {
+        padding: 15px 0;
+    }
+
+    #mobile-nav-toggle {
+        /* margin-right: 45px; */
+        display: block;
+        z-index: 1000;
+    }
+    @media (max-width: 1680px) {
+    .header-upper-right .button-upper {
+        font-size: 10px !important;
+    }
+}
+
+    #logo {
+        padding-left: 15px;
+    }
+
+    #logo img {
+        max-width: 150px;
+        height: auto;
+    }
+
+    #nav-menu-container {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #2224ad;
+        display: none;
+    }
+
+    #nav-menu-container.show {
+        display: block;
+    }
+
+    .nav-menu {
+        padding: 15px;
+        margin: 0;
+    }
+
+    .nav-menu li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .nav-menu li a {
+        color: #fff;
+        padding: 10px 15px;
+        display: block;
+    }
+  
+}
+
+@media (max-width: 1000px) {
+    #mobile-nav {
+        z-index: 1100;
+        width: 100%;
+        /* left: -100%; */
+    }
+
+    /* #logo{
+        display: none;
+    } */
+}@media (max-width: 991.98px) {
+    .row {
+        display: flex !important;
+
+        flex-wrap: wrap;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 800px) {
+    .header-nav-bg {
+        padding: 10px 0;
+    }
+
+    #mobile-nav-toggle {
+        margin-right: 15px;
+        display: block;
+        z-index: 1000;
+        position: relative;
+        top: auto;
+    }
+
+    #logo {
+        padding-left: 15px;
+    }
+
+    .col-lg-12 {
+        align-items: center !important;
+        padding: 5px 0;
+    }
+
+    #nav-menu-container {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #2224ad;
+    }
+}
+
+/* Add these styles to fix the right-side spacing issue */
+body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .col-lg-12 {
+        padding: 0;
+    }
+
+    #nav-menu-container {
+        width: 100vw;
+        left: 0;
+        right: 0;
+    }
+}
+
+
+
+
+        /* Modern Footer Styling */
+        .footer-area {
+            background: linear-gradient(135deg, #120a8f 0%, #2224ad 100%);
+            position: relative;
+            padding: 80px 0 40px;
+            color: rgba(255, 255, 255, 0.85);
+            overflow: hidden;
+            margin-top: 50px;
+        }
+        
+        /* Wave Effect at Top */
+        .footer-wave-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            line-height: 0;
+            overflow: hidden;
+        }
+        
+        .footer-wave-top svg {
+            display: block;
+            width: 100%;
+            height: 70px;
+        }
+        
+        /* Footer Title Styling */
+        .footer-title {
+            color: #ffffff;
+            position: relative;
+            font-weight: 600;
+            font-size: 1.4rem;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .footer-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background: #e1258c;
+            border-radius: 2px;
+        }
+        
+        .text-center .footer-title:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .text-md-end .footer-title:after {
+            left: auto;
+            right: 0;
+        }
+        
+        /* Footer Links Styling */
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.85);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            padding: 6px 0;
+            font-size: 15px;
+        }
+        
+        .footer-link i {
+            margin-right: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: #ffffff;
+            transform: translateX(5px);
+            text-decoration: none;
+        }
+        
+        .footer-link:hover i {
+            color: #e1258c;
+        }
+        
+      /* Fix for social icons alignment */
+.footer-social {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: white;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-icon i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 767px) {
+    .footer-social {
+        gap: 10px;
+    }
+    
+    .social-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-icon:hover {
+            background: #e1258c;
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(225, 37, 140, 0.3);
+        }
+        
+        /* CTA Button Styling */
+        .footer-cta {
+            margin-top: 20px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #e1258c;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(225, 37, 140, 0.3);
+        }
+        
+        .cta-button:hover {
+            background: #ffffff;
+            color: #e1258c;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(225, 37, 140, 0.4);
+        }
+        
+        /* Copyright Text Styling */
+        .copyright-text {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        /* Policy Links */
+        .footer-policy-links {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .policy-divider {
+            color: rgba(255, 255, 255, 0.4);
+            margin: 0 8px;
+        }
+        
+        /* Wave Animation at Bottom */
+        .footer-wave-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            overflow: hidden;
+        }
+        
+        .wave-animation {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #e1258c, transparent, #e1258c);
+            animation: wave 8s linear infinite;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 991px) {
+            .footer-area {
+                padding: 60px 0 30px;
+            }
+            
+            .footer-title {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .text-center-sm {
+                text-align: center !important;
+            }
+            
+            .text-md-end .footer-title:after {
+                left: 50%;
+                transform: translateX(-50%);
+                right: auto;
+            }
+            
+            .footer-policy-links {
+                justify-content: center;
+            }
+            
+            .footer-area {
+                padding: 50px 0 30px;
+            }
+            
+            .footer-title {
+                font-size: 1.2rem;
+            }
+            
+            .footer-wave-top svg {
+                height: 40px;
+            }
+        }
+        
+        @media (max-width: 575px) {
+            .footer-social {
+                gap: 10px;
+            }
+            
+            .social-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .cta-button {
+                padding: 10px 25px;
+                font-size: 14px;
+            }
+            
+            .policy-divider {
+                display: none;
+            }
+            
+            .footer-policy-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .footer-link {
+                padding: 5px 0;
+            }
+        }
+    </style>
+    
+</head>
+
+<body>
+    <!-- <header id="header" id="home">
+        <div class="col-md-12">
+            <div class="row align-items-center justify-content-between d-flex">
+                <div class="top-aea">
+                    <div class="header-upper-left">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        <a href="tel:+91 9831027443">+91 9831027443</a>
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <a href="mailto:sales@exceedhms.com">sales@exceedhms.com</a>
+                    </div>
+                    <div class="header-upper-right"> Stay Connect
+                        <a href="https://www.facebook.com/ExceedHotelSoftware" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        <a href="https://www.youtube.com/channel/UCMgrOShr3d87PcevscbRrxA" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                        <a href="{% url 'subscription:plans' %}" class="button-upper">Start Free Trial</a>
+                    </div>
+                </div>
+                <div class="nav-section" style="display: flex;justify-content: space-between;">
+                <div id="logo">
+                    <a href="{% url 'subscription:index_view' %}"><img src="{% static 'subscription/assets/img/img/full-logo.png' %}" alt="" title="" /></a>
+                </div>
+                    <nav id="nav-menu-container">
+                        <ul class="nav-menu">
+                            <li class="menu-active"><a href="{% url 'subscription:index_view' %}"">Home</a></li>
+                            <li><a href="{% url 'subscription:plans' %}"">Pricing</a></li>
+                            <li><a href="{% url 'subscription:exceed_view' %}"">Why Choose Exceed</a></li>
+                            <li><a href="{% url 'subscription:support_view' %}"">Support</a></li>
+                            <li><a href="{% url 'subscription:contact_view' %}"">Contacts</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                </div>
+            </div>
+        </div>
+    </header> -->
+    <header  >
+        <div class="header-top-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="top-area d-flex justify-content-between align-items-center">
+                            <div class="header-upper-left d-flex align-items-center gap-3">
+                                <a href="tel:+91 63004 40316" class="d-flex align-items-center">
+                                    <i class="fa fa-phone me-2" aria-hidden="true"></i>
+                                    +91 63004 40316
+                                </a>
+                                <a href="mailto:support@ultrakeyit.com" class="d-flex align-items-center">
+                                    <i class="fa fa-envelope me-2" aria-hidden="true"></i>
+                                    support@ultrakeyit.com
+                                </a>
+                            </div>
+                            <div class="header-upper-right d-flex align-items-center gap-3">
+                                <span>Stay Connect</span>
+                                <div class="social-links d-flex gap-3">
+                                    <a href="https://www.facebook.com/ultrakeyit" target="_blank">
+                                        <i class="fa fa-facebook" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="https://www.youtube.com/@ultrakeyit" target="_blank">
+                                        <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <a href="{% url 'subscription:plans' %}" class="button-upper">Start Free Trial</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-nav-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12" style="display: flex;justify-content: space-between;align-items: start;">
+                        <div id="logo">                     
+                            <a href="{% url 'subscription:index_view' %}"><img src="{% static 'subscription/assets/img/img/full-logo.png' %}" alt="" title="" /></a>
+                        </div>
+  <!-- Add mobile toggle button -->
+  <button type="button" id="mobile-nav-toggle"><i class="lnr lnr-menu"></i></button>
+
+  <nav id="nav-menu-container">
+    <ul class="nav-menu">
+        <li class="{% if request.resolver_match.url_name == 'index_view' %}menu-active{% endif %}">
+            <a href="{% url 'subscription:index_view' %}">Home</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'plans' %}menu-active{% endif %}">
+            <a href="{% url 'subscription:plans' %}">Pricing</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'exceed_view' %}menu-active{% endif %}">
+            <a href="{% url 'subscription:exceed_view' %}">Why Choose Bloom Up</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'support_view' %}menu-active{% endif %}">
+            <a href="{% url 'subscription:support_view' %}">Support</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'clients_view' %}menu-active{% endif %}">
+            <a href="{% url 'subscription:clients_view' %}">Clients</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'contact_view' %}menu-active{% endif %}">
+            <a href="{% url 'subscription:contact_view' %}">Contacts</a>
+        </li>
+        {% if user.is_authenticated %}
+
+        <li>
+            <form id="logout-form" action="{% url 'admin-panel:logout' %}" method="POST">
+                {% csrf_token %}
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="ri-logout-circle-r-line"></i>Logout
+                </a>
+            </form>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+                </div>
+                <!-- #nav-menu-container -->
+            </div>
+        </div>
+    </div>
+        <!-- </div></div> -->
+    </header>
+    <!-- Content Block -->
+    <main>
+        {% block content %}
+        <!-- Page specific content will be inserted here -->
+        {% endblock %}
+    </main>
+
+    <!-- <footer class="footer-area pt-50 pb-50" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-md-12 col-sm-12">
+                    <div class="single-footer-widget">
+                        <h4 class="text-white">Quick Links</h4>
+                        <ul>
+                            <li class="menu-active"><a href="{% url 'subscription:index_view' %}">Home</a></li>
+                            <li><a href="{% url 'subscription:plans' %}">Pricing</a></li>
+                            <li><a href="{% url 'subscription:exceed_view' %}">Why Choose Exceed</a></li>
+                            <li><a href="{% url 'subscription:support_view' %}">Support</a></li>
+                            <li><a href="{% url 'subscription:contact_view' %}">Contacts</a></li>
+                       
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-12 col-sm-12">
+                    <div class="single-footer-widget">
+                        <h4 class="text-white text-center">Get Us Connected</h4>
+                        <div class="footer-social align-items-center">
+                            <a href="https://www.facebook.com/ExceedHotelSoftware" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="https://www.youtube.com/channel/UCMgrOShr3d87PcevscbRrxA" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                            <a href="skype:live:.cid.42b642868f0f6f5e?call" target="_blank" title="Skype"><i class="fa fa-skype" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="footer-social align-items-center button-free-trial">
+                            <p><a href="{% url 'subscription:plans' %}">START FREE TRIAL</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="single-footer-widget footer-text-right">
+                        <p class="footer-text mt-30">
+                            Copyright &copy; <script>document.write(new Date().getFullYear());</script> Bestman Bloom UpSoftware LLP<br />All Rights Reserved
+                        </p>
+                        <p>
+                            <a href="terms-and-conditions.html" class="text-white ml-0">Terms And Conditions</a>
+                            <span class="ml-1 mr-1">|</span>
+                            <a href="privacy-policy.html" class="text-white ml-0">Privacy Policy</a>
+                            <span class="ml-1 mr-1">|</span>
+                            <a href="refund-cancellation.html" class="text-white ml-0">Refund Policy</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer> -->
+
+    <footer class="footer-area" id="contact">
+        <div class="footer-wave-top">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
+                <path fill="#ffffff" fill-opacity="1" d="M0,32L60,42.7C120,53,240,75,360,74.7C480,75,600,53,720,42.7C840,32,960,32,1080,37.3C1200,43,1320,53,1380,58.7L1440,64L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <div class="row justify-content-between">
+                <!-- Quick Links Column -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-footer-widget">
+                        <h4 class="footer-title">Quick Links</h4>
+                        <ul class="footer-links">
+                            <li><a href="{% url 'subscription:index_view' %}" class="footer-link"><i class="fa fa-angle-right"></i>Home</a></li>
+                            <li><a href="{% url 'subscription:plans' %}" class="footer-link"><i class="fa fa-angle-right"></i>Pricing</a></li>
+                            <li><a href="{% url 'subscription:exceed_view' %}" class="footer-link"><i class="fa fa-angle-right"></i>Why Choose Exceed</a></li>
+                            <li><a href="{% url 'subscription:support_view' %}" class="footer-link"><i class="fa fa-angle-right"></i>Support</a></li>
+                            <li><a href="{% url 'subscription:contact_view' %}" class="footer-link"><i class="fa fa-angle-right"></i>Contacts</a></li>
+                            <li><a href="{% url 'subscription:clients_view' %}" class="footer-link"><i class="fa fa-angle-right"></i>Clients</a></li>
+                            <li><a href="{% url 'admin-panel:login' %}" class="footer-link"><i class="fa fa-angle-right"></i>Admin</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Social Media Column -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-footer-widget text-center">
+                        <h4 class="footer-title">Connect With Us</h4>
+                        <div class="footer-social">
+                            <a href="https://www.facebook.com/ultrakeyit" target="_blank" title="Facebook" class="social-icon">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@ultrakeyit" target="_blank" title="YouTube" class="social-icon">
+                                <i class="fa fa-youtube-play"></i>
+                            </a>
+                            <a href="mailto:support@ultrakeyit.com" title="Email Us" class="social-icon">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                        </div>
+                        <div class="footer-cta">
+                            <a href="{% url 'subscription:plans' %}" class="cta-button">START FREE TRIAL</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copyright Column -->
+                <div class="col-lg-4 col-md-12">
+                    <div class="single-footer-widget text-md-end text-center-sm">
+                        <div class="footer-logo mb-4 d-md-block d-none">
+                            <img src="{% static 'subscription/assets/img/img/full-logo.png' %}" alt="Bloom Up Logo" class="img-fluid" style="max-width: 180px;">
+                        </div>
+                        <div class="footer-info">
+                            <p class="copyright-text">
+                                Copyright &copy; <script>document.write(new Date().getFullYear());</script> Bestman Bloom UpSoftware LLP<br>All Rights Reserved
+                            </p>
+                            <div class="footer-policy-links">
+                                <a href="{% url 'subscription:terms_and_conditions' %}" class="footer-link">Terms And Conditions</a>
+                                <span class="policy-divider">|</span>
+                                <a href="{% url 'subscription:privacy_policy' %}" class="footer-link">Privacy Policy</a>
+                                <span class="policy-divider">|</span>
+                                <a href="{% url 'subscription:refund' %}" class="footer-link">Refund Policy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-wave-bottom">
+            <div class="wave-animation"></div>
+        </div>
+    </footer>
+    
+<!-- guest details javascript  -->
+<script src="{% static 'assets/js/vendor/jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/simplebar.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/apexcharts.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/jquery-jvectormap-1.2.2.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/jquery-jvectormap-world-mill-en.js' %}"></script>
+<!-- Data Tables -->
+<script src="{% static 'assets/js/vendor/jquery.datatables.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/datatables.bootstrap5.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/datatables.responsive.min.js' %}"></script>
+<!-- Caleddar -->
+<script src="{% static 'assets/js/vendor/jquery.simple-calendar.js' %}"></script>
+<!-- Date Range Picker -->
+<script src="{% static 'assets/js/vendor/moment.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/daterangepicker.js' %}"></script>
+<script src="{% static 'assets/js/vendor/date-range.js' %}"></script>
+
+<!-- Main Custom -->
+<script src="{% static 'assets/js/main.js' %}"></script>
+ <!-- end guest details javascript  -->
+
+
+    <!-- JS Links -->
+    <script src="{% static 'subscription/assets/js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'subscription/assets/js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'subscription/assets/js/superfish.min.js' %}"></script>
+    <script src="{% static 'subscription/assets/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'subscription/assets/js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'subscription/assets/js/slick.js' %}"></script>
+    <script src="{% static 'subscription/assets/js/main9055.js' %}"></script>
+    <script src="{% static 'subscription/assets/js/index68b3.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        function handleLogout(event) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                document.getElementById('logout-form').submit();
+            }
+        }
+        
+        // Add event listener to logout link
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutLink = document.querySelector('a[href*="logout"]');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', handleLogout);
+            }
+        });
+        </script>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logout confirmation
+            const logoutForm = document.getElementById('logout-form');
+            if (logoutForm) {
+                logoutForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if (confirm('Are you sure you want to logout?')) {
+                        this.submit();
+                    }
+                });
+            }
+        });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+</body>
+
+</html>
+

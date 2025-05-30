@@ -1,0 +1,452 @@
+﻿
+
+{% extends 'sub_base.html' %}
+{% block content %}
+{% load static %}
+
+
+
+
+    <script>
+        function Validate() {
+            var emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+
+            if (document.cont_us.fullname.value == '') {
+                alert('Please enter your full name!');
+                document.cont_us.fullname.focus();
+                return false;
+            }
+            if (document.cont_us.email.value == '') {
+                alert('Please enter your email address!');
+                document.cont_us.email.focus();
+                return false;
+            }
+            if (document.cont_us.email.value.search(emailRegEx) == -1) {
+                alert('Please enter a valid email address!');
+                return false;
+            }
+            if (document.cont_us.enter_complete_details.value == '') {
+                alert('Please enter your details!');
+                document.cont_us.enter_complete_details.focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-9816632-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-9816632-1');
+    </script>-->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CL6FNEMREJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-CL6FNEMREJ');
+    </script>
+    <!-- Global site tag (gtag.js) - Google Ads: 958701517 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-958701517"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'AW-958701517');
+    </script>
+    <!-- Event snippet for FREE TRIAL FORM conversion page
+    In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+    <script>
+        function gtag_report_conversion(url) {
+            var callback = function () {
+                if (typeof (url) != 'undefined') {
+                    window.location = url;
+                }
+            };
+            gtag('event', 'conversion', {
+                'send_to': 'AW-958701517/8bGaCJ6mvqMDEM2_kskD',
+                'event_callback': callback
+            });
+            return false;
+        }
+    </script>
+
+<style>
+        .inner-area-two {
+        padding: 80px 0;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+
+    .contact-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        overflow: hidden;
+        margin: 20px auto;
+        max-width: 1200px;
+    }
+
+    .contact-info-section {
+        background-image: linear-gradient(rgb(10 23 164 / 46%), rgb(0 0 0 / 41%)), url("{% static 'subscription/assets/img/img/banner.jpg' %}");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 40px;
+        color: white;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+    }
+
+    .contact-info-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .contact-info-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        font-weight: 600;
+    }
+
+    .contact-info-item {
+        margin-bottom: 25px;
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .contact-info-item i {
+        font-size: 20px;
+        width: 40px;
+        height: 40px;
+        background: #e1258c;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .contact-info-item div {
+        flex: 1;
+    }
+
+    .contact-info-item h4 {
+        margin-bottom: 5px;
+        font-size: 1.1rem;
+    }
+
+    .contact-form-section {
+        padding: 40px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .form-title {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-control {
+        border: none;
+        border-bottom: 2px solid #e9ecef;
+        border-radius: 0;
+        padding: 12px 0;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #e1258c;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #e1258c 0%, #e1258c 100%);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(225, 37, 140, 0.3);
+    }
+
+    .contact-info-item a {
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .contact-info-item a:hover {
+        opacity: 0.8;
+        color: #e1258c;
+    }
+
+    /* Responsive improvements */
+    @media (min-width: 992px) {
+        .contact-container .row {
+            min-height: 600px;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .contact-info-section, 
+        .contact-form-section {
+            padding: 40px 30px;
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+        }
+        
+        .contact-info-section h2 {
+            font-size: 2.2rem;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .inner-area-two {
+            padding: 50px 0;
+        }
+        
+        .contact-container {
+            margin: 0 15px;
+        }
+        
+        .contact-info-section, 
+        .contact-form-section {
+            padding: 30px 20px;
+        }
+        
+        .form-title {
+            font-size: 1.6rem;
+            text-align: center;
+        }
+        
+        .contact-info-section h2 {
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        
+        .contact-info-item {
+            margin-bottom: 20px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 575px) {
+        .contact-info-section, 
+        .contact-form-section {
+            padding: 25px 15px;
+        }
+        
+        .form-title {
+            font-size: 1.4rem;
+        }
+        
+        .contact-info-section h2 {
+            font-size: 1.6rem;
+        }
+        
+        .contact-info-item h4 {
+            font-size: 1rem;
+        }
+        
+        .contact-info-item i {
+            width: 35px;
+            height: 35px;
+            font-size: 16px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+    }
+
+    /* Animation improvements */
+    .animate__animated {
+        animation-duration: 1s;
+    }
+    
+    /* Fix for equal height columns */
+    @media (min-width: 992px) {
+        .contact-container .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .contact-container .row > [class*='col-'] {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 767px) {
+    .contact-container {
+        margin: 0 15px;
+        margin-top: 25px !important;
+    }
+}
+
+
+</style>
+<div class="lh-main-content team-list">
+    <div class="container-fluid">
+
+
+    <section class="generic-banner relative">
+        <div class="container">
+            <div class="row height align-items-center justify-content-center">
+                <div class="col-lg-12 text-center">
+                    <div class="generic-banner-content">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End banner Area -->
+    <!-- About Generic Start -->
+    <section class="inner-area-two">
+        <div class="contact-container">
+            <div class="row">
+                <div class="col-lg-5 animate__animated animate__fadeInLeft">
+                    <div class="contact-info-section">
+                        <div class="contact-info-content">
+                            <h2 class="text-white">Contact Information</h2>
+                            <div class="contact-info-item">
+                                <i class="fa fa-map-marker"></i>
+                                <div>
+                                    <h4 class="text-white">Head Office</h4>
+                                    <p class="text-white d-flex">Hyderabad,Telangana India</p>
+                                </div>
+                            </div>
+                            <div class="contact-info-item">
+                                <i class="fa fa-phone"></i>
+                                <div>
+                                    <h4 class="text-white">Sales Phone</h4>
+                                    <a href="tel:+916300440316">+91 63004 40316</a>
+                                </div>
+                            </div><br>
+                            <div class="contact-info-item">
+                                <i class="fa fa-envelope" ></i>
+                                <div>
+                                    <h4 class="text-white">Email</h4>
+                                    <a href="mailto:support@ultrakeyit.com">support@ultrakeyit.com</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 animate__animated animate__fadeInRight">
+                    <div class="contact-form-section">
+                        <h1 class="form-title">Get In Touch With Us Today!</h1>
+                        <form id="form-contact-us" name="cont_us" action="{% url 'subscription:contact_form_submit' %}" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="fname" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Your Phone Number" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Your Message" required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                Send Message <i class="fa fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</div>
+
+<script>
+document.querySelector("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const form = this;
+    const formData = new FormData(form);
+
+    fetch("/subscription/contact/submit/", {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Message Sent!',
+                text: data.message,
+                confirmButtonColor: '#d91d73'
+            });
+            form.reset();
+        } else {
+            let errorMessages = '';
+            for (const field in data.errors) {
+                errorMessages += `${field}: ${data.errors[field].join(", ")}\n`;
+            }
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                text: errorMessages,
+                confirmButtonColor: '#d91d73'
+            });
+        }
+    })
+    .catch(() => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Something went wrong. Please try again later.',
+            confirmButtonColor: '#d91d73'
+        });
+    });
+});
+
+
+
+</script>
+    {% endblock %}

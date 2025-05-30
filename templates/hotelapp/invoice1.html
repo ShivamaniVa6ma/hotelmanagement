@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}	
+
+		<!-- main content -->
+		<div class="lh-main-content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="lh-card lh-invoice max-width-1170">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Invoice</h4>
+								<div class="header-tools">
+									<button class="lh-btn-primary m-r-5">Save</button>
+									<button class="lh-btn-secondary">Print</button>
+								</div>
+							</div>
+							<div class="lh-card-content card-default">
+
+								<div class="invoice-wrapper">
+
+									<div class="row">
+										<div class="col-md-6 col-lg-3 col-sm-6">
+											{% if theme == 'dark' %}
+												<img src="{{ dark_logo_url }}" alt="Dark Logo" style="height: 60px;">
+											{% else %}
+												<img src="{{ light_logo_url }}" alt="Light Logo" style="height: 60px;">
+											{% endif %}
+
+											
+										</div>
+										<div class="col-md-6 col-lg-3 col-sm-6">
+											<p class="text-dark mb-2">From</p>
+
+											<address>
+												<span> {{ company.company_name }} </span>
+												<br> {{ company.address }}
+												<br> <span>Email:</span> {{ company.email }}
+												<br> <span>Phone:</span> {{ company.phone }}
+											</address>
+										</div>
+										<div class="col-md-6 col-lg-3 col-sm-6">
+											<p class="text-dark mb-2">To</p>
+
+											<address>
+												<span>{{ guest.name }}</span>
+												<br> {{ guest.address }}
+												<br> <span>Email</span>: {{ guest.email }}
+												<br> <span>Phone:</span> {{ guest.phone }}
+											</address>
+										</div>
+										<div class="col-md-6 col-lg-3 col-sm-6">
+											<p class="text-dark mb-2">Details</p>
+
+											<address>
+												<span>Invoice ID:</span>
+												<span class="text-dark">{{ booking.invoice_id }}</span>
+												{% for tax in tax_breakdown %}
+
+													<br><span>TAX :</span> {{ tax.name }}
+													<br><span>({{ tax.percentage }}%)</span> ₹{{ tax.amount }}
+												{% endfor %}
+
+													
+											</address>
+										</div>
+									</div>
+									<div class="lh-chart-header">
+										<div class="block">
+											<h6>Invoice</h6>
+											<h5>{{ booking.invoice_id }}</h5>
+										</div>
+										<div class="block">
+											<h6>Amount</h6>
+											<h5>₹{{ booking.total_amount }}</h5>
+										</div>
+										<div class="block">
+											<h6>CheckIn</h6>
+											<h5>{{ booking.check_in }}</h5>
+										</div>
+										<div class="block">
+											<h6>CheckOut</h6>
+											<h5>{{ booking.check_out }}</h5>
+										</div>
+									</div>
+									<div class="table-responsive tbl-800">
+										<div>
+											<table class="table-invoice table-striped" style="width:100%">
+												<thead>
+													<tr>
+														<th>#</th>
+														<th>Image</th>
+														<th>Room Type</th>
+														<th>Room Number</th>
+														<th>Description</th>
+														<th>Price</th>
+													</tr>
+												</thead>
+
+												<tbody>
+													{% for item in room_data %}
+													  <tr>
+														<td>{{ forloop.counter }}</td>
+														<td><img src="{{ item.room_image }}" width="150"></td>
+														<td>{{ item.room_type.name }}</td>
+														<td>Room {{ item.room.room_number }}{{ item.room.block }}</td>
+														<td>{{ item.room.description|default:"No description available" }}</td>
+														<td>₹{{ booking.total_amount }}</td>  <!-- Or use room price if individual -->
+
+													  </tr>
+													{% endfor %}
+												  </tbody>
+											</table>
+										</div>
+									</div>
+
+									<div class="row justify-content-end inc-total">
+										<div class="col-lg-9 order-lg-1 order-md-2 order-sm-2">
+											<div class="note">
+												<label>Note</label>
+												<p>Your country territory tax has been apply.</p>
+												<p>Your voucher cannot be applied, because you enter wrong code.</p>
+											</div>
+										</div>
+										<div class="col-lg-3 order-lg-2 order-md-1 order-sm-1">
+											<ul class="list-unstyled">
+												<li class="mid pb-3 text-dark"> Subtotal
+													<span
+														class="d-inline-block float-right text-default">₹{{ subtotal }}</span>
+												</li>
+
+												 {% for tax in tax_breakdown %}
+													<li class="mid pb-3 text-dark">{{ tax.name }} ({{ tax.percentage }}%)
+														<span class="d-inline-block float-right text-default">₹{{ tax.amount }}</span>
+													</li>
+												{% endfor %}
+												<li class="text-dark">Total
+													<span class="d-inline-block float-right">₹{{ total }}</span>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> 
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

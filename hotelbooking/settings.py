@@ -9,15 +9,19 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+import dj_database_url
 
 from pathlib import Path
 import os
+
+DATABASE_URL = os.getenv('DATABASE_URL')
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = BASE_DIR / 'templates'
  
-
+# SECRET_KEY = config('SECRET_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -26,9 +30,9 @@ TEMPLATE_DIR = BASE_DIR / 'templates'
 SECRET_KEY = 'django-insecure-#+)fxqdjxv)j-4pl8nmar)00uisw2=_9a8sl(q$w*ed=-@ycy0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['hotelbooking.onrender.com']
 
 
 # Application definition
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
     'hotelapp',
     'django_extensions',
     'hotel',
+    'subscription',
 ]
 
 MIDDLEWARE = [
@@ -53,9 +58,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'hotelapp.middleware.SessionTimeoutMiddleware',
+    'hotel.middleware.CompanyNameMiddleware',
     'hotelapp.middleware.DateTimeJSONMiddleware',
     'hotelapp.middleware.SuperuserPermissionMiddleware',
+    'subscription.middleware.SubscriptionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 
 ]
 
@@ -64,7 +72,7 @@ ROOT_URLCONF = 'hotelbooking.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,6 +80,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'hotelapp.context_processors.get_active_subscription',
+                "hotelapp.context_processors.dynamic_logos",
+                'subscription.context_processors.guest_context',  # ✅ Add this line
+
             ],
         },
     },
@@ -90,16 +102,27 @@ WSGI_APPLICATION = 'hotelbooking.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hotelbooking1',
-        'USER': 'root',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
-        'PORT': '3306',
+
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True
+        )
     }
-}
+else:
+    # fallback to local MySQL
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'hotelbloom',
+            'USER': 'root',
+            'PASSWORD': '1234',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
+    }
 
 
 # Password validation
@@ -137,6 +160,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Adjust this path as necessary
+
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
@@ -174,3 +199,13 @@ EMAIL_HOST_PASSWORD = 'tgtl tcnn nkdb oibc'  # Replace with your email password
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default backend
 ]
+
+RAZORPAY_KEY_ID = 'rzp_test_Bvq9kiuaq8gkcs'
+RAZORPAY_KEY_SECRET = 'qnN6ytUKNw6beVzQUw7OBiJM'
+
+SITE_URL = 'http://localhost:8000'  # Change this to your domain
+
+
+DEFAULT_LOGO_URL = '/static//hotel/assets/img/logo/logo.png'
+DEFAULT_FROM_EMAIL = 'shivamani7907@gmail.com'
+

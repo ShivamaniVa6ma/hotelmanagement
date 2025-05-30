@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Booking Form</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   
+   <style>
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+        }
+
+        .btn-submit {
+            background: linear-gradient(45deg, #2193b0, #6dd5ed);
+            border: none;
+            color: white;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 147, 176, 0.4);
+            background: linear-gradient(45deg, #1c7a94, #5ab9cc);
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: block;
+        }
+
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+
+        .form-control.is-valid {
+            border-color: #28a745;
+        }
+
+        h4 {
+            color: #2c3e50;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h4:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(45deg, #2193b0, #6dd5ed);
+            border-radius: 3px;
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #95a5a6;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                margin: 15px;
+                padding: 20px !important;
+            }
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="form-container p-4 p-md-5">
+                    <h4 class="text-center mb-4">Hotel Subscription Details</h4>
+                    <form method="POST" id="hotelBookingForm" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="name" class="form-label">
+                                <i class="fas fa-user me-2"></i>Full Name<span class="text-danger">*</span>
+                            </label>
+                            <div class="input-icon">
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                    <span class="error-message">{{ form.name.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">
+                                <i class="fas fa-envelope me-2"></i>Email Address<span class="text-danger">*</span>
+                            </label>
+                            <div class="input-icon">
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <span class="error-message">{{ form.email.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">
+                                <i class="fas fa-phone me-2"></i>Phone Number<span class="text-danger">*</span>
+                            </label>
+                            <div class="input-icon">
+                                {{ form.phone }}
+                                {% if form.phone.errors %}
+                                    <span class="error-message">{{ form.phone.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="hotelName" class="form-label">
+                                <i class="fas fa-hotel me-2"></i>Hotel Name/Company<span class="text-danger">*</span>
+                            </label>
+                            <div class="input-icon">
+                                {{ form.company_name }}
+                                {% if form.company_name.errors %}
+                                    <span class="error-message">{{ form.company_name.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- <div class="mb-3">
+                            <label for="rooms" class="form-label">
+                                <i class="fas fa-door-closed me-2"></i>Number of Rooms<span class="text-danger">*</span>
+                            </label>
+                            <div class="input-icon">
+                                {{ form.number_of_rooms }}
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            {% if form.number_of_rooms.errors %}
+                            <div class="error-message show">{{ form.number_of_rooms.errors.0 }}</div>
+                            {% endif %}
+                        </div> -->
+
+                        <div class="mb-4">
+                            <label for="address" class="form-label">
+                                <i class="fas fa-map-marker-alt me-2"></i>Address<span class="text-danger">*</span>
+                            </label>
+                            {{ form.address }}
+                            {% if form.address.errors %}
+                                <span class="error-message">{{ form.address.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-submit btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>Continue to Payment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.getElementById('hotelBookingForm').addEventListener('submit', function(e) {
+            // Remove the preventDefault to allow form submission
+            let isValid = true;
+            
+            // Reset all error messages
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.classList.remove('show');
+            });
+
+            // Name validation
+            const name = document.getElementById('name');
+            if (!name.value.trim()) {
+                isValid = false;
+            }
+
+            // Email validation
+            const email = document.getElementById('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value.trim())) {
+                isValid = false;
+            }
+
+            // Phone validation
+            const phone = document.getElementById('phone');
+            if (!phone.value.trim()) {
+                isValid = false;
+            }
+
+            // Hotel name validation
+            const hotelName = document.getElementById('hotelName');
+            if (!hotelName.value.trim()) {
+                isValid = false;
+            }
+
+            // Address validation
+            const address = document.getElementById('address');
+            if (!address.value.trim()) {
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+
+        // Add input validation feedback
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('input', function() {
+                const icon = this.parentElement.querySelector('i');
+                if (this.value.trim()) {
+                    icon.style.color = '#2ecc71';
+                } else {
+                    icon.style.color = '#95a5a6';
+                }
+            });
+        });
+    </script>
+    <script>
+        // Real-time validation
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input, textarea');
+            
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    validateField(this);
+                });
+
+                input.addEventListener('blur', function() {
+                    validateField(this);
+                });
+            });
+
+            function validateField(field) {
+                if (!field) return;  // Guard clause
+                
+                const value = field.value.trim();
+                let errorSpan = field.nextElementSibling;
+                
+                // Create error span if it doesn't exist
+                if (!errorSpan || !errorSpan.classList.contains('error-message')) {
+                    errorSpan = document.createElement('span');
+                    errorSpan.classList.add('error-message');
+                    field.parentNode.insertBefore(errorSpan, field.nextSibling);
+                }
+
+                let isValid = true;
+                let errorMessage = '';
+
+                switch(field.name) {
+                    case 'name':
+                        if (value.length < 3) {
+                            isValid = false;
+                            errorMessage = 'Name must be at least 3 characters long';
+                        } else if (/\d/.test(value)) {
+                            isValid = false;
+                            errorMessage = 'Name cannot contain numbers';
+                        }
+                        break;
+
+                    case 'email':
+                        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                            isValid = false;
+                            errorMessage = 'Please enter a valid email address';
+                        }
+                        break;
+
+                    case 'phone':
+                        if (value.replace(/\D/g, '').length < 10) {
+                            isValid = false;
+                            errorMessage = 'Phone number must be at least 10 digits';
+                        }
+                        break;
+
+                    case 'company_name':
+                        if (value.length < 2) {
+                            isValid = false;
+                            errorMessage = 'Company name must be at least 2 characters';
+                        }
+                        break;
+
+                    case 'address':
+                        if (value.length < 10) {
+                            isValid = false;
+                            errorMessage = 'Address must be at least 10 characters';
+                        }
+                        break;
+                }
+
+                if (!isValid) {
+                    field.classList.add('is-invalid');
+                    field.classList.remove('is-valid');
+                    errorSpan.textContent = errorMessage;
+                    errorSpan.style.display = 'block';
+                } else {
+                    field.classList.remove('is-invalid');
+                    field.classList.add('is-valid');
+                    errorSpan.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

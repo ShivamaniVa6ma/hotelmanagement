@@ -1,0 +1,884 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+  .offcanvas-backdrop.show {
+    opacity: 0;
+  }
+
+  .room-card {
+    background: #f8f9ff;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 15px;
+    border: 1px solid #e0e0ff;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .room-type-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .room-type-header .form-check-input {
+    width: 20px;
+    height: 20px;
+  }
+
+  .room-details {
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .price-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .availability-text {
+    color: #444;
+    margin-bottom: 15px;
+  }
+
+  .number-input {
+    width: 100px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 5px 10px;
+  }
+
+  .ac-options, .bed-options {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+  }
+
+  .form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+
+  .remove-btn {
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 1.2rem;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+  }
+
+  .remove-btn:hover {
+    color: #bb2d3b;
+  }
+
+  .selected-rooms {
+    margin-top: 20px;
+  }
+
+  .room-card {
+    position: relative;
+  }
+
+  .btn-check:checked + .btn-outline-primary {
+    background-color: #0d6efd;
+    color: white;
+  }
+
+  .dropdown-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+  }
+
+  .add-more-text {
+    color: #0d6efd;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .dropdown {
+    width: 21%;
+  }
+
+  .dropdown-toggle {
+    width: 100%;
+  }
+
+  .dropdown-menu {
+    width: 21%;
+  }
+
+  .form-select-room {
+    width: 22%;
+    padding: 10px;
+  }
+
+  @media (min-width: 576px) {
+    .add-more-text {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (min-width: 320px) {
+    .add-more-text {
+      font-size: 13px;
+    }
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css">
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+
+<div class="lh-main-content">
+  <div class="container-fluid">
+    <div class="lh-page-title">
+      <div class="lh-breadcrumb">
+        <h5>Bookings</h5>
+        <ul>
+          <li><a href="{% url 'admin-panel:index' %}">Home</a></li>
+          <li>Bookings</li>
+        </ul>
+      </div>
+      <div class="lh-tools">
+        <a href="javascript:void(0)" title="Refresh" class="refresh"
+                ><i class="ri-refresh-line"></i
+              ></a>
+              <div id="pagedate">
+                <div class="lh-date-range" title="Date">
+                  <span></span>
+                </div>
+              </div>
+
+              <div class="filter">
+                <div class="dropdown" title="Filter">
+                  <button
+                    class="btn dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    >
+                  
+                    <i class="ri-sound-module-line"></i>
+                  </button>
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    <li><a class="dropdown-item" href="#">Booking</a></li>
+                    <li><a class="dropdown-item" href="#">Revenue</a></li>
+                    <li><a class="dropdown-item" href="#">Expence</a></li>
+                  </ul>
+                </div>
+              </div>
+
+        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#bookingOffcanvas">
+          <i class="fas fa-plus-circle me-2"></i>Book Room
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 col-md-12">
+        <div class="lh-card" id="bookingtbl">
+          <div class="lh-card-header">
+            <h4 class="lh-card-title">Latest Bookings</h4>
+            <div class="header-tools">
+              <a href="javascript:void(0)" class="m-r-10 lh-full-card"
+                ><i class="ri-fullscreen-line" title="Full Screen"></i
+              ></a>
+              <div class="lh-date-range dots">
+                <span></span>
+              </div>
+            </div>
+          </div>
+          <div class="lh-card-content card-default">
+            <div class="booking-table">
+              <div class="table-responsive">
+                <table id="booking_table" class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Room Type</th>
+                      <th>RoomNo</th>
+                      <th>CheckIn</th>
+                      <th>CheckOut</th>
+                      <th>Proof</th>
+                      <th>Payment</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if bookings %}
+                    {% for booking in bookings %}
+
+                    <tr>
+                      <td class="token"> {{ booking.id}} </td>
+                      <td>
+                        <!-- <img
+                          class="cat-thumb"
+                          src="{% static '/assets/img/room/1.png' %}"
+                          alt="clients Image"
+                        /> -->
+                        <span class="name"> {{ booking.room.room_type }}</span>
+                      </td>
+                      <td>{{ booking.room.room_number }}</td>
+                      <td> {{ booking.check_in|date:"M d, Y H:i" }}</td>
+                      <td>{{ booking.check_out|date:"M d, Y H:i" }}</td>
+                      <td>{{ booking.guest.get_proof_type_display }} - {{ booking.guest.proof_no }}</td>
+
+                      <td class="active">{{ booking.payment_type }}</td>
+                      <td>₹{{ booking.total_amount }}</td>
+                      <td>
+                        {% if booking.check_out > now %}
+                            <span class="badge bg-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Completed</span>
+                        {% endif %}
+                    </td>
+                      
+                      <!-- <td class="rooms">
+                        <span class="mem">6 Member</span> /
+                        <span class="room">2 Room</span>
+                      </td> -->
+                      <td>
+                        <div class="d-flex justify-content-center">
+                          <a href="{% url 'admin-panel:booking_view' booking.id %}" class="btn btn-outline-primary me-2">
+                            <i class="ri-eye-line"></i>
+                          </a>
+                          <a href="{% url 'admin-panel:delete_booking' booking.id %}" class="btn btn-outline-danger">
+                            <i class="ri-delete-bin-line"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                      
+                  
+                    {% endfor %} 
+                  {% else %}
+                    <tr>
+                        <td colspan="10" class="text-center">No Bookings Found.</td>
+                    </tr>
+                {% endif %}                    
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="bookingOffcanvas" aria-labelledby="bookingOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="bookingOffcanvasLabel">New Booking</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+      <form id="bookingForm" method="post" action="{% url 'admin-panel:multiple_bookings_create' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <input type="hidden" id="roomTypeInput" name="room_type">
+        <input type="hidden" name="bed_type" value="{{ bed_type }}">
+        <input type="hidden" name="ac_type" value="{{ ac_type }}">
+        <input type="hidden" name="sitting_capacity" value="{{ sitting_capacity }}">
+      
+
+        {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+          <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+            {{ message }}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <input type="hidden" name="room_type" value="{{ room_type }}">
+        <input type="hidden" name="bed_type" value="{{ bed_type }}">
+        <input type="hidden" name="ac_type" value="{{ ac_type }}">
+        <input type="hidden" name="sitting_capacity" value="{{ sitting_capacity }}">
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Check-in Date & Time</label>
+            <input type="datetime-local" name="check_in" id="check_in" class="form-control" required>
+            {% if booking_form.check_in.errors %}
+            <div class="invalid-feedback">
+              {{ booking_form.check_in.errors }}
+            </div>
+            {% endif %}
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Check-out Date & Time</label>
+            <input type="datetime-local" name="check_out" id="check_out" class="form-control" required>
+            {% if booking_form.check_out.errors %}
+            <div class="invalid-feedback">
+              {{ booking_form.check_out.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="form-container">
+            <div class="mb-3">
+              <div class="dropdown-container">
+                <div style="flex: 1;">
+                  <label for="roomType" class="form-label">Add Room Type</label>
+                  <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="roomTypeDropdownBtn" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%;">
+                      Select Room Type
+                    </button>
+                    <ul class="dropdown-menu" id="roomTypeDropdown"></ul>
+                  </div>
+                </div>
+                <div class="add-more-text" id="addMoreText" style="cursor: pointer;">Add More</div>
+              </div>
+            </div>
+
+            <div id="selectedRooms"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Guest Name</label>
+            <input type="text" id="name" name="name" class="form-control" value="{{ guest_form.name.value|default:'' }}">
+
+            {% if guest_form.name.errors %}
+            <div class="invalid-feedback">
+              {{ guest_form.name.errors }}
+            </div>
+            {% endif %}
+          </div>
+          
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Phone Number</label>
+            <input type="text" id="phone" name="phone" class="form-control" value="{{ guest_form.phone.value|default:'' }}">
+            {% if guest_form.phone.errors %}
+            <div class="invalid-feedback">
+              {{ guest_form.phone.errors }}
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-control" value="{{ guest_form.email.value|default:'' }}">
+            {% if guest_form.email.errors %}
+            <div class="invalid-feedback">
+              {{ guest_form.email.errors }}
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Address</label>
+            <textarea id="address" name="address" class="form-control">{{ guest_form.address.value|default:'' }}</textarea>
+            {% if guest_form.address.errors %}
+            <div class="invalid-feedback">
+              {{ guest_form.address.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="guest-info">
+              <h6 class="mb-3">Guest Count</h6>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Adults</label>
+                  <input type="text" id="adults" name="adults" class="form-control" value="{{ guest_form.adults.value|default:'' }}">
+                  {% if booking_form.adults.errors %}
+                  <div class="invalid-feedback">
+                    {{ booking_form.adults.errors }}
+                  </div>
+                  {% endif %}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Children</label>
+                  <input type="text" id="children" name="children" class="form-control" value="{{ guest_form.children.value|default:'' }}">
+                  {% if booking_form.children.errors %}
+                  <div class="invalid-feedback">
+                    {{ booking_form.children.errors }}
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="col-md-5 mb-3" style="width: 100%">
+          <h6 class="card-title mb-4">ID Proof Selection</h6>
+          <!-- Radio Buttons for Proof Type Selection -->
+        <!-- <div class="mb-4"> -->
+          <label class="form-label" for="proof_type">ID Proof Type <span class="text-danger">*</span></label>
+          <div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="proof_type" id="aadharRadio" value="aadhar">
+              <label class="form-check-label" for="aadharRadio">Aadhar Card</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="proof_type" id="panRadio" value="pan" >
+              <label class="form-check-label" for="panRadio">PAN Card</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="proof_type" id="passportRadio" value="passport" >
+              <label class="form-check-label" for="passportRadio">Passport</label>
+            </div>
+          </div>
+          {% if guest_form.proof_type.errors %}
+                            <div class="error-message">{{ guest_form.proof_type.errors.0 }}</div>
+                        {% endif %}
+        </div>
+
+        <!-- Proof Number Input Field -->
+        <div class="mb-4">
+          <label id="proofLabel" for="proofInput" class="form-label">Enter ID Proof Number <span class="text-danger">*</span></label>
+          <input 
+            type="text" 
+            id="proofInput" 
+            name="proof_no"
+            class="form-control" 
+            value="{{ guest_form.proof_no.value|default:'' }}"
+          >
+          <div id="proofText" class="form-text">Select an ID proof type above</div>
+          <div id="proofError" class="invalid-feedback"></div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="guest-info">
+              <label class="form-label">Upload ID Proof</label>
+              <input 
+                    type="file" 
+                    name="proof_file" 
+                    id="proofFile" 
+                    class="form-control"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    required
+                  >
+              <!-- {{ guest_form.proof_file }} -->
+              {% if guest_form.proof_file.errors %}
+              <div class="invalid-feedback">
+                {{ guest_form.proof_file.errors }}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Payment Type</label>
+            <select name="payment_type">
+              <option value="razorpay">Razorpay</option>
+              <option value="cash">Cash</option>
+              <option value="upi">UPI</option>
+              <option value="card">Card</option>
+              <option value="net_banking">Net Banking</option>
+          </select>
+            {% if booking_form.payment_type.errors %}
+            <div class="invalid-feedback">
+              {{ booking_form.payment_type.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <hr/>
+
+       
+          <div class="total-price">Total Amount: <span class="total-amount">₹0</span></div>
+
+        <div class="d-grid gap-2" style="display: flex; justify-content: center; width: 100%; margin-top: 40px;">
+          <button type="submit" id="confirmBookingButton" class="btn btn-primary">
+            <i class="fas fa-check-circle me-2"></i>Confirm Booking
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+document.getElementById('bookingForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    let selectedRooms = [];
+    document.querySelectorAll('.room-card').forEach(function(roomCard) {
+        let roomType = roomCard.querySelector('.room-type').value;
+        let bedType = roomCard.querySelector('select[id^="bedTypeSelect_"]').value;
+        let acType = roomCard.querySelector('select[id^="acTypeSelect_"]').value;
+        let roomCount = roomCard.querySelector('.room-count').value;
+
+        if (roomCount > 0) {
+            selectedRooms.push({
+                roomType: roomType,
+                bedType: bedType,
+                acType: acType,
+                roomCount: roomCount
+            });
+        }
+    });
+
+    if (selectedRooms.length === 0) {
+        alert('Please select at least one room before submitting.');
+        return;
+    }
+
+    let formData = new FormData(this);
+    formData.append('selectedRooms', JSON.stringify(selectedRooms));
+
+    fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    }).then(response => response.json()).then(data => {
+        if (data.success) {
+            window.location.href = data.redirect_url;
+        } else {
+            alert(data.error);
+        }
+    }).catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetchRoomTypes();
+
+    // Add event listeners for check-in and check-out fields
+    document.querySelector('input[name="check_in"]').addEventListener('change', function() {
+        document.querySelectorAll('.room-card').forEach(card => {
+            updateRoomPriceAndAvailability(card);
+        });
+    });
+
+    document.querySelector('input[name="check_out"]').addEventListener('change', function() {
+        document.querySelectorAll('.room-card').forEach(card => {
+            updateRoomPriceAndAvailability(card);
+        });
+    });
+});
+
+// Function to fetch room types dynamically
+async function fetchRoomTypes() {
+    try {
+        const response = await fetch('/admin-panel/get-room-types/');
+        if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("✅ Room Types Data:", data);
+
+        if (data.success) {
+            populateRoomTypeDropdown(data.room_types);
+        } else {
+            console.error('Error fetching room types:', data.error);
+        }
+    } catch (error) {
+        console.error('Network error while fetching room types:', error);
+    }
+}
+
+// Populate Room Type Dropdown
+function populateRoomTypeDropdown(roomTypes) {
+    const dropdownMenu = document.getElementById('roomTypeDropdown');
+    dropdownMenu.innerHTML = ''; // Clear previous options
+
+    roomTypes.forEach(room => {
+        const item = document.createElement('a');
+        item.classList.add('dropdown-item');
+        item.href = '#';
+        item.dataset.id = room.id;
+        item.dataset.name = room.name;
+        item.textContent = room.name;
+
+        item.addEventListener('click', async function (e) {
+            e.preventDefault();
+            const roomTypeId = this.dataset.id;
+            const roomTypeName = this.dataset.name;
+
+            // Create the room card
+            const newRoomCard = await createRoomCard(roomTypeId, roomTypeName);
+            if (newRoomCard) {
+                document.getElementById('selectedRooms').appendChild(newRoomCard);
+            }
+        });
+
+        dropdownMenu.appendChild(item);
+    });
+}
+
+// Function to create a room card dynamically
+async function createRoomCard(roomTypeId, roomTypeName) {
+    const uniqueId = `${roomTypeName.replace(/\s+/g, '_')}_${Date.now()}`;
+
+    // Create the room card HTML
+    let cardHtml = `
+        <div class="room-card" id="${uniqueId}">
+            <span class="remove-btn" onclick="removeRoom('${uniqueId}')">&times;</span>
+            <div class="room-type-header">
+                <h5 class="mb-0">${roomTypeName}</h5>
+            </div>
+            <input type="hidden" class="room-type" value="${roomTypeId}">
+            <div class="form-group">
+                <label for="bedTypeSelect_${uniqueId}">Select Bed Type:</label>
+                <select id="bedTypeSelect_${uniqueId}" class="form-control">
+                    <option value="">Select Bed Type</option>
+                    <option value="single">Single Bed</option>
+                    <option value="double">Double Bed</option>
+                    <option value="king">King Bed</option>
+                    <option value="queen">Queen Bed</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="acTypeSelect_${uniqueId}">Select AC Type:</label>
+                <select id="acTypeSelect_${uniqueId}" class="form-control">
+                    <option value="">Select AC Type</option>
+                    <option value="ac">AC</option>
+                    <option value="nonAc">Non-AC</option>
+                </select>
+            </div>
+            <div class="room-details">
+                <div class="price-text">Room Price: <span class="room-price">Fetching...</span></div>
+                <div class="availability-text">Available Rooms: <span class="room-availability">Fetching...</span></div>
+                <div class="mb-3">
+                    <label class="form-label">Select No. Rooms:</label>
+                    <input type="number" class="number-input room-count" name="roomCount_${uniqueId}" min="1" value="1" required>
+                </div>
+            </div>
+        </div>`;
+
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = cardHtml;
+    const cardElement = tempDiv.firstElementChild;
+
+    // Append the card to the selected rooms container
+    document.getElementById('selectedRooms').appendChild(cardElement);
+
+    // Add event listeners to the dropdowns
+    const bedTypeSelect = document.getElementById(`bedTypeSelect_${uniqueId}`);
+    const acTypeSelect = document.getElementById(`acTypeSelect_${uniqueId}`);
+
+    bedTypeSelect.addEventListener('change', () => updateRoomPriceAndAvailability(cardElement));
+    acTypeSelect.addEventListener('change', () => updateRoomPriceAndAvailability(cardElement));
+
+    return cardElement;
+}
+
+// Function to fetch bed_type from Django backend
+async function getBedType(roomTypeId) {
+    try {
+        console.log(`Requesting bedType for roomTypeId: ${roomTypeId}`);  // Debugging log
+        
+        let response = await fetch(`/admin-panel/get-room-type/${roomTypeId}/`);
+        
+        console.log(`Fetching bedType for roomTypeId: ${roomTypeId}, Status: ${response.status}`);
+
+        if (!response.ok) {
+            console.error("Response Error:", await response.text());
+            throw new Error(`HTTP Status ${response.status}`);
+        }
+
+        let data = await response.json();
+        console.log("API Response:", data);
+
+        return data.bed_type || null;
+    } catch (error) {
+        console.error("Error fetching bed type:", error);
+        return null;
+    }
+}
+
+// Function to get the CSRF token from cookies
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Function to update room price and availability dynamically
+async function updateRoomPriceAndAvailability(cardElement) {
+    const roomTypeId = cardElement.querySelector('.room-type').value;
+    const bedType = cardElement.querySelector('select[id^="bedTypeSelect_"]').value;
+    const acType = cardElement.querySelector('select[id^="acTypeSelect_"]').value;
+    const checkIn = document.querySelector('input[name="check_in"]').value;
+    const checkOut = document.querySelector('input[name="check_out"]').value;
+    const selectedRooms = cardElement.querySelector('.room-count').value || 1;
+
+    // Debugging: Log values before making request
+    console.log("📌 Room Type ID:", roomTypeId);
+    console.log("📌 Bed Type:", bedType);
+    console.log("📌 AC Type:", acType);
+    console.log("📌 Check-in:", checkIn);
+    console.log("📌 Check-out:", checkOut);
+    console.log("📌 Selected Rooms:", selectedRooms);
+
+    if (!checkIn || !checkOut || !roomTypeId || !bedType || !acType) {
+        console.warn("⚠️ Skipping API call due to missing values.");
+        return;
+    }
+
+    try {
+        const response = await fetch('/admin-panel/get-room-price/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify({
+                roomTypeId,
+                bedType,
+                acType,
+                checkIn,
+                checkOut,
+                selectedRooms
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("✅ API Response:", data);
+
+        if (data.success) {
+            const roomPriceElement = cardElement.querySelector('.room-price');
+            const roomAvailabilityElement = cardElement.querySelector('.room-availability');
+            const totalAmountElement = document.querySelector('.total-amount');
+
+            if (roomPriceElement) {
+                roomPriceElement.textContent = `₹${data.price_per_room}`;
+            } else {
+                console.error("❌ Room price element not found.");
+            }
+
+            if (roomAvailabilityElement) {
+                roomAvailabilityElement.textContent = data.available_rooms;
+            } else {
+                console.error("❌ Room availability element not found.");
+            }
+
+            if (totalAmountElement) {
+                totalAmountElement.textContent = `₹${data.total_amount}`;
+            } else {
+                console.error("❌ Total amount element not found.");
+            }
+        } else {
+            console.error("❌ Error fetching room price:", data.error);
+        }
+    } catch (error) {
+        console.error("❌ Network error while fetching room price:", error);
+    }
+}
+
+
+
+// Function to add event listeners for dynamically created elements
+function addRoomCardListeners(cardElement) {
+    const acOptions = cardElement.querySelectorAll('.ac-type');
+    acOptions.forEach(option => {
+        option.addEventListener('change', function () {
+            const roomCard = this.closest('.room-card');
+            const checkIn = document.querySelector('input[name="check_in"]').value;
+            const checkOut = document.querySelector('input[name="check_out"]').value;
+            updateRoomPriceAndAvailability(roomCard, checkIn, checkOut);
+        });
+    });
+
+    const bedOptions = cardElement.querySelectorAll('.bed-type');
+    bedOptions.forEach(option => {
+        option.addEventListener('change', function () {
+            const roomCard = this.closest('.room-card');
+            const checkIn = document.querySelector('input[name="check_in"]').value;
+            const checkOut = document.querySelector('input[name="check_out"]').value;
+            updateRoomPriceAndAvailability(roomCard, checkIn, checkOut);
+        });
+    });
+
+    const roomCount = cardElement.querySelector('.room-count');
+    if (roomCount) {
+        roomCount.addEventListener('change', function () {
+            const roomCard = this.closest('.room-card');
+            const checkIn = document.querySelector('input[name="check_in"]').value;
+            const checkOut = document.querySelector('input[name="check_out"]').value;
+            updateRoomPriceAndAvailability(roomCard, checkIn, checkOut);
+        });
+    }
+}
+
+// Function to remove room card
+function removeRoom(uniqueId) {
+    const roomCard = document.getElementById(uniqueId);
+    if (roomCard) {
+        roomCard.remove();
+    }
+}
+
+document.getElementById('selectedRooms').addEventListener('change', function(event) {
+    if (event.target.matches('select[id^="bedTypeSelect_"]') || event.target.matches('select[id^="acTypeSelect_"]')) {
+        const roomCard = event.target.closest('.room-card');
+        const checkIn = document.querySelector('input[name="check_in"]').value;
+        const checkOut = document.querySelector('input[name="check_out"]').value;
+
+        // Call the function to update price and availability
+        updateRoomPriceAndAvailability(roomCard, checkIn, checkOut);
+    }
+});
+
+
+  
+  </script>
+  
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+{% endblock %}

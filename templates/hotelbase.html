@@ -16,26 +16,39 @@
     <link rel="icon" href="hotel/assets/img/favicons/favicon.png" type="image/x-icon">
     
     <!-- Css All Plugins Files -->
-    <link rel="stylesheet" href="{% static 'hotel/assets/css/vendor/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'hotel/assets/css/vendor/magnific-popup.css' %}">
-    <link rel="stylesheet" href="{% static 'hotel/assets/css/vendor/aos.css' %}">
-    <link rel="stylesheet" href="{% static 'hotel/assets/css/vendor/remixicon.css' %}">
-    <link rel="stylesheet" href="{% static 'hotel/assets/css/vendor/materialdesignicons.min.css' %}">
-    <link rel="stylesheet" href="{% static 'hotel/assets/css/vendor/swiper-bundle.min.css' %}">
-    <link rel="stylesheet" href="{% static 'hotel/assets/css/vendor/semantic.min.css' %}">
-    <link rel="stylesheet" href="{% static 'hotel/assets/css/vendor/slick.min.css' %}">
+    <link rel="stylesheet" href="{% static '/hotel/assets/css/vendor/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static '/hotel/assets/css/vendor/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static '/hotel/assets/css/vendor/aos.css' %}">
+    <link rel="stylesheet" href="{% static '/hotel/assets/css/vendor/remixicon.css' %}">
+    <link rel="stylesheet" href="{% static '/hotel/assets/css/vendor/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static '/hotel/assets/css/vendor/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static '/hotel/assets/css/vendor/semantic.min.css' %}">
+    <link rel="stylesheet" href="{% static '/hotel/assets/css/vendor/slick.min.css' %}">
+
 
     <!-- Main Style -->
-    <link rel="stylesheet" href="{% static 'hotel/assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static '/hotel/assets/css/style.css' %}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Tint&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
-<!-- <style>
-   
+<!-- jQuery (required for Slick) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-.heading {
+<!-- Slick Slider CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+<!-- Slick Slider JS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    
+
+
+
+
+<style>
+    .heading {
   font-family: "Funnel Sans", sans-serif;
 
 }
@@ -47,10 +60,87 @@
     color: white;
 
 }
+    .logo-img {
+            max-width: 150px;  /* Set maximum width */
+            height: auto;      /* Maintain aspect ratio */
+        }
+    .nav-link {
+        position: relative;
+        transition: color 0.3s ease;
+        padding: 5px 10px !important;
+    }
+
+    .nav-link.active {
+        color: #f32078 !important;
+    }
+
+    /* .nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #f32078;
+    } */
+
+ /* ... existing styles ... */
+
+ .nav-item.dropdown {
+        position: relative;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        margin-top: 0.5rem;
+        border: none;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        min-width: 200px;
+        border-radius: 4px;
+        padding: 0.5rem 0;
+    }
+
+    .dropdown-item {
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .dropdown-item:hover {
+        background-color: rgba(243, 32, 120, 0.1);
+        color: #f32078;
+    }
 
 
-</style> -->
+    .dropdown-item.active {
+        background-color: #f32078 !important;
+        color: white !important;
+    }
 
+    .navbar-nav {
+        align-items: center;
+        /* gap: 10px; */
+    }
+ 
+    .nav-link.dropdown-toggle {
+        display: flex !important;
+        align-items: center !important;
+        white-space: nowrap !important;
+        flex-direction: row;
+    }
+
+    .nav-link.dropdown-toggle i {
+        margin-left: 4px;
+        font-size: 16px;
+        line-height: 1;
+    }
+
+    .navbar-nav > li {
+        display: flex;
+        align-items: center;
+    } 
+</style>
     
 </head>
 
@@ -63,7 +153,7 @@
 
     <!-- Header -->
     <header>
-        <div class="lh-top-header">
+        <!-- <div class="lh-top-header">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 col-sm-12  lh-top-social">
@@ -97,14 +187,22 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="lh-header">
             <div class="container">
                 <div class="row">
                     <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="{% url 'user-panel:index' %}">
-                            <img src="{% static 'hotel/assets/img/logo/logo.png' %}" alt="logo" class="lh-logo">
+                        {% if light_logo_url %}
+
+                        <a class="navbar-brand" href="{% url 'user-panel:index' company_name=company_name %}">
+                            <img id="lightLogo" src="{{ light_logo_url }}" alt="Light Logo" class="logo-img">
                         </a>
+                        {% else %}
+                        <a class="navbar-brand" href="{% url 'user-panel:index' company_name=company_name %}">
+                            <img src="{% static '/hotel/assets/img/logo/logo.png' %}" alt="logo" class="lh-logo">
+                        </a>
+                        {% endif %}
+
                         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -112,88 +210,99 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                               
+
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="{% url 'user-panel:index' %}">
+                                    <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" 
+                                       href="{% url 'user-panel:index' company_name=company_name %}">
                                         Home
                                     </a>
                                 </li>
-
-                              
+                                
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button"
-                                        data-bs-toggle="dropdown">
+                                    <a class="nav-link dropdown-toggle {% if 'about' in request.path or 'facilities' in request.path or 'faq' in request.path or 'services' in request.path or 'spa' in request.path or 'team' in request.path or 'checkout' in request.path %}active{% endif %}" 
+                                       href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
                                         Pages
                                         <i class="ri-arrow-down-s-line"></i>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="{% url 'user-panel:about' %}">About Us</a>
+                                            <a class="dropdown-item {% if 'about' in request.path %}active{% endif %}" 
+                                               href="{% url 'user-panel:about' company_name=company_name %}">About Us</a>
                                         </li>
-                                        <!-- <li>
-                                            <a class="dropdown-item" href=" {% url 'user-panel:contact' %}">Contact</a>
-                                        </li> -->
+                                        <li>
+                                            <a class="dropdown-item {% if 'facilities' in request.path %}active{% endif %}" 
+                                               href="{% url 'user-panel:facilities' company_name=company_name %}">Facilities</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item {% if 'faq' in request.path %}active{% endif %}" 
+                                               href="{% url 'user-panel:faq' company_name=company_name %}">Faq</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item {% if 'services' in request.path %}active{% endif %}" 
+                                               href="{% url 'user-panel:services' company_name=company_name %}">Services</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item {% if 'spa' in request.path %}active{% endif %}" 
+                                               href="{% url 'user-panel:spa' company_name=company_name %}">Spa</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item {% if 'team' in request.path %}active{% endif %}" 
+                                               href="{% url 'user-panel:team' company_name=company_name %}">Team</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item {% if 'checkout' in request.path %}active{% endif %}" 
+                                               href="{% url 'user-panel:checkout' company_name=company_name %}">Checkout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                        
+                                
 
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'user-panel:facilities' %}">Facilities</a>
-                                        </li>
-                                       <li>
-                                            <a class="dropdown-item" href="{% url 'user-panel:faq' %}">Faq</a>
-                                        </li>
-                                        <!-- <li>
-                                            <a class="dropdown-item" href="prices.html">Prices</a>
-                                        </li> -->
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'user-panel:services' %}">Services</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'user-panel:spa' %}">Spa</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'user-panel:team' %}">Team</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'user-panel:checkout' %}">Checkout</a>
-                                        </li>
-                                    </ul>
-                                </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button"
-                                        data-bs-toggle="dropdown">
-                                        Room
-                                        <i class="ri-arrow-down-s-line"></i>
+                                    <a class="nav-link {% if 'room' in request.path %}active{% endif %}" 
+                                       href="{% url 'user-panel:room' company_name=company_name %}">
+                                      Rooms
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'user-panel:room' %}">Rooms</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href=" {% url 'user-panel:room-2' %}">Rooms 2</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'user-panel:room-details' %}">Rooms details</a>
-                                        </li>
-                                    </ul>
                                 </li>
+
+                        
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="{% url 'user-panel:gallery' %}">
+                                    <a class="nav-link {% if 'gallery' in request.path %}active{% endif %}" 
+                                       href="{% url 'user-panel:gallery' company_name=company_name %}">
                                         Gallery
                                     </a>
                                 </li>
-                              
-                                
+                        
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="  {% url 'user-panel:restaurant' %}">
-                                        Restaurant Menu
-                                    </a>
-                                </li>
-
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link" href=" {% url 'user-panel:contact' %}">
+                                    <a class="nav-link {% if 'contact-us' in request.path %}active{% endif %}" 
+                                       href="{% url 'user-panel:contact-us' company_name=company_name %}">
                                         Contact Us
                                     </a>
                                 </li>
+                        
+                                {% if not request.user.is_superuser and not request.user.is_guest %}
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link {% if 'admin' in request.path %}active{% endif %}" 
+                                        href="{% url 'admin-panel:index' %}">
+                                            Admin
+                                        </a>
+                                    </li>
+                                {% endif %}
 
-                               
+
+
+                                {% if user.is_authenticated %}
+                                    <li>
+                                        <form id="logout-form" action="{% url 'admin-panel:logout' %}" method="POST" style="margin: 0;">
+                                            {% csrf_token %}
+                                            <a class="nav-link {% if 'logout' in request.path %}active{% endif %}" 
+                                            href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                <i class="ri-logout-circle-r-line"></i> Logout
+                                            </a>
+                                        </form>
+                                    </li>
+                                {% endif %}
 
                               
                             </ul>
@@ -217,36 +326,35 @@
                     <li class="dropdown drop-list">
                         <a href="#" class="dropdown-list">Home</a>
                         <ul class="sub-menu">
-                            <li><a href="{% url 'user-panel:index' %}">Home Layout 1</a></li>
-                            <li><a href="{% url 'user-panel:index' %}">Home Layout 2</a></li>
+                            <li><a href="{% url 'user-panel:index' company_name=company_name %}">Home Layout 1</a></li>
+                            <li><a href="{% url 'user-panel:index' company_name=company_name %}">Home Layout 2</a></li>
                         </ul>
                     </li>
                     <li class="dropdown drop-list">
                         <a href="#" class="dropdown-list">Categories</a>
                         <ul class="sub-menu">
-                            <li><a href="{% url 'user-panel:gallery' %}">gallery 1</a></li>
-                            <li><a href="{% url 'user-panel:gallery' %}">gallery 2</a></li>
+                            <li><a href="{% url 'user-panel:gallery' company_name=company_name %}">gallery 1</a></li>
+                            <li><a href="{% url 'user-panel:gallery' company_name=company_name %}">gallery 2</a></li>
                         </ul>
                     </li>
                     <li class="dropdown drop-list">
                         <a href="#" class="dropdown-list">Room</a>
                         <ul class="sub-menu">
-                            <li><a href="{% url 'user-panel:room' %}">Rooms</a></li>
-                            <li><a href="{% url 'user-panel:room-2' %}">Rooms 2</a></li>
-                            <li><a href="{% url 'user-panel:room-details' %}">Room Details</a></li>
+                            <li><a href="{% url 'user-panel:room' company_name=company_name %}">Rooms</a></li>
+                            <li><a href="{% url 'user-panel:room-details' company_name=company_name %}">Room Details</a></li>
                         </ul>
                     </li>
                     <li class="dropdown drop-list">
                         <a href="#" class="dropdown-list">Pages</a>
                         <ul class="sub-menu">
-                            <li><a href="{% url 'user-panel:about' %}">About Us</a></li>
-                            <li><a href="{% url 'user-panel:contact' %}">Contact</a></li>
-                            <li><a href="{% url 'user-panel:facilities' %}">Facilities</a></li>
-                            <li><a href="{% url 'user-panel:faq' %}">Faq</a></li>
-                            <li><a href="{% url 'user-panel:services' %}">Services</a></li>
-                            <li><a href="{% url 'user-panel:spa' %}">Spa</a></li>
-                            <li><a href="{% url 'user-panel:team' %}">Team</a></li>
-                            <li><a href="{% url 'user-panel:checkout' %}">Checkout</a></li>
+                            <li><a href="{% url 'user-panel:about' company_name=company_name %}">About Us</a></li>
+                            <li><a href="{% url 'user-panel:contact-us' company_name=company_name %}">Contact</a></li>
+                            <li><a href="{% url 'user-panel:facilities' company_name=company_name %}">Facilities</a></li>
+                            <li><a href="{% url 'user-panel:faq' company_name=company_name %}">Faq</a></li>
+                            <li><a href="{% url 'user-panel:services' company_name=company_name %}">Services</a></li>
+                            <li><a href="{% url 'user-panel:spa' company_name=company_name %}">Spa</a></li>
+                            <li><a href="{% url 'user-panel:team' company_name=company_name %}">Team</a></li>
+                            <li><a href="{% url 'user-panel:checkout' company_name=company_name %}">Checkout</a></li>
                         </ul>
                     </li>
                     <li class="dropdown drop-list">
@@ -257,7 +365,7 @@
                         </ul>
                     </li>
                     <li class="dropdown drop-list">
-                        <a href="{% url 'user-panel:restaurant' %}">Restaurant</a>
+                        <!-- <a href="{% url 'user-panel:restaurant' company_name=company_name %}">Restaurant</a> -->
                     </li>
                 </ul>
             </div>
@@ -289,31 +397,31 @@
                         <ul>
                             <li>
                                 <code>*</code>
-                                <a{% url 'user-panel:index' %}">Home</a>
+                                <a href="{% url 'user-panel:index' company_name=company_name %}">Home</a>
                             </li>
                             <li>
                                 <code>*</code>
-                                <a{% url 'user-panel:about' %}">About</a>
+                                <a href="{% url 'user-panel:about' company_name=company_name %}">About</a>
                             </li>
                              <li>
                                 <code>*</code>
-                                <a{% url 'user-panel:room' %}">Rooms & suites</a>
+                                <a href=" {% url 'user-panel:room' company_name=company_name %}">Rooms & suites</a>
                             </li>
                             <li>
                                 <code>*</code>
-                                <a{% url 'user-panel:spa' %}">spa & Wellness</a>
+                                <a href="{% url 'user-panel:spa' company_name=company_name %}">spa & Wellness</a>
+                            </li>
+                            <!-- <li>
+                                <code>*</code>
+                                <a href=" {% url 'user-panel:restaurant' company_name=company_name %}">Restaurant</a>
+                            </li> -->
+                            <li>
+                                <code>*</code>
+                                <a href=" {% url 'user-panel:gallery' company_name=company_name %}">Gallery</a>
                             </li>
                             <li>
                                 <code>*</code>
-                                <a{% url 'user-panel:restaurant' %}">Restaurant</a>
-                            </li>
-                            <li>
-                                <code>*</code>
-                                <a{% url 'user-panel:gallery' %}">Gallery</a>
-                            </li>
-                            <li>
-                                <code>*</code>
-                                <a{% url 'user-panel:contact' %}">Contact</a>
+                                <a href=" {% url 'user-panel:contact-us' company_name=company_name %}">Contact</a>
                             </li>
                         </ul>
                     </div>
@@ -321,7 +429,16 @@
                 <div class="col-lg-6 rs-pb-24 order-lg-2 order-md-1 order-1">
                     <div class="lh-social-media">
                         <div class="footer-logos">
-                            <img src="{% static 'hotel/assets/img/logo/logo.png' %}" alt="logo">
+                        {% if light_logo_url %}
+
+                        <a class="navbar-brand" href="{% url 'user-panel:index' company_name=company_name %}">
+                            <img id="lightLogo" src="{{ light_logo_url }}" alt="Light Logo" class="logo-img">
+                        </a>
+                        {% else %}
+                        <a class="navbar-brand" href="{% url 'user-panel:index' company_name=company_name %}">
+                            <img src="{% static '/hotel/assets/img/logo/logo.png' %}" alt="logo">
+                        </a>
+                        {% endif %}
                         </div>
                         <div class="lh-footer-social">
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero voluptatem soluta eaque
@@ -335,9 +452,9 @@
                             </form>
                         </div>
                       
-                        <a href="termsandconditions.html"><p style="text-align: center;color: white;margin-top: 10px;">Terms And Conditions</p></a> 
-                        <a href="privacy.html"><p style="text-align: center;color: white;margin-top: 10px;">Privacy and policy</p></a> 
-                        <a href="cancellation.html"><p style="text-align: center;color: white;margin-top: 10px;">Cancellation Policy</p></a> 
+                        <a href="{% url 'user-panel:terms_and_conditions' company_name=company_name %}"><p style="text-align: center;color: white;margin-top: 10px;">Terms And Conditions</p></a> 
+                        <a href="{% url 'user-panel:privacy' company_name=company_name %}"><p style="text-align: center;color: white;margin-top: 10px;">Privacy and policy</p></a> 
+                        <a href="{% url 'user-panel:cancellation' company_name=company_name %}"><p style="text-align: center;color: white;margin-top: 10px;">Cancellation Policy</p></a> 
 
                       
                     </div>
@@ -366,12 +483,12 @@
                                     <div class="lh-follow-social">
                                         <h4 class="heading">Follow On Social</h4>
                                         <div class="footer-logo-image" style="margin-top: 10px;">
-                                            <a href="#"><img src="{% static 'hotel/assets/img/logo/facebook.png' %}" alt="facebook"></a>
-                                            <a href="#"><img src="{% static 'hotel/assets/img/logo/twitter.png' %}" alt="twitter"></a>
-                                            <a href="#"><img src="{% static 'hotel/assets/img/logo/instagram.png' %}" alt="instagram"></a>
-                                            <a href="#"><img src="{% static 'hotel/assets/img/logo/linkedin.png' %}" alt="linkedin"></a>
-                                            <a href="#"><img src="{% static 'hotel/assets/img/logo/dribbble.png' %}" alt="dribbble" style="width: 12%;"></a>
-                                            <a href="#"><img src="{% static 'hotel/assets/img/logo/pinterest.png' %}" alt="pinterest"  style="width: 12%;"></a>
+                                            <a href="#"><img src="{% static '/hotel/assets/img/logo/facebook.png' %}" alt="facebook"></a>
+                                            <a href="#"><img src="{% static '/hotel/assets/img/logo/twitter.png' %}" alt="twitter"></a>
+                                            <a href="#"><img src="{% static '/hotel/assets/img/logo/instagram.png' %}" alt="instagram"></a>
+                                            <a href="#"><img src="{% static '/hotel/assets/img/logo/linkedin.png' %}" alt="linkedin"></a>
+                                            <a href="#"><img src="{% static '/hotel/assets/img/logo/dribbble.png' %}" alt="dribbble" style="width: 12%;"></a>
+                                            <a href="#"><img src="{% static '/hotel/assets/img/logo/pinterest.png' %}" alt="pinterest"  style="width: 12%;"></a>
                                         </div>
                                     </div>
                                 </li>
@@ -383,7 +500,7 @@
         </div>
                   <div class="footer-bottom-copy">
                     <div class="md:text-start text-center">
-                    <p class="mb-0 " >© <script>document.write(new Date().getFullYear())</script> <a{% url 'user-panel:index' %}" class="link">Bloom Up </a> – All Rights Reserved ||  Developed by <a href="https://ultrakeyit.in/" target="_blank" class="link" >Ultrakey It Solutions Private Limited </a>.</p>
+                    <p class="mb-0 " >© <script>document.write(new Date().getFullYear())</script> <a href=" {% url 'user-panel:index' company_name=company_name %}" class="link">{{ site_name }}</a> – All Rights Reserved ||  Developed by <a href="https://ultrakeyit.in/" target="_blank" class="link" >Ultrakey It Solutions Private Limited </a>.</p>
                  </div> 
                 </div>
     </footer>
@@ -393,18 +510,50 @@
     </a>
 
     <!-- Plugins JS -->
-    <script src="{% static 'hotel/assets/js/vendor/jquery.min.js' %}"></script>
-    <script src="{% static 'hotel/assets/js/vendor/swiper-bundle.min.js' %}"></script>
-    <script src="{% static 'hotel/assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'hotel/assets/js/vendor/magnific-popup.min.js' %}"></script>
-    <script src="{% static 'hotel/assets/js/vendor/aos.js' %}"></script>
-    <script src="{% static 'hotel/assets/js/vendor/semantic.min.js' %}"></script>
-    <script src="{% static 'hotel/assets/js/vendor/slick.min.js' %}"></script>
-    <script src="{% static 'hotel/assets/js/vendor/particles.min.js' %}"></script>
-    <script src="{% static 'hotel/assets/js/vendor/app.js' %}"></script>
+    <script src="{% static '/hotel/assets/js/vendor/jquery.min.js' %}"></script>
+    <script src="{% static '/hotel/assets/js/vendor/swiper-bundle.min.js' %}"></script>
+    <script src="{% static '/hotel/assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static '/hotel/assets/js/vendor/magnific-popup.min.js' %}"></script>
+    <script src="{% static '/hotel/assets/js/vendor/aos.js' %}"></script>
+    <script src="{% static '/hotel/assets/js/vendor/semantic.min.js' %}"></script>
+    <script src="{% static '/hotel/assets/js/vendor/slick.min.js' %}"></script>
+    <script src="{% static '/hotel/assets/js/vendor/particles.min.js' %}"></script>
+    <script src="{% static '/hotel/assets/js/vendor/app.js' %}"></script>
 
     <!-- Main-js -->
-    <script src="{% static 'hotel/assets/js/main.js' %}"></script>
+    <script src="{% static '/hotel/assets/js/main.js' %}"></script>
+
+    <script>
+        function handleLogout(event) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                document.getElementById('logout-form').submit();
+            }
+        }
+        
+        // Add event listener to logout link
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutLink = document.querySelector('a[href*="logout"]');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', handleLogout);
+            }
+        });
+        </script>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logout confirmation
+            const logoutForm = document.getElementById('logout-form');
+            if (logoutForm) {
+                logoutForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if (confirm('Are you sure you want to logout?')) {
+                        this.submit();
+                    }
+                });
+            }
+        });
+        </script>
 
 </body>
 

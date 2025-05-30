@@ -159,7 +159,18 @@
 			width: 160px;
 		}
 	}
-	</style>
+	.text-danger {
+		color: #dc3545;
+		font-size: 12px;
+		margin-top: 5px;
+	}
+	.invalid-feedback {
+		display: block;
+		color: #dc3545;
+		font-size: 12px;
+		margin-top: 5px;
+	}
+</style>
 
 		<!-- main content -->
 		<div class="lh-main-content">
@@ -170,11 +181,12 @@
 						<h5>Team Update</h5>
 						<ul>
 							<li><a href="{% url 'admin-panel:index' %}">Luxurious</a></li>
+							<li> <i class="fas fa-angle-right pl3 pr3"></i></li>
 							<li>Team Update</li>
 						</ul>
 					</div>
 				</div>
-				<form class="lh-profile-add" method="POST" enctype="multipart/form-data" action="{% url 'admin-panel:edit_team_member' team_member.id %}">
+				<form class="lh-profile-add" method="POST" enctype="multipart/form-data" action="{% url 'admin-panel:edit_team_member' member.id %}">
 					{% csrf_token %}
 						
 					<div class="row">
@@ -188,14 +200,20 @@
 												<div class="lh-team-block-detail">
 													<div class="profile-img">
 														<div class="avatar-preview">
-															<div class="t-img" id="imagePreview"
-																style="background-image: url('{% if team_member.image %}{{ team_member.image.url }}{% else %}{% static 'assets/img/user/thumb.jpg' %}{% endif %}'); background-position: center;">
+															<div 
+																class="t-img" 
+																id="imagePreview"
+																style="background-image: url('{% if member.image %}{{ member.image.url }}{% else %}{% static '/assets/img/user/thumb.jpg' %}{% endif %}');">
 															</div>
+
 														</div>
 														<span class="tag-label online"></span>
 														<div class="avatar-edit">
 															<input type="file" class="form-control" name="image" id="imageUpload" accept="image/*" onchange="previewImage(this)">
 															<label for="imageUpload"></label>
+															{% if form.image.errors %}
+																<div class="invalid-feedback">{{ form.image.errors|join:", " }}</div>
+															{% endif %}
 														</div>
 													</div>
 													
@@ -203,18 +221,18 @@
 														<input type="text" class="form-control" id="name_profile" name="name"
 															placeholder="Enter name" value="{{ form.name.value|default:'' }}">
 														{% if form.name.errors %}
-															<div class="text-danger">{{ form.name.errors|join:", " }}</div>
+															<div class="invalid-feedback">{{ form.name.errors|join:", " }}</div>
 														{% endif %}
 													</div>
 													<div class="form-group p-b-15" >
 														<input type="text" class="form-control" id="designation" name="designation"
 															placeholder="Enter Designation" value="{{ form.designation.value|default:'' }}">
 														{% if form.designation.errors %}
-															<div class="text-danger">{{ form.designation.errors|join:", " }}</div>
+															<div class="invalid-feedback">{{ form.designation.errors|join:", " }}</div>
 														{% endif %}
 
 													</div>
-													<div class="lh-settings">
+													<!-- <div class="lh-settings">
 														<button type="submit" class="lh-btn-primary m-r-10" style="width: 100%;">Edit Profile</button>
 														<div class="dropdown" title="Status">
 															<button class="btn btn-secondary dropdown-toggle"
@@ -233,10 +251,13 @@
 																			class="tag-label busy"></span>Busy</a></li>
 															</ul>
 														</div>
-													</div>
+													</div> -->
 												</div>
 												<div class="form-group">
 													<textarea class="form-control" id="profile_detail" name="description" rows="9" placeholder="Enter Details">{{ form.description.value|default:'' }}</textarea>
+													{% if form.description.errors %}
+														<div class="invalid-feedback">{{ form.description.errors|join:", " }}</div>
+													{% endif %}
 												</div>
 											</div>
 										</div>
@@ -251,10 +272,10 @@
 										<div class="col-sm-12">
 											<h3>Account Details</h3>
 											<div class="lh-team-detail">
-												<p>From your account you can easily view and track Deals. You can manage
+												<!-- <p>From your account you can easily view and track Deals. You can manage
 													and change your account information like address, contact
 													information
-													and history of deals.</p>
+													and history of deals.</p> -->
 											</div>
 										</div>	
 										<div class="col-md-6 col-sm-12">
@@ -267,7 +288,7 @@
 																placeholder="Enter email" value="{{ form.email1.value|default:'' }}">
 															
 															{% if form.email1.errors %}
-																<div class="text-danger">{{ form.email1.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.email1.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
@@ -277,7 +298,7 @@
 																placeholder="Enter email" value="{{ form.email2.value|default:'' }}">
 															
 															{% if form.email2.errors %}
-																<div class="text-danger">{{ form.email2.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.email2.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
@@ -294,7 +315,7 @@
 																placeholder="Enter phone number" value="{{ form.phone1.value|default:'' }}">
 															
 															{% if form.phone1.errors %}
-																<div class="text-danger">{{ form.phone1.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.phone1.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
@@ -304,7 +325,7 @@
 																placeholder="Enter phone number" value="{{ form.phone2.value|default:'' }}">
 															
 															{% if form.phone2.errors %}
-																<div class="text-danger">{{ form.phone2.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.phone2.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
@@ -317,6 +338,9 @@
 												<ul>
 													<li>
 														<textarea class="form-control" id="profile_detail" name="address1" rows="9" placeholder="Enter Details">{{ form.address1.value|default:'' }}</textarea>
+														{% if form.address1.errors %}
+															<div class="invalid-feedback">{{ form.address1.errors|join:", " }}</div>
+														{% endif %}
 													</li>
 												</ul>
 											</div>
@@ -327,6 +351,9 @@
 												<ul>
 													<li>
 														<textarea class="form-control" id="profile_detail" name="address2" rows="9" placeholder="Enter Details">{{ form.address2.value|default:'' }}</textarea>
+														{% if form.address2.errors %}
+															<div class="invalid-feedback">{{ form.address2.errors|join:", " }}</div>
+														{% endif %}
 													</li>
 												</ul>
 											</div>
@@ -341,7 +368,7 @@
 																placeholder="Enter account name" value="{{ form.account_name.value|default:'' }}">
 															
 															{% if form.account_name.errors %}
-																<div class="text-danger">{{ form.account_name.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.account_name.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
@@ -351,7 +378,7 @@
 																placeholder="Enter account number" value="{{ form.account_number.value|default:'' }}">
 															
 															{% if form.account_number.errors %}
-																<div class="text-danger">{{ form.account_number.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.account_number.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
@@ -361,7 +388,7 @@
 																placeholder="Enter IFSC code" value="{{ form.ifsc_code.value|default:'' }}">
 															
 															{% if form.ifsc_code.errors %}
-																<div class="text-danger">{{ form.ifsc_code.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.ifsc_code.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
@@ -371,7 +398,7 @@
 																placeholder="Enter bank name" value="{{ form.bank_name.value|default:'' }}">
 															
 															{% if form.bank_name.errors %}
-																<div class="text-danger">{{ form.bank_name.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.bank_name.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
@@ -388,7 +415,7 @@
 																placeholder="Enter Facebook URL" value="{{ form.facebook.value|default:'' }}">
 															
 															{% if form.facebook.errors %}
-																<div class="text-danger">{{ form.facebook.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.facebook.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
@@ -398,7 +425,7 @@
 																placeholder="Enter Twitter URL" value="{{ form.twitter.value|default:'' }}">
 															
 															{% if form.twitter.errors %}
-																<div class="text-danger">{{ form.twitter.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.twitter.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
@@ -408,7 +435,7 @@
 																placeholder="Enter Linkedin URL" value="{{ form.linkedin.value|default:'' }}">
 															
 															{% if form.linkedin.errors %}
-																<div class="text-danger">{{ form.linkedin.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.linkedin.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
@@ -418,7 +445,7 @@
 																placeholder="Enter Github URL" value="{{ form.github.value|default:'' }}">
 															
 															{% if form.github.errors %}
-																<div class="text-danger">{{ form.github.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.github.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
@@ -431,20 +458,20 @@
 												<ul>
 													<li><strong>Aadhar No : </strong>
 														<div class="form-group">
-															<input type="text" class="form-control"  name="aadhar_no" value="{{ form.aadhar_no.value|default:'' }}
+															<input type="text" class="form-control"  name="aadhar_no" value="{{ form.aadhar_no.value|default:'' }}"
 																placeholder="Aadhar No ">
 															{% if form.aadhar_no.errors %}
-																<div class="text-danger">{{ form.aadhar_no.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.aadhar_no.errors|join:", " }}</div>
 															{% endif %}
 															
 														</div>
 													</li>
 													<li><strong>Aadhar File : </strong>
 														<div class="form-group">
-															<input type="file" class="form-control" name="aadhar_file" value="{{ form.aadhar_file.value|default:'' }}
+															<input type="file" class="form-control" name="aadhar_file" value="{{ form.aadhar_file.value|default:'' }}"
 																placeholder="No file Choosen">
 																{% if form.aadhar_file.errors %}
-																<div class="text-danger">{{ form.aadhar_file.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.aadhar_file.errors|join:", " }}</div>
 															{% endif %}
 															{% if member.aadhar_file %}
 															<strong>Aadhar Uploaded File: </strong>
@@ -463,19 +490,19 @@
 												<ul>
 													<li><strong>PAN NO : </strong>
 														<div class="form-group">
-															<input type="text" class="form-control" name="pan_no" value="{{ form.pan_no.value|default:'' }}
+															<input type="text" class="form-control" name="pan_no" value="{{ form.pan_no.value|default:'' }}"
 																placeholder="PAN No">
 																{% if form.pan_no.errors %}
-																<div class="text-danger">{{ form.pan_no.errors|join:", " }}</div>
+																<div class="invalid-feedback">{{ form.pan_no.errors|join:", " }}</div>
 															{% endif %}
 														</div>
 													</li>
 													<li><strong>PAN File : </strong>
 														<div class="form-group">
-															<input type="file" class="form-control" name="pan_file" value="{{ form.pan_file.value|default:'' }}
+															<input type="file" class="form-control" name="pan_file" value="{{ form.pan_file.value|default:'' }}"
 																	placeholder="No File Choosen" >
 																	{% if form.pan_file.errors %}
-																	<div class="text-danger">{{ form.pan_file.errors|join:", " }}</div>
+																	<div class="invalid-feedback">{{ form.pan_file.errors|join:", " }}</div>
 																{% endif %}
 																{% if member.pan_file %}
 																<strong>Uploaded PAN File: </strong>
@@ -493,6 +520,12 @@
 							</div>
 						</div>
 					</div>
+
+<div style="display: flex;justify-content: center;padding-bottom: 15px;">
+	<button class="btn btn-primary">Submit</button>
+</div>
+
+
 				</form>
 			</div>
 		</div>
@@ -513,5 +546,5 @@
 		}
 	</script>
 	<!-- Main Custom -->
-	<script src="{% static 'assets/js/main.js' %}"></script>
+	<script src="{% static '/assets/js/main.js' %}"></script>
 {% endblock %}

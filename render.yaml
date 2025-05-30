@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: hotelbooking       # 👈 you can change this to your app's name
+    env: python
+    region: singapore            # or any region like frankfurt, singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn hotelbooking.wsgi:application
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: your-db-name   # only used if you're using Render's DB
+          property: connectionString
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        value: django-insecure-#+)fxqdjxv)j-4pl8nmar)00uisw2=_9a8sl(q$w*ed=-@ycy0
+      - key: ALLOWED_HOSTS
+        value: hotelbooking.onrender.com
+
+

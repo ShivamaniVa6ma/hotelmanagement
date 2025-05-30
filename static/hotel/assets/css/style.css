@@ -1305,6 +1305,7 @@ select {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   padding: 5px 15px;
+  margin-bottom: 10px;
   line-height: 28px;
   background-color: #f32078;
   color: #fff;
@@ -3713,7 +3714,7 @@ h5.lh-blog-details-heding {
   background-position: bottom;
   margin: 0;
   background-blend-mode: overlay;
-  background-color: rgb(11 16 57 / 80%);
+  background-color: rgb(7 62 57)  ;
 }
 
 .section-hero {
@@ -3730,7 +3731,7 @@ h5.lh-blog-details-heding {
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 0.3;
+  /* opacity: 0.3; */
 }
 
 .lh-hero-contain {
@@ -7012,3 +7013,4 @@ input[type=number]::-webkit-outer-spin-button {
   
   
 }
+

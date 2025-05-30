@@ -128,7 +128,7 @@ a {
 }
 
 p {
-  color: #777;
+  /* color: #777; */
   font-size: 14px;
   line-height: 28px;
   letter-spacing: 0.03rem;
@@ -140,7 +140,7 @@ ul {
 }
 ul li {
   list-style-type: none;
-  color: #777;
+  /* color: var(--text-color); */
   font-size: 14px;
   line-height: 21px;
   letter-spacing: 0.03rem;
@@ -478,7 +478,7 @@ label {
 .lh-page-title .lh-breadcrumb h5 {
   font-size: 19px;
   font-weight: 600;
-  color: #484d54;
+  color: var(--text-color);
 }
 .lh-page-title .lh-breadcrumb ul {
   margin: 0;
@@ -493,7 +493,7 @@ label {
 }
 .lh-page-title .lh-breadcrumb ul li {
   font-size: 13px;
-  color: #777;
+  color: var(--text-color)
   position: relative;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -513,7 +513,7 @@ label {
   left: 3px;
 }
 .lh-page-title .lh-breadcrumb ul li a {
-  color: #777;
+  color:var(--text-color);
 }
 .lh-page-title .lh-tools  {
   display: -webkit-box;
@@ -551,10 +551,12 @@ label {
   color: #484d54;
 }
 .lh-page-title .lh-tools .refresh {
-  width: 100px;
+  width: 43px;
   height: 35px;
   display: -webkit-box;
   display: -ms-flexbox;
+
+  
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -689,7 +691,7 @@ label {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  background-color: #033981;
+  background-color: #330481;
   color: #fff;
   font-size: 14px;
   border: 1px solid #4949e9;
@@ -750,8 +752,8 @@ label {
 .dropdown .dropdown-toggle {
   width: 35px;
   height: 35px;
-  padding: 0;
-  background: #033981;
+  padding: 7px;
+  background: #330481;
   color: #ffffff;
   border: 1px solid #eee;
   border-radius: 5px;
@@ -1349,7 +1351,7 @@ label {
 .lh-sidebar .lh-sb-logo {
   height: 70px;
   padding: 0 15px;
-  background-color: #181e28;
+  /* background-color: #181e28; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1561,7 +1563,7 @@ label {
   overflow: hidden !important;
 }
 [data-mode=light] .lh-sb-logo {
-  background-color: #033981;
+  background-color: #330481;
   border-bottom: 1px solid #eee;
 }
 [data-mode=light] .lh-sb-wrapper .lh-sb-list .lh-sb-item-separator {
@@ -1581,7 +1583,7 @@ label {
 }
 [data-mode=light] .lh-sb-wrapper .lh-sb-list .lh-sb-item a {
   padding: 10px 0;
-  color: #484d54;
+  color: #818488;
 }
 [data-mode=light] .lh-sb-wrapper .lh-sb-list .lh-sb-item a:hover {
   color: #777;
@@ -1849,7 +1851,7 @@ label {
   position: fixed;
   top: 0;
   right: 0;
-  background-color: #033981;
+  background-color: #330481;
   -webkit-backdrop-filter: blur(3px);
           backdrop-filter: blur(3px);
   display: -webkit-box;
@@ -1990,9 +1992,9 @@ label {
   position: relative;
   border-radius: 5px;
 }
-.lh-header .lh-header-items .right-header .lh-hover-drop:hover, [data-header-mode-tool=light] .lh-header-items .right-header .lh-hover-drop:hover {
+/* .lh-header .lh-header-items .right-header .lh-hover-drop:hover, [data-header-mode-tool=light] .lh-header-items .right-header .lh-hover-drop:hover {
   background-color: #e9ecef;
-}
+} */
 .lh-header .lh-header-items .right-header .lh-hover-drop:hover .lh-hover-drop-panel, [data-header-mode-tool=light] .lh-header-items .right-header .lh-hover-drop:hover .lh-hover-drop-panel {
   margin-top: 0;
   opacity: 1;
@@ -2081,9 +2083,9 @@ label {
           justify-content: center;
   border-radius: 5px;
 }
-.lh-header .lh-header-items .right-header .lh-right-tool > a:hover, [data-header-mode-tool=light] .lh-header-items .right-header .lh-right-tool > a:hover {
+/* .lh-header .lh-header-items .right-header .lh-right-tool > a:hover, [data-header-mode-tool=light] .lh-header-items .right-header .lh-right-tool > a:hover {
   background-color: #e9ecef;
-}
+} */
 .lh-header .lh-header-items .right-header .lh-right-tool i, [data-header-mode-tool=light] .lh-header-items .right-header .lh-right-tool i {
   font-size: 21px;
   color: #ebf0f7;
@@ -2166,6 +2168,8 @@ label {
           justify-content: center;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
+          border:none
+
 }
 .lh-header .lh-header-items .header-search-box .search-btn i, [data-header-mode-tool=light] .lh-header-items .header-search-box .search-btn i {
   color: #9799a7;
@@ -2438,7 +2442,7 @@ footer {
   width: calc(100% - 270px);
   margin-left: 270px;
   padding: 15px;
-  background-color: #fff;
+  /* background-color: #fff; */
   -webkit-box-shadow: 0px 0px 35px 0px rgba(154, 161, 171, 0.15);
           box-shadow: 0px 0px 35px 0px rgba(154, 161, 171, 0.15);
   text-align: center; /* Center align the footer content */
@@ -3891,7 +3895,7 @@ thead th {
 
 .btn-outline-success {
   margin: 2px;
-  padding: 5px;
+  padding: 7px;
   color: #999;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4655,7 +4659,7 @@ div.dataTables_wrapper div.dataTables_info {
   display: flex;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
-          justify-content: space-between;
+          /* justify-content: space-between; */
   font-size: 14px;
   font-weight: 600;
   color: #777;
@@ -5817,7 +5821,7 @@ div.dataTables_wrapper div.dataTables_info {
 .lh-invoice .invoice-wrapper p {
   font-size: 14px;
   font-weight: 600;
-  color: #484d54;
+  /* color: #484d54; */
 }
 .lh-invoice .invoice-wrapper .table-invoice {
   margin-top: 30px;
@@ -5850,7 +5854,7 @@ div.dataTables_wrapper div.dataTables_info {
 }
 .lh-invoice .invoice-wrapper .list-unstyled li {
   font-size: 15px;
-  color: #484d54;
+  color: var(--text-color);
   font-weight: 500;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5868,14 +5872,14 @@ div.dataTables_wrapper div.dataTables_info {
 .lh-invoice .invoice-wrapper .note label {
   font-size: 15px;
   font-weight: 500;
-  color: #484d54;
+  color: var(--card-bg1);
 }
 .lh-invoice .invoice-wrapper .note p {
   margin: 0;
   font-size: 13px;
   font-weight: 300;
   line-height: 26px;
-  color: #999;
+  color: #282525;
 }
 /*# sourceMappingURL=style.css.map */
 
@@ -5986,7 +5990,7 @@ div.dataTables_wrapper div.dataTables_info {
 
 /* Improved Book Room Button */
 .btn-primary {
-  background: #033981;
+  background: #330481;
   border: none;
   padding: 8px 20px;
   border-radius: 50px;
@@ -5998,6 +6002,8 @@ div.dataTables_wrapper div.dataTables_info {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(78, 115, 223, 0.4);
+  background: #8c0cf2;
+  color: white;
 }
 
 /* Enhanced Offcanvas Design */
@@ -6007,7 +6013,7 @@ div.dataTables_wrapper div.dataTables_info {
 }
 
 .offcanvas-header {
-  background: #033981;
+  background:#330481;
   color: white;
   padding: 20px 30px;
 }
@@ -6133,4 +6139,126 @@ div.dataTables_wrapper div.dataTables_info {
   .d-grid .btn-primary {
     width: 100%;
   }
+}
+
+.card-default-logo
+{
+  background-color: var(--card-default-logo);
+}
+
+.card-body{
+  background-color: var(--text-color) !important;
+}
+
+/* .form-control {
+  background-color: var(--input-bg);
+  color: var(--text-color) !important;
+} */
+
+
+
+.tax_default_color{
+  background-color: var(--tax-default-color) !important;
+}
+
+h1 {
+  color: var(--text-color) !important;
+}
+
+
+h2 {
+  color: var(--text-color) !important;
+}
+
+  h3 {
+    color: var(--text-color) !important;
+  }
+
+  /* label{
+    color: var(--text-color) !important;
+  } */
+
+  h4 {
+    color: var(--text-color) !important;
+  }
+  h5 {
+    color: var(--text-color) !important;
+  }
+
+
+  h6{
+    color: var(--text-color) !important;
+  }
+
+  /* p{
+    color: var(--text-color) !important;
+  } */
+
+  .text-muted{
+    color: var(--text-muted) !important;
+  }
+
+  .text-primary{
+    color: var(--text-color) !important;
+  }
+
+  /* li{
+    color: var(--text-color) !important;
+  }
+  li a{
+    color: var(--text-color) !important;
+  } */
+
+  .default_color{
+    color: var(--text-color) !important;
+  }
+
+  .lh-sb-list a {
+    color: var(--text-color) !important;
+}
+
+address{
+  color: var( --card-bg1) !important;
+}
+
+td{
+  color: var( --card-bg1) !important;
+}
+
+th{
+  color: var( --card-bg1) !important;
+}
+
+li span{
+  color: var(--text-color) !important;
+}
+
+.offcanvas {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color)!important;
+  border-color: var(--border-color)!important;
+}
+
+.offcanvas-body{
+  color: var(--text-color)!important;
+}
+
+
+.offcanvas_default{
+  background-color: var(--bg-color)!important;
+  color: var(--text-color)!important;
+}
+
+.offcanvas_default_color{
+  background-color: var(--bg-color)!important;
+  color: var(--text-color)!important;
+}
+
+.lh-breadcrumb{
+  background-color: var(--bg-color)!important;
+  color: var(--text-color)!important;
+}
+
+.invoice-address-title{
+  color: var(--text-color)!important;
 }

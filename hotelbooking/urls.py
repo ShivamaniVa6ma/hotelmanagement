@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('admin-panel/', include('hotelapp.urls', namespace='admin-panel')),
     path('user-panel/', include('hotel.urls',namespace='user-panel')),
+    path('subscription/',include('subscription.urls',namespace='')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

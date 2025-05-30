@@ -1,0 +1,478 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+		<!-- main content -->
+		<div class="lh-main-content">
+			<div class="container-fluid">
+				<!-- Page title & breadcrumb -->
+				<div class="lh-page-title">
+					<div class="lh-breadcrumb">
+						<h5>Dashboard</h5>
+						<ul>
+							<li><a href="{% url 'admin-panel:index' %}">Home</a></li>
+							<li> <i class="fas fa-angle-right pl3 pr3"></i></li>
+							<li>Dashboard</li>
+						</ul>
+					</div>
+					<div class="lh-tools">
+						<a href="javascript:void(0)" title="Refresh" class="refresh"><i class="ri-refresh-line"></i></a>
+						<div id="pagedate">
+							<div class="lh-date-range" title="Date">
+								<span></span>
+							</div>
+						</div>
+						<!-- <div class="filter">
+							<div class="dropdown" title="Filter">
+								<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+									data-bs-toggle="dropdown" aria-expanded="false">
+									<i class="ri-sound-module-line"></i>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+									<li><a class="dropdown-item" href="#">Booking</a></li>
+									<li><a class="dropdown-item" href="#">Revenue</a></li>
+									<li><a class="dropdown-item" href="#">Expence</a></li>
+								</ul>
+							</div>
+						</div> -->
+					</div>
+				</div>
+				
+
+		<div class="dashboard-container">
+            <!-- Add this at the top of your dashboard container for debugging -->
+            <div class="debug-info" style="display: none;">
+                <pre>
+                    Has Subscription: {{ has_subscription }}
+                    Subscription: {{ subscription }}
+                    End Date: {{ subscription_end_date }}
+                    Total Rooms: {{ total_rooms }}
+                    Max Rooms: {{ max_rooms }}
+                    Active Bookings: {{ active_bookings }}
+                    Team Members: {{ team_members }}
+                    Max Team Members: {{ max_team_members }}
+                    Features: {{ subscription_features }}
+                </pre>
+            </div>
+
+            <!-- Subscription Header -->
+            <div class="subscription-header mb-4">
+                <h2>{{ company_name }}</h2>
+                <div class="subscription-info">
+                    <h3>Your Subscription:
+                        {% if subscription %}
+                            {{ subscription.name }}
+                        {% else %}
+                            No active subscription
+                        {% endif %}
+                    </h3>
+                    <p>Company Name: {{ company_name }}</p>
+                    <p>Subscription End Date: {{ subscription_end_date|date:"F d, Y" }}</p>
+                    <p>Total Rooms: {{ total_rooms }} / {{ max_rooms }}</p>
+                    <p>Active Bookings: {{ active_bookings }}</p>
+                    <p>Team Members: {{ team_members }} / {{ max_team_members }}</p>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row">
+                <div class="col-xl-3 col-md-6">
+                    <div class="lh-card lh-card-1">
+                        <div class="lh-card-content label-card">
+                            <div class="title">
+                                <div class="growth-numbers">
+                                    <h4>Rooms</h4>
+                                    <h5>{{ total_rooms }} / {{ max_rooms }}</h5>
+                                </div>
+                                <span class="icon"><i class="ri-hotel-bed-line"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6">
+                    <div class="lh-card lh-card-2">
+                        <div class="lh-card-content label-card">
+                            <div class="title">
+                                <div class="growth-numbers">
+                                    <h4>Active Bookings</h4>
+                                    <h5>{{ active_bookings }}</h5>
+                                </div>
+                                <span class="icon"><i class="ri-calendar-check-line"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6">
+                    <div class="lh-card lh-card-3">
+                        <div class="lh-card-content label-card">
+                            <div class="title">
+                                <div class="growth-numbers">
+                                    <h4>Team Members</h4>
+                                    <h5>{{ team_members }} / {{ max_team_members }}</h5>
+                                </div>
+                                <span class="icon"><i class="ri-team-line"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subscription Features -->
+            <div class="subscription-features mt-4">
+                <h3>Your Subscription Features</h3>
+                <div class="row">
+                    {% for feature in subscription_features %}
+                    <div class="col-md-4 mb-3">
+                        <div class="feature-card">
+                            <i class="ri-check-line text-success"></i>
+                            {{ feature }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="row mt-4">
+                <!-- Recent Bookings -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Recent Bookings</h4>
+                        </div>
+                        <div class="card-body">
+                            {% if has_bookings %}
+                                {% for booking in recent_bookings %}
+                                <div class="booking-item">
+                                    <p>{{ booking.guest_name }} - Room {{ booking.room.number }}</p>
+                                    <small>{{ booking.check_in_date|date:"M d, Y" }} to {{ booking.check_out_date|date:"M d, Y" }}</small>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-muted">No recent bookings</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Team Members -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Team Members ({{ team_members }}/{{ max_team_members }})</h4>
+                        </div>
+                        <div class="card-body">
+                            {% if has_team_members %}
+                                {% for member in recent_team_members %}
+                                <div class="team-member-item d-flex align-items-center mb-3">
+                                    {% if member.profile_image %}
+                                        <img src="{{ member.profile_image.url }}" alt="{{ member.name }}" class="rounded-circle me-3" style="width: 40px; height: 40px;">
+                                    {% else %}
+                                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                            {{ member.name|make_list|first|upper }}
+                                        </div>
+                                    {% endif %}
+                                    <div>
+                                        <p class="mb-0 fw-bold">{{ member.name }}</p>
+                                        <small class="text-muted">{{ member.role }}</small>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-muted">No team members added</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+				<div class="row">
+					<div class="col-xl-8 col-md-12">
+						<div class="lh-card revenue-overview">
+							<div class="lh-card-header header-575">
+								<h4 class="lh-card-title">Revenue Overview</h4>
+								<div class="header-tools">
+									<a href="javascript:void(0)" class="m-r-10 lh-full-card">
+										<i class="ri-fullscreen-line" title="Full Screen"></i></a>
+									<div class="lh-date-range date" title="Date">
+										<span></span>
+									</div>
+								</div>
+							</div>
+							<div class="lh-card-content">
+								<div class="lh-chart-header">
+									<div class="block">
+										<h6>Bookings</h6>
+										<h5>825
+											<span class="up"><i class="ri-arrow-up-line"></i>24%</span>
+										</h5>
+									</div>
+									<div class="block">
+										<h6>Revenue</h6>
+										<h5>$89k
+											<span class="up"><i class="ri-arrow-up-line"></i>24%</span>
+										</h5>
+									</div>
+									<div class="block">
+										<h6>Expence</h6>
+										<h5>$68k
+											<span class="down"><i class="ri-arrow-down-line"></i>24%</span>
+										</h5>
+									</div>
+									<div class="block">
+										<h6>Profit</h6>
+										<h5>$21k
+											<span class="up"><i class="ri-arrow-up-line"></i>24%</span>
+										</h5>
+									</div>
+								</div>
+								<div class="lh-chart-content">
+									<div id="overviewChart"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-4 col-md-12">
+						<div class="lh-card" id="lhmap">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Top Country</h4>
+								<div class="header-tools">
+									<div class="lh-date-range dots">
+										<span></span>
+									</div>
+								</div>
+							</div>
+							<div class="lh-card-content">
+								<div class="lh-map-view">
+									<div id="world-map"></div>
+								</div>
+								<div class="lh-map-detail">
+									<div class="lh-map-detail">
+										<div class="title">
+											<h5>Revenue</h5>
+											<a href="#" class="visit" title="View all data">view <i
+													class="ri-arrow-right-line"></i></a>
+										</div>
+										<div class="lh-detail-list">
+											<div class="lh-label">
+												<div>
+													<label>India</label>
+													<span class="down"><i class="ri-arrow-down-line"></i>2.6%</span>
+												</div>
+												<p>$958.5k</p>
+											</div>
+											<div class="progress">
+												<div class="progress-bar bg-primary" role="progressbar"
+													style="width: 95%" aria-valuenow="95" aria-valuemin="0"
+													aria-valuemax="100"></div>
+											</div>
+										</div>
+										<div class="lh-detail-list">
+											<div class="lh-label">
+												<div>
+													<label>Morocco</label>
+													<span class="up"><i class="ri-arrow-up-line"></i>5.6%</span>
+												</div>
+												<p>$788.7k</p>
+											</div>
+											<div class="progress">
+												<div class="progress-bar bg-secondary" role="progressbar"
+													style="width: 84%" aria-valuenow="84" aria-valuemin="0"
+													aria-valuemax="100"></div>
+											</div>
+										</div>
+										<div class="lh-detail-list">
+											<div class="lh-label">
+												<div>
+													<label>Brazil</label>
+													<span class="up"><i class="ri-arrow-up-line"></i>3.7%</span>
+												</div>
+												<p>$592.2k</p>
+											</div>
+											<div class="progress">
+												<div class="progress-bar bg-secondary" role="progressbar"
+													style="width: 76%" aria-valuenow="76" aria-valuemin="0"
+													aria-valuemax="100"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-xl-12 col-md-12">
+						<div class="lh-card" id="bookingtbl">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Bookings</h4>
+								<div class="header-tools">
+									<a href="javascript:void(0)" class="m-r-10 lh-full-card"><i
+											class="ri-fullscreen-line" title="Full Screen"></i></a>
+									<div class="lh-date-range dots">
+										<span></span>
+									</div>
+								</div>
+							</div>
+							<div class="lh-card-content card-default">
+								<div class="booking-table">
+									<div class="table-responsive">
+										<table id="booking_table" class="table">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Name</th>
+													<th>CheckIn</th>
+													<th>CheckOut</th>
+													<th>Proof</th>
+													<th>Payment</th>
+													<th>Amount</th>
+													<th>RoomNo</th>
+													<th>Rooms</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												{% for booking in recent_bookings %}
+												<tr>
+													<td class="token">{{ booking.id }}</td>
+													<td>
+														{% if booking.guest.photo %}
+															<img class="cat-thumb" src="{{ booking.guest.photo.url }}" alt="{{ booking.guest.name }}">
+														{% else %}
+															<img class="cat-thumb" src="{% static '/assets/img/user/default.jpg' %}" alt="Default">
+														{% endif %}
+														<span class="name">{{ booking.guest.name }}</span>
+													</td>
+													<td>{{ booking.check_in|date:"d/m/Y" }}</td>
+													<td>{{ booking.check_out|date:"d/m/Y" }}</td>
+													<td>{{ booking.guest.id_proof_type }}</td>
+													<td class="{{ booking.status|lower }}">{{ booking.payment_type }}</td>
+													<td>${{ booking.total_amount }}</td>
+													<td class="type">
+														<span>{{ booking.room.room_type|title }} : </span>{{ booking.room.room_number }}
+													</td>
+													<td class="rooms">
+														<span class="mem">{{ booking.adults|add:booking.children }} Member</span> /
+														<span class="room">1 Room</span>
+													</td>
+													<td>
+														<div class="d-flex justify-content-center">
+															<a href="{% url 'admin-panel:booking_view' booking.id %}" class="btn btn-outline-success">
+																<i class="ri-information-line"></i>
+															</a>
+															<button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+																data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+																<span class="sr-only"><i class="ri-settings-3-line"></i></span>
+															</button>
+															<div class="dropdown-menu">
+																<a class="dropdown-item" href="{% url 'admin-panel:edit_booking' booking.id %}">Edit</a>
+																<a class="dropdown-item" href="{% url 'admin-panel:delete_booking' booking.id %}">Delete</a>
+															</div>
+														</div>
+													</td>
+												</tr>
+												{% empty %}
+												<tr>
+													<td colspan="10" class="text-center">No bookings found</td>
+												</tr>
+												{% endfor %}
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+<style>
+	.dashboard-container {
+    padding: 20px;
+}
+
+.subscription-status {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.basic-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stat-card h4 {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.subscription-features {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.subscription-features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.subscription-features li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.subscription-features li:last-child {
+    border-bottom: none;
+}
+</style>
+		
+
+	{% block script %}
+	<script>
+		// JavaScript to toggle dark mode
+		document.getElementById('toggleMode').addEventListener('click', function() {
+			document.body.classList.toggle('dark-mode');
+			const header = document.querySelector('.lh-header');
+			const sidebar = document.querySelector('.lh-sidebar');
+			header.classList.toggle('dark-mode');
+			sidebar.classList.toggle('dark-mode');
+		});
+	</script>
+
+	{% endblock %}
+
+
+</html>

@@ -14,7 +14,7 @@
                     <div class="lh-breadcrumb">
                         <h5>
                             <span class="lh-inner-breadcrumb">
-                                <a href="{% url 'user-panel:index' %}">Home</a>
+                                <a href="{% url 'user-panel:index' company_name=company_name %}">Home</a>
                             </span>
                             <span> / </span>
                             <span>
@@ -31,92 +31,32 @@
             <div class="banner" data-aos="fade-up" data-aos-duration="1200">
                 <h2>Enjoy Your Best <span>Services</span></h2>
             </div>
+            {% if services %}
             <div class="row mtb-m-12">
+                {% for service in services %}
                 <div class="col-lg-4 col-md-6 m-tb-12">
                     <div class="lh-services" data-aos="fade-up" data-aos-duration="1200">
                         <div class="lh-services-contain">
                             <div class="lh-icon">
-                                <img src="{% static 'hotel/assets/img/services/service-1.svg' %}" class="svg-img" alt="services img">
+                                <img src="{{ service.icon.url }}" class="svg-img" alt="{{ service.name }}">
                             </div>
-                            <h4 class="lh-services-heading">Private Dining Rooms</h4>
-                            <p>This is the dolor sit amet consectetur adipisicing eligendi.</p>
+                            <h4 class="lh-services-heading">{{ service.name }}</h4>
+                            <p>{{ service.description }}</p>
                         </div>
                         <div class="lh-services-image">
-                            <img src="{% static 'hotel/assets/img/services/1.jpg' %}" alt="services-1">
+                            <img src="{{ service.image.url }}" alt="{{ service.name }}">
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 m-tb-12">
-                    <div class="lh-services" data-aos="fade-up" data-aos-duration="1800">
-                        <div class="lh-services-contain">
-                            <div class="lh-icon">
-                                <img src="{% static 'hotel/assets/img/services/service-2.svg' %}" class="svg-img" alt="services img">
-                            </div>                            
-                            <h4 class="lh-services-heading">Distinctive Rooms</h4>
-                            <p>This is the dolor sit amet consectetur adipisicing eligendi.</p>
-                        </div>
-                        <div class="lh-services-image">
-                            <img src="{% static 'hotel/assets/img/services/2.jpg' %}" alt="services-2">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 m-tb-12">
-                    <div class="lh-services" data-aos="fade-up" data-aos-duration="2500">
-                        <div class="lh-services-contain">
-                            <div class="lh-icon">
-                                <img src="{% static 'hotel/assets/img/services/service-3.svg' %}" class="svg-img" alt="services img">
-                            </div>
-                            <h4 class="lh-services-heading">Complimentary Offers</h4>
-                            <p>This is the dolor sit amet consectetur adipisicing eligendi.</p>
-                        </div>
-                        <div class="lh-services-image">
-                            <img src="{% static 'hotel/assets/img/services/3.jpg' %}" alt="services-3">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 m-tb-12">
-                    <div class="lh-services" data-aos="fade-up" data-aos-duration="1200">
-                        <div class="lh-services-contain">
-                            <div class="lh-icon">
-                                <img src="{% static 'hotel/assets/img/services/service-4.svg' %}" class="svg-img" alt="services img">
-                            </div>                            
-                            <h4 class="lh-services-heading">The Pool</h4>
-                            <p>This is the dolor sit amet consectetur adipisicing eligendi.</p>
-                        </div>
-                        <div class="lh-services-image">
-                            <img src="{% static 'hotel/assets/img/services/4.jpg' %}" alt="services-4">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 m-tb-12">
-                    <div class="lh-services" data-aos="fade-up" data-aos-duration="1800">
-                        <div class="lh-services-contain">
-                            <div class="lh-icon">
-                                <img src="{% static 'hotel/assets/img/services/service-5.svg' %}" class="svg-img" alt="services img">
-                            </div>
-                            <h4 class="lh-services-heading">Fitness Center</h4>
-                            <p>This is the dolor sit amet consectetur adipisicing eligendi.</p>
-                        </div>
-                        <div class="lh-services-image">
-                            <img src="{% static 'hotel/assets/img/services/5.jpg' %}" alt="services-5">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 m-tb-12">
-                    <div class="lh-services" data-aos="fade-up" data-aos-duration="2500">
-                        <div class="lh-services-contain">
-                            <div class="lh-icon">
-                                <img src="{% static 'hotel/assets/img/services/service-6.svg' %}" class="svg-img" alt="services img">
-                            </div>
-                            <h4 class="lh-services-heading">Spa Center</h4>
-                            <p>This is the dolor sit amet consectetur adipisicing eligendi.</p>
-                        </div>
-                        <div class="lh-services-image">
-                            <img src="{% static 'hotel/assets/img/services/6.jpg' %}" alt="services-6">
-                        </div>
-                    </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                    <h3>No Services Available</h3>
                 </div>
             </div>
+            {% endif %}
         </div>
     </section>
 

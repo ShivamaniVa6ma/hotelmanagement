@@ -54,9 +54,16 @@
     /*========== Nav Sidebar ===========*/
     $(document).ready(function () {
 
-        /*========== Tooltips ===========*/
-        $('[title]').attr('data-bs-toggle', 'tooltip');
-        $('[title]').tooltip();
+        // /*========== Tooltips ===========*/
+        // if ($.fn.tooltip) {
+        //     $('[title]').attr('data-bs-toggle', 'tooltip');
+        //     $('[title]').tooltip();
+        // } else {
+        //     console.warn("Bootstrap's tooltip function is not available.");
+        // }
+        
+        // $('[title]').attr('data-bs-toggle', 'tooltip');
+        // $('[title]').tooltip();
         /*========== Sidebar ===========*/
         // mobileAndTabletCheck       
         window.mobileAndTabletCheck = function () {
@@ -1017,3 +1024,1761 @@
         // }
     });
 })(jQuery);
+
+
+// deleteteamdesignation
+    // $(document).on('click', '.btn-delete-designation', function() {
+    //     var id = $(this).data('id');
+    //     deleteDesignation(id);
+    // });
+        // function deleteDesignation(id) {
+        //     Swal.fire({
+        //         title: 'Are you sure?',
+        //         text: "You won't be able to revert this action!",
+        //         icon: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#d33',
+        //         cancelButtonColor: '#3085d6',
+        //         confirmButtonText: 'Yes, delete it!'
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             // Start the AJAX call
+        //             $.ajax({
+        //                 url: `/admin-panel/team-designation/${id}/delete/`,
+        //                 type: 'POST',
+        //                 data: {
+        //                     'csrfmiddlewaretoken': '{{ csrf_token }}'
+        //                 },
+        //                 success: function(response) {
+        //                     if (response.status === 'success') {
+        //                         Swal.fire(
+        //                             'Deleted!',
+        //                             'Team Designation has been deleted successfully.',
+        //                             'success'
+        //                         );
+        //                         $(`[data-member-id="${id}"]`).closest('.designation-item').fadeOut();
+        //                     } else {
+        //                         Swal.fire(
+        //                             'Error!',
+        //                             'Something went wrong. Please try again.',
+        //                             'error'
+        //                         );
+        //                     }
+        //                 },
+        //                 error: function(xhr) {
+        //                     Swal.fire(
+        //                         'Error!',
+        //                         'Something went wrong. Please contact support.',
+        //                         'error'
+        //                     );
+        //                 }
+        //             });
+        //         }
+        //     });
+        // }
+
+        // function deleteRoomType(id) {
+        //     Swal.fire({
+        //         title: 'Are you sure?',
+        //         text: "You won't be able to undo this!",
+        //         icon: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#d33',
+        //         cancelButtonColor: '#3085d6',
+        //         confirmButtonText: 'Yes, delete it!'
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             $.ajax({
+        //                 url: `/admin-panel/room-type/${id}/delete/`, // URL to your Django delete view
+        //                 type: 'POST',
+        //                 data: {
+        //                     'csrfmiddlewaretoken': '{{ csrf_token }}'
+        //                 },
+        //                 success: function(response) {
+        //                     if (response.status === 'success') {
+        //                         Swal.fire(
+        //                             'Deleted!',
+        //                             'The room type has been deleted successfully.',
+        //                             'success'
+        //                         );
+        //                         // Remove the Room Type Card from the DOM
+        //                         $(`[data-room-id="${id}"]`).fadeOut();
+        //                     } else {
+        //                         Swal.fire(
+        //                             'Error!',
+        //                             'Something went wrong. Please try again.',
+        //                             'error'
+        //                         );
+        //                     }
+        //                 },
+        //                 error: function(xhr) {
+        //                     if (xhr.status === 403) {
+        //                         Swal.fire(
+        //                             'Permission Denied!',
+        //                             'You do not have permission to delete this.',
+        //                             'error'
+        //                         );
+        //                     } else if (xhr.status === 404) {
+        //                         Swal.fire(
+        //                             'Not Found!',
+        //                             'The room type does not exist.',
+        //                             'error'
+        //                         );
+        //                     } else {
+        //                         Swal.fire(
+        //                             'Error!',
+        //                             'Something went wrong. Please contact support.',
+        //                             'error'
+        //                         );
+        //                     }
+        //                 }
+        //             });
+        //         }
+        //     });
+        // }
+        
+        // function deleteEvent(id) {
+        //     Swal.fire({
+        //         title: 'Are you sure?',
+        //         text: "This event will be permanently deleted!",
+        //         icon: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#d33',
+        //         cancelButtonColor: '#3085d6',
+        //         confirmButtonText: 'Yes, delete it!'
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             $.ajax({
+        //                 url: `/admin-panel/event/${id}/delete/`,
+        //                 type: 'POST',
+        //                 data: {
+        //                     'csrfmiddlewaretoken': '{{ csrf_token }}'
+        //                 },
+        //                 success: function(response) {
+        //                     if (response.status === 'success') {
+        //                         Swal.fire(
+        //                             'Deleted!',
+        //                             'The event has been deleted successfully.',
+        //                             'success'
+        //                         );
+        //                         // Remove the event card without page reload
+        //                         $(`[data-event-id="${id}"]`).fadeOut();
+        //                     } else {
+        //                         Swal.fire(
+        //                             'Error!',
+        //                             'Something went wrong. Please try again.',
+        //                             'error'
+        //                         );
+        //                     }
+        //                 },
+        //                 error: function(xhr) {
+        //                     if (xhr.status === 403) {
+        //                         Swal.fire(
+        //                             'Permission Denied!',
+        //                             'You do not have permission to delete this.',
+        //                             'error'
+        //                         );
+        //                     } else if (xhr.status === 404) {
+        //                         Swal.fire(
+        //                             'Not Found!',
+        //                             'The event does not exist.',
+        //                             'error'
+        //                         );
+        //                     } else {
+        //                         Swal.fire(
+        //                             'Error!',
+        //                             'Something went wrong. Please contact support.',
+        //                             'error'
+        //                         );
+        //                     }
+        //                 }
+        //             });
+        //         }
+        //     });
+        // }
+        
+        // function deleteFeature(id) {
+        //     Swal.fire({
+        //         title: 'Are you sure?',
+        //         text: "This feature will be permanently deleted!",
+        //         icon: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#d33',
+        //         cancelButtonColor: '#3085d6',
+        //         confirmButtonText: 'Yes, delete it!'
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             $.ajax({
+        //                 url: `/admin-panel/feature/${id}/delete/`,
+        //                 type: 'POST',
+        //                 data: {
+        //                     'csrfmiddlewaretoken': '{{ csrf_token }}'
+        //                 },
+        //                 success: function(response) {
+        //                     if (response.status === 'success') {
+        //                         Swal.fire(
+        //                             'Deleted!',
+        //                             'The feature has been deleted successfully.',
+        //                             'success'
+        //                         );
+        //                         // Remove the feature card without page reload
+        //                         $(`[data-feature-id="${id}"]`).fadeOut();
+        //                     } else {
+        //                         Swal.fire(
+        //                             'Error!',
+        //                             'Something went wrong. Please try again.',
+        //                             'error'
+        //                         );
+        //                     }
+        //                 },
+        //                 error: function(xhr) {
+        //                     if (xhr.status === 403) {
+        //                         Swal.fire(
+        //                             'Permission Denied!',
+        //                             'You do not have permission to delete this.',
+        //                             'error'
+        //                         );
+        //                     } else if (xhr.status === 404) {
+        //                         Swal.fire(
+        //                             'Not Found!',
+        //                             'The feature does not exist.',
+        //                             'error'
+        //                         );
+        //                     } else {
+        //                         Swal.fire(
+        //                             'Error!',
+        //                             'Something went wrong. Please contact support.',
+        //                             'error'
+        //                         );
+        //                     }
+        //                 }
+        //             });
+        //         }
+        //     });
+        // }
+        
+        function deleteItem(url, id, itemName) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                Swal.fire(
+                                    'Deleted!',
+                                    itemName + ' has been deleted successfully.',
+                                    'success'
+                                );
+                                
+                                // ✅ Remove the deleted item instantly from the page
+                                $(`[data-item-id="${id}"]`).fadeOut('slow', function() {
+                                    $(this).remove();
+                                });
+        
+                                // ✅ Automatically refresh the list after deletion
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 1000); // Refresh after 1 second
+                            } else {
+                                Swal.fire(
+                                    'Error!',
+                                    'Something went wrong. Please try again.',
+                                    'error'
+                                );
+                            }
+                        },
+                        error: function(xhr) {
+                            if (xhr.status === 403) {
+                                Swal.fire(
+                                    'Permission Denied!',
+                                    'You do not have permission to delete this.',
+                                    'error'
+                                );
+                            } else if (xhr.status === 404) {
+                                Swal.fire(
+                                    'Not Found!',
+                                    'The ' + itemName + ' does not exist.',
+                                    'error'
+                                );
+                            } else {
+                                Swal.fire(
+                                    'Error!',
+                                    'Something went wrong. Please contact support.',
+                                    'error'
+                                );
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        
+        // document.getElementById('team-designation-form').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+            
+        //     const roomType = document.getElementById('Team Designation').value;
+        //     const dateTime = document.getElementById('dateTimes').value;
+    
+        //     // You can handle the form submission here
+        //     console.log('Room Type:', teamDesignation);
+        //     console.log('Date and Time:', dateTimes);
+            
+        //     // Optional: Show success message
+        //     alert('Booking submitted successfully!');
+        //     this.reset();
+        // });
+        
+        $(document).ready(function() {
+            $("#team-designation-form").on("submit", function(event) {
+                event.preventDefault();  // Prevent full page reload
+        
+                var formData = new FormData(this);  // Create FormData object
+                var formURL = $(this).data('url');  // ✅ Fetch URL from form attribute
+
+
+        
+                $.ajax({
+                    url: formURL,
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: response.message || 'Team designation added successfully!',
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+        
+                            // ✅ Clear the form fields
+                            $("#team-designation-form")[0].reset();
+        
+                            // ✅ Auto-refresh the page to show the new designation
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2000);
+                        } 
+                        else if (response.status === 'error') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Validation Error!',
+                                text: response.message || "Please check the form fields.",
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        let errorMessage = "Something went wrong!";
+        
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            errorMessage = xhr.responseJSON.error;
+                        }
+        
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Server Error!',
+                            text: errorMessage,
+                        });
+                    }
+                });
+            });
+        });
+
+        document.getElementById("room-type-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent full page reload
+        
+            let formData = new FormData(this);
+            let url = this.getAttribute('data-url');
+
+        
+            fetch(url, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // ✅ Handle success message
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: data.message || 'Room type added successfully!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+        
+                    // ✅ Reset the form fields
+                    document.getElementById("room-type-form").reset();
+        
+                    // ✅ Auto-refresh the page after submission
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                } 
+                
+                // ✅ Handle form validation errors
+                else if (data.errors) {
+                    let errorMessage = "";
+        
+                    // ✅ Loop through form errors and display them in SweetAlert
+                    Object.entries(data.errors).forEach(([field, errors]) => {
+                        errorMessage += `${errors.join(', ')}\n`;
+                    });
+        
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error!',
+                        text: errorMessage,
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Server Error!',
+                    text: 'Something went wrong! Please try again later.',
+                });
+            });
+        });
+
+        document.getElementById("eventform").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent full page reload
+        
+            let formData = new FormData(this);
+            let url = this.getAttribute('data-url');
+
+        
+            // ✅ Prevent submission if End Date < Start Date
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            if (new Date(endDate) < new Date(startDate)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'End date cannot be earlier than Start Date.',
+                });
+                return;
+            }
+        
+            // ✅ Send the AJAX request using fetch API
+            fetch(url, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // ✅ Handle success response
+                if (data.success === true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+        
+                    // ✅ Reset the form fields
+                    document.getElementById("eventform").reset();
+        
+                    // ✅ Auto-refresh the page after 2 seconds
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                }
+                
+                // ✅ Handle form validation errors
+                else if (data.errors) {
+                    let errorMessage = "";
+                    Object.entries(data.errors).forEach(([field, errors]) => {
+                        errorMessage += `${errors.join('\n')}\n`;
+                    });
+        
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error!',
+                        text: errorMessage,
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Server Error!',
+                    text: 'Something went wrong! Please try again.',
+                });
+            });
+        });
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById("featureForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+        
+                let formData = new FormData(this);
+                let url = this.getAttribute('data-url');
+
+        
+                // ✅ Send the AJAX request using Fetch API
+                fetch(url, {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success === true) {
+                        // ✅ Show SweetAlert Success
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+        
+                        // ✅ Reset the form fields
+                        document.getElementById("featureForm").reset();
+        
+                        // ✅ Auto Refresh Page
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    }
+                    else if (data.errors) {
+                        let errorMessage = "";
+                        Object.entries(data.errors).forEach(([field, errors]) => {
+                            errorMessage += `${errors.map(err => err.message).join('\n')}\n`;
+                        });
+        
+                        // ✅ Show SweetAlert Validation Error
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error!',
+                            text: errorMessage,
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Server Error!',
+                        text: 'Something went wrong! Please try again.',
+                    });
+                });
+            });
+        });
+        
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImg = imagePreview.querySelector('img');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#1a73e8';
+            dropZone.style.backgroundColor = 'rgba(26, 115, 232, 0.05)';
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.borderColor = '#e0e0e0';
+            dropZone.style.backgroundColor = 'transparent';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        });
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            handleFile(file);
+        });
+
+        function handleFile(file) {
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    previewImg.src = reader.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        
+        
+
+       
+        
+        
+        // add rooms form in rooms1.html 
+
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const imageInput = document.querySelector('input[name="images"]');
+        //     const preview = document.getElementById('imagePreview');
+        //     const maxImages = 10;
+            
+        //     imageInput.addEventListener('change', function(event) {
+        //         // Clear previous previews
+        //         preview.innerHTML = '';
+            
+        //         const files = event.target.files;
+                
+        //         // Check image limit
+        //         if (files.length > maxImages) {
+        //             alert(`You can only upload up to ${maxImages} images.`);
+        //             event.target.value = ''; // Clear the input
+        //             return;
+        //         }
+            
+        //         for (const file of files) {
+        //             const reader = new FileReader();
+        //             reader.onload = function(e) {
+        //                 const imgContainer = document.createElement('div');
+        //                 imgContainer.className = 'position-relative';
+                        
+        //                 const img = document.createElement('img');
+        //                 img.src = e.target.result;
+        //                 img.classList.add('preview-image', 'rounded');
+        //                 img.style.maxWidth = '200px';
+        //                 img.style.maxHeight = '200px';
+        //                 img.style.objectFit = 'cover';
+                        
+        //                 const removeBtn = document.createElement('button');
+        //                 removeBtn.innerHTML = '×';
+        //                 removeBtn.type = 'button';
+        //                 removeBtn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
+        //                 removeBtn.onclick = function() {
+        //                     imgContainer.remove();
+        //                 };
+                        
+        //                 imgContainer.appendChild(img);
+        //                 imgContainer.appendChild(removeBtn);
+        //                 preview.appendChild(imgContainer);
+        //             }
+        //             reader.readAsDataURL(file);
+        //         }
+        //         });
+        //     });
+            
+            
+        //         function handleSubmit(event) {
+        //             event.preventDefault();
+        //             const formData = new FormData(event.target);
+        //             const data = Object.fromEntries(formData.entries());
+                    
+        //             // Get selected features
+        //             data.features = Array.from(formData.getAll('features'));
+                    
+        //             // Here you would typically send the data to your backend
+        //             console.log('Form Data:', data);
+                    
+        //             // Show success message
+        //             alert('Room added successfully!');
+        //             event.target.reset();
+        //             document.getElementById('imagePreview').innerHTML = '';
+        //         }
+            
+        //         function resetForm() {
+        //             // Reset the form
+        //             document.getElementById('addRoomForm').reset();
+                    
+        //             // Clear image preview
+        //             document.getElementById('imagePreview').innerHTML = '';
+                    
+        //             // Enable image input
+        //             document.getElementById('imageInput').disabled = false;
+                    
+        //             // Reset room number display (show single room, hide bulk)
+        //             document.getElementById('singleRoomNumber').style.display = 'block';
+        //             document.getElementById('bulkRoomNumbers').style.display = 'none';
+                    
+        //             // Reset radio button to single room
+        //             document.getElementById('singleRoom').checked = true;
+                    
+        //             // Reset required attributes
+        //             document.querySelector('#singleRoomNumber input').required = true;
+        //             document.querySelectorAll('#bulkRoomNumbers input').forEach(input => input.required = false);
+                    
+        //             // Reset room type related sections
+        //             const bedTypeSection = document.getElementById('bedTypeSection');
+        //             const seatingSection = document.getElementById('seatingSection');
+        //             bedTypeSection.style.display = 'block';
+        //             seatingSection.style.display = 'none';
+                    
+        //             // Reset bed type required attributes
+        //             bedTypeSection.querySelectorAll('input[name="bedType"]').forEach(input => input.required = true);
+        //             seatingSection.querySelector('input').required = false;
+        //         }
+            
+        //         function editRoom(roomId) {
+        //             // Change form title and button text
+        //             document.querySelector('#addRoomOffcanvasLabel').textContent = 'Edit Room';
+        //             document.querySelector('.btn-submit').textContent = 'Update Room';
+                    
+        //             // Update form action with correct URL namespace
+        //             const form = document.getElementById('addRoomForm');
+        //             form.action = `/admin-panel/rooms/${roomId}/edit/`;
+                    
+        //             // Hide bulk room options when editing
+        //             document.querySelector('.radio-group').style.display = 'none';
+        //             document.getElementById('bulkRoomNumbers').style.display = 'none';
+        //             document.getElementById('singleRoomNumber').style.display = 'block';
+                    
+        //             // Add error handling for the fetch request
+        //             fetch(`/admin-panel/rooms/${roomId}/edit/`)
+        //                 .then(response => {
+        //                     if (!response.ok) {
+        //                         throw new Error('Network response was not ok');
+        //                     }
+        //                     return response.json();
+        //                 })
+        //                 .then(data => {
+        //                     if (!data) {
+        //                         throw new Error('No data received');
+        //                     }
+                            
+        //                     // Populate form fields
+        //                     document.querySelector('input[name="room_number"]').value = data.room_number || '';
+        //                     document.querySelector('input[name="block"]').value = data.block || '';
+        //                     document.querySelector('select[name="room_type"]').value = data.room_type || ''; // This line populates the room_type
+        //                     document.querySelector('select[name="bed_type"]').value = data.bed_type || '';
+                            
+        //                     // Handle AC type radio buttons
+        //                     const acTypeRadio = document.querySelector(`input[name="ac_type"][value="${data.ac_type}"]`);
+        //                     if (acTypeRadio) {
+        //                         acTypeRadio.checked = true;
+        //                     }
+                            
+        //                     // Handle numeric fields
+        //                     document.querySelector('input[name="base_price"]').value = data.base_price || '';
+        //                     document.querySelector('input[name="weekend_price"]').value = data.weekend_price || '';
+        //                     document.querySelector('input[name="holiday_price"]').value = data.holiday_price || '';
+        //                     document.querySelector('input[name="hourly_price"]').value = data.hourly_price || '';
+        //                     document.querySelector('input[name="max_occupancy"]').value = data.max_occupancy || '';
+        //                     document.querySelector('textarea[name="description"]').value = data.description || '';
+                            
+        //                     // Handle features
+        //                     const featureCheckboxes = document.querySelectorAll('input[name="features"]');
+        //                     featureCheckboxes.forEach(checkbox => {
+        //                         checkbox.checked = data.features && data.features.includes(checkbox.value);
+        //                     });
+                            
+        //                     // Handle room type specific fields
+        //                     const roomTypeSelect = document.querySelector('select[name="room_type"]');
+        //                     if (data.room_type === 'conference') {
+        //                         document.getElementById('bedTypeSection').style.display = 'none';
+        //                         document.getElementById('seatingSection').style.display = 'block';
+        //                         document.querySelector('input[name="seating_capacity"]').value = data.seating_capacity || '';
+        //                     } else {
+        //                         document.getElementById('bedTypeSection').style.display = 'block';
+        //                         document.getElementById('seatingSection').style.display = 'none';
+        //                     }
+        //                     // Handle existing images
+        //                     const imagePreview = document.getElementById('imagePreview');
+        //                 imagePreview.innerHTML = ''; // Clear existing preview
+                        
+        //                 if (data.images && data.images.length > 0) {
+        //                     data.images.forEach(image => {
+        //                         const imgContainer = document.createElement('div');
+        //                         imgContainer.className = 'position-relative d-inline-block me-2 mb-2';
+                                
+        //                         const img = document.createElement('img');
+        //                         img.src = image.url;
+        //                         img.classList.add('preview-image', 'rounded');
+        //                         img.style.width = '100px';
+        //                         img.style.height = '100px';
+        //                         img.style.objectFit = 'cover';
+                                
+        //                         const removeBtn = document.createElement('button');
+        //                         removeBtn.innerHTML = '×';
+        //                         removeBtn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
+        //                         removeBtn.onclick = function() {
+        //                             if (confirm('Are you sure you want to remove this image?')) {
+        //                                 imgContainer.remove();
+        //                             }
+        //                         };
+                                
+        //                         imgContainer.appendChild(img);
+        //                         imgContainer.appendChild(removeBtn);
+        //                         imagePreview.appendChild(imgContainer);
+        //                     });
+        //                 }
+                            
+        //                     // Trigger room type change event
+        //                     roomTypeSelect.dispatchEvent(new Event('change'));
+        //                 })
+        //                 .catch(error => {
+        //                     console.error('Error fetching room data:', error);
+        //                     alert('Error loading room data. Please try again.');
+        //                 });
+        //         }
+            
+        //         function deleteRoom(roomId) {
+        //             if (confirm('Are you sure you want to delete this room? This action cannot be undone.')) {
+        //                 // Get CSRF token from the cookie
+        //                 function getCookie(name) {
+        //                     let cookieValue = null;
+        //                     if (document.cookie && document.cookie !== '') {
+        //                         const cookies = document.cookie.split(';');
+        //                         for (let i = 0; i < cookies.length; i++) {
+        //                             const cookie = cookies[i].trim();
+        //                             if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        //                                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        //                                 break;
+        //                             }
+        //                         }
+        //                     }
+        //                     return cookieValue;
+        //                 }
+        //                 const csrftoken = getCookie('csrftoken');
+            
+        //                 // Make the delete request
+        //                 fetch(`/admin-panel/rooms/${roomId}/delete/`, {
+        //                     method: 'POST',
+        //                     headers: {
+        //                         'X-CSRFToken': csrftoken,
+        //                         'Content-Type': 'application/json',
+        //                     },
+        //                     credentials: 'same-origin'  // This is important for cookies
+        //                 })
+        //                 .then(response => {
+        //                     if (!response.ok) {
+        //                         throw new Error('Network response was not ok');
+        //                     }
+        //                     return response.json();
+        //                 })
+        //                 .then(data => {
+        //                     if (data.success) {
+        //                         // Show success message using Bootstrap toast or alert
+        //                         alert('Room deleted successfully!');
+        //                         // Reload the page to reflect changes
+        //                         window.location.reload();
+        //                     } else {
+        //                         alert('Error deleting room: ' + (data.error || 'Unknown error'));
+        //                     }
+        //                 })
+        //                 .catch(error => {
+        //                     console.error('Error:', error);
+        //                     alert('Error deleting room. Please try again.');
+        //                 });
+        //             }
+        //         }
+
+        //         document.getElementById('addRoomForm').addEventListener('submit', function(event) {
+        //             event.preventDefault(); // Prevent the default form submission
+            
+        //             const formData = new FormData(this);
+            
+        //             fetch(this.action, {
+        //                 method: 'POST',
+        //                 body: formData,
+        //                 headers: {
+        //                     'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token
+        //                 }
+        //             })
+        //             .then(response => response.json())
+        //             .then(data => {
+        //                 if (data.success === false) {
+        //                     // Show SweetAlert for error message
+        //                     Swal.fire({
+        //                         icon: 'error',
+        //                         title: 'Error',
+        //                         text: data.message,
+        //                         confirmButtonText: 'OK'
+        //                     });
+        //                 } else {
+        //                     // Show success message
+        //                     Swal.fire({
+        //                         icon: 'success',
+        //                         title: 'Success',
+        //                         text: 'Room added successfully!',
+        //                         confirmButtonText: 'OK'
+        //                     }).then(() => {
+        //                         window.location.href = "{% url 'admin-panel:room_list' %}"; // Redirect to rooms page
+        //                     });
+        //                 }
+        //             })
+        //             .catch(error => {
+        //                 console.error('Error:', error);
+        //                 Swal.fire({
+        //                     icon: 'error',
+        //                     title: 'Error',
+        //                     text: 'An unexpected error occurred. Please try again.',
+        //                     confirmButtonText: 'OK'
+        //                 });
+        //             });
+        //         });
+        
+
+        // $(document).ready(function () {
+		// 	function fetchRoomData() {
+		// 		$.ajax({
+		// 			url: "{% url 'admin-panel:fetch_room_data' %}",
+		// 			type: "GET",
+		// 			dataType: "json",
+		// 			success: function (response) {
+		// 				let roomTypeSelect = $("select[name='room_type']");
+
+		// 				roomTypeSelect.empty();
+		// 				roomTypeSelect.append(`<option value="">Select Room Type</option>`);
+
+		// 				$.each(response.room_types, function (index, roomType) {
+		// 					console.log("Room Type:", roomType.name, "| Bed Type:", roomType.bed_type);
+
+		// 					roomTypeSelect.append(`
+        //                         <option value="${roomType.id}" data-bedtype="${roomType.bed_type}">
+        //                             ${roomType.name}
+        //                         </option>
+        //                     `);
+		// 				});
+
+		// 				toggleFields(); // Run toggleFields after populating room types
+		// 			}
+		// 		});
+		// 	}
+
+		// 	function toggleFields() {
+		// 		var selectedBedType = $("#id_room_type option:selected").attr("data-bedtype")?.trim().toLowerCase() || "";
+
+		// 		console.log("Selected Bed Type:", selectedBedType);
+
+		// 		if (selectedBedType === "conference") {
+		// 			$("#seatingSection").removeClass("hidden");  // Show Seating Capacity
+		// 			$("#bedTypeSection").addClass("hidden");  // Hide Bed Type
+		// 		} else {
+		// 			$("#seatingSection").addClass("hidden");  // Hide Seating Capacity
+		// 			$("#bedTypeSection").removeClass("hidden");  // Show Bed Type
+		// 		}
+		// 	}
+
+		// 	// Trigger toggleFields when room type changes
+		// 	$("#id_room_type").change(()=>{
+		// 		console.log("changed value");
+		// 	});
+
+		// 	// Fetch room data on page load
+		// 	fetchRoomData();
+		// });
+
+		document.addEventListener('DOMContentLoaded', function () {
+			const singleRoom = document.getElementById('singleRoom');
+			const bulkRooms = document.getElementById('bulkRooms');
+			const singleRoomNumber = document.getElementById('singleRoomNumber');
+			const bulkRoomNumbers = document.getElementById('bulkRoomNumbers');
+
+			function toggleRoomNumberInputs() {
+				if (singleRoom.checked) {
+					console.log("Single Room selected.");
+					singleRoomNumber.style.display = 'block';
+					bulkRoomNumbers.style.display = 'none';
+					singleRoomNumber.querySelector('input').required = true;
+					bulkRoomNumbers.querySelectorAll('input').forEach(input => {
+						input.required = false;
+						input.value = ''; // Clear hidden values
+					});
+				} else {
+					console.log("Bulk Rooms selected.");
+					singleRoomNumber.style.display = 'none';
+					bulkRoomNumbers.style.display = 'block';
+					singleRoomNumber.querySelector('input').required = false;
+					bulkRoomNumbers.querySelectorAll('input').forEach(input => input.required = true);
+				}
+			}
+
+			singleRoom.addEventListener('change', toggleRoomNumberInputs);
+			bulkRooms.addEventListener('change', toggleRoomNumberInputs);
+
+			// Add this new code for room type handling
+			// const roomType = document.getElementById('room_type');
+			// const bedTypeSection = document.getElementById('bedTypeSection');
+			// const seatingSection = document.getElementById('seatingSection');
+			// const bedTypeInputs = bedTypeSection.querySelectorAll('input[name="bed_type"]');
+
+			// document.addEventListener('DOMContentLoaded', function() {
+			// 	function toggleFields() {
+			// 		var selectedRoomType = $("#room_type option:selected").text().toLowerCase();
+			// 		var selectedBedType = $("#bed_type option:selected").text().toLowerCase();
+
+			// 		if (selectedRoomType.includes("conference") || selectedBedType.includes("conference")) {
+			// 			$("#seating_capacity").closest(".form-group").show();  // Show Seating Capacity
+			// 			$("#bedTypeSection").hide();  // Hide Bed Type
+			// 		} else {
+			// 			$("#seating_capacity").closest(".form-group").hide();
+			// 			$("#bedTypeSection").show();  // Show Bed Type
+			// 		}
+			// 	}
+
+			// 	// Run on page load
+			// 	toggleFields();
+
+			// 	// Run when the dropdown value changes
+			// 	$("#room_type, #bed_type").change(function () {
+			// 		toggleFields();
+			// 	});
+			// });
+		})
+		function previewImages(event) {
+			const preview = document.getElementById('imagePreview');
+			const files = event.target.files;
+			const maxImages = 10;
+			const existingImages = preview.children.length;
+			const remainingSlots = maxImages - existingImages;
+
+			// Check if adding new images would exceed the limit
+			if (files.length > remainingSlots) {
+				alert(`You can only upload up to ${maxImages} images. You have ${existingImages} images already.`);
+				event.target.value = ''; // Clear the input
+				return;
+			}
+
+			for (const file of files) {
+				const reader = new FileReader();
+				reader.onload = function (e) {
+					const imgContainer = document.createElement('div');
+					imgContainer.className = 'position-relative';
+
+					const img = document.createElement('img');
+					img.src = e.target.result;
+					img.classList.add('preview-image', 'rounded');
+
+					const removeBtn = document.createElement('button');
+					removeBtn.innerHTML = '×';
+					removeBtn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
+					removeBtn.onclick = function () {
+						imgContainer.remove();
+						// Enable input if images are less than max
+						const imageInput = document.getElementById('imageInput');
+						if (preview.children.length < maxImages) {
+							imageInput.disabled = false;
+						}
+					};
+
+					imgContainer.appendChild(img);
+					imgContainer.appendChild(removeBtn);
+					preview.appendChild(imgContainer);
+
+					// Disable input if max images reached
+					if (preview.children.length >= maxImages) {
+						document.getElementById('imageInput').disabled = true;
+					}
+				}
+				reader.readAsDataURL(file);
+			}
+		}
+
+		function handleSubmit(event) {
+			event.preventDefault();
+			const formData = new FormData(event.target);
+			const data = Object.fromEntries(formData.entries());
+
+			// Get selected features
+			data.features = Array.from(formData.getAll('features'));
+
+			// Here you would typically send the data to your backend
+			console.log('Form Data:', data);
+
+			// Show success message
+			alert('Room added successfully!');
+			event.target.reset();
+			document.getElementById('imagePreview').innerHTML = '';
+		}
+
+		function resetForm() {
+			// Reset the form
+			document.getElementById('addRoomForm').reset();
+
+			// Clear image preview
+			document.getElementById('imagePreview').innerHTML = '';
+
+			// Enable image input
+			document.getElementById('imageInput').disabled = false;
+
+			// Reset room number display (show single room, hide bulk)
+			document.getElementById('singleRoomNumber').style.display = 'block';
+			document.getElementById('bulkRoomNumbers').style.display = 'none';
+
+			// Reset radio button to single room
+			document.getElementById('singleRoom').checked = true;
+
+			// Reset required attributes
+			document.querySelector('#singleRoomNumber input').required = true;
+			document.querySelectorAll('#bulkRoomNumbers input').forEach(input => input.required = false);
+
+			// Reset room type related sections
+			const bedTypeSection = document.getElementById('bedTypeSection');
+			const seatingSection = document.getElementById('seatingSection');
+			bedTypeSection.style.display = 'block';
+			seatingSection.style.display = 'none';
+
+			// Reset bed type required attributes
+			bedTypeSection.querySelectorAll('input[name="bedType"]').forEach(input => input.required = true);
+			seatingSection.querySelector('input').required = false;
+		}
+
+		function editRoom(roomId) {
+			// Change form title and button text
+			document.querySelector('#addRoomOffcanvasLabel').textContent = 'Edit Room';
+			document.querySelector('.btn-submit').textContent = 'Update Room';
+
+			// Update form action with correct URL namespace
+			const form = document.getElementById('addRoomForm');
+			form.action = `/admin-panel/rooms/${roomId}/edit/`;
+
+			// Hide bulk room options when editing
+			document.querySelector('.radio-group').style.display = 'none';
+			document.getElementById('bulkRoomNumbers').style.display = 'none';
+			document.getElementById('singleRoomNumber').style.display = 'block';
+
+			// Add error handling for the fetch request
+			fetch(`/admin-panel/rooms/${roomId}/edit/`)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					return response.json();
+				})
+				.then(data => {
+					if (!data) {
+						throw new Error('No data received');
+					}
+
+					// Populate form fields
+					document.querySelector('input[name="room_number"]').value = data.room_number || '';
+					document.querySelector('input[name="block"]').value = data.block || '';
+					document.querySelector('select[name="room_type"]').value = data.room_type || ''; // This line populates the room_type
+					document.querySelector('select[name="bed_type"]').value = data.bed_type || '';
+
+					// Handle AC type radio buttons
+					const acTypeRadio = document.querySelector(`input[name="ac_type"][value="${data.ac_type}"]`);
+					if (acTypeRadio) {
+						acTypeRadio.checked = true;
+					}
+
+					// Handle numeric fields
+					document.querySelector('input[name="base_price"]').value = data.base_price || '';
+					document.querySelector('input[name="weekend_price"]').value = data.weekend_price || '';
+					document.querySelector('input[name="holiday_price"]').value = data.holiday_price || '';
+					document.querySelector('input[name="hourly_price"]').value = data.hourly_price || '';
+					document.querySelector('input[name="max_occupancy"]').value = data.max_occupancy || '';
+					document.querySelector('textarea[name="description"]').value = data.description || '';
+
+					// Handle features
+					const featureCheckboxes = document.querySelectorAll('input[name="features"]');
+					featureCheckboxes.forEach(checkbox => {
+						checkbox.checked = data.features && data.features.includes(checkbox.value);
+					});
+
+					// Handle room type specific fields
+					const roomTypeSelect = document.querySelector('select[name="room_type"]');
+					if (data.room_type === 'conference') {
+						document.getElementById('bedTypeSection').style.display = 'none';
+						document.getElementById('seatingSection').style.display = 'block';
+						document.querySelector('input[name="seating_capacity"]').value = data.seating_capacity || '';
+					} else {
+						document.getElementById('bedTypeSection').style.display = 'block';
+						document.getElementById('seatingSection').style.display = 'none';
+					}
+					// Handle existing images
+					const imagePreview = document.getElementById('imagePreview');
+					imagePreview.innerHTML = ''; // Clear existing preview
+
+					if (data.images && data.images.length > 0) {
+						data.images.forEach(image => {
+							const imgContainer = document.createElement('div');
+							imgContainer.className = 'position-relative d-inline-block me-2 mb-2';
+
+							const img = document.createElement('img');
+							img.src = image.url;
+							img.classList.add('preview-image', 'rounded');
+							img.style.width = '100px';
+							img.style.height = '100px';
+							img.style.objectFit = 'cover';
+
+							const removeBtn = document.createElement('button');
+							removeBtn.innerHTML = '×';
+							removeBtn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
+							removeBtn.onclick = function () {
+								if (confirm('Are you sure you want to remove this image?')) {
+									imgContainer.remove();
+								}
+							};
+
+							imgContainer.appendChild(img);
+							imgContainer.appendChild(removeBtn);
+							imagePreview.appendChild(imgContainer);
+						});
+					}
+
+					// Trigger room type change event
+					roomTypeSelect.dispatchEvent(new Event('change'));
+				})
+				.catch(error => {
+					console.error('Error fetching room data:', error);
+					alert('Error loading room data. Please try again.');
+				});
+		}
+
+		function deleteRoom(roomId) {
+			if (confirm('Are you sure you want to delete this room? This action cannot be undone.')) {
+				// Get CSRF token from the cookie
+				function getCookie(name) {
+					let cookieValue = null;
+					if (document.cookie && document.cookie !== '') {
+						const cookies = document.cookie.split(';');
+						for (let i = 0; i < cookies.length; i++) {
+							const cookie = cookies[i].trim();
+							if (cookie.substring(0, name.length + 1) === (name + '=')) {
+								cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+								break;
+							}
+						}
+					}
+					return cookieValue;
+				}
+				const csrftoken = getCookie('csrftoken');
+
+				// Make the delete request
+				fetch(`/admin-panel/rooms/${roomId}/delete/`, {
+					method: 'POST',
+					headers: {
+						'X-CSRFToken': csrftoken,
+						'Content-Type': 'application/json',
+					},
+					credentials: 'same-origin'  // This is important for cookies
+				})
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Network response was not ok');
+						}
+						return response.json();
+					})
+					.then(data => {
+						if (data.success) {
+							// Show success message using Bootstrap toast or alert
+							alert('Room deleted successfully!');
+							// Reload the page to reflect changes
+							window.location.reload();
+						} else {
+							alert('Error deleting room: ' + (data.error || 'Unknown error'));
+						}
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						alert('Error deleting room. Please try again.');
+					});
+			}
+		}
+
+		document.getElementById('addRoomForm').addEventListener('submit', function (event) {
+			event.preventDefault(); // Prevent the default form submission
+
+			const formData = new FormData(this);
+
+			fetch(this.action, {
+				method: 'POST',
+				body: formData,
+				headers: {
+					'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success === false) {
+						// Show SweetAlert for error message
+						Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: data.message,
+							confirmButtonText: 'OK'
+						});
+					} else {
+						// Show success message
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: 'Room added successfully!',
+							confirmButtonText: 'OK'
+						}).then(() => {
+							window.location.href = "{% url 'admin-panel:room_list' %}"; // Redirect to rooms page
+						});
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+					Swal.fire({
+						icon: 'error',
+						title: 'Error',
+						text: 'An unexpected error occurred. Please try again.',
+						confirmButtonText: 'OK'
+					});
+				});
+		});
+
+       
+        
+        
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const spaForm = document.getElementById('spaForm');
+            const imageInput = document.getElementById('image');
+            const imagePreview = document.getElementById('imagePreview');
+            const imagePreviewText = document.getElementById('imagePreviewText');
+        
+            // Image preview functionality
+            imageInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                        imagePreviewText.style.display = 'none';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreview.style.display = 'none';
+                    imagePreviewText.style.display = 'block';
+                }
+            });
+        
+            // Form submission with debugging
+            spaForm.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission
+                console.log('Form submission intercepted'); // Debug: Confirm this runs
+        
+                let formData = new FormData(spaForm);
+                console.log('Form action URL:', spaForm.action); // Debug: Check the URL
+        
+                // fetch(spaForm.action, {
+                //     method: 'POST',
+                //     body: formData,
+                //     headers: {
+                //         'X-Requested-With': 'XMLHttpRequest' // Indicate AJAX request
+                //     }
+                // })
+                // .then(response => {
+                //     console.log('Response received:', response); // Debug: Check response
+                //     if (!response.ok) {
+                //         throw new Error('Network response was not ok');
+                //     }
+                //     return response.json(); // Parse JSON response
+                // })
+                // .then(data => {
+                //     console.log('Parsed data:', data); // Debug: Log the parsed response
+        
+                //     if (data.status === 'success') {
+                //         Swal.fire({
+                //             icon: 'success',
+                //             title: 'Success!',
+                //             text: data.message
+                //         });
+                //         // Add the new item to the list (if applicable)
+                //         addListItem(
+                //             formData.get('name'),
+                //             formData.get('fromTime'),
+                //             formData.get('toTime'),
+                //             formData.get('description'),
+                //             document.getElementById('image').files[0]
+                //         );
+        
+                //         // Reset form
+                //         spaForm.reset();
+                //         imagePreview.style.display = 'none';
+                //         imagePreviewText.style.display = 'block';
+                //     } else {
+                //         Swal.fire({
+                //             icon: 'error',
+                //             title: 'Error!',
+                //             text: data.message
+                //         });
+                //     }
+                // })
+                // .catch(error => {
+                //     console.error('Fetch error:', error); // Debug: Log any errors
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Oops...',
+                //         text: 'Something went wrong! Please try again.'
+                //     });
+                // });
+            });
+        });
+        
+        // Function to format time for display
+        function formatTime(time) {
+            if (!time) return '--:--';
+            const [hours, minutes] = time.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const formattedHour = hour % 12 || 12;
+            return `${formattedHour}:${minutes} ${ampm}`;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceForm = document.getElementById('serviceForm');
+            const iconUpload = document.getElementById('iconUpload');
+            const imageUpload = document.getElementById('imageUpload');
+            const iconPreview = document.getElementById('iconPreview');
+            const imagePreview = document.getElementById('imagePreview');
+            const resetBtn = document.getElementById('resetBtn');
+
+            // Preview functions
+            function handleFilePreview(file, previewElement, isIcon) {
+                if (file) {
+                    // Validate file size
+                    const maxSize = isIcon ? 1024 * 1024 : 5 * 1024 * 1024;
+                    if (file.size > maxSize) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'File Too Large',
+                            text: `File size must be less than ${isIcon ? '1MB' : '5MB'}`
+                        });
+                        return false;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewElement.innerHTML = `<img src="${e.target.result}" class="img-fluid ${isIcon ? 'icon-img' : 'preview-img'}" alt="preview">`;
+                    };
+                    reader.readAsDataURL(file);
+                    return true;
+                }
+                return false;
+            }
+
+            // File upload previews
+            iconUpload.addEventListener('change', function() {
+                handleFilePreview(this.files[0], iconPreview, true);
+            });
+
+            imageUpload.addEventListener('change', function() {
+                handleFilePreview(this.files[0], imagePreview, false);
+            });
+
+            // Form submission
+            serviceForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(serviceForm);
+
+                // Show loading state
+                const submitBtn = serviceForm.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+                submitBtn.disabled = true;
+
+                fetch('/admin-panel/save-service/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: data.message
+                        });
+                        serviceForm.reset();
+                        iconPreview.innerHTML = '<i class="fas fa-upload fa-2x text-muted"></i>';
+                        imagePreview.innerHTML = '<i class="fas fa-image fa-3x text-muted"></i>';
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: data.message
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong! Please try again.'
+                    });
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                    // Reset button state
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                });
+
+                // Manually trigger the form submission event
+                const submitEvent = new Event('submit', {
+                    bubbles: true,
+                    cancelable: true,
+                });
+                serviceForm.dispatchEvent(submitEvent);
+            });
+
+            // Reset button handler
+            resetBtn.addEventListener('click', function() {
+                serviceForm.reset();
+                iconPreview.innerHTML = '<i class="fas fa-upload fa-2x text-muted"></i>';
+                imagePreview.innerHTML = '<i class="fas fa-image fa-3x text-muted"></i>';
+            });
+        });
+        
+
+        // document.addEventListener("DOMContentLoaded", function () {
+        //     const aboutUsForm = document.getElementById("aboutUsForm");
+        //     const fileUpload = document.getElementById("file-upload");
+        //     const titleInput = document.getElementById("title");
+        //     const descriptionInput = document.getElementById("description");
+        //     const fileName = document.getElementById("file-name");
+        //     const previewImage = document.getElementById("preview-image");
+    
+        //     // Show selected file name
+        //     fileUpload.addEventListener("change", () => {
+        //         const file = fileUpload.files[0];
+        //         fileName.textContent = file ? file.name : "No file chosen";
+    
+        //         // Image preview logic
+        //         if (file) {
+        //             const reader = new FileReader();
+        //             reader.onload = function (e) {
+        //                 previewImage.src = e.target.result;
+        //                 previewImage.style.display = "block";
+        //             };
+        //             reader.readAsDataURL(file);
+        //         } else {
+        //             previewImage.src = "";
+        //             previewImage.style.display = "none";
+        //         }
+        //     });
+    
+        //     // Submit handler
+        //     aboutUsForm.addEventListener("submit", function (e) {
+        //         e.preventDefault();
+        //         console.log("Form submission initiated.");
+
+        //         // Basic validations
+        //         if (fileUpload.files.length === 0) {
+        //             Swal.fire({
+        //                 icon: "error",
+        //                 title: "Oops...",
+        //                 text: "Please upload an image before submitting!",
+        //             });
+        //             return;
+        //         }
+    
+        //         if (!titleInput.value.trim()) {
+        //             Swal.fire({
+        //                 icon: "error",
+        //                 title: "Validation Error",
+        //                 text: "Title is required!",
+        //             });
+        //             return;
+        //         }
+    
+        //         if (!descriptionInput.value.trim()) {
+        //             Swal.fire({
+        //                 icon: "error",
+        //                 title: "Validation Error",
+        //                 text: "Description is required!",
+        //             });
+        //             return;
+        //         }
+    
+        //         const formData = new FormData(aboutUsForm);
+        //         console.log("FormData created.");
+
+        //         // Optional loading state
+        //         Swal.fire({
+        //             title: "Submitting...",
+        //             didOpen: () => Swal.showLoading(),
+        //             allowOutsideClick: false,
+        //             allowEscapeKey: false,
+        //             showConfirmButton: false
+        //         });
+    
+        //         fetch("/admin-panel/save-about-us/", {
+        //             method: "POST",
+        //             body: formData,
+        //             headers: {
+        //                 "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+        //             },
+        //         })
+        //         .then((response) => {
+        //             if (!response.ok) {
+        //                 throw new Error("Network response was not OK");
+        //             }
+        //             return response.json();
+        //         })
+        //         .then((data) => {
+        //             if (data.success) {
+        //                 Swal.fire({
+        //                     icon: "success",
+        //                     title: "Success!",
+        //                     text: data.message,
+        //                 }).then(() => {
+        //                     aboutUsForm.reset();
+        //                     resetImagePreview();
+        //                 });
+        //             } else {
+        //                 console.error("Server returned error:", data.errors);
+        //                 Swal.fire({
+        //                     icon: "error",
+        //                     title: "Error!",
+        //                     text: data.message,
+        //                 });
+        //             }
+        //         })
+        //         .catch((error) => {
+        //             console.error("Fetch error:", error);
+        //             Swal.fire({
+        //                 icon: "error",
+        //                 title: "Oops...",
+        //                 text: "Something went wrong! Please check console.",
+        //             });
+        //         });
+        //     });
+    
+        //     // Reset image preview
+        //     function resetImagePreview() {
+        //         fileName.textContent = "No file chosen";
+        //         fileUpload.value = "";
+        //         previewImage.src = "";
+        //         previewImage.style.display = "none";
+        //     }
+    
+        //     // Global JS error catcher
+        //     window.addEventListener("error", function (e) {
+        //         console.error("Global JS Error:", e.message);
+        //     });
+    
+        //     // Reset button functionality
+        //     document.getElementById("resetBtn").addEventListener("click", function () {
+        //         aboutUsForm.reset();
+        //         resetImagePreview();
+        //     });
+        // });
+    
+// document.addEventListener("DOMContentLoaded", function () {
+//     const aboutUsForm = document.getElementById("aboutUsForm");
+//     if (!aboutUsForm) {
+//         console.error("Form not found!");
+//         return;
+//     }
+
+//     const fileUpload = document.getElementById("file-upload");
+//     const titleInput = document.getElementById("title");
+//     const descriptionInput = document.getElementById("description");
+//     const fileName = document.getElementById("file-name");
+
+//     aboutUsForm.addEventListener("submit", function (e) {
+//         e.preventDefault();
+
+//         console.log("Submit event triggered");
+
+//         // Validate File Input
+//         if (fileUpload.files.length === 0) {
+//             Swal.fire({
+//                 icon: "error",
+//                 title: "Oops...",
+//                 text: "Please upload an image before submitting!",
+//             });
+//             return;
+//         }
+
+//         // Validate Title
+//         if (!titleInput.value.trim()) {
+//             Swal.fire({
+//                 icon: "error",
+//                 title: "Validation Error",
+//                 text: "Title is required!",
+//             });
+//             return;
+//         }
+
+//         // Validate Description
+//         if (!descriptionInput.value.trim()) {
+//             Swal.fire({
+//                 icon: "error",
+//                 title: "Validation Error",
+//                 text: "Description is required!",
+//             });
+//             return;
+//         }
+
+//         let formData = new FormData(aboutUsForm);
+//         console.log("FormData prepared, sending fetch...");
+
+//         fetch("/admin-panel/about-us-submit/", {
+//             method: "POST",
+//             body: formData,
+//             headers: {
+//                 "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+//             },
+//         })
+//         .then((response) => {
+//             console.log("Fetch response received:", response);
+//             return response.json();
+//         })
+//         .then((data) => {
+//             console.log("Data received:", data);
+//             if (data.success) {
+//                 Swal.fire({
+//                     icon: "success",
+//                     title: "Success!",
+//                     text: data.message,
+//                 }).then(() => {
+//                     aboutUsForm.reset();
+//                     resetImagePreview();
+//                 });
+//             } else {
+//                 Swal.fire({
+//                     icon: "error",
+//                     title: "Error!",
+//                     text: data.message,
+//                 });
+//             }
+//         })
+//         .catch((error) => {
+//             console.error("Fetch error:", error);
+//             Swal.fire({
+//                 icon: "error",
+//                 title: "Oops...",
+//                 text: "Something went wrong! Please try again.",
+//             });
+//         });
+//     });
+
+//     function resetImagePreview() {
+//         fileName.textContent = "No file chosen";
+//         fileUpload.value = "";
+//         document.getElementById("preview-image").src = "#";
+//     }
+// });

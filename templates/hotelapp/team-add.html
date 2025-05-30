@@ -1,7 +1,98 @@
 {% extends 'base.html' %}
+{% block extra_head %}
+
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<style>
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    max-width: 300px;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.notification.success {
+    background-color: #28a745;
+}
+
+.notification.error {
+    background-color: #dc3545;
+}
+
+.notification.warning {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.notification.info {
+    background-color: #17a2b8;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
 {% load static %}
+
+<style>
+    .error-message {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+        padding-left: 5px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+        position: relative;
+    }
+    .form-control.is-invalid {
+        border-color: #dc3545;
+        background-image: none;
+    }
+    .form-control.is-valid {
+        border-color: #28a745;
+        background-image: none;
+    }
+    .invalid-feedback {
+        display: block;
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+</style>
+
+<!-- {% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if not subscription_user %}
+    <div class="alert alert-warning" role="alert">
+        You don't have an active subscription. Please <a href="{% url 'subscription:plans' %}">subscribe</a> to continue.
+    </div>
+{% elif not subscription_plan %}
+    <div class="alert alert-warning" role="alert">
+        No subscription plan found. Please <a href="{% url 'subscription:plans' %}">select a plan</a> to continue.
+    </div>
+{% else %} -->
 		<!-- main content -->
 		<div class="lh-main-content">
 			<div class="container-fluid">
@@ -11,19 +102,23 @@
 						<h5>Add Members</h5>
 						<ul>
 							<li><a href="{% url 'admin-panel:index' %}">Luxurious</a></li>
+							<li> <i class="fas fa-angle-right pl3 pr3"></i></li>
 							<li>Team Add</li>
 						</ul>
 					</div>
 				</div>
-				<form class="lh-profile-add" action="{% url 'admin-panel:add_team_member' %}" method="post" enctype="multipart/form-data">
+				<!-- <div class="subscription-info alert {% if current_members >= max_members %}alert-warning{% else %}alert-info{% endif %}">
+					Current Team Members: {{ current_members }} / {{ max_members }}
+				</div> -->
+				<form class="lh-profile-add" action="{% url 'admin-panel:add_team_member' %}" method="post" enctype="multipart/form-data" novalidate>
 					{% csrf_token %}
 					{% if form.non_field_errors %}
-                <div class="alert alert-danger">
-                    {% for error in form.non_field_errors %}
-                        {{ error }}
-                    {% endfor %}
-                </div>
-            {% endif %}
+						<div class="alert alert-danger">
+							{% for error in form.non_field_errors %}
+								{{ error }}
+							{% endfor %}
+						</div>
+					{% endif %}
 					<div class="row">
 						<div class="col-xxl-3 col-xl-4 col-md-12">
 							<div class="team-sticky-bar">
@@ -34,57 +129,46 @@
 												<div class="lh-team-block-detail">
 													<div class="profile-img">
 														<div class="avatar-preview">
-															<div class="t-img" id="imagePreview"
-																style="background-image: url('{% static 'assets/img/user/thumb.jpg' %}')">
+															{% static "assets/img/user/thumb.jpg" as thumb_url %}
+															<div class="t-img" id="imagePreview" style="background-image: url('{{ thumb_url }}');">
 															</div>
 														</div>
-														<span class="tag-label online"></span>
 														<div class="avatar-edit">
-															<input type='file' id="imageUpload" name="image"
-																accept="image/*">
+															<input type="file" id="imageUpload" name="image" accept="image/*">
 															<label for="imageUpload"></label>
+															{% if form.image.errors %}
+																<span class="error-message">{{ form.image.errors|join:", " }}</span>
+															{% endif %}
 														</div>
 													</div>
 													<div class="form-group p-b-15">
-														<input type="text" class="form-control" id="name_profile" name="name"
-															placeholder="Enter name">
+														<input type="text" class="form-control {% if form.name.errors %}is-invalid{% endif %}" id="name_profile" name="name"
+															placeholder="Enter name" value="{{ form.name.value|default:'' }}">
 														{% if form.name.errors %}
-															<div class="text-danger">{{ form.name.errors|join:", " }}</div>
+															<div class="invalid-feedback">
+																{{ form.name.errors|join:", " }}
+															</div>
 														{% endif %}
 													</div>
-													<div class="form-group p-b-15" >
-														<input type="text" class="form-control" id="designation" name="designation"
-															placeholder="Enter Designation">
-														{% if form.designation.errors %}
-															<div class="text-danger">{{ form.designation.errors|join:", " }}</div>
-														{% endif %}
-
+													<div class="form-group p-b-15">
+														<label for="designation">Select Team Designation</label>
+														<select class="form-control" id="designation" name="designation">
+															<option value="">-- Select Designation --</option>
+															{% for designation in team_designations %}
+																<option value="{{ designation.id }}">{{ designation.designation }}</option>
+															{% endfor %}
+														</select>
 													</div>
-
-													<div class="lh-settings">	
-														<button type="submit" class="lh-btn-primary m-r-10" style="width: 100%;">Add Profile</button>
-														<div class="dropdown" title="Status">
-															<button class="btn btn-secondary dropdown-toggle"
-																type="button" data-bs-toggle="dropdown"
-																aria-expanded="false" style="width: 40px;">
-																<i class="mdi mdi-dots-vertical"></i>
-															</button>
-															<ul class="dropdown-menu">
-																<li><a class="dropdown-item" href="#"><span
-																			class="tag-label online"></span>Online</a>
-																</li>
-																<li><a class="dropdown-item" href="#"><span
-																			class="tag-label offline"></span>Offline</a>
-																</li>
-																<li><a class="dropdown-item" href="#"><span
-																			class="tag-label busy"></span>Busy</a></li>
-															</ul>
-														</div>
-													</div>
+													
 												</div>
 												<div class="form-group">
-													<textarea class="form-control" id="profile_detail" rows="9" name="description"
-														placeholder="Enter Details"></textarea>
+													<textarea class="form-control {% if form.description.errors %}is-invalid{% endif %}" id="profile_detail" rows="9" name="description"
+														placeholder="Enter Details">{{ form.description.value|default:'' }}</textarea>
+													{% if form.description.errors %}
+														<div class="invalid-feedback">
+															{{ form.description.errors|join:", " }}
+														</div>
+													{% endif %}
 												</div>
 											</div>
 										</div>
@@ -97,24 +181,23 @@
 								<div class="lh-card-content lh-card-team team-details">
 									<div class="row">
 										<div class="col-sm-12">
-											<h3>Account Details</h3>
+											<h3>Team Details</h3>
 											<div class="lh-team-detail">
-												<p>From your account you can easily view and track Deals. You can manage
-													and change your account information like address, contact
-													information
-													and history of deals.</p>
+												
 											</div>
 										</div>
 										<div class="col-md-6 col-sm-12">
 											<div class="lh-team-detail">
 												<h6>E-mail address</h6>
 												<ul>
-													<li><strong>Email 1 : </strong>
+					<li><strong>Email 1<span style="color: red;    font-size: 15px;">*</span> : </strong>
 														<div class="form-group">
-															<input type="email" class="form-control" name="email1"
-																placeholder="Enter email" >
+															<input type="email" class="form-control {% if form.email1.errors %}is-invalid{% endif %}" name="email1"
+																placeholder="Enter email" value="{{ form.email1.value|default:'' }}">
 															{% if form.email1.errors %}
-																<div class="text-danger">{{ form.email1.errors|join:", " }}</div>
+																<div class="invalid-feedback">
+																	{{ form.email1.errors|join:", " }}
+																</div>
 															{% endif %}
 														</div>
 													</li>
@@ -132,12 +215,14 @@
 											<div class="lh-team-detail">
 												<h6>Contact nubmer</h6>
 												<ul>
-													<li><strong>Phone Nubmer 1 : </strong>
+<li><strong>Phone Nubmer 1<span style="color: red;    font-size: 15px;">*</span> : </strong>
 														<div class="form-group">
-															<input type="text" class="form-control" name="phone1"
-																placeholder="Enter number">
+															<input type="text" class="form-control {% if form.phone1.errors %}is-invalid{% endif %}" name="phone1"
+																placeholder="Enter number" value="{{ form.phone1.value|default:'' }}">
 															{% if form.phone1.errors %}
-																<div class="text-danger">{{ form.phone1.errors|join:", " }}</div>
+																<div class="invalid-feedback">
+																	{{ form.phone1.errors|join:", " }}
+																</div>
 															{% endif %}
 														</div>
 													</li>
@@ -153,7 +238,7 @@
 										</div>
 										<div class="col-md-6 col-sm-12">
 											<div class="lh-team-detail">
-												<h6>Home Address</h6>
+			<h6>Home Address<span style="color: red;    font-size: 15px;">*</span></h6>
 												<ul>
 													<li>
 														<textarea class="form-control" id="profile_address1" rows="2" name="address1"
@@ -165,7 +250,7 @@
 										</div>
 										<div class="col-md-6 col-sm-12">
 											<div class="lh-team-detail">
-												<h6>Current Address</h6>
+												<h6>Current Address<span style="color: red;    font-size: 15px;">*</span></h6>
 												<ul>
 													<li>
 														<textarea class="form-control" id="profile_address2" rows="2" name="address2"
@@ -178,39 +263,47 @@
 											<div class="lh-team-detail">
 												<h6>Bank Accounts</h6>
 												<ul>
-													<li><strong>Account Name : </strong>
+				<li><strong>Account Name<span style="color: red;    font-size: 15px;">*</span> : </strong>
 														<div class="form-group">
-															<input type="text" class="form-control" name="account_name"
-																placeholder="Enter acc name" >
+															<input type="text" class="form-control {% if form.account_name.errors %}is-invalid{% endif %}" name="account_name"
+																placeholder="Enter acc name" value="{{ form.account_name.value|default:'' }}">
 															{% if form.account_name.errors %}
-																<div class="text-danger">{{ form.account_name.errors|join:", " }}</div>
+																<div class="invalid-feedback">
+																	{{ form.account_name.errors|join:", " }}
+																</div>
 															{% endif %}
 														</div>
 													</li>
-													<li><strong>Account Number : </strong>
+	<li><strong>Account Number<span style="color: red;    font-size: 15px;">*</span>: </strong>
 														<div class="form-group">
-															<input type="text" class="form-control" name="account_number"
-																placeholder="Enter acc number" >
+															<input type="text" class="form-control {% if form.account_number.errors %}is-invalid{% endif %}" name="account_number"
+																placeholder="Enter acc number" value="{{ form.account_number.value|default:'' }}">
 															{% if form.account_number.errors %}
-																<div class="text-danger">{{ form.account_number.errors|join:", " }}</div>
+																<div class="invalid-feedback">
+																	{{ form.account_number.errors|join:", " }}
+																</div>
 															{% endif %}
 														</div>
 													</li>
-													<li><strong>IFSC Code : </strong>
+		<li><strong>IFSC Code<span style="color: red;    font-size: 15px;">*</span> : </strong>
 														<div class="form-group">
-															<input type="text" class="form-control" name="ifsc_code"
-																placeholder="Enter acc ifsc">
+															<input type="text" class="form-control {% if form.ifsc_code.errors %}is-invalid{% endif %}" name="ifsc_code"
+																placeholder="Enter acc ifsc" value="{{ form.ifsc_code.value|default:'' }}">
 															{% if form.ifsc_code.errors %}
-																<div class="text-danger">{{ form.ifsc_code.errors|join:", " }}</div>
+																<div class="invalid-feedback">
+																	{{ form.ifsc_code.errors|join:", " }}
+																</div>
 															{% endif %}
 														</div>
 													</li>
-													<li><strong>Bank name : </strong>
+		<li><strong>Bank name<span style="color: red;    font-size: 15px;">*</span> : </strong>
 														<div class="form-group">
-															<input type="text" class="form-control" name="bank_name"
-																placeholder="Enter bank name"	>
+															<input type="text" class="form-control {% if form.bank_name.errors %}is-invalid{% endif %}" name="bank_name"
+																placeholder="Enter bank name" value="{{ form.bank_name.value|default:'' }}">
 															{% if form.bank_name.errors %}
-																<div class="text-danger">{{ form.bank_name.errors|join:", " }}</div>
+																<div class="invalid-feedback">
+																	{{ form.bank_name.errors|join:", " }}
+																</div>
 															{% endif %}
 														</div>
 													</li>
@@ -252,21 +345,24 @@
 											<div class="lh-team-detail">
 												<h6>Aadhar Info</h6>
 												<ul>
-													<li><strong>Aadhar No : </strong>
+<li><strong>Aadhar No<span style="color: red;    font-size: 15px;">*</span> : </strong>
 														<div class="form-group">
-															<input type="text" class="form-control" name="aadhar_no"
-																placeholder="Aadhar No ">
+															<input type="text" class="form-control {% if form.aadhar_no.errors %}is-invalid{% endif %}" name="aadhar_no"
+																placeholder="Aadhar No" value="{{ form.aadhar_no.value|default:'' }}">
 															{% if form.aadhar_no.errors %}
-																<div class="text-danger">{{ form.aadhar_no.errors|join:", " }}</div>
+																<div class="invalid-feedback">
+																	{{ form.aadhar_no.errors|join:", " }}
+																</div>
 															{% endif %}
 														</div>
 													</li>
-													<li><strong>Aadhar File : </strong>
+				<li><strong>Aadhar File<span style="color: red;    font-size: 15px;">*</span> : </strong>
 														<div class="form-group">
-															<input type="file" class="form-control" name="aadhar_file"
-																placeholder="No file Choosen" >
-																{% if form.aadhar_file.errors %}
-																<div class="text-danger">{{ form.aadhar_file.errors|join:", " }}</div>
+															<input type="file" class="form-control" name="aadhar_file">
+															{% if form.aadhar_file.errors %}
+																<div class="invalid-feedback">
+																	{{ form.aadhar_file.errors|join:", " }}
+																</div>
 															{% endif %}
 														</div>
 													</li>
@@ -277,22 +373,25 @@
 											<div class="lh-team-detail">
 												<h6>PAN Info</h6>
 												<ul>
-													<li><strong>PAN NO : </strong>
+	<li><strong>PAN NO<span style="color: red;    font-size: 15px;">*</span> : </strong>
 														<div class="form-group">
-															<input type="text" class="form-control" name="pan_no"
-																placeholder="PAN No">
-																{% if form.pan_no.errors %}
-																<div class="text-danger">{{ form.pan_no.errors|join:", " }}</div>
+															<input type="text" class="form-control {% if form.pan_no.errors %}is-invalid{% endif %}" name="pan_no"
+																placeholder="PAN No" value="{{ form.pan_no.value|default:'' }}">
+															{% if form.pan_no.errors %}
+																<div class="invalid-feedback">
+																	{{ form.pan_no.errors|join:", " }}
+																</div>
 															{% endif %}
 														</div>
 													</li>
-													<li><strong>PAN File : </strong>
+		<li><strong>PAN File<span style="color: red;    font-size: 15px;">*</span>: </strong>
 														<div class="form-group">
-															<input type="file" class="form-control" name="pan_file"
-																	placeholder="No File Choosen" >
-																	{% if form.pan_file.errors %}
-																	<div class="text-danger">{{ form.pan_file.errors|join:", " }}</div>
-																{% endif %}
+															<input type="file" class="form-control" name="pan_file">
+															{% if form.pan_file.errors %}
+																<div class="invalid-feedback">
+																	{{ form.pan_file.errors|join:", " }}
+																</div>
+															{% endif %}
 														</div>
 													</li>
 												</ul>
@@ -303,15 +402,18 @@
 							</div>
 						</div>
 					</div>
+						<div style="display: flex; justify-content:center;padding-bottom: 15px;">
+						<button type="submit" class="btn btn-primary">Submit</button></div>
+
 				</form>
 			</div>
 		</div>
 
 		<!-- Footer -->
 		
-	</main>
+{% endif %}
 
-	{% endblock %}
+{% endblock %}
 	
 	<!-- {% block extra_js %}
 <script>
@@ -333,5 +435,232 @@
     {% endif %}
 </script>
 {% endblock %} -->
+
+{% block script %}
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="{% static '/assets/js/main.js' %}"></script>
+<script>
+	$(document).ready(function() {
+		// console.log(typeof $.fn.tooltip); // Should log "function"
+		// if (typeof $.fn.tooltip === 'function') {
+		// 	$('[data-toggle="tooltip"]').tooltip(); // Initialize tooltips
+		// } else {
+		// 	console.error('Tooltip function is not available.');
+		// }
+	});
+</script>
+
+<script>
+    // Real-time validation
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const inputs = form.querySelectorAll('input, textarea');
+        
+        inputs.forEach(input => {
+            // Ensure an error div exists directly after each field
+            if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('invalid-feedback')) {
+                const errorDiv = document.createElement('div');
+                errorDiv.classList.add('invalid-feedback');
+                input.parentNode.insertBefore(errorDiv, input.nextSibling);
+            }
+
+            input.addEventListener('input', function() {
+                validateField(this);
+            });
+
+            input.addEventListener('blur', function() {
+                validateField(this);
+            });
+        });
+    });
+
+    function validateField(field) {
+        // Do not clear field.value; just update classes and error text.
+        const errorDiv = field.nextElementSibling;
+        const value = field.value.trim();
+        let isValid = true;
+        let errorMessage = '';
+
+        // Remove previous valid/invalid classes; reset errorDiv display (but DO NOT clear value)
+        field.classList.remove('is-invalid', 'is-valid');
+        errorDiv.style.display = 'none';
+
+        // Validation rules for various fields
+        switch(field.name) {
+            case 'name':
+                if (value.length < 3) {
+                    isValid = false;
+                    errorMessage = 'Name must be at least 3 characters';
+                }
+                break;
+            case 'email1':
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                    isValid = false;
+                    errorMessage = 'Please enter a valid email address';
+                }
+                break;
+            case 'phone1':
+                if (!/^\+?1?\d{9,15}$/.test(value)) {
+                    isValid = false;
+                    errorMessage = 'Please enter a valid phone number';
+                }
+                break;
+            case 'aadhar_no':
+                if (!/^\d{12}$/.test(value)) {
+                    isValid = false;
+                    errorMessage = 'Aadhar number must be 12 digits';
+                }
+                break;
+            case 'pan_no':
+                if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(value)) {
+                    isValid = false;
+                    errorMessage = 'Invalid PAN number format';
+                }
+                break;
+            // Added validations for bank account details
+            case 'account_number':
+                if (!/^\d{9,18}$/.test(value)) {
+                    isValid = false;
+                    errorMessage = 'Account number must be between 9 and 18 digits';
+                }
+                break;
+            case 'ifsc_code':
+                if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(value)) {
+                    isValid = false;
+                    errorMessage = 'Invalid IFSC code format (e.g., HDFC0123456)';
+                }
+                break;
+            case 'bank_name':
+                if (value.length < 3) {
+                    isValid = false;
+                    errorMessage = 'Bank name must be at least 3 characters';
+                } else if (!/^[A-Za-z\s]+$/.test(value)) {
+                    isValid = false;
+                    errorMessage = 'Bank name can only contain letters and spaces';
+                }
+                break;
+            case 'account_name':
+                if (value.length < 3) {
+                    isValid = false;
+                    errorMessage = 'Account name must be at least 3 characters';
+                } else if (!/^[A-Za-z\s]+$/.test(value)) {
+                    isValid = false;
+                    errorMessage = 'Account name can only contain letters and spaces';
+                }
+                break;
+            // Add other field validations as needed
+        }
+
+        if (!isValid && value !== '') {
+            field.classList.add('is-invalid');
+            errorDiv.textContent = errorMessage;
+            errorDiv.style.display = 'block';
+        } else if (value !== '') {
+            field.classList.add('is-valid');
+        }
+    }
+
+    // Handle form submission
+    form.addEventListener('submit', function(e) {
+        let hasErrors = false;
+        const inputs = form.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            validateField(input);
+            if (input.classList.contains('is-invalid')) {
+                hasErrors = true;
+            }
+        });
+
+        if (hasErrors) {
+            e.preventDefault();
+            // Optionally, scroll to the first error
+            const firstError = form.querySelector('.is-invalid');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+function showNotification(message, type) {
+    // Use SweetAlert to show notifications
+    if (type === 'success') {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: message,
+            confirmButtonText: 'OK'
+        });
+    } else if (type === 'error') {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: message,
+            confirmButtonText: 'OK'
+        });
+    } else if (type === 'warning') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Warning!',
+            text: message,
+            confirmButtonText: 'OK'
+        });
+    }
+}
+
+// {% if messages %}
+//     <script>
+//         {% for message in messages %}
+//             showNotification("{{ message|safe }}", "{{ message.level_tag }}");
+//         {% endfor %}
+//     </script>
+// {% endif %}
+<script>
+// Rest of your event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.lh-profile-add');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;  // Get CSRF token
+
+        fetch("{% url 'admin-panel:add_team_member' %}", {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrfToken,  // Include CSRF token
+            },
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                showNotification(data.message, 'error');
+            } else {
+                showNotification('Team member added successfully!', 'success');
+                form.reset();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('An error occurred while submitting the form', 'error');
+        });
+    });
+});
+
+
+
+</script>
+
+{% endblock %}
+
 
 

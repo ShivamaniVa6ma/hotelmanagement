@@ -1,0 +1,2832 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Best Luxurious Hotel Booking Template.">
+    <meta name="keywords"
+        content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern">
+    <meta name="author" content="ashishmaraviya">
+
+	<title>Luxurious - Hotel Booking HTML Template + Admin Dashboard</title>
+
+	<!-- App favicon -->
+	<link rel="shortcut icon" href="assets/img/favicon/favicon.png">
+
+	<!-- Icon CSS -->
+	<link href="{% static 'assets/css/vendor/materialdesignicons.min.css' %}" rel="stylesheet">
+	<link href="{% static 'assets/css/vendor/remixicon.css' %}" rel="stylesheet">
+
+	<!-- Vendor CSS -->
+	<link href="{% static 'assets/css/vendor/datatables.bootstrap5.min.css' %}"" rel='stylesheet'>
+	<link href="{% static 'assets/css/vendor/responsive.datatables.min.css' %}" rel='stylesheet'>
+	<link href="{% static 'assets/css/vendor/daterangepicker.css' %}" rel='stylesheet'>
+	<link href="{% static 'assets/css/vendor/simplebar.css' %}" rel="stylesheet">
+	<link href="{% static 'assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'assets/css/vendor/apexcharts.css' %}" rel="stylesheet">
+	<link href="{% static 'assets/css/vendor/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet">
+
+	<!-- Main CSS -->
+	<link id="mainCss" href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+
+	<!-- Add this CSS to your stylesheet -->
+	<style>
+	.delete-modal .modal-content {
+		border: none;
+		/* padding: 2rem 1rem; */
+		border-radius: 15px;
+		
+	}
+
+	.delete-modal .delete-icon {
+		width: 85px;
+		height: 85px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #ffe4e4;
+		border-radius: 50%;
+		margin: 0 auto 1.5rem;
+	}
+
+	.delete-modal .delete-icon i {
+		font-size: 3rem;
+		color: #ff3b3b;
+	}
+
+	.delete-modal h4 {
+		color: #343434;
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.delete-modal p {
+		color: #666;
+		margin-bottom: 2rem;
+	}
+
+	.delete-modal .button-row {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+	}
+
+	.delete-modal .btn {
+		min-width: 120px;
+		padding: 0.6rem 1.5rem;
+		border-radius: 50px;
+		font-weight: 500;
+	}
+
+	.delete-modal .btn-danger {
+		background: #ff3b3b;
+		border-color: #ff3b3b;
+	}
+
+	.delete-modal .btn-danger:hover {
+		background: #ff1c1c;
+		border-color: #ff1c1c;
+	}
+
+	.delete-modal .btn-secondary {
+		background: #e4e6ef;
+		border-color: #e4e6ef;
+		color: #666;
+	}
+
+	.delete-modal .btn-secondary:hover {
+		background: #d5d7e3;
+		border-color: #d5d7e3;
+		color: #444;
+	}
+
+	.search-wrapper {
+		margin-right: 15px;
+		display: inline-block;
+	}
+
+	.search-box {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+
+	.search-input {
+		width: 280px;
+		height: 40px;
+		padding: 10px 45px 10px 20px;
+		border: 2px solid #e4e6ef;
+		border-radius: 50px;
+		font-size: 14px;
+		transition: all 0.3s ease;
+		background: #f5f8fa;
+	}
+
+	.search-input:focus {
+		border-color: darkblue;
+		background: #fff;
+		outline: none;
+		box-shadow: 0 0 0 3px rgba(0, 158, 247, 0.1);
+	}
+
+	.search-button {
+		position: absolute;
+		right: 5px;
+		height: 34px;
+		width: 34px;
+		border: none;
+		background: transparent;
+		border-radius: 50%;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+	}
+
+	.search-button i {
+		font-size: 18px;
+		color: #5e6278;
+		transition: all 0.3s ease;
+	}
+
+	.search-button:hover {
+		background: #009ef7;
+	}
+
+	.search-button:hover i {
+		color: #fff;
+	}
+
+	/* Responsive adjustments */
+	@media (max-width: 768px) {
+		.search-input {
+			width: 200px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.search-wrapper {
+			margin-right: 10px;
+		}
+		
+		.search-input {
+			width: 160px;
+		}
+	}
+
+	/*room type settings*/
+	.booking-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+            border-color: #86b7fe;
+        }
+
+        .btn-submit {
+            background: darkblue;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            border: none;
+            /* width: 100%; */
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: darkblue;
+            transform: translateY(-2px);
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .button-wrapper{
+            display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto; /* Center the div itself */
+        }
+	/*room type settings*/
+
+	/*logo settings styles*/
+	.main-container {
+            min-height: 100vh;
+            padding: 2rem 0;
+			
+        }
+
+        .settings-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .settings-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 1.5rem;
+            border-bottom: none;
+        }
+
+        .header-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: white;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .favicon-preview {
+            max-width: 48px;
+            max-height: 48px;
+            border-radius: 8px;
+        }
+
+        .logo-card {
+            border-radius: 12px;
+            border: 2px dashed #dee2e6;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 1rem;
+        }
+
+        .logo-card:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .dark-mode {
+            background-color: var(--dark-bg);
+            color: white;
+        }
+
+        .dark-mode .logo-card {
+            background: #2d2d2d;
+            border-color: #404040;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .file-upload-wrapper {
+			display: flex;
+			justify-content: center;
+
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .custom-file-upload {
+            display: block;
+            padding: 1rem;
+            /* background: #f8f9fa; */
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .custom-file-upload:hover {
+            background: #e9ecef;
+        }
+
+        .upload-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 150px;
+            /* background: #f8f9fa; */
+            border-radius: 8px;
+            margin-top: 1rem;
+            padding: 1rem;
+        }
+
+        .btn-primary {
+            background: darkblue;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .success-animation {
+            animation: successPulse 0.5s ease-out;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .settings-card {
+                margin: 1rem;
+            }
+            
+            .preview-image {
+                max-width: 150px;
+                max-height: 150px;
+            }
+            
+            .card-header {
+                padding: 1rem;
+            }
+            
+            .header-icon {
+                font-size: 1.5rem;
+            }
+        }
+
+		.dark-mode {
+			
+    background-color: darkblue;
+    color: white;
+}
+a{
+	text-decoration: none;
+}
+	/*end logo settings styles*/
+
+	/*Calender form styles*/
+	
+	.form-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            background-color: #fff;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        
+        .events-list {
+            margin-top: 2rem;
+        }
+        
+        .event-card {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+	/*end calender form styles*/
+	/*Features styles*/
+	.feature-form-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .form-header {
+            background: darkblue;
+            /* padding: 30px; */
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+        }
+        .feature-icon {
+            font-size: 15px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: darkblue;
+            box-shadow: 0 0 0 0.2rem rgba(26, 115, 232, 0.1);
+        }
+        .feature-preview {
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .feature-preview:hover {
+            border-color: darkblue;
+            background: rgba(26, 115, 232, 0.05);
+        }
+        .feature-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .btn-submit {
+            background:darkblue;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3);
+        }
+        .category-tag {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+			color: darkblue;
+            transition: .4s;
+            border-radius: 34px;
+			height: 30px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 6px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: darkblue;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+	/*end features styles*/
+
+	/*rooms styles*/
+	@media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 95%;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 992px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                max-width: 768px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                max-width: 576px;
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                width: 85%;
+                padding: 10px;
+            }
+        }
+
+        .room-list {
+            margin-bottom: 20px;
+        }
+
+        .room-row {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+			align-items: flex-start;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 576px) {
+            .room-row {
+                flex-direction: column;
+            }
+        }
+
+        .room-row:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .room-number {
+            background: #002B5B;
+            color: white;
+            padding: 6px;
+			padding-left: 10px;
+            border-radius: 8px ;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* min-width: 120px; */
+			width: 100%;
+        }
+
+        @media (max-width: 576px) {
+            .room-number {
+                border-radius: 8px 8px 0 0;
+                width: 100%;
+            }
+        }
+		
+
+        .room-details {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            flex-grow: 1;
+            /* gap: 20px; */
+            flex-wrap: wrap;
+			/* margin-bottom: 20px; */
+        }
+
+        .detail-item {
+            display: flex;
+			align-items: flex-start;
+            gap: 10px;
+			width: 25%;
+            /* flex: 1 1 200px;
+            min-width: 200px; */
+        }
+
+        @media (max-width: 992px) {
+            .detail-item {
+                flex: 1 1 calc(50% - 10px);
+                min-width: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .room-details {
+                gap: 15px;
+                padding: 12px;
+            }
+            
+            .detail-item {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* .icon-circle {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            background: #002B5B;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        } */
+
+        @media (max-width: 768px) {
+            .icon-circle {
+                width: 32px;
+                height: 32px;
+                min-width: 32px;
+            }
+        }
+
+        .detail-content {
+            display: flex;
+            flex-direction: row;
+            gap: 3px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .detail-label {
+            color: #6c757d;
+            font-size: 0.85em;
+            margin-bottom: 0;
+            white-space: nowrap;
+        }
+
+        .detail-value {
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+		
+
+        .settings-btn {
+            background: none;
+            border: none;
+            color: white;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .settings-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .settings-btn {
+                padding: 10px;
+            }
+        }
+
+        .section-title {
+            color: #002B5B;
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #002B5B;
+            font-size: 1.5em;
+        }
+
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.3em;
+                margin: 20px 0 12px;
+            }
+        }
+
+        .action-buttons {
+            display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+            /* gap: 10px; */
+            align-items: center;
+            margin-left: auto;
+            padding: 0 5px;
+        }
+
+        @media (max-width: 576px) {
+            .action-buttons {
+                padding: 10px 15px;
+                justify-content: flex-end;
+                background: #f8f9fa;
+                border-radius: 0 0 8px 8px;
+            }
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+            color: #002B5B;
+        }
+
+        .action-btn:hover {
+            background-color: rgba(0, 43, 91, 0.1);
+        }
+
+        .action-btn.edit:hover {
+            color: #0056b3;
+        }
+
+        .action-btn.delete:hover {
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .action-btn {
+                padding: 10px;
+            }
+        }
+	/*end rooms styles*/
+	
+	/* Add new room styles */
+
+	.custom-card {
+            border: none;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .form-label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .required::after {
+            content: "*";
+            color: red;
+            margin-left: 4px;
+        }
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;
+        }
+        .custom-card-header {
+            background: linear-gradient(45deg, #1a237e, #283593);
+            color: white;
+            /* border-radius: 10px 10px 0 0; */
+        }
+        .btn-submit {
+            background: linear-gradient(45deg, #1a237e, #283593);
+            border: none;
+            padding: 10px 30px;
+        }
+        .btn-submit:hover {
+            background: linear-gradient(45deg, #283593, #1a237e);
+        }
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-right: none;
+        }
+        .form-control:focus {
+            border-color: #1a237e;
+            box-shadow: 0 0 0 0.2rem rgba(26,35,126,0.25);
+        }
+        .bed-type-btn {
+            width: 120px;
+            margin: 5px;
+        }
+        .bed-type-btn.active {
+            background-color: #1a237e;
+            border-color: #1a237e;
+        }
+        .price-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+			
+        }
+        .radio-group {
+            /* border: 1px solid #dee2e6;
+            border-radius: 8px; */
+            padding: 15px;
+        }
+.offcanvas{
+    width: 827px !important;
+	
+}
+
+
+.offcanvas-backdrop {
+	position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+	background-color: none;
+	 
+}
+.offcanvas-backdrop.show {
+    opacity: -1;
+}
+	/*end Add new room styles */
+	</style>
+
+</head>
+
+<body data-lh-mode="light">
+	<main class="wrapper sb-default">
+		<!-- Loader -->
+		<div id="lh-overlay">
+			<div class="lh-ellipsis">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+
+		
+		<!-- Header -->
+		<header class="lh-header">
+			<div class="container-fluid">
+				<div class="lh-header-items">
+					<div class="left-header">
+						<a href="javascript:void(0)" class="lh-toggle-sidebar">
+							<span class="outer-ring">
+								<span class="inner-ring"></span>
+							</span>
+						</a>
+
+
+						<div class="header-search-box">
+							<div class="header-search-drop">
+								<a href="javascript:void(0)" class="open-search"><i class="ri-search-line"></i></a>
+								<form class="lh-search">
+									<input class="search-input" type="text" placeholder="Search...">
+									<a href="javascript:void(0)" class="search-btn"><i class="ri-search-line"></i>
+									</a>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="right-header">
+						<div class="lh-right-tool lh-flag-drop language">
+							<div class="lh-hover-drop">
+								<div class="lh-hover-tool">
+									<img class="flag" src="{% static 'assets/img/flag/us.png' %}" alt="flag">
+								</div>
+								<div class="lh-hover-drop-panel right">
+									<ul>
+										<li><a href="javascript:void(0)"><img class="flag" src="{% static 'assets/img/flag/us.png' %}"
+													alt="flag">English</a></li>
+										<li><a href="javascript:void(0)"><img class="flag" src="{% static 'assets/img/flag/in.png' %}"
+													alt="flag">Hindi</a></li>
+										<li><a href="javascript:void(0)"><img class="flag" src="{% static 'assets/img/flag/de.png' %}"
+													alt="flag"> Deutsch</a></li>
+										<li><a href="javascript:void(0)"><img class="flag" src="{% static 'assets/img/flag/it.png' %}"
+													alt="flag">Italian</a></li>
+										<li><a href="javascript:void(0)"><img class="flag" src="{% static 'assets/img/flag/jp.png' %}"
+													alt="flag">Japanese</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="lh-right-tool apps">
+							<div class="lh-hover-drop">
+								<div class="lh-hover-tool">
+									<i class="ri-apps-2-line"></i>
+								</div>
+								<div class="lh-hover-drop-panel right apps">
+									<h6 class="title">Apps</h6>
+									<ul>
+										<li><a href="javascript:void(0)"><img class="app" src="{% static 'assets/img/apps/1.png' %}"
+													alt="flag">Github</a></li>
+										<li><a href="javascript:void(0)"><img class="app" src="{% static 'assets/img/apps/2.png' %}"
+													alt="flag">Dribbble</a></li>
+										<li><a href="javascript:void(0)"><img class="app" src="{% static 'assets/img/apps/3.png' %}"
+													alt="flag">Dropbox</a></li>
+										<li><a href="javascript:void(0)"><img class="app" src="{% static 'assets/img/apps/4.png' %}"
+													alt="flag">Figma</a></li>
+										<li><a href="javascript:void(0)"><img class="app" src="{% static 'assets/img/apps/5.png' %}"
+													alt="flag">Meta</a></li>
+										<li><a href="javascript:void(0)"><img class="app" src="{% static 'assets/img/apps/6.png' %}"
+													alt="flag">Adsense</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="lh-right-tool display-screen">
+							<a class="lh-screen full" href="javascript:void(0)"><i class="ri-fullscreen-line"></i></a>
+							<a class="lh-screen reset" href="javascript:void(0)"><i
+									class="ri-fullscreen-exit-line"></i></a>
+						</div>
+						<div class="lh-right-tool">
+							<a class="lh-notify" href="javascript:void(0)">
+								<i class="ri-notification-2-line"></i>
+								<span class="label"></span>
+							</a>
+						</div>
+						<div class="lh-right-tool display-dark">
+							<a class="lh-mode dark" href="javascript:void(0)"><i class="ri-moon-clear-line"></i></a>
+							<a class="lh-mode light" href="javascript:void(0)"><i class="ri-sun-line"></i></a>
+						</div>
+						<div class="lh-right-tool lh-user-drop">
+							<div class="lh-hover-drop">
+								<div class="lh-hover-tool">
+									<img class="user" src="{% static 'assets/img/user/1.jpg' %}" alt="user">
+								</div>
+								<div class="lh-hover-drop-panel right">
+									<div class="details">
+										<h6>Moris Waites</h6>
+										<p>moris@example.com</p>
+									</div>
+									<ul class="border-top">
+										<li><a href="team-profile.html">Profile</a></li>
+										<li><a href="#">Help</a></li>
+										<li><a href="#">Messages</a></li>
+										<li><a href="team-update.html">Settings</a></li>
+									</ul>
+									<ul class="border-top">
+										<li><a href="signin.html"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- sidebar -->
+		<div class="lh-sidebar-overlay"></div>
+		<div class="lh-sidebar" data-mode="light">
+			<div class="lh-sb-logo">
+				<a href="{% url 'admin-panel:index' %}" class="sb-full"><img src="{% static 'assets/img/logo/full-logo.png' %}" alt="logo"></a>
+				<a href="{% url 'admin-panel:index' %}" class="sb-collapse"><img src="{% static 'assets/img/logo/collapse-logo.png' %}" alt="logo"></a>
+			</div>
+			<div class="lh-sb-wrapper">
+				<div class="lh-sb-content">
+					<ul class="lh-sb-list">
+						<li class="lh-sb-item sb-drop-item">
+							<a href="javascript:void(0)" class="lh-drop-toggle">
+								<i class="ri-dashboard-3-line"></i>
+								<span class="condense">Dashboard<i class="drop-arrow ri-arrow-down-s-line"></i></span>
+							</a>
+							<ul class="lh-sb-drop condense">
+								<li class="list"><a href="{% url 'admin-panel:index' %}" class="lh-page-link drop"><i
+											class="ri-git-commit-line"></i>Report</a></li>
+							</ul>
+						</li>
+						<li class="lh-sb-item-separator"></li>
+						<li class="lh-sb-title condense">Apps</li>
+						<li class="lh-sb-item sb-drop-item">
+							<a href="javascript:void(0)" class="lh-drop-toggle">
+								<i class="ri-shield-user-line"></i><span class="condense">Staff<i
+										class="drop-arrow ri-arrow-down-s-line"></i></span></a>
+							<ul class="lh-sb-drop condense">
+									<!-- <li><a href="team-profile.html" class="lh-page-link drop"><i
+											class="ri-git-commit-line"></i>Team Profile</a></li> -->
+								<li><a href="team-add.html" class="lh-page-link drop"><i
+											class="ri-git-commit-line"></i>Team Add</a></li>
+								<!-- <li><a href="team-update.html" class="lh-page-link drop"><i
+											class="ri-git-commit-line"></i>Team Update</a></li> -->
+								<li><a href="team-list.html" class="lh-page-link drop"><i
+											class="ri-git-commit-line"></i>Team List</a></li>
+							</ul>
+						</li>						
+						<li class="lh-sb-item-separator"></li>
+						<li class="lh-sb-title condense">Hotel | Resort</li>
+						<li class="lh-sb-item">
+							<a href="guest.html" class="lh-page-link">
+								<i class="ri-group-line"></i><span class="condense"><span
+										class="hover-title">Guest</span> </span>
+							</a>
+						</li>
+						
+						<li class="lh-sb-item">
+							<a href="rooms.html" class="lh-page-link">
+								<i class="ri-home-8-line"></i><span class="condense"><span
+										class="hover-title">Rooms</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item">
+							<a href="bookings.html" class="lh-page-link">
+								<i class="ri-contacts-book-line"></i><span class="condense"><span
+										class="hover-title">Bookings</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item">
+							<a href="invoice.html" class="lh-page-link">
+								<i class="ri-bill-line"></i><span class="condense"><span
+										class="hover-title">Invoice</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item-separator"></li>
+						<li class="lh-sb-title condense">Restaurant</li>
+						<li class="lh-sb-item">
+							<a href="menu.html" class="lh-page-link">
+								<i class="ri-restaurant-2-line"></i><span class="condense"><span
+										class="hover-title">Menu</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item">
+							<a href="menu-add.html" class="lh-page-link">
+								<i class="ri-restaurant-2-line"></i><span class="condense"><span
+										class="hover-title">Add Menu</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item">
+							<a href="orders.html" class="lh-page-link">
+								<i class="ri-bookmark-3-line"></i><span class="condense"><span
+										class="hover-title">Orders</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item-separator"></li>
+						<li class="lh-sb-title condense">Extra</li>
+						<li class="lh-sb-item sb-drop-item">
+							<a href="javascript:void(0)" class="lh-drop-toggle">
+								<i class="ri-pages-line"></i><span class="condense">Authentication<i
+										class="drop-arrow ri-arrow-down-s-line"></i></span></a>
+							<ul class="lh-sb-drop condense">
+								<li><a href="signin.html" class="lh-page-link drop"><i
+											class="ri-git-commit-line"></i>Login</a></li>
+								<li><a href="signup.html" class="lh-page-link drop"><i
+											class="ri-git-commit-line"></i>Signup</a></li>
+						
+							</ul>
+						</li>
+						<li class="lh-sb-item-separator"></li>
+						<li class="lh-sb-title condense">Settings</li>
+						<li class="lh-sb-item">
+							<a href="role.html" class="lh-page-link">
+								<i class="ri-magic-line"></i><span class="condense"><span
+										class="hover-title">Role</span></span></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- Notify sidebar -->
+		<div class="lh-notify-bar-overlay"></div>
+		<div class="lh-notify-bar">
+			<div class="lh-bar-title">
+				<h6>Notifications<span class="label">12</span></h6>
+				<a href="javascript:void(0)" class="close-notify"><i class="ri-close-line"></i></a>
+			</div>
+			<div class="lh-bar-content">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link active" id="alert-tab" data-bs-toggle="tab" data-bs-target="#alert"
+							type="button" role="tab" aria-controls="alert" aria-selected="true">Alert</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages"
+							type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>
+					</li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="alert" role="tabpanel" aria-labelledby="alert-tab">
+						<div class="lh-alert-list">
+							<ul>
+								<li>
+									<div class="icon lh-alert">
+										<i class="ri-alarm-warning-line"></i>
+									</div>
+									<div class="detail">
+										<div class="title">Your final report is overdue</div>
+										<p class="time">Just now</p>
+										<p class="message">Please submit your quarterly report before - June 15.</p>
+									</div>
+								</li>
+								<li>
+									<div class="icon lh-warn">
+										<i class="ri-error-warning-line"></i>
+									</div>
+									<div class="detail">
+										<div class="title">Your Booking campaign is stop!</div>
+										<p class="time">5:45AM - 25/05/2024</p>
+										<p class="message">Please submit your quarterly report before Jun 15.</p>
+									</div>
+								</li>
+								<li>
+									<div class="icon lh-success">
+										<i class="ri-check-double-line"></i>
+									</div>
+									<div class="detail">
+										<div class="title">Your payment is successfully processed</div>
+										<p class="time">9:20PM - 19/06/2024</p>
+										<p class="message">Check your account wallet. if there is any issue, create
+											support ticket.</p>
+									</div>
+								</li>
+								<li>
+									<div class="icon lh-warn">
+										<i class="ri-error-warning-line"></i>
+									</div>
+									<div class="detail">
+										<div class="title">Budget threshold exceeded!</div>
+										<p class="time">4:15AM - 01/04/2024</p>
+										<p class="message">Budget threshold was exceeded for project "Luxurious" B612
+											elements.</p>
+									</div>
+								</li>
+
+
+								<li>
+									<div class="icon lh-warn">
+										<i class="ri-close-line"></i>
+									</div>
+									<div class="detail">
+										<div class="title">Booking was decline!</div>
+										<p class="time">4:15AM - 01/04/2024</p>
+										<p class="message">Your booking "B126" is declined by Theresa Mayeras.</p>
+									</div>
+								</li>
+
+
+								<li>
+
+									<div class="icon lh-success">
+										<i class="ri-check-double-line"></i>
+									</div>
+									<div class="detail">
+										<div class="title">Your payment is successfully processed</div>
+										<p class="time">9:20PM - 19/06/2024</p>
+										<p class="message">Check your account wallet. if there is any issue, create
+											support ticket.</p>
+									</div>
+								</li>
+								<li class="check"><a class="lh-primary-btn" href="#">View all</a></li>
+							</ul>
+						</div>
+					</div>
+				<div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+						<div class="lh-message-list">
+							<ul>
+								<li>
+									<a href="#" class="reply">Replay</a>
+									<div class="user">
+										<img src="{% static 'assets/img/user/9.jpg' %}" alt="user">
+										<span class="label online"></span>
+									</div>
+									<div class="detail">
+										<a href="#" class="name">Boris Wisli</a>
+										<p class="time">5:30AM, Today</p>
+										<p class="message">Hello, Room 204 need to be .</p>clean
+										<span class="download-files">
+											<span class="download">
+												<img src="{% static 'assets/img/room/1.png' %}" alt="image">
+												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
+											</span>
+											<span class="download">
+												<img src="{% static 'assets/img/room/2.png' %}" alt="image">
+												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
+											</span>
+											<span class="download">
+												<img src="{% static 'assets/img/room/3.png' %}" alt="image">
+												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
+											</span>
+										</span>
+									</div>
+								</li>
+								<li>
+
+									<a href="#" class="reply">Reply</a>
+									<div class="user">
+										<img src="{% static 'assets/img/user/8.jpg' %}" alt="user">
+										<span class="label offline"></span>
+									</div>
+									<div class="detail">
+										<a href="#" class="name">Frank N. Stein</a>
+										<p class="time">8:30PM, 05/12/2024</p>
+										<p class="message">Please take a look and get order from table 06.</p>
+									</div>
+								</li>
+								<li>
+									<a href="#" class="reply">Reply</a>
+									<div class="user">
+										<img src="{% static 'assets/img/user/7.jpg' %}" alt="user">
+										<span class="label busy"></span>
+									</div>
+									<div class="detail">
+										<a href="#" class="name">Frank N. Stein</a>
+										<p class="time">8:30PM, 05/12/2024</p>
+										<p class="message">Room 65 AC repair service is done.</p>
+										<span class="download-files">
+											<span class="download">
+												<img src="{% static 'assets/img/facilities/1.png' %}" alt="image">
+												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
+											</span>
+										</span>
+									</div>
+								</li>
+								<li>
+									<a href="#" class="reply">Replay</a>
+									<div class="user">
+										<img src="{% static 'assets/img/user/6.jpg' %}" alt="user">
+										<span class="label busy"></span>
+									</div>
+									<div class="detail">
+										<a href="#" class="name">Paige Turner</a>
+										<p class="time">4:30PM, 12/12/2024</p>
+										<p class="message">Take a Spa trainer interview.</p>
+									</div>
+								</li>
+
+								<li>
+									<a href="#" class="reply">Replay</a>
+									<div class="user">
+										<img src="{% static 'assets/img/user/5.jpg' %}" alt="user">
+										<span class="label busy"></span>
+									</div>
+									<div class="detail">
+										<a href="#" class="name">Allie Grater</a>
+										<p class="time">8:30PM, 05/12/2024</p>
+										<p class="message">Take marketing module task.</p>
+									</div>
+								</li>
+								<li class="check"><a class="lh-primary-btn" href="#">View all</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- main content -->
+		<div class="lh-main-content team-list">
+			<div class="container-fluid">
+				<!-- Page title & breadcrumb -->
+				<div class="lh-page-title lh-page-title-2">
+					<div class="lh-breadcrumb">
+						<h5>Settings</h5>
+						<ul>
+							<li><a href="{% url 'admin-panel:index' %}">Luxurious</a></li>
+							<li>Team List</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xxl-4 col-lg-5 col-md-12">
+						<div class="team-sticky-bar">
+							<div class="lh-card">
+								
+								<div class="search-wrapper" style="margin: 31px 50px 0px;">
+									<div class="search-box">
+										<input type="text" class="search-input" placeholder="Search team members...">
+										<button class="search-button">
+											<i class="ri-search-line"></i>
+										</button>
+									</div>
+								</div>
+
+								<div class="lh-card-content">
+									<ul class="nav nav-tabs" role="tablist">
+										<li class="nav-item" role="presentation">
+											<a class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab1" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Guest List</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/1.jpg' %}" alt="team">
+													<span>Moris Waites</span> -->
+												</div>
+											</a>
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab2" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Team List</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/2.jpg' %}" alt="team">
+													<span>Emma Grater</span> -->
+												</div>
+											</a>
+
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab3" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Rooms</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/3.jpg' %}" alt="team">
+													<span>Olive Yew</span> -->
+												</div>
+											</a>
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab4" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                 <span>Logo</span>
+													
+												</div>
+											</a>
+
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab5" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Team Designation</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/5.jpg' %}" alt="team">
+													<span>Martin vegasu</span> -->
+												</div>
+											</a>
+										</li>
+										<li class="nav-item" role="presentation">
+											<button  data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas" style="border: none;background-color: white;width: 100%;">
+
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab6" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span style="padding-right: 20px;">Add New Room</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/6.jpg' %}" alt="team">
+													<span>Lily wilson</span> -->
+												</div></a>
+												</button>
+											
+										</li>
+
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab7" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Room Types</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/7.jpg' %}" alt="team">
+													<span>Nancy thomas</span> -->
+												</div>
+											</a>
+											
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab8" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Bookings</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/8.jpg' %}" alt="team">
+													<span>Mecov Maira</span> -->
+												</div>
+											</a>
+										
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab9" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Calender</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/9.jpg' %}" alt="team">
+													<span>Boris Whisli</span> -->
+												</div>
+											</a>
+										</li>
+
+
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab10" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Add New Features</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/10.jpg' %}" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+										</li>
+
+
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab11" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Add New Menu</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/10.jpg' %}" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xxl-8 col-lg-7 col-md-12">
+						<div class="lh-card" id="assigntbl">
+
+							<div class="lh-card-content card-default">
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="tab1" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Guest List</h4>
+												</div>
+												<!-- <div class="row"> -->
+													
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+
+									<div class="tab-pane fade" id="tab2" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Team List</h4>
+												</div>
+												<!-- <div class="row"> -->
+													
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tab3" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Rooms</h4>
+												</div>
+												<!-- <div class="row"> -->
+
+													<div class="container">
+														<!-- <div class="booking-form">
+															<h2 class="text-center mb-4">Room Type</h2>
+															<form id="bookingForm">
+																<div class="mb-4">
+																	<label for="roomType" class="form-label">Room Type</label>
+																	<input type="text" 
+																		   class="form-control" 
+																		   id="roomType" 
+																		   placeholder="Enter your room type"
+																		   required>
+																</div>
+												
+																<div class="mb-4">
+																	<label for="dateTime" class="form-label">Date and Time</label>
+																	<input type="datetime-local" 
+																		   class="form-control" 
+																		   id="dateTime"
+																		   required>
+																</div>
+												<div class="button-wrapper">
+																<button type="submit" class="btn-submit">Submit</button>
+															</div>
+															</form>
+														</div> -->
+													</div>
+													
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+					
+									<div class="tab-pane fade" id="tab4" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Logos</h4>
+												</div>
+
+												<div class="row">
+													<div class="main-container">
+														<div class="container">
+															<div class="row justify-content-center">
+																<div class="col-lg-10">
+																	<div class="settings-card card">
+																		<!-- <div class="card-header d-flex align-items-center">
+																			<i class="fas fa-hotel header-icon"></i>
+																			<h3 class="mb-0 text-white"> Settings</h3>
+																		</div> -->
+																		<div class="card-body p-4">
+																			<form id="settingsForm">
+																				<!-- Site Name -->
+																				<div class="mb-4">
+																					<label for="siteName" class="form-label fw-bold">
+																						<i class="fas fa-signature me-2"></i>Site Name
+																					</label>
+																					<input type="text" class="form-control" id="siteName" required
+																						placeholder="Enter your hotel name">
+																				</div>
+												
+																				<!-- Favicon -->
+																				<div class="mb-4">
+																					<label class="form-label fw-bold">
+																						<i class="fas fa-bookmark me-2"></i>Favicon
+																					</label>
+																					<div class="logo-card">
+																						<div class="file-upload-wrapper">
+																							<label class="custom-file-upload">
+																								<i class="fas fa-upload upload-icon"></i>
+																								<span>Choose Favicon</span>
+																								<input type="file" class="form-control" id="favicon" 
+																									accept=".ico,.png,.jpg,.jpeg" style="display: none;">
+																							</label>
+																						</div>
+																						<div class="preview-container">
+																							<img id="faviconPreview" src="{% static 'assets/img/logo/collapse-logo.png' %}" 
+																								class="favicon-preview" alt="Favicon preview">
+																						</div>
+																					</div>
+																				</div>
+												
+																				<!-- Light Logo -->
+																				<div class="mb-4">
+																					<label class="form-label fw-bold">
+																						<i class="fas fa-sun me-2"></i>Light Mode Logo
+																					</label>
+																					<div class="logo-card">
+																						<div class="file-upload-wrapper">
+																							<label class="custom-file-upload">
+																								<i class="fas fa-upload upload-icon"></i>
+																								<span>Choose Light Logo</span>
+																								<input type="file" class="form-control" id="lightLogo" 
+																									accept="image/*" style="display: none;">
+																							</label>
+																						</div>
+																						<div class="preview-container">
+																							<img id="lightLogoPreview" src="{% static 'assets/img/logo/logo-3.png' %}" 
+																								class="preview-image" alt="Light logo preview">
+																						</div>
+																					</div>
+																				</div>
+												
+																				<!-- Dark Logo -->
+																				<div class="mb-4">
+																					<label class="form-label fw-bold">
+																						<i class="fas fa-moon me-2"></i>Dark Mode Logo
+																					</label>
+																					<div class="logo-card dark-mode">
+																						<div class="file-upload-wrapper">
+																							<label class="custom-file-upload">
+																								<i class="fas fa-upload upload-icon"></i>
+																								<span>Choose Dark Logo</span>
+																								<input type="file" class="form-control" id="darkLogo" 
+																									accept="image/*" style="display: none;">
+																							</label>
+																						</div>
+																						<div class="preview-container">
+																							<img id="darkLogoPreview" src="{% static 'assets/img/logo/full-logo.png' %}" 
+																								class="preview-image" alt="Dark logo preview">
+																						</div>
+																					</div>
+																				</div>
+																				<!-- Preview Toggle -->
+																				<!-- <div class="mb-4">
+																					<div class="form-check form-switch">
+																						<input class="form-check-input" type="checkbox" id="darkModeToggle">
+																						<label class="form-check-label" for="darkModeToggle">
+																							<i class="fas fa-adjust me-2"></i>Toggle Dark Mode Preview
+																						</label>
+																					</div>
+																				</div> -->
+												
+																				<!-- Submit Button -->
+																				 <div class="d-flex justify-content-center">
+																				<button type="submit" class="btn btn-primary">
+																					<i class="fas fa-save me-2"></i>Save Settings
+																				</button></div>
+																			</form>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="tab-pane fade" id="tab5" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Team Designation</h4>
+												</div>
+												<div class="row">
+													
+													<div class="container">
+														<div class="booking-form">
+															<h2 class="text-center mb-4">Team Designation</h2>
+															<form id="bookingForm">
+																<div class="mb-4">
+																	<label for="Team Designation" class="form-label">Team Designation</label>
+																	<input type="text" 
+																		   class="form-control" 
+																		   id="teamDesignation" 
+																		   placeholder="Enter Designation"
+																		   required>
+																</div>
+												
+																<div class="mb-4">
+																	<label for="dateTime" class="form-label">Date and Time</label>
+																	<input type="datetime-local" 
+																		   class="form-control" 
+																		   id="dateTimes"
+																		   required>
+																</div>
+												<div class="button-wrapper">
+																<button type="submit" class="btn-submit">submit</button>
+															</div>
+															</form>
+														</div>
+													</div>
+												
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tab6" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<!-- <div class="lh-card-header">
+													<h4 class="lh-card-title">Add New Rooms</h4>
+												</div> -->
+												<!-- <div class="row"> -->
+													 <!-- Add New Room Button -->
+    <!-- <button class="btn btn-primary m-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">
+        Add New Room
+    </button> -->
+
+    <!-- Off-canvas Component -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="addRoomOffcanvas" aria-labelledby="addRoomOffcanvasLabel" style="width: 600px;">
+        <div class="offcanvas-header custom-card-header">
+            <h4 class="offcanvas-title" id="addRoomOffcanvasLabel">Add New Room</h4>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Move your existing form here -->
+            <form id="addRoomForm" onsubmit="handleSubmit(event)">
+                <div class="row g-3">
+                       <!-- Add Room Type Selection -->
+                       <div class="col-12">
+                        <label class="form-label required">Room Addition Type</label>
+                        <div class="radio-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="additionType" id="singleRoom" value="single" checked required>
+                                <label class="form-check-label" for="singleRoom">Add Single Room</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="additionType" id="bulkRooms" value="bulk">
+                                <label class="form-check-label" for="bulkRooms">Add Bulk Rooms</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" id="singleRoomNumber">
+                        <label class="form-label required">Room Number</label>
+                        <input type="text" class="form-control" name="roomNumber" required>
+                    </div>
+
+                    <!-- Bulk Room Number Section -->
+                    <div class="col-12" id="bulkRoomNumbers" style="display: none;">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label required">From Room Number</label>
+                                <input type="text" class="form-control" name="fromRoomNumber">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label required">To Room Number</label>
+                                <input type="text" class="form-control" name="toRoomNumber">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label required">Block</label>
+                        <input type="text" class="form-control" name="block" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label required">Room Type</label>
+                        <select class="form-select" name="roomType" id="roomType" required>
+                            <option value="">Select Room Type</option>
+                            <option value="standard">Standard Room</option>
+                            <option value="deluxe">Deluxe Room</option>
+                            <option value="suite">VIP Room</option>
+                            <option value="executive">Conference Room</option>
+                        </select>
+                    </div>
+
+                    <!-- Bed Type Section -->
+                    <div class="col-md-6" id="bedTypeSection">
+                        <label class="form-label required">Bed Type</label>
+                        <div class="d-flex flex-wrap">
+                            <input type="radio" class="btn-check" name="bedType" id="single" value="single" required>
+                            <label class="btn btn-outline-primary bed-type-btn" for="single">Single Bed</label>
+
+                            <input type="radio" class="btn-check" name="bedType" id="double" value="double">
+                            <label class="btn btn-outline-primary bed-type-btn" for="double">Double Bed</label>
+                        </div>
+                    </div>
+
+                    <!-- Seating Capacity Section (Initially Hidden) -->
+                    <div class="col-md-6" id="seatingSection" style="display: none;">
+                        <label class="form-label required">Seating Capacity</label>
+                        <input type="number" class="form-control" name="seatingCapacity" min="1">
+                    </div>
+
+                    <!-- AC/Non-AC Radio Buttons -->
+                    <div class="col-md-6">
+                        <label class="form-label required">Air Conditioning</label>
+                        <div class="radio-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="acType" id="ac" value="ac" required>
+                                <label class="form-check-label" for="ac">AC Room</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="acType" id="nonAc" value="nonAc">
+                                <label class="form-check-label" for="nonAc">Non-AC Room</label>
+                            </div>
+                        </div>
+                    </div>
+
+              <!-- Enhanced Price Section -->
+                    <div class="col-12">
+                        <label class="form-label required">Room Pricing</label>
+                        <div class="price-card">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Base Price Per Night</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₹</span>
+                                        <input type="number" class="form-control" name="basePrice" min="0" step="100" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Weekend Price</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₹</span>
+                                        <input type="number" class="form-control" name="weekendPrice" min="0" step="100" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Holiday Price</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₹</span>
+                                        <input type="number" class="form-control" name="holidayPrice" min="0" step="100" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Hourly Price</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₹</span>
+                                        <input type="number" class="form-control" name="extraPersonPrice" min="0" step="100" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label required">Max Occupancy</label>
+                        <input type="number" class="form-control" name="maxOccupancy" min="1" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Room Features</label>
+                        <div class="row g-2">
+                            <div class="col-md-3 col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="features" value="wifi">
+                                    <label class="form-check-label">Wi-Fi</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="features" value="tv">
+                                    <label class="form-check-label">TV</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="features" value="minibar">
+                                    <label class="form-check-label">Minibar</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="features" value="safe">
+                                    <label class="form-check-label">Refrigerator</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-md-3 col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="features" value="wifi">
+                                    <label class="form-check-label">Bath Tub</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="features" value="tv">
+                                    <label class="form-check-label">Parking</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="features" value="minibar">
+                                    <label class="form-check-label">Swimming Pool</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="features" value="safe">
+                                    <label class="form-check-label">Room Cleanig</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Room Description</label>
+                        <textarea class="form-control" name="description" rows="3"></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Room Images</label>
+                        <input type="file" class="form-control" name="images[]" accept="image/*" multiple onchange="previewImages(event)" id="imageInput">
+                        <small class="text-muted">You can upload images</small>
+                        <div id="imagePreview" class="d-flex flex-wrap gap-2 mt-2"></div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-primary btn-submit">Add Room</button>
+                        <button type="button" class="btn btn-secondary ms-2" onclick="resetForm()">Reset Form</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+						<!-- </div> -->
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tab7" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Room types</h4>
+												</div>
+												<!-- <div class="row"> -->
+
+													<div class="container py-4">
+													<div class="booking-form">
+															<h2 class="text-center mb-4">Room Type</h2>
+															<form id="bookingForm">
+																<div class="mb-4">
+																	<label for="roomType" class="form-label">Room Type</label>
+																	<input type="text" 
+																		   class="form-control" 
+																		   id="roomType" 
+																		   placeholder="Enter your room type"
+																		   required>
+																</div>
+												
+																<div class="mb-4">
+																	<label for="dateTime" class="form-label">Date and Time</label>
+																	<input type="datetime-local" 
+																		   class="form-control" 
+																		   id="dateTime"
+																		   required>
+																</div>
+												<div class="button-wrapper">
+																<button type="submit" class="btn-submit">Submit</button>
+															</div>
+															</form>
+														</div> 
+													</div>
+	
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tab8" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Bookings</h4>
+												</div>
+												<!-- <div class="row"> -->
+
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+
+									<div class="tab-pane fade" id="tab9" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Calender</h4>
+												</div>
+												<div class="row">
+													<div class="container">
+														<div class="form-container">
+															<div class="header">
+																<h2>Holiday Calendar</h2>
+																<p class="text-muted">Add your events and occasions</p>
+															</div>
+															
+															<form id="eventForm">
+																<div class="mb-3">
+																	<label for="occasion" class="form-label">Occasion</label>
+																	<input type="text" class="form-control" id="occasion" required>
+																</div>
+																
+																<div class="mb-3">
+																	<label for="startDate" class="form-label">Start Date</label>
+																	<input type="date" class="form-control" id="startDate" required>
+																</div>
+																
+																<div class="mb-3">
+																	<label for="endDate" class="form-label">End Date</label>
+																	<input type="date" class="form-control" id="endDate" required>
+																</div>
+																
+																<div style="display: flex;align-items: center;justify-content: center;" ><button type="submit" class="btn btn-primary">Add Event</button></div>
+															</form>
+															
+															<div class="events-list" id="eventsList">
+																<!-- Events will be added here -->
+															</div>
+														</div>
+													</div>
+													
+	</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tab10" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Features</h4>
+												</div>
+												<div class="row">
+
+													
+														<div class="container py-5" style="width: 700px;">
+															<div class="feature-form-card">
+																<!-- Form Header -->
+																<div class="form-header" style="display: flex;align-items: center;justify-content: start;gap: 5px;padding: 8px;padding-top: 18px;">
+																	<div class="feature-icon">
+																		<i class="fas fa-plus"></i>
+																	</div>
+																	<h3 style="color: white;">Add New Feature</h3>
+																	<!-- <p class="mb-0">Add and configure new features for your hotel</p> -->
+																</div>
+													
+																<!-- Form Body -->
+																<div class="p-4">
+																	<form id="featureForm">
+																		<!-- Basic Information -->
+																		<div class="row mb-4">
+																			<div class="col-md-6">
+																				<label class="form-label">Feature Name</label>
+																				<input type="text" class="form-control" placeholder="e.g., Swimming Pool">
+																			</div>
+																			<div class="col-md-6">
+																				<label class="form-label">Feature Category</label>
+																				<select class="form-select">
+																					<option>Amenities</option>
+																					<option>Services</option>
+																					<option>Facilities</option>
+																					<option>Entertainment</option>
+																					<option>Food & Beverage</option>
+																				</select>
+																			</div>
+																		</div>
+													
+																		<!-- Description -->
+																		<div class="mb-4">
+																			<label class="form-label">Description</label>
+																			<textarea class="form-control" rows="3" placeholder="Describe the feature..."></textarea>
+																		</div>
+													
+																		<!-- Feature Image -->
+																		<div class="mb-4">
+																			<label class="form-label">Feature Image</label>
+																			<div class="feature-preview" id="dropZone">
+																				<i class="fas fa-cloud-upload-alt mb-3" style="font-size: 2rem; color: #1a73e8;"></i>
+																				<p class="mb-0">Drag & drop your image here or <span class="text-primary">browse</span></p>
+																				<input type="file" id="fileInput" hidden accept="image/*">
+																				<div id="imagePreview" class="mt-3" style="display: none;">
+																					<img src="" alt="Preview" style="max-width: 200px;">
+																				</div>
+																			</div>
+																		</div>
+
+
+													
+																		<!-- Feature Details -->
+																		<div class="row mb-4">
+																			<div class="col-md-6">
+																				<label class="form-label">Availability</label>
+																				<select class="form-select">
+																					<option>24/7</option>
+																					<option>Scheduled Hours</option>
+																					<option>On Request</option>
+																					<option>Seasonal</option>
+																				</select>
+																			</div>
+																			<div class="col-md-6">
+																				<label class="form-label">Location</label>
+																				<input type="text" class="form-control" placeholder="e.g., Ground Floor">
+																			</div>
+																		</div>
+													
+																		<!-- Feature Settings -->
+																		<div class="mb-4">
+																			<label class="form-label">Feature Settings</label>
+																			<div class="row g-3">
+																				<div class="col-md-4">
+																					<div class="d-flex justify-content-between align-items-center">
+																						<span>Chargeable</span>
+																						<label class="toggle-switch">
+																							<input type="checkbox">
+																							<span class="slider"></span>
+																						</label>
+																					</div>
+																				</div>
+																				<div class="col-md-4">
+																					<div class="d-flex justify-content-between align-items-center">
+																						<span>Requires Booking</span>
+																						<label class="toggle-switch">
+																							<input type="checkbox">
+																							<span class="slider"></span>
+																						</label>
+																					</div>
+																				</div>
+																				<div class="col-md-4">
+																					<div class="d-flex justify-content-between align-items-center">
+																						<span>Featured</span>
+																						<label class="toggle-switch">
+																							<input type="checkbox">
+																							<span class="slider"></span>
+																						</label>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+													
+																		<!-- Submit Button -->
+																		<div class="text-end">
+																			<button type="button" class="btn btn-light me-2">Cancel</button>
+																			<button type="submit" class="btn btn-light me-2">Save
+																				<!-- <i class="fas fa-save me-2"></i>Save -->
+																			</button>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="tab-pane fade" id="tab11" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Add New Menu</h4>
+												</div>
+												<!-- <div class="row"> -->
+													
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer>
+			<div class="container-fluid">
+				<div class="copyright">
+					                    <p class="mb-0 " >© <script>document.write(new Date().getFullYear())</script> <a href="{% url 'admin-panel:index' %}" class="link">Bloom Up </a> – All Rights Reserved ||  Developed by <a href="https://ultrakeyit.in/" target="_blank" class="link" >Ultrakey It Solutions Private Limited </a>.</p>
+
+				</div>
+			</div>
+		</footer>
+
+		<!-- Feature tools -->
+		<div class="lh-tools-sidebar-overlay"></div>
+		<div class="lh-tools-sidebar">
+			<a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
+				<i class="ri-settings-4-line"></i>
+			</a>
+			<div class="lh-bar-title">
+				<h6>Tools</h6>
+				<a href="javascript:void(0)" class="close-tools"><i class="ri-close-line"></i></a>
+			</div>
+			<div class="lh-tools-detail">
+				<div class="lh-tools-block">
+					<h3>Modes</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item mode active" data-lh-mode-tool="light">
+							<img src="{% static 'assets/img/tools/light.png' %}" alt="light">
+							<p>light</p>
+						</div>
+						<div class="lh-tools-item mode" data-lh-mode-tool="dark">
+							<img src="{% static 'assets/img/tools/dark.png' %}" alt="dark">
+							<p>dark</p>
+						</div>
+					</div>
+				</div>
+				<div class="lh-tools-block">
+					<h3>Sidebar</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item sidebar active" data-sidebar-mode-tool="light">
+							<img src="{% static 'assets/img/tools/side-light.png' %}" alt="light">
+							<p>light</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="dark">
+							<img src="{% static 'assets/img/tools/side-dark.png' %}" alt="dark">
+							<p>dark</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-1">
+							<img src="{% static 'assets/img/tools/side-bg-1.png' %}" alt="background">
+							<p>Bg-1</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-2">
+							<img src="{% static 'assets/img/tools/side-bg-2.png' %}" alt="background">
+							<p>Bg-2</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-3">
+							<img src="{% static 'assets/img/tools/side-bg-3.png' %}" alt="background">
+							<p>Bg-3</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-4">
+							<img src="{% static 'assets/img/tools/side-bg-4.png' %}" alt="background">
+							<p>Bg-4</p>
+						</div>
+					</div>
+				</div>
+				<div class="lh-tools-block">
+					<h3>Header</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item header active" data-header-mode="light">
+							<img src="{% static 'assets/img/tools/header-light.png' %}" alt="light">
+							<p>light</p>
+						</div>
+						<div class="lh-tools-item header" data-header-mode="dark">
+							<img src="{% static 'assets/img/tools/header-dark.png' %}" alt="dark">
+							<p>dark</p>
+						</div>
+					</div>
+				</div>
+				<div class="lh-tools-block">
+					<h3>Backgrounds</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item bg active" data-bg-mode="default">
+							<img src="{% static 'assets/img/tools/bg-0.png' %}" alt="default">
+							<p>Default</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-1">
+							<img src="{% static 'assets/img/tools/bg-1.png' %}" alt="bg-1">
+							<p>Bg-1</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-2">
+							<img src="{% static 'assets/img/tools/bg-2.png' %}" alt="bg-2">
+							<p>Bg-2</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-3">
+							<img src="{% static 'assets/img/tools/bg-3.png' %}" alt="bg-3">
+							<p>Bg-3</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-4">
+							<img src="{% static 'assets/img/tools/bg-4.png' %}" alt="bg-4">
+							<p>Bg-4</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-5">
+							<img src="{% static 'assets/img/tools/bg-5.png' %}" alt="bg-5">
+							<p>Bg-5</p>
+						</div>
+					</div>
+				</div>
+				<div class="lh-tools-block">
+					<h3>Box Design</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item box active" data-box-mode-tool="default">
+							<img src="{% static 'assets/img/tools/box-0.png' %}" alt="default">
+							<p>Default</p>
+						</div>
+						<div class="lh-tools-item box" data-box-mode-tool="box-1">
+							<img src="{% static 'assets/img/tools/box-1.png' %}" alt="box-1">
+							<p>Box-1</p>
+						</div>
+						<div class="lh-tools-item box" data-box-mode-tool="box-2">
+							<img src="{% static 'assets/img/tools/box-2.png' %}" alt="box-2">
+							<p>Box-2</p>
+						</div>
+						<div class="lh-tools-item box" data-box-mode-tool="box-3">
+							<img src="{% static 'assets/img/tools/box-3.png' %}" alt="box-3">
+							<p>Box-3</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<!-- Vendor Custom -->
+	<script src="{% static 'assets/js/vendor/jquery-3.6.4.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/simplebar.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/apexcharts.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/jquery-jvectormap-1.2.2.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/jquery-jvectormap-world-mill-en.js' %}"></script>
+	<!-- Data Tables -->
+	<script src='{% static 'assets/js/vendor/jquery.datatables.min.js' %}'></script>
+	<script src='{% static 'assets/js/vendor/datatables.bootstrap5.min.js' %}'></script>
+	<script src='{% static 'assets/js/vendor/datatables.responsive.min.js' %}'></script>
+	<!-- Caleddar -->
+	<script src="{% static 'assets/js/vendor/jquery.simple-calendar.js' %}"></script>
+	<!-- Date Range Picker -->
+	<script src="{% static 'assets/js/vendor/moment.min.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/daterangepicker.js' %}"></script>
+	<script src="{% static 'assets/js/vendor/date-range.js' %}"></script>
+
+	<!-- Main Custom -->
+	<script src="{% static 'assets/js/main.js' %}"></script>
+
+	<!-- Add this modal HTML at the end of your file, before closing body tag -->
+	<div class="modal fade delete-modal" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body text-center">
+					<div class="delete-icon">
+						<i class="ri-error-warning-line"></i>
+					</div>
+					<h4>Are you sure?</h4>
+					<p>Do you really want to delete this record? This process cannot be undone.</p>
+					<div class="button-row">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-danger">Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Add this JavaScript before the closing body tag -->
+	<script>
+	document.getElementById('confirmDelete').addEventListener('click', function() {
+		// Add your delete logic here
+		alert('Team member deleted successfully!');
+		
+		// Close the modal
+		var modal = bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal'));
+		modal.hide();
+	});
+	</script>
+
+
+<!-- room type settings script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+	document.getElementById('bookingForm').addEventListener('submit', function(e) {
+		e.preventDefault();
+		
+		const roomType = document.getElementById('roomType').value;
+		const dateTime = document.getElementById('dateTime').value;
+
+		// You can handle the form submission here
+		console.log('Room Type:', roomType);
+		console.log('Date and Time:', dateTime);
+		
+		// Optional: Show success message
+		alert('Booking submitted successfully!');
+		this.reset();
+	});
+</script>
+ <!--end room type settings script-->
+
+ <!--start team settings script-->
+ <script>
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const roomType = document.getElementById('Team Designation').value;
+        const dateTime = document.getElementById('dateTimes').value;
+
+        // You can handle the form submission here
+        console.log('Room Type:', teamDesignation);
+        console.log('Date and Time:', dateTimes);
+        
+        // Optional: Show success message
+        alert('Booking submitted successfully!');
+        this.reset();
+    });
+</script>
+ <!--end team settings script-->
+
+<!--logo settings script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Preview image functions with animation
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            const file = input.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.add('success-animation');
+                    setTimeout(() => {
+                        preview.classList.remove('success-animation');
+                    }, 500);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Update file input labels
+        function updateFileLabel(input) {
+            const label = input.parentElement.querySelector('span');
+            if (input.files.length > 0) {
+                label.textContent = input.files[0].name;
+            }
+        }
+
+        // Setup file input listeners
+        ['favicon', 'lightLogo', 'darkLogo'].forEach(id => {
+            const input = document.getElementById(id);
+            input.addEventListener('change', function() {
+                previewImage(this, `${id}Preview`);
+                updateFileLabel(this);
+            });
+        });
+
+        // Dark mode toggle with smooth transition
+        document.getElementById('darkModeToggle').addEventListener('change', function() {
+            document.body.style.transition = 'background-color 0.3s ease';
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Form submission with animation
+        document.getElementById('settingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('siteName', document.getElementById('siteName').value);
+            formData.append('favicon', document.getElementById('favicon').files[0]);
+            formData.append('lightLogo', document.getElementById('lightLogo').files[0]);
+            formData.append('darkLogo', document.getElementById('darkLogo').files[0]);
+
+            // Add success animation to button
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.classList.add('success-animation');
+            setTimeout(() => {
+                submitButton.classList.remove('success-animation');
+                alert('Settings saved successfully!');
+            }, 500);
+        });
+    </script>
+<!--end logo settings script-->
+
+<!--calender form script-->
+<script>
+	document.getElementById('eventForm').addEventListener('submit', function(e) {
+		e.preventDefault();
+		
+		const occasion = document.getElementById('occasion').value;
+		const startDate = document.getElementById('startDate').value;
+		const endDate = document.getElementById('endDate').value;
+		
+		// Validate dates
+		if (new Date(endDate) < new Date(startDate)) {
+			alert('End date cannot be before start date');
+			return;
+		}
+		
+		// Create event card
+		const eventCard = document.createElement('div');
+		eventCard.className = 'event-card';
+		eventCard.innerHTML = `
+			<h5>${occasion}</h5>
+			<p class="mb-1">Start: ${formatDate(startDate)}</p>
+			<p class="mb-0">End: ${formatDate(endDate)}</p>
+		`;
+		
+		// Add event to list
+		document.getElementById('eventsList').appendChild(eventCard);
+		
+		// Reset form
+		this.reset();
+	});
+	
+	function formatDate(dateString) {
+		const options = { year: 'numeric', month: 'long', day: 'numeric' };
+		return new Date(dateString).toLocaleDateString(undefined, options);
+	}  
+	
+	// Set min date for end date based on start date
+	document.getElementById('startDate').addEventListener('change', function() {
+		document.getElementById('endDate').min = this.value;
+	});
+</script>
+<!--end calender form script-->
+
+<!--features form script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // File Upload Handling
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImg = imagePreview.querySelector('img');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#1a73e8';
+            dropZone.style.backgroundColor = 'rgba(26, 115, 232, 0.05)';
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.borderColor = '#e0e0e0';
+            dropZone.style.backgroundColor = 'transparent';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        });
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            handleFile(file);
+        });
+
+        function handleFile(file) {
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    previewImg.src = reader.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Form Submission
+        document.getElementById('featureForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Feature saved successfully!');
+        });
+    </script>
+<!--end features form script-->
+
+<!--rooms form script-->
+<script>
+	const roomTypes = {
+		standard: {
+			title: 'Standard Rooms',
+			rooms: [
+				{ number: '101', price: '₹2000/-', ac: 'NON AC', bedType: 'Single Bed', maxOccupancy: 6 },
+				{ number: '103', price: '₹200/-', ac: 'AC', bedType: 'Single Bed', maxOccupancy: 6 },
+				{ number: '104', price: '₹200/-', ac: 'NON AC', bedType: 'Single Bed', maxOccupancy: 6 },
+				{ number: '105', price: '₹200/-', ac: 'AC', bedType: 'Single Bed', maxOccupancy: 6 }
+			]
+		},
+		deluxe: {
+			title: 'Deluxe Suites',
+			rooms: [
+				{ number: '204', price: '₹200/-', ac: 'AC', bedType: 'Single Bed', maxOccupancy: 6 },
+				{ number: '206', price: '₹200/-', ac: 'AC', bedType: 'Single Bed', maxOccupancy: 6 },
+				{ number: '207', price: '₹200/-', ac: 'AC', bedType: 'Single Bed', maxOccupancy: 6 },
+				{ number: '208', price: '₹200/-', ac: 'AC', bedType: 'Single Bed', maxOccupancy: 6 }
+			]
+		},
+		vip: {
+			title: 'VIP Suites',
+			rooms: [
+				{ number: '502', price: '₹200/-', ac: 'AC', bedType: 'Single Bed', maxOccupancy: 6 },
+				{ number: '504', price: '₹200/-', ac: 'AC', bedType: 'Single Bed', maxOccupancy: 6 },
+				{ number: '505', price: '₹200/-', ac: 'AC', bedType: 'Single Bed', maxOccupancy: 6 },
+				{ number: '506', price: '₹200/-', ac: 'AC', bedType: 'Single Bed', maxOccupancy: 6 }
+			]
+		}
+	};
+
+
+
+	function createRoomRow(room) {
+		return `
+			<div class="room-row" style="display: flex; flex-direction: row;gap:3px;background-color: #f2f2f2; padding: 10px;padding-bottom: 0px; border-radius: 5px; margin-bottom: 10px;">
+				<div class="room-number">
+					<span>Room ${room.number}</span>
+				
+              <div class="action-buttons">
+			
+                        <button class="action-btn edit" title="Edit Room"  style="color:#ffff">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete" title="Delete Room"  style="color:#ffff">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+						 <button class="action-btn delete" title="View Room"  style="color:#ffff">
+                           <i class='fas fa-eye'></i>
+
+                        </button>
+                    </div>
+                </div>
+				
+				<div class="room-details">
+					<div class="detail-item">
+						<div class="icon-circle">
+							
+						</div>
+						<div class="detail-content" style="display: flex; flex-direction: row;gap:3px">
+							<div><span class="detail-label">Basic Price:</span></div>
+							<div><span class="detail-value">${room.price}</span></div>
+						</div>
+					</div>
+					<div class="detail-item">
+						<div class="icon-circle">
+							
+						</div>
+						<div class="detail-content"  style="display: flex; flex-direction: row;gap:3px">
+							<div><span class="detail-label">AC Type:</span></div>
+							<div><span class="detail-value">${room.ac}</span></div>
+						</div>
+					</div> 
+					<div class="detail-item">
+						<div class="icon-circle">      
+							
+						</div>
+						<div class="detail-content" style="display: flex; flex-direction: row;gap:3px">
+							<div><span class="detail-label">Bed Type:</span></div>
+							<div><span class="detail-value">${room.bedType}</span></div>
+						</div>
+					</div>
+					<div class="detail-item">
+						<div class="icon-circle">
+							
+						</div>
+						<div class="detail-content" style="display: flex; flex-direction: row;gap:3px">
+							<div><span class="detail-label">Max Occupancy:</span></div>
+							<div><span class="detail-value">${room.maxOccupancy}</span></div>
+						</div>
+					</div>
+				</div>
+				</div>
+				
+			                  
+		`;
+	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		const container = document.querySelector('.container');
+		
+		for (const [type, data] of Object.entries(roomTypes)) {
+			const section = document.createElement('div');
+			section.className = 'room-list';
+			section.innerHTML = `
+				<h2 class="section-title">${data.title}</h2>
+				${data.rooms.map(room => createRoomRow(room)).join('')}
+			`;
+			container.appendChild(section);
+		}
+	});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+<!--end rooms form script-->
+
+<!--Add new room script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const singleRoom = document.getElementById('singleRoom');
+		const bulkRooms = document.getElementById('bulkRooms');
+		const singleRoomNumber = document.getElementById('singleRoomNumber');
+		const bulkRoomNumbers = document.getElementById('bulkRoomNumbers');
+
+		function toggleRoomNumberInputs() {
+			if (singleRoom.checked) {
+				singleRoomNumber.style.display = 'block';
+				bulkRoomNumbers.style.display = 'none';
+				singleRoomNumber.querySelector('input').required = true;
+				bulkRoomNumbers.querySelectorAll('input').forEach(input => input.required = false);
+			} else {
+				singleRoomNumber.style.display = 'none';
+				bulkRoomNumbers.style.display = 'block';
+				singleRoomNumber.querySelector('input').required = false;
+				bulkRoomNumbers.querySelectorAll('input').forEach(input => input.required = true);
+			}
+		}
+
+		singleRoom.addEventListener('change', toggleRoomNumberInputs);
+		bulkRooms.addEventListener('change', toggleRoomNumberInputs);
+
+		// Add this new code for room type handling
+		const roomType = document.getElementById('roomType');
+		const bedTypeSection = document.getElementById('bedTypeSection');
+		const seatingSection = document.getElementById('seatingSection');
+		const bedTypeInputs = bedTypeSection.querySelectorAll('input[name="bedType"]');
+
+		roomType.addEventListener('change', function() {
+			if (this.value === 'executive') {
+				bedTypeSection.style.display = 'none';
+				seatingSection.style.display = 'block';
+				// Remove required attribute from bed type inputs
+				bedTypeInputs.forEach(input => input.required = false);
+				// Add required attribute to seating capacity
+				seatingSection.querySelector('input').required = true;
+			} else {
+				bedTypeSection.style.display = 'block';
+				seatingSection.style.display = 'none';
+				// Add required attribute back to bed type inputs
+				bedTypeInputs.forEach(input => input.required = true);
+				// Remove required attribute from seating capacity
+				seatingSection.querySelector('input').required = false;
+			}
+		});
+	});
+
+
+	function previewImages(event) {
+		const preview = document.getElementById('imagePreview');
+		const files = event.target.files;
+		const maxImages = 10;
+		const existingImages = preview.children.length;
+		const remainingSlots = maxImages - existingImages;
+
+		// Check if adding new images would exceed the limit
+		if (files.length > remainingSlots) {
+			alert(`You can only upload up to ${maxImages} images. You have ${existingImages} images already.`);
+			event.target.value = ''; // Clear the input
+			return;
+		}
+
+		for (const file of files) {
+			const reader = new FileReader();
+			reader.onload = function(e) {
+				const imgContainer = document.createElement('div');
+				imgContainer.className = 'position-relative';
+				
+				const img = document.createElement('img');
+				img.src = e.target.result;
+				img.classList.add('preview-image', 'rounded');
+				
+				const removeBtn = document.createElement('button');
+				removeBtn.innerHTML = '×';
+				removeBtn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
+				removeBtn.onclick = function() {
+					imgContainer.remove();
+					// Enable input if images are less than max
+					const imageInput = document.getElementById('imageInput');
+					if (preview.children.length < maxImages) {
+						imageInput.disabled = false;
+					}
+				};
+				
+				imgContainer.appendChild(img);
+				imgContainer.appendChild(removeBtn);
+				preview.appendChild(imgContainer);
+
+				// Disable input if max images reached
+				if (preview.children.length >= maxImages) {
+					document.getElementById('imageInput').disabled = true;
+				}
+			}
+			reader.readAsDataURL(file);
+		}
+	}
+
+	function handleSubmit(event) {
+		event.preventDefault();
+		const formData = new FormData(event.target);
+		const data = Object.fromEntries(formData.entries());
+		
+		// Get selected features
+		data.features = Array.from(formData.getAll('features'));
+		
+		// Here you would typically send the data to your backend
+		console.log('Form Data:', data);
+		
+		// Show success message
+		alert('Room added successfully!');
+		event.target.reset();
+		document.getElementById('imagePreview').innerHTML = '';
+	}
+
+	function resetForm() {
+		// Reset the form
+		document.getElementById('addRoomForm').reset();
+		
+		// Clear image preview
+		document.getElementById('imagePreview').innerHTML = '';
+		
+		// Enable image input
+		document.getElementById('imageInput').disabled = false;
+		
+		// Reset room number display (show single room, hide bulk)
+		document.getElementById('singleRoomNumber').style.display = 'block';
+		document.getElementById('bulkRoomNumbers').style.display = 'none';
+		
+		// Reset radio button to single room
+		document.getElementById('singleRoom').checked = true;
+		
+		// Reset required attributes
+		document.querySelector('#singleRoomNumber input').required = true;
+		document.querySelectorAll('#bulkRoomNumbers input').forEach(input => input.required = false);
+		
+		// Reset room type related sections
+		const bedTypeSection = document.getElementById('bedTypeSection');
+		const seatingSection = document.getElementById('seatingSection');
+		bedTypeSection.style.display = 'block';
+		seatingSection.style.display = 'none';
+		
+		// Reset bed type required attributes
+		bedTypeSection.querySelectorAll('input[name="bedType"]').forEach(input => input.required = true);
+		seatingSection.querySelector('input').required = false;
+	}
+	
+	
+</script>
+
+<!--end Add new room script-->
+
+</body>
+
+
+</html>

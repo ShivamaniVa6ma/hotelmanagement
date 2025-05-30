@@ -1,0 +1,668 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	<style>
+#revenueChart,
+  #statusChart {
+    max-width: 600px;
+    max-height: 600px;
+  }
+  .chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; /* spacing between charts */
+    flex-wrap: wrap; /* optional: wrap on small screens */
+    padding: 20px;
+    margin: 20px 0;
+  }
+
+  .chart-box {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
+    transition: transform 0.3s ease;
+  }
+
+  .chart-box:hover {
+    transform: translateY(-5px);
+  }
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+		/* Dark mode styles */
+		body.dark-mode  {
+			background-color: #121212;
+			color: #ffffff;
+		}
+		.lh-header.dark-mode {
+			background-color: #1e1e1e;
+		}
+
+		.lh-sidebar.dark-mode  {
+			background-color: #1e1e1e;
+		} 
+
+		.lh-sidebar .lh-sb-logo .dark-mode {
+			background-color: #1e1e1e;
+
+		}
+
+
+		/* Add more styles as needed */
+		/*cards styles*/
+		.dashboard-card {
+      border-radius: 24px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      background: radial-gradient(circle at top right, rgba(255,255,255,0.8), transparent 70%);
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+
+    .dashboard-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-visitors {
+      background: linear-gradient(135deg, #E0F2FE 0%, #BFDBFE 100%);
+    }
+
+    .card-bookings {
+      background: linear-gradient(135deg, #F3E8FF 0%, #E9D5FF 100%);
+    }
+
+    .card-revenue {
+      background: linear-gradient(135deg, #DCFCE7 0%, #BBF7D0 100%);
+    }
+
+    .card-rooms {
+      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    }
+
+    .card-team {
+      background: linear-gradient(135deg, #FFE4E6 0%, #FECDD3 100%);
+    }
+
+    .icon-wrapper {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .icon-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+      transition: transform 0.6s ease;
+      transform: translateX(-100%);
+    }
+
+    .dashboard-card:hover .icon-wrapper::after {
+      transform: translateX(100%);
+    }
+
+    .icon-visitors { background: linear-gradient(135deg, #3B82F6, #2563EB); }
+    .icon-bookings { background: linear-gradient(135deg, #8B5CF6, #6D28D9); }
+    .icon-revenue { background: linear-gradient(135deg, #10B981, #059669); }
+    .icon-rooms { background: linear-gradient(135deg, #F59E0B, #D97706); }
+    .icon-team { background: linear-gradient(135deg, #EC4899, #DB2777); }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-title {
+      color: #1F2937;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.025em;
+    }
+
+    .card-value {
+      color: #111827;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.025em;
+    }
+
+    .growth-wrapper {
+      background: rgba(255, 255, 255, 0.5);
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      backdrop-filter: blur(4px);
+    }
+
+    .growth-text {
+      font-size: 0.875rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .growth-up {
+      color: #059669;
+    }
+
+    .growth-down {
+      color: #DC2626;
+    }
+
+    .period-text {
+      color: #4B5563;
+      font-size: 0.875rem;
+      margin-left: 0.5rem;
+      font-weight: 500;
+    }
+
+    .stat-divider {
+      width: 4px;
+      height: 4px;
+      background: #9CA3AF;
+      border-radius: 50%;
+      margin: 0 0.5rem;
+    }
+
+    .mini-chart {
+      height: 2px;
+      background: rgba(0,0,0,0.1);
+      margin-top: 1rem;
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .chart-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0;
+      transition: width 1s ease;
+      border-radius: 2px;
+    }
+
+    .visitors-progress { background: #3B82F6; }
+    .bookings-progress { background: #8B5CF6; }
+    .revenue-progress { background: #10B981; }
+    .rooms-progress { background: #F59E0B; }
+    .team-progress { background: #EC4899; }
+
+    @media (max-width: 768px) {
+      .dashboard-card {
+        margin-bottom: 1rem;
+      }
+    }
+
+	.lh-breadcrumb{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 860px;
+	}
+		/*end cards styles*/
+	</style>
+
+
+		<!-- main content -->
+		<div class="lh-main-content">
+			<div class="container-fluid">
+				<!-- Page title & breadcrumb -->
+				<div class="lh-page-title">
+					<div class="lh-breadcrumb">
+						<h5>Dashboard</h5>
+						<ul>
+							<li><a href="{% url 'admin-panel:index' %}">Home</a></li>
+							<li>Dashboard</li>
+						</ul>
+					</div>
+					<div class="lh-tools">
+						<!-- <a href="javascript:void(0)" title="Refresh" class="refresh"><i class="ri-refresh-line"></i></a>
+						<div id="pagedate">
+							<div class="lh-date-range" title="Date">
+								<span></span>
+							</div>
+						</div> -->
+						<!--  <div class="filter">
+							<div class="dropdown" title="Filter">
+								<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+									data-bs-toggle="dropdown" aria-expanded="false">
+									<i class="ri-sound-module-line"></i>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+									<li><a class="dropdown-item" href="#">Booking</a></li>
+									<li><a class="dropdown-item" href="#">Revenue</a></li>
+									<li><a class="dropdown-item" href="#">Expence</a></li>
+								</ul>
+							</div>
+						</div> --> 
+					</div>
+				</div>
+				<div class="row g-3" style="margin-bottom: 15px;">
+					<!-- Visitors Card -->
+					<div class="col-xl-4 col-md-6">
+					  <div class="dashboard-card card-visitors p-4">
+						<div class="card-content">
+						  <div class="d-flex justify-content-between align-items-start mb-4">
+							<div>
+							  <h4 class="card-title">TOTAL VISITORS</h4>
+							  <h3 class="card-value">{{ total_visitors }}</h3>
+							</div>
+							<div class="icon-wrapper icon-visitors">
+							  <i class="ri-group-line"></i>
+							</div>
+						  </div>
+						  <div class="growth-wrapper">
+							<div class="d-flex align-items-center">
+							  <span class="growth-text {% if booking_growth >= 0 %}growth-up{% else %}growth-down{% endif %}">
+								<i class="ri-arrow-{% if booking_growth >= 0 %}up{% else %}down{% endif %}-line"></i>
+								{{ booking_growth }}%
+							  </span>
+							  <div class="stat-divider"></div>
+							  <span class="period-text">vs last month</span>
+							</div>
+						  </div>
+						  <div class="mini-chart">
+							<div class="chart-progress visitors-progress" style="width: {{ booking_growth|default:0 }}%"></div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+			  
+					<!-- Bookings Card -->
+					<div class="col-xl-4 col-md-6">
+					  <div class="dashboard-card card-bookings p-4">
+						<div class="card-content">
+						  <div class="d-flex justify-content-between align-items-start mb-4">
+							<div>
+							  <h4 class="card-title">TOTAL BOOKINGS</h4>
+							  <h3 class="card-value">{{ total_bookings }}</h3>
+							</div>
+							<div class="icon-wrapper icon-bookings">
+							  <i class="ri-calendar-check-line"></i>
+							</div>
+						  </div>
+						  <div class="growth-wrapper">
+							<div class="d-flex align-items-center">
+							  <span class="growth-text {% if booking_growth >= 0 %}growth-up{% else %}growth-down{% endif %}">
+								<i class="ri-arrow-{% if booking_growth >= 0 %}up{% else %}down{% endif %}-line"></i>
+								{{ booking_growth }}%
+							  </span>
+							  <div class="stat-divider"></div>
+							  <span class="period-text">vs last month</span>
+							</div>
+						  </div>
+						  <div class="mini-chart">
+							<div class="chart-progress bookings-progress" style="width: {{ booking_growth|default:0 }}%"></div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+			  
+					<!-- Revenue Card -->
+					<div class="col-xl-4 col-md-6">
+					  <div class="dashboard-card card-revenue p-4">
+						<div class="card-content">
+						  <div class="d-flex justify-content-between align-items-start mb-4">
+							<div>
+							  <h4 class="card-title">TOTAL REVENUE</h4>
+							  <h3 class="card-value">₹{{ total_revenue|floatformat:2 }}</h3>
+							</div>
+							<div class="icon-wrapper icon-revenue">
+							  <i class="ri-money-dollar-circle-line"></i>
+							</div>
+						  </div>
+						  <div class="growth-wrapper">
+							<div class="d-flex align-items-center">
+							  <span class="growth-text {% if revenue_growth >= 0 %}growth-up{% else %}growth-down{% endif %}">
+								<i class="ri-arrow-{% if revenue_growth >= 0 %}up{% else %}down{% endif %}-line"></i>
+								{{ revenue_growth }}%
+							  </span>
+							  <div class="stat-divider"></div>
+							  <span class="period-text">vs last month</span>
+							</div>
+						  </div>
+						  <div class="mini-chart">
+							<div class="chart-progress revenue-progress" style="width: {{ revenue_growth|default:0 }}%"></div>
+						  </div>
+						</div>
+					  </div>
+					</div></div>
+			  
+					<!-- Rooms Card -->
+					 <div class="row" style="display: flex;justify-content: center; margin-bottom: 15px;">
+					<div class="col-xl-4 col-md-6">
+					  <div class="dashboard-card card-rooms p-4">
+						<div class="card-content">
+						  <div class="d-flex justify-content-between align-items-start mb-4">
+							<div>
+							  <h4 class="card-title">AVAILABLE ROOMS</h4>
+							  <h3 class="card-value">{{ available_rooms }}/{{ total_rooms }}</h3>
+							</div>
+							<div class="icon-wrapper icon-rooms">
+							  <i class="ri-hotel-line"></i>
+							</div>
+						  </div>
+						  <div class="growth-wrapper">
+							<div class="d-flex align-items-center">
+							  <span class="growth-text growth-up">
+								<i class="ri-arrow-up-line"></i>
+								{{ rooms_availability_percent }}%
+							  </span>
+							  <div class="stat-divider"></div>
+							  <span class="period-text">availability rate</span>
+							</div>
+						  </div>
+						  <div class="mini-chart">
+							<div class="chart-progress rooms-progress" style="width: {{ rooms_availability_percent }}%"></div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+			  
+					<!-- Team Card -->
+					<div class="col-xl-4 col-md-6">
+					  <div class="dashboard-card card-team p-4">
+						<div class="card-content">
+						  <div class="d-flex justify-content-between align-items-start mb-4">
+							<div>
+							  <h4 class="card-title">TEAM MEMBERS</h4>
+							  <h3 class="card-value">{{ team_members }}</h3>
+							</div>
+							<div class="icon-wrapper icon-team">
+							  <i class="ri-team-line"></i>
+							</div>
+						  </div>
+						  <div class="growth-wrapper">
+							<div class="d-flex align-items-center">
+							  <span class="growth-text growth-up">
+								<i class="ri-arrow-up-line"></i>
+								Active
+							  </span>
+							  <div class="stat-divider"></div>
+							  <span class="period-text">team members</span>
+							</div>
+						  </div>
+						  <div class="mini-chart">
+							<div class="chart-progress team-progress" style="width: 100%"></div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+
+				  <div class="chart-container">
+					<div class="chart-box">
+						<canvas id="bookingChart"></canvas>
+					</div>
+					<div class="chart-box">
+						<canvas id="revenueChart"></canvas>
+					</div>
+				  </div>
+
+				<div class="row">
+					<div class="col-xl-12 col-md-12">
+						<div class="lh-card" id="bookingtbl">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Recent Bookings</h4>
+								<div class="header-tools">
+									<a href="javascript:void(0)" class="m-r-10 lh-full-card"><i
+											class="ri-fullscreen-line" title="Full Screen"></i></a>
+									<div class="lh-date-range dots">
+										<span></span>
+									</div>
+								</div>
+							</div>
+							<div class="lh-card-content card-default">
+								<div class="booking-table">
+									<div class="table-responsive">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Guest</th>
+													<th>Room</th>
+													<th>Check-In</th>
+													<th>Check-Out</th>
+													<th>Status</th>
+													<th>Amount</th>
+												</tr>
+											</thead>
+											<tbody>
+												{% for booking in recent_bookings %}
+												<tr>
+													<td>{{ booking.id }}</td>
+													<td>{{ booking.guest.name }}</td>
+													<td>{{ booking.room.room_number }}-{{ booking.room.block }} </td>
+													<td>{{ booking.check_in|date:"Y-m-d" }}</td>
+													<td>{{ booking.check_out|date:"Y-m-d" }}</td>
+													<td>{{ booking.status|title }}</td>
+													<td>${{ booking.total_amount|floatformat:2 }}</td>
+												</tr>
+												{% empty %}
+												<tr>
+													<td colspan="7" class="text-center">No recent bookings found</td>
+												</tr>
+												{% endfor %}
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+	<script>
+		// JavaScript to toggle dark mode
+		document.getElementById('toggleMode').addEventListener('click', function() {
+			document.body.classList.toggle('dark-mode');
+			const header = document.querySelector('.lh-header');
+			const sidebar = document.querySelector('.lh-sidebar');
+			header.classList.toggle('dark-mode');
+			sidebar.classList.toggle('dark-mode');
+		});
+	</script>
+
+{{ months|json_script:"months-data" }}
+{{ revenues|json_script:"revenues-data" }}
+{{ status_labels|json_script:"status-labels" }}
+{{ status_data|json_script:"status-data" }}
+
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		// Parse data from JSON-safe script tags
+		const months = JSON.parse(document.getElementById('months-data').textContent);
+		const revenues = JSON.parse(document.getElementById('revenues-data').textContent);
+		const statusLabels = JSON.parse(document.getElementById('status-labels').textContent);
+		const statusData = JSON.parse(document.getElementById('status-data').textContent);
+		const totalBookings = statusData.reduce((a, b) => a + b, 0);
+	
+		// Common chart options
+		const commonOptions = {
+			responsive: true,
+			maintainAspectRatio: false,
+			plugins: {
+				legend: {
+					position: 'bottom',
+					labels: {
+						padding: 20,
+						font: {
+							size: 12
+						}
+					}
+				}
+			}
+		};
+	
+		// Bookings Pie Chart
+		const bookingCanvas = document.getElementById('bookingChart');
+		if (bookingCanvas) {
+			const bookingCtx = bookingCanvas.getContext('2d');
+			new Chart(bookingCtx, {
+				type: 'doughnut',
+				data: {
+					labels: statusLabels,
+					datasets: [{
+						data: statusData,
+						backgroundColor: [
+							'rgba(76, 175, 80, 0.8)',  // Green
+							'rgba(244, 67, 54, 0.8)',  // Red
+							'rgba(255, 152, 0, 0.8)'   // Orange
+						],
+						borderColor: [
+							'rgba(76, 175, 80, 1)',
+							'rgba(244, 67, 54, 1)',
+							'rgba(255, 152, 0, 1)'
+						],
+						borderWidth: 1
+					}]
+				},
+				options: {
+					...commonOptions,
+					plugins: {
+						...commonOptions.plugins,
+						title: {
+							display: true,
+							text: 'Current Month Booking Status',
+							font: {
+								size: 16,
+								weight: 'bold'
+							},
+							padding: 20
+						},
+						tooltip: {
+							callbacks: {
+								label: function(context) {
+									const count = context.parsed;
+									const percent = ((count / totalBookings) * 100).toFixed(1);
+									return `${context.label}: ${count} (${percent}%)`;
+								}
+							}
+						}
+					},
+					cutout: '60%'
+				}
+			});
+		}
+	
+		// Revenue Bar Chart
+		const revenueCanvas = document.getElementById('revenueChart');
+		if (revenueCanvas) {
+			const revenueCtx = revenueCanvas.getContext('2d');
+			new Chart(revenueCtx, {
+				type: 'bar',
+				data: {
+					labels: months,
+					datasets: [{
+						label: 'Monthly Revenue (₹)',
+						data: revenues,
+						backgroundColor: 'rgba(75, 192, 192, 0.6)',
+						borderColor: 'rgba(75, 192, 192, 1)',
+						borderWidth: 1,
+						borderRadius: 5
+					}]
+				},
+				options: {
+					...commonOptions,
+					plugins: {
+						...commonOptions.plugins,
+						title: {
+							display: true,
+							text: 'Revenue Overview (Last 6 Months)',
+							font: {
+								size: 16,
+								weight: 'bold'
+							},
+							padding: 20
+						}
+					},
+					scales: {
+						x: {
+							grid: {
+								display: false
+							},
+							ticks: {
+								autoSkip: true,
+								maxRotation: 45,
+								minRotation: 0,
+								maxTicksLimit: 6,
+								font: {
+									size: 11
+								}
+							}
+						},
+						y: {
+							beginAtZero: true,
+							grid: {
+								display: true,
+								color: 'rgba(0, 0, 0, 0.1)'
+							},
+							ticks: {
+								callback: function(value) {
+									return '₹' + value.toLocaleString();
+								},
+								font: {
+									size: 11
+								}
+							}
+						}
+					}
+				}
+			});
+		}
+	});
+	</script>
+	
+
+{% endblock %}

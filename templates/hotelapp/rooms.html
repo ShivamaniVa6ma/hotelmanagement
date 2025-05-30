@@ -337,8 +337,8 @@
 		<div class="lh-sidebar-overlay"></div>
 		<div class="lh-sidebar" data-mode="light">
 			<div class="lh-sb-logo">
-				<a href="index.html" class="sb-full"><img src="assets/img/logo/full-logo.png" alt="logo"></a>
-				<a href="index.html" class="sb-collapse"><img src="assets/img/logo/collapse-logo.png" alt="logo"></a>
+				<a href="{% url 'admin-panel:index' %}" class="sb-full"><img src="assets/img/logo/full-logo.png" alt="logo"></a>
+				<a href="{% url 'admin-panel:index' %}" class="sb-collapse"><img src="assets/img/logo/collapse-logo.png" alt="logo"></a>
 			</div>
 			<div class="lh-sb-wrapper">
 				<div class="lh-sb-content">
@@ -349,7 +349,7 @@
 								<span class="condense">Dashboard<i class="drop-arrow ri-arrow-down-s-line"></i></span>
 							</a>
 							<ul class="lh-sb-drop condense">
-								<li class="list"><a href="index.html" class="lh-page-link drop"><i
+								<li class="list"><a href="{% url 'admin-panel:index' %}" class="lh-page-link drop"><i
 											class="ri-git-commit-line"></i>Report</a></li>
 							</ul>
 						</li>
@@ -666,12 +666,19 @@
 				<div class="lh-page-title">
 					<div class="lh-breadcrumb">
 						<h5>Rooms</h5>
-						<ul>
-							<li><a href="index.html">Home</a></li>
+						<!-- <ul>
+							<li><a href="{% url 'admin-panel:index' %}">Home</a></li>
 							<li>Rooms</li>
-						</ul>
+						</ul> -->
 					</div>
 					<div class="lh-tools">
+						<div class="lh-breadcrumb">
+							<!-- <h5>Rooms</h5> -->
+							<ul>
+								<li><a href="{% url 'admin-panel:index' %}">Home</a></li>
+								<li>Rooms</li>
+							</ul>
+						</div>
 						<a href="javascript:void(0)" title="Refresh" class="refresh"><i class="ri-refresh-line"></i></a>
 						<div id="pagedate">
 							<div class="lh-date-range" title="Date">
@@ -690,6 +697,17 @@
 								</div>
 							</div>
 						</div>
+						
+						<div class="lh-tools">
+							<a href="javascript:void(0)" title="Refresh" class="refresh"
+									><i class="ri-refresh-line"></i
+								  ></a>
+								  <div id="pagedate">
+									<div class="lh-date-range" title="Date">
+									  <span></span>
+									</div>
+								  </div>
+					
 
 						<button class="btn btn-primary m-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas">
 							Add New Room
@@ -1597,7 +1615,7 @@
 		<footer>
 			<div class="container-fluid">
 				<div class="copyright">
-					                    <p class="mb-0 " >© <script>document.write(new Date().getFullYear())</script> <a href="index.html" class="link">Bloom Up </a> – All Rights Reserved ||  Developed by <a href="https://ultrakeyit.in/" target="_blank" class="link" >Ultrakey It Solutions Private Limited </a>.</p>
+					                    <p class="mb-0 " >© <script>document.write(new Date().getFullYear())</script> <a href="{% url 'admin-panel:index' %}" class="link">Bloom Up </a> – All Rights Reserved ||  Developed by <a href="https://ultrakeyit.in/" target="_blank" class="link" >Ultrakey It Solutions Private Limited </a>.</p>
 
 				</div>
 			</div>

@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .failed-container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .failed-icon {
+            color: #dc3545;
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="failed-container">
+            <div class="failed-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h2 class="mb-4">Payment Failed</h2>
+            <p class="mb-4">Sorry, your payment could not be processed. Please try again.</p>
+            <a href="{% url 'subscription:plans' %}" class="btn btn-primary">Back to Plans</a>
+        </div>
+    </div>
+</body>
+</html> 

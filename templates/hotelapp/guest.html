@@ -31,6 +31,19 @@
 
 	<!-- Main CSS -->
 	<link id="mainCss" href="assets/css/style.css" rel="stylesheet">
+
+<!-- <style>
+	@media (min-width: 1200px) {
+    .booking_list{
+        flex: 0 0 auto;
+        width: 100%;
+        margin-top: 81px !important;
+    }
+}
+
+
+</style> -->
+
 </head>
 
 <body data-lh-mode="light">
@@ -153,8 +166,8 @@
 		<div class="lh-sidebar-overlay"></div>
 		<div class="lh-sidebar" data-mode="light">
 			<div class="lh-sb-logo">
-				<a href="index.html" class="sb-full"><img src="assets/img/logo/full-logo.png" alt="logo"></a>
-				<a href="index.html" class="sb-collapse"><img src="assets/img/logo/collapse-logo.png" alt="logo"></a>
+				<a href="{% url 'admin-panel:index' %}" class="sb-full"><img src="assets/img/logo/full-logo.png" alt="logo"></a>
+				<a href="{% url 'admin-panel:index' %}" class="sb-collapse"><img src="assets/img/logo/collapse-logo.png" alt="logo"></a>
 			</div>
 			<div class="lh-sb-wrapper">
 				<div class="lh-sb-content">
@@ -165,7 +178,7 @@
 								<span class="condense">Dashboard<i class="drop-arrow ri-arrow-down-s-line"></i></span>
 							</a>
 							<ul class="lh-sb-drop condense">
-								<li class="list"><a href="index.html" class="lh-page-link drop"><i
+								<li class="list"><a href="{% url 'admin-panel:index' %}" class="lh-page-link drop"><i
 											class="ri-git-commit-line"></i>Report</a></li>
 							</ul>
 						</li>
@@ -483,7 +496,8 @@
 					<div class="lh-breadcrumb">
 						<h5>Guest</h5>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="{% url 'admin-panel:index' %}">Home</a></li>
+							<li> <i class="fas fa-angle-right pl3 pr3"></i></li>
 							<li>Guest</li>
 						</ul>
 					</div>
@@ -494,7 +508,7 @@
 								<span></span>
 							</div>
 						</div>
-						<div class="filter">
+						<!-- <div class="filter">
 							<div class="dropdown" title="Filter">
 								<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
 									data-bs-toggle="dropdown" aria-expanded="false">
@@ -506,11 +520,11 @@
 									<li><a class="dropdown-item" href="#">Expence</a></li>
 								</ul>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-xl-12 col-md-12">
+					<div class="col-xl-12 col-md-12 booking_list">
 						<div class="lh-card" id="bookingtbl">
 							<div class="lh-card-header">
 								<h4 class="lh-card-title">Bookings</h4>
@@ -854,7 +868,7 @@
 		<footer>
 			<div class="container-fluid">
 				<div class="copyright">
-					                    <p class="mb-0 " >© <script>document.write(new Date().getFullYear())</script> <a href="index.html" class="link">Bloom Up </a> – All Rights Reserved ||  Developed by <a href="https://ultrakeyit.in/" target="_blank" class="link" >Ultrakey It Solutions Private Limited </a>.</p>
+					                    <p class="mb-0 " >© <script>document.write(new Date().getFullYear())</script> <a href="{% url 'admin-panel:index' %}" class="link">Bloom Up </a> – All Rights Reserved ||  Developed by <a href="https://ultrakeyit.in/" target="_blank" class="link" >Ultrakey It Solutions Private Limited </a>.</p>
 
 				</div>
 			</div>

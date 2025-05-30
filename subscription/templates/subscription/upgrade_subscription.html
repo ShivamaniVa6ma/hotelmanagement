@@ -1,0 +1,109 @@
+{% extends 'sub_base.html' %}
+{% block content %}
+{%  load static %}
+<style>
+    .plan-option {
+        transition: all 0.3s ease;
+    }
+    .plan-option:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .feature-list {
+        list-style: none;
+        padding-left: 0;
+    }
+    .feature-list li {
+        padding: 5px 0;
+        position: relative;
+        padding-left: 25px;
+    }
+    .feature-list li:before {
+        content: "✓";
+        color: #28a745;
+        position: absolute;
+        left: 0;
+    }
+    .current-plan-badge {
+        background-color: #17a2b8;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8em;
+        margin-left: 8px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Manage Your Subscription</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Current Plan Info -->
+                    <div class="current-plan mb-4">
+                        <h4>Current Plan: {{ current_subscription.subscription_plan.name }}</h4>
+                        <p>Valid until: {{ current_subscription.subscription_end_date|date:"F d, Y" }}</p>
+                        <p>Current Monthly Price: ${{ current_subscription.subscription_plan.monthly_price }}</p>
+                    </div>
+
+                    <hr>
+
+                    <!-- Available Plans -->
+                    <form method="post" class="upgrade-form" action="{% url 'subscription:upgrade_subscription' subscription_user_id=current_subscription.id %}">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <div class="plans-container mb-4">
+                            <h4>Choose Your Plan</h4>
+                            {% for plan in available_plans %}
+                            <div class="plan-option card mb-3 {% if plan.is_popular %}border-primary{% endif %}">
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input type="radio" name="plan" value="{{ plan.id }}" 
+                                               class="form-check-input" id="plan_{{ plan.id }}"
+                                               {% if plan.id == current_subscription.subscription_plan.id %}checked{% endif %}>
+                                        <label class="form-check-label" for="plan_{{ plan.id }}">
+                                            <h5 class="mb-2">
+                                                {{ plan.name }}
+                                                {% if plan.id == current_subscription.subscription_plan.id %}
+                                                    <span class="current-plan-badge">Current Plan</span>
+                                                {% endif %}
+                                                {% if plan.is_popular %}
+                                                    <span class="badge bg-primary">Most Popular</span>
+                                                {% endif %}
+                                            </h5>
+                                            <p class="mb-2">${{ plan.monthly_price }}/month</p>
+                                            <ul class="feature-list">
+                                                {% for feature in plan.get_feature_list %}
+                                                <li>{{ feature }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="duration-select mb-4">
+                            <h4>Choose Duration</h4>
+                            <div class="form-group">
+                                {{ form.duration_months }}
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Update Subscription
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

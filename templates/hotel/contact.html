@@ -13,7 +13,7 @@
                     <div class="lh-breadcrumb">
                         <h5>
                             <span class="lh-inner-breadcrumb">
-                                <a href="{% url 'user-panel:index' %}">Home</a>
+                                <a href="{% url 'user-panel:index' company_name=company_name %}">Home</a>
                             </span>
                             <span> / </span>
                             <span>
@@ -33,7 +33,7 @@
                 <div class="col-lg-4 rs-pb-24">
                     <div class="lh-contact" data-aos="fade-up" data-aos-duration="1000">
                         <div class="lh-contact-image">
-                            <img src="{% static 'hotel/assets/img/contact/call-1.svg' %}" class="svg-img" alt="call">
+                            <img src="{% static '/hotel/assets/img/contact/call-1.svg' %}" class="svg-img" alt="call">
                         </div>
                         <div class="lh-contact-detalis">
                             <h4 class="lh-contact-detalis-heading">Make A call</h4>
@@ -47,7 +47,7 @@
                 <div class="col-lg-4 rs-pb-24">
                     <div class="lh-contact" data-aos="fade-up" data-aos-duration="1500">
                         <div class="lh-contact-image">
-                            <img src="{% static 'hotel/assets/img/contact/email-1.svg' %}" class="svg-img" alt="contact">
+                            <img src="{% static '/hotel/assets/img/contact/email-1.svg' %}" class="svg-img" alt="contact">
                         </div>
                         <div class="lh-contact-detalis">
                             <h4 class="lh-contact-detalis-heading">Send A Email</h4>
@@ -61,7 +61,7 @@
                 <div class="col-lg-4 rs-pb-24">
                     <div class="lh-contact" data-aos="fade-up" data-aos-duration="2000">
                         <div class="lh-contact-image">
-                            <img src="{% static 'hotel/assets/img/contact/support-1.svg' %}" class="svg-img" alt="contact">
+                            <img src="{% static '/hotel/assets/img/contact/support-1.svg' %}" class="svg-img" alt="contact">
                         </div>
                         <div class="lh-contact-detalis">
                             <h4 class="lh-contact-detalis-heading">Address</h4>
@@ -78,28 +78,29 @@
                 <div class="col-lg-6 rs-pb-24">
                     <div class="lh-contact-touch-inner">
                         <div class="lh-contact-touch-contain">
-                            <h4 class="lh-contact-touch-contain-heading">Get In Touch With Us Fell Free To Write Us</h4>
+                            <h4 class="lh-contact-touch-contain-heading">Get In Touch With Us Feel Free To Write Us</h4>
                             <p>This is the dolor consectetur adpisicing elit. Deleniti quam exercitationem a
                                 expedita natus quisquam. Deleniti Facere exercitationem ratione nihil Deleniti delectus
                                 possimus!</p>
                         </div>
                         <div class="lh-contact-touch-inner-form">
-                            <form action="#">
+                            <form method="POST" action="{% url 'user-panel:contact-us' company_name=company_name %}" id="contactForm">
+                                {% csrf_token %}
                                 <div class="lh-contact-touch-inner-form-warp">
-                                    <input type="text" name="firstname" placeholder="Your Name*"
-                                        class="lh-form-control mr-30" required="">
-                                    <input type="email" name="email" placeholder="Your Email*" class="lh-form-control"
-                                        required="">
+                                    <input type="text" name="name" placeholder="Your Name*"
+                                        class="lh-form-control mr-30" required>
+                                    <input type="email" name="email" placeholder="Your Email*" 
+                                        class="lh-form-control" required>
                                 </div>
                                 <div class="lh-contact-touch-inner-form-warp">
-                                    <input type="text" name="firstname" placeholder="Your Subject*"
-                                        class="lh-form-control" required="">
+                                    <input type="text" name="subject" placeholder="Your Subject*"
+                                        class="lh-form-control" required>
                                 </div>
                                 <div class="lh-contact-touch-inner-form-warp">
-                                    <textarea class="lh-form-control" placeholder="Message*"></textarea>
+                                    <textarea name="message" class="lh-form-control" placeholder="Message*" required></textarea>
                                 </div>
                                 <div class="lh-contact-touch-inner-form-button">
-                                    <button class="lh-buttons result-placeholder" type="submit">
+                                    <button class="lh-buttons" type="submit">
                                         Send Message
                                     </button>
                                 </div>
@@ -109,14 +110,98 @@
                 </div>
                 <div class="col-lg-6 rs-pb-24">
                     <div class="lh-contact-touch-ifrem">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29749.225774882685!2d72.84343101893258!3d21.245595574425934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f4fb5c0b087%3A0xb7aabd8a90da0679!2sMota%20Varachha%2C%20Surat%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1690017805909!5m2!1sen!2sin"
-                            style="border:0;"></iframe>
+                        <!-- <textarea name="embed_code">{{ form.embed_code.value }}</textarea> -->
+                        {% if embed_code %}
+                            {{ embed_code|safe }}
+                        {% else %}
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60894.189917817996!2d78.31633641953123!3d17.46512800664211!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4f7a26b96d6c0b61%3A0x6b3acb732ef5e3!2sUltrakey%20IT%20Solutions%20Private%20Limited!5e0!3m2!1sen!2sin!4v1744890644323!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        {% endif %}
+                    
                     </div>
                 </div>
             </div>
             </div>
         </div>
     </section>
+
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" rel="stylesheet">
+    
+    <!-- jQuery (if not already included) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#contactForm").on('submit', function(e) {
+                e.preventDefault();
+                
+                var form = $(this);
+                var formData = new FormData(this);
+                
+                $.ajax({
+                    url: window.location.href,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Thank You for providing feedback to us!',
+                                icon: 'success',
+                                confirmButtonColor: '#3085d6'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    form[0].reset();
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'There was an error sending your message.',
+                                icon: 'error',
+                                confirmButtonColor: '#d33'
+                            });
+                        }
+                    },
+                    error: function(xhr, errmsg, err) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An error occurred. Please try again later.',
+                            icon: 'error',
+                            confirmButtonColor: '#d33'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </div>
 {% endblock %}
+
+
+
+
+
+<style>
+    .error-feedback {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+    
+    .is-invalid {
+        border-color: #dc3545 !important;
+    }
+    
+    .text-danger {
+        color: #dc3545;
+    }
+    </style>

@@ -3,6 +3,8 @@
 
 {% block content %}
 
+
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -28,20 +30,41 @@
             margin-bottom: 20px;
         } */
         .room-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 rooms per row */
-            gap: 6px; /* Space between the rooms */
-            width: 90%; /* Full width of the container */
-            /* display: flex;
-            flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
 
-            justify-content: space-between;
-            width: 22%; */
+.room-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.3s ease-in-out;
+}
 
-            /* display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px; */
-        }
+.room-block.available {
+    background-color: green;
+}
+
+.room-block.booked {
+    background-color: red;
+    cursor: not-allowed;
+}
+
+.room-block.selected {
+    background-color: blue !important;
+}
+
+
         .room {
             padding: 10px;
             border-radius: 5px;
@@ -52,6 +75,15 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             /* min-width: 50px; Minimum width for room items */
         
+        }
+        .available {
+            background-color: green;
+            color: white;
+        }
+
+        .unavailable {
+            background-color: red;
+            color: white;
         }
         .room-list {
             display: flex; /* Use flexbox for alignment */
@@ -269,8 +301,25 @@
     }
 </style>
     
+<style>
+    .room-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .room {
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        min-width: 50px;
+    }
+    .available { background-color: green; color: white; }
+    .sold { background-color: gray; color: white; }
+</style>
+
 <div class="main-content">
-    <section class="section-banner"></section>
+    <section class="section-banner">
         <div class="row banner-image">
             <div class="banner-overlay"></div>
             <div class="banner-section">
@@ -279,7 +328,7 @@
                     <div class="lh-breadcrumb">
                         <h5>
                             <span class="lh-inner-breadcrumb">
-                                <a href="{% url 'user-panel:index' %}">Home</a>
+                                <a href="{% url 'user-panel:index' company_name=company_name %}">Home</a>
                             </span>
                             <span> / </span>
                             <span>
@@ -303,7 +352,7 @@
                                         <h1 class="text-center mb-4" style="color: rgb(245, 6, 146);">Room Booking System</h1>
 
                                         
-                                        <form id="bookingForm" method="post" enctype="multipart/form-data" action="{% url 'user-panel:create_booking' %}">
+                                        <form id="bookingForm" method="post" enctype="multipart/form-data" action="{% url 'user-panel:create_booking' company_name=company_name %}">
                                             {% csrf_token %}
 
                                             <div class="row">
@@ -312,67 +361,74 @@
                                                 <!-- Add Check-in Date and Time -->
                                                 <div class="col-md-6 mb-2">
                                                     <label for="checkIn" class="form-label">Check-in Date and Time</label>
-                                                    <input type="datetime-local" name="check_in" id="checkIn" value="{{ check_in|date:'Y-m-d H:i' }}" class="form-control">
+                                                    <input type="datetime-local" name="check_in" id="checkIn" class="form-control" value="{{ check_in|date:'Y-m-d\TH:i' }}" required>
                                                 </div>
                                                 <!-- Add Check-out Date and Time -->
                                                 <div class="col-md-6 mb-2">
                                                     <label for="checkOut" class="form-label">Check-out Date and Time</label>
-                                                    <input type="datetime-local" id="checkOut" name="check_out" value="{{ check_out|date:'Y-m-d H:i' }}" class="form-control">
+                                                    <input type="datetime-local" id="checkOut" name="check_out" class="form-control" value="{{ check_out|date:'Y-m-d\TH:i' }}" required>
                                                 </div>
                                             </div>
                                             
                                             <h3 class="room-type-title" style="color: black;">Select Room Types</h3>
-                                            <div class="room-selection-container">
-                                                <div class="form-check">
-                                                    <input class="form-check-input room-checkbox" type="checkbox" value="standard" id="standardRoom" name="room_type">
-                                                    <label class="form-check-label" for="standardRoom">Standard Room </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input room-checkbox" type="checkbox" value="deluxe" id="deluxeRoom" name="room_type">
-                                                    <label class="form-check-label" for="deluxeRoom">Deluxe Room </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input room-checkbox" type="checkbox" value="vip" id="vipRoom" name="room_type">
-                                                    <label class="form-check-label" for="vipRoom">VIP Room </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input room-checkbox" type="checkbox" value="conference" id="conferenceRoom">
-                                                    <label class="form-check-label" for="conferenceRoom">Conference Room </label>
-                                                </div>
+                                            <div class="room-selection-container" id="roomSelectionContainer">
+                                                <!-- Room types will be dynamically added here -->
                                             </div>
-                                            <div class="room-list" id="roomList">
-                                                <!-- Rooms will be dynamically added here -->
-                                            </div>
+
+                                            
 
                                             <div class="guest-info-container mb-4">
                                                 <h3 style="color: black;">Guest Information</h3>
+                                                {% if user.is_authenticated and user.is_guest and user.guest_profile %}
+                                                    <div class="alert alert-info">
+                                                        <p>Your guest profile will be used for this booking.</p>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-2">
+                                                            <label for="guestName" class="form-label">Guest Name</label>
+                                                            <input type="text" id="guestName" name="name" class="form-control" value="{{ user.guest_profile.name }}" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 mb-2">
+                                                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                                                            <input type="tel" id="phoneNumber" name="phone" class="form-control" value="{{ user.guest_profile.phone }}" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 mb-2">
+                                                            <label for="email" class="form-label">Email</label>
+                                                            <input type="email" id="email" name="email" class="form-control" value="{{ user.guest_profile.email }}" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 mb-2">
+                                                            <label for="address" class="form-label">Address</label>
+                                                            <input type="text" id="address" name="address" class="form-control" value="{{ user.guest_profile.address }}" readonly>
+                                                        </div>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-2">
+                                                            <label for="guestName" class="form-label">Guest Name</label>
+                                                            <input type="text" id="guestName" name="name" class="form-control" required>
+                                                        </div>
+                                                        <div class="col-md-6 mb-2">
+                                                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                                                            <input type="tel" id="phoneNumber" name="phone" class="form-control" required>
+                                                        </div>
+                                                        <div class="col-md-6 mb-2">
+                                                            <label for="email" class="form-label">Email</label>
+                                                            <input type="email" id="email" name="email" class="form-control" required>
+                                                        </div>
+                                                        <div class="col-md-6 mb-2">
+                                                            <label for="address" class="form-label">Address</label>
+                                                            <input type="text" id="address" name="address" class="form-control" required>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
                                                 <div class="row">
                                                     <div class="col-md-6 mb-2">
-                                                        <label for="guestName" class="form-label">Guest Name</label>
-                                                        <input type="text" id="guestName" name="name" class="form-control">
+                                                        <label for="adults" class="form-label">Number of Adults</label>
+                                                        <input type="number" id="adults" name="adults" class="form-control" min="1" max="10" required>
                                                     </div>
                                                     <div class="col-md-6 mb-2">
-                                                        <label for="phoneNumber" class="form-label">Phone Number</label>
-                                                        <input type="tel" id="phoneNumber" name="phone" class="form-control">
-                                                    </div>
-                                                    <div class="col-md-6 mb-2">
-                                                        <label for="email" class="form-label">Email</label>
-                                                        <input type="email" id="email" name="email" class="form-control">
-                                                    </div>
-                                                    <div class="col-md-6 mb-2">
-                                                        <label for="address" class="form-label">Address</label>
-                                                        <input type="text" id="address" name="address" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <!-- <h5>Guest Count</h5> -->
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-2">
-                                                        <label for="numberOfAdults" class="form-label">Number Of Adults</label>
-                                                        <input type="number" id="numberOfAdults" name="adults" class="form-control">
-                                                    </div>
-                                                    <div class="col-md-6 mb-2">
-                                                        <label for="children" class="form-label">Children</label>
-                                                        <input type="number" id="numberOfAdults" name="children" class="form-control">
+                                                        <label for="children" class="form-label">Number of Children</label>
+                                                        <input type="number" id="children" name="children" class="form-control" min="0" max="10" required>
                                                     </div>
                                                 </div>
                                             
@@ -428,7 +484,7 @@
                                                   >                                                    <div class="form-text">Please upload a clear image of your ID proof (Aadhar, PAN, or Passport).</div>
                                                 </div>
                                                   <!-- Payment Type Selection -->
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <label for="paymentType" class="form-label">Payment Type</label>
                                                 <select name="payment_type">
                                                     <option value="cash">Cash</option>
@@ -436,9 +492,10 @@
                                                     <option value="card">Card</option>
                                                     <option value="net_banking">Net Banking</option>
                                                 </select>
-                                            </div>
+                                            </div> -->
                                     
-                                     
+                                            <input type="hidden" name="payment_type" value="razorpay">
+
                                     
                                     
                                     
@@ -458,18 +515,23 @@
                                                     
                                                         <div class="mt-3">
                                                             <strong>Total Amount: </strong>
-                                                            <span id="totalAmount">Rs. 0</span>
+                                                            <div id="totalAmount" class="fs-5 fw-bold text-success mb-3"></div>
+                                                            <div id="priceBreakdown"></div>
+
                                                         </div>
                                                         <button type="submit" id="bookButton" class="btn btn-primary mt-3" >Book Now</button>
                                                     </div>
                                                 </div>
                                             </div>
+                                                <!-- Add hidden input to store selected rooms -->
+                                                <input type="hidden" id="selectedRoomsInput" name="selectedRooms">
 
                                            
                                                 <!-- Total Rooms Selected: 0 -->
                                             </div>
                                             
                                         </form>
+
                                     </div>
                                 </div>
                             </div>
@@ -480,281 +542,692 @@
         </section>
 </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    document.getElementById('bookingForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this);
-        const selectedRooms = Array.from(document.querySelectorAll('.room.selected')).map(room => ({
-            id: room.getAttribute('data-room-id'),
-            roomType: room.getAttribute('data-room-type'),
-            attribute: room.getAttribute('data-attribute')
-        }));
-        
-        if (selectedRooms.length === 0) {
-            alert('Please select at least one room before booking.');
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Pre-select room type if available
+        {% if room_type %}
+            const roomTypeId = "{{ room_type.id }}";
+            const roomTypeCheckbox = document.getElementById(`roomType-${roomTypeId}`);
+            if (roomTypeCheckbox) {
+                roomTypeCheckbox.checked = true;
+                roomTypeCheckbox.dispatchEvent(new Event('change'));
+            }
+        {% endif %}
+
+        // Trigger price estimate if dates are pre-filled
+        const checkIn = document.getElementById("checkIn").value;
+        const checkOut = document.getElementById("checkOut").value;
+        if (checkIn && checkOut) {
+            updateEstimate();
+        }
+    });
+    </script>
+
+
+<script>
+let selectedRooms = []; // Store selected rooms
+
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData(this);
+    const selectedRoomIds = getSelectedRooms();
+
+    if (selectedRoomIds.length === 0) {
+        alert('Please select at least one room before booking.');
+        return;
+    }
+
+    formData.append('selectedRooms', JSON.stringify(selectedRoomIds));
+
+    fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            // Backend error like 500 or 429 etc.
+            throw new Error(`Server error: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success && data.payment_details) {
+            launchRazorpay(data.payment_details);
+        } else {
+            alert('Booking failed: ' + (data.error || 'Unknown error occurred'));
+        }
+    })
+    .catch(error => {
+        console.error('Booking error:', error);
+        alert('An unexpected error occurred. Please try again later.');
+    });
+});
+
+function launchRazorpay(paymentDetails) {
+    const companyName = "{{ company_name }}";
+    const options = {
+        key: paymentDetails.key_id,
+        amount: paymentDetails.amount,
+        currency: paymentDetails.currency,
+        name: companyName,
+        description: "Room Booking Payment",
+        order_id: paymentDetails.order_id,
+        handler: function (response) {
+            // Optional: You can send response.razorpay_payment_id, etc. to your backend here
+            // alert("Payment successful!");
+            window.location.href = `/user-panel/${companyName}/booking-success/`;
+        },
+        prefill: {
+            name: paymentDetails.guest_name,
+            email: paymentDetails.guest_email,
+            contact: paymentDetails.guest_phone
+        },
+        theme: {
+            color: "#3399cc"
+        }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+
+    // Prevent multiple clicks (Razorpay sometimes fires multiple times)
+    // rzp.on('payment.failed', function (response){
+    //     // alert("Payment failed. Reason: " + response.error.description);
+    //     window.location.href = `/user-panel/${companyName}/booking-failure/`;
+
+    // });
+    rzp.on('payment.failed', function (response){
+    const errorMessage = encodeURIComponent(response.error.description || "Unknown error occurred.");
+    window.location.href = `/user-panel/${companyName}/booking-failure/?error=${errorMessage}`;
+});
+
+}
+
+
+function toggleRoomSelection(roomDiv, roomId, roomNumber, block) {
+    const index = selectedRooms.findIndex(room => room.roomId === roomId);
+
+    if (roomDiv.classList.contains('selected')) {
+        roomDiv.classList.remove('selected');
+        if (index !== -1) selectedRooms.splice(index, 1);
+    } else {
+        roomDiv.classList.add('selected');
+        if (index === -1) selectedRooms.push({ roomId, roomNumber, block });
+    }
+
+    console.log("Selected Rooms:", selectedRooms);
+
+    const checkIn = document.getElementById("checkIn").value;
+    const checkOut = document.getElementById("checkOut").value;
+    if (checkIn && checkOut) {
+        fetchPriceEstimate("{{ company_name }}", checkIn, checkOut, getSelectedRooms());
+    }
+}
+
+    document.getElementById("checkIn").addEventListener("change", updateEstimate);
+    document.getElementById("checkOut").addEventListener("change", updateEstimate);
+
+    function updateEstimate() {
+        const checkIn = document.getElementById("checkIn").value;
+        const checkOut = document.getElementById("checkOut").value;
+        const selected = getSelectedRooms();
+        if (checkIn && checkOut && selected.length > 0) {
+            fetchPriceEstimate("{{ company_name }}", checkIn, checkOut, selected);
+        }
+    }
+
+function getSelectedRooms() {
+    console.log("Fetching Selected Rooms:", selectedRooms);
+    return selectedRooms.map(room => room.roomId); // Returns only room IDs
+}
+
+
+
+function fetchPriceEstimate(companyName, checkIn, checkOut, selectedRooms) {
+    if (!checkIn || !checkOut || selectedRooms.length === 0) return;
+
+    const url = "{% url 'user-panel:get_price_estimate' company_name=company_name %}";
+
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest"
+        },
+        body: JSON.stringify({
+            check_in: checkIn,
+            check_out: checkOut,
+            selectedRooms
+        }),
+    })
+    .then(async response => {
+        if (!response.ok) {
+            const text = await response.text();
+            console.error("Estimate API Error:", text);
+            throw new Error("Price estimate failed");
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            document.getElementById("totalAmount").innerText = `Rs. ${data.total_price.toFixed(2)}`;
+
+            const breakdownContainer = document.getElementById("priceBreakdown");
+            breakdownContainer.innerHTML = "";
+
+            data.room_breakdown.forEach(room => {
+                let html = `<div class="border p-2 mb-2 rounded shadow bg-white">
+                                <strong>Room ${room.room_number}${room.block} </strong> - Rs. ${room.final_price.toFixed(2)}<br>`;
+
+                if (room.hourly_applied) {
+                    html += `<em>(Hourly pricing applied)</em><br>`;
+                }
+
+                if (room.daily_breakdown?.length) {
+                    html += `<ul class="list-disc pl-5">`;
+                    room.daily_breakdown.forEach(day => {
+                        html += `<li>${day.date}: Rs. ${day.price.toFixed(2)} (${day.reason})</li>`;
+                    });
+                    html += `</ul>`;
+                }
+
+                html += `</div>`;
+                breakdownContainer.innerHTML += html;
+            });
+        } else {
+            document.getElementById("totalAmount").innerText = "Price calculation failed";
+        }
+    })
+    .catch(error => {
+        console.error("Price estimate error:", error);
+        document.getElementById("totalAmount").innerText = "Error fetching estimate";
+    });
+}
+
+function resetRoomSelections() {
+    document.querySelectorAll('.room.selected').forEach(div => div.classList.remove('selected'));
+    selectedRooms = [];
+    updateEstimate(); // Recalculate with 0 rooms
+}
+
+    // Attach event listener to update pricing when check-in/out changes
+    document.getElementById("checkIn").addEventListener("change", updatePrice);
+    document.getElementById("checkOut").addEventListener("change", updatePrice);
+    function updatePrice() {
+        const checkIn = document.getElementById("checkIn").value;
+        const checkOut = document.getElementById("checkOut").value;
+        const selectedRooms = getSelectedRooms(); // Fetch selected rooms properly
+
+        if (!checkIn || !checkOut) {
+            console.error("Check-in and Check-out are required!");
             return;
         }
 
-        formData.append('selectedRooms', JSON.stringify(selectedRooms));
+        if (selectedRooms.length === 0) {
+            console.error("No rooms selected!");
+            return;
+        }
 
-        fetch(this.action, {
+        fetchPriceEstimate(checkIn, checkOut, selectedRooms);
+    }
+
+
+
+
+    function handlePaymentSuccess(response, bookingId) {
+        fetch("{% url 'user-panel:payment_callback' company_name=company_name %}", {
             method: 'POST',
-            body: formData,
             headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+                booking_id: bookingId
+            })
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
-                if (data.redirect_url) {
-                    window.location.href = data.redirect_url;
-                } else {
-                    alert('Booking successful, but no redirect URL provided.');
-                }
+            if (data.success && data.redirect_url) {
+                window.location.href = data.redirect_url;
             } else {
-                alert('Error: ' + (data.error || 'Unknown error occurred'));
-                console.error(data.errors);
+                alert('Payment verification failed');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('An unexpected error occurred');
+            alert('Payment verification failed');
         });
-    });
+    }
     
-    document.addEventListener('DOMContentLoaded', function () {
-        const roomTypeCheckboxes = document.querySelectorAll('.room-checkbox');
-        const roomList = document.getElementById('roomList');
-        const selectedRooms = new Set(); // Track selected room IDs along with room type and attributes
-    
-        function fetchRooms() {
-            const selectedRoomTypes = Array.from(roomTypeCheckboxes)
-                .filter(cb => cb.checked)
-                .map(cb => cb.value);
-    
-            if (selectedRoomTypes.length === 0) {
-                roomList.innerHTML = '';
-                updateTotalRooms();
+    // ajax code for fetching room types and rendering them dynamically
+
+    $('.room-type-checkbox, input[name="bed_type"], input[name="ac_type"]').change(function () {
+    let selectedRoomType = $('.room-type-checkbox:checked').val();
+    let checkIn = $("#checkIn").val();
+    let checkOut = $("#checkOut").val();
+    let bedType = $("input[name='bed_type']:checked").val();
+    let acType = $("input[name='ac_type']:checked").val();
+    let companyName = "{{ company_name }}";
+
+    if (!selectedRoomType || !checkIn || !checkOut) {
+        $('#room-container').html('<p class="text-danger">Room type, check-in, and check-out dates are required.</p>');
+        return;
+    }
+
+    $.ajax({
+        url: `/user-panel/${companyName}/fetch-rooms/`,
+        type: 'GET',
+        data: {
+            room_type_id: selectedRoomType,
+            check_in: checkIn,
+            check_out: checkOut,
+            bed_type: bedType,
+            ac_type: acType
+        },
+        dataType: 'json',
+        success: function (response) {
+            if (response.error) {
+                $('#room-container').html(`<p class="text-danger">${response.error}</p>`);
                 return;
             }
-    
-            // Keep existing rooms and add new ones
-            selectedRoomTypes.forEach(roomType => {
-                if (!document.getElementById(`rooms-${roomType}`)) {
-                    fetchRoomsForType(roomType);
-                }
+
+            // Clear previously selected rooms
+            resetRoomSelections();
+
+            let html = '<div class="room-grid">';
+            response.room_data.forEach(room => {
+                let statusClass = room.is_available ? 'available' : 'unavailable';
+                html += `<div class="room ${statusClass}" data-room-id="${room.room_id}" onclick="toggleRoomSelection(this, ${room.room_id}, '${room.room_number}', '${room.block}')">
+                            ${room.room_number}
+                         </div>`;
             });
-    
-            // Remove unchecked room types
-            document.querySelectorAll('.room-section').forEach(section => {
-                const roomType = section.getAttribute('data-room-type');
-                if (!selectedRoomTypes.includes(roomType)) {
-                    section.remove();
-                    // Remove selected rooms of this type
-                    const roomsOfType = Array.from(selectedRooms).filter(id =>
-                        id.startsWith(`${roomType}-`)
-                    );
-                    roomsOfType.forEach(id => selectedRooms.delete(id));
-                }
-            });
-    
-            updateTotalRooms();
+            html += `</div>`;
+            $('#room-container').html(html);
+        },
+        error: function () {
+            $('#room-container').html('<p class="text-danger">Failed to fetch rooms.</p>');
         }
-    
-        function fetchRoomsForType(roomType) {
-            const selectedAttribute = roomType === 'conference'
-                ? document.querySelector(`input[name="seating-capacity-${roomType}"]:checked`)?.value || '10'
-                : document.querySelector(`input[name="bed-type-${roomType}"]:checked`)?.value || 'single';
-    
-            fetch("{% url 'user-panel:fetch_rooms' %}?" + new URLSearchParams({
-                'room_type[]': [roomType],
-                [roomType === 'conference' ? 'seating_capacity' : 'bed_type']: selectedAttribute
-            }))
-                .then(response => response.json())
-                .then(data => {
-                    const existingSection = document.getElementById(`rooms-${roomType}`);
-                    const roomsHtml = renderRoomSection(roomType, data[roomType], selectedAttribute);
-    
-                    if (existingSection) {
-                        existingSection.outerHTML = roomsHtml;
-                    } else {
-                        roomList.insertAdjacentHTML('beforeend', roomsHtml);
-                    }
-    
-                    addRoomSelectionHandlers();
-                    restoreSelectedRooms(); // Restore previously selected rooms
-                })
-                .catch(error => console.error('Error fetching rooms:', error));
-        }
-    
-        function renderRoomSection(roomType, rooms, selectedAttribute) {
-            const isConference = roomType === 'conference';
-    
-            return `
-                <div class="room-section mb-4" id="rooms-${roomType}" data-room-type="${roomType}">
-                    <h3 class="section-title">${roomType.charAt(0).toUpperCase() + roomType.slice(1)} Rooms</h3>
-                    
-                    ${isConference ? `
-                        <div class="seating-capacity-selection">
-                            <input type="radio" id="capacity-10-${roomType}" name="seating-capacity-${roomType}" value="10" 
-                                class="seating-capacity-radio" ${selectedAttribute === '10' ? 'checked' : ''}
-                                onchange="window.fetchRoomsForType('${roomType}')">
-                            <label class="seating-capacity-label" for="capacity-10-${roomType}">10 Seats</label>
-    
-                            <input type="radio" id="capacity-25-${roomType}" name="seating-capacity-${roomType}" value="25" 
-                                class="seating-capacity-radio" ${selectedAttribute === '25' ? 'checked' : ''}
-                                onchange="window.fetchRoomsForType('${roomType}')">
-                            <label class="seating-capacity-label" for="capacity-25-${roomType}">25 Seats</label>
-    
-                            <input type="radio" id="capacity-50-${roomType}" name="seating-capacity-${roomType}" value="50" 
-                                class="seating-capacity-radio" ${selectedAttribute === '50' ? 'checked' : ''}
-                                onchange="window.fetchRoomsForType('${roomType}')">
-                            <label class="seating-capacity-label" for="capacity-50-${roomType}">50 Seats</label>
-    
-                            <input type="radio" id="capacity-100-${roomType}" name="seating-capacity-${roomType}" value="100" 
-                                class="seating-capacity-radio" ${selectedAttribute === '100' ? 'checked' : ''}
-                                onchange="window.fetchRoomsForType('${roomType}')">
-                            <label class="seating-capacity-label" for="capacity-100-${roomType}">100 Seats</label>
-                        </div>
-                    ` : `
-                        <div class="bed-type-selection">
-                            <input type="radio" id="single-${roomType}" name="bed-type-${roomType}" value="single" 
-                                class="bed-type-radio" ${selectedAttribute === 'single' ? 'checked' : ''}
-                                onchange="window.fetchRoomsForType('${roomType}')">
-                            <label class="bed-type-label" for="single-${roomType}">Single Bed</label>
-    
-                            <input type="radio" id="double-${roomType}" name="bed-type-${roomType}" value="double" 
-                                class="bed-type-radio" ${selectedAttribute === 'double' ? 'checked' : ''}
-                                onchange="window.fetchRoomsForType('${roomType}')">
-                            <label class="bed-type-label" for="double-${roomType}">Double Bed</label>
-                        </div>
-                    `}
-    
-                    ${renderRooms(rooms, roomType)}
-                </div>
-            `;
-        }
-    
-        function renderRooms(rooms, roomType) {
-            let html = '';
-    
-            // Render AC Rooms
-            if (rooms.ac && rooms.ac.length > 0) {
-                html += `
-                    <div class="ac-rooms mb-4">
-                        <h4 class="section-title">AC Rooms</h4>
-                        <div class="room-grid">
-                            ${rooms.ac.map(room => `
-                                <div class="room ${room.is_available ? 'available' : 'sold'}" 
-                                     data-room-id="${room.id}"
-                                     data-room-type="${roomType}"
-                                     data-attribute="${roomType === 'conference' ? room.seating_capacity : room.bed_type}">
-                                    ${room.room_number}
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-    
-            // Render Non-AC Rooms
-            if (rooms.nonAc && rooms.nonAc.length > 0) {
-                html += `
-                    <div class="non-ac-rooms mb-4">
-                        <h4 class="section-title">Non-AC Rooms</h4>
-                        <div class="room-grid">
-                            ${rooms.nonAc.map(room => `
-                                <div class="room ${room.is_available ? 'available' : 'sold'}" 
-                                     data-room-id="${room.id}"
-                                     data-room-type="${roomType}"
-                                     data-attribute="${roomType === 'conference' ? room.seating_capacity : room.bed_type}">
-                                    ${room.room_number}
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-    
-            return html;
-        }
-    
-        function addRoomSelectionHandlers() {
-            document.querySelectorAll('.room.available').forEach(room => {
-                room.addEventListener('click', function () {
-                    const roomId = this.getAttribute('data-room-id'); // Room ID
-                    const roomType = this.getAttribute('data-room-type'); // Room Type
-                    const attribute = this.getAttribute('data-attribute'); // Bed Type or Seating Capacity
-    
-                    // Unique identifier combining roomId, roomType, and attribute
-                    const uniqueRoomId = `${roomType}-${attribute}-${roomId}`;
-    
-                    if (this.classList.toggle('selected')) {
-                        selectedRooms.add(uniqueRoomId); // Add room with attribute
-                    } else {
-                        selectedRooms.delete(uniqueRoomId); // Remove room with attribute
-                    }
-    
-                    updateTotalRooms();
-                });
-            });
-        }
-    
-        function restoreSelectedRooms() {
-            selectedRooms.forEach(uniqueRoomId => {
-                const [roomType, attribute, roomId] = uniqueRoomId.split('-');
-                const roomElement = document.querySelector(`[data-room-id="${roomId}"][data-room-type="${roomType}"]`);
-    
-                // Restore selection if the attribute matches
-                if (roomElement && roomElement.getAttribute('data-attribute') === attribute) {
-                    roomElement.classList.add('selected');
-                }
-            });
-        }
-    
-        function updateTotalRooms() {
-            const roomTypeCounts = {};
-    
-            // Group selected rooms by room type and attribute
-            selectedRooms.forEach(uniqueRoomId => {
-                const [roomType, attribute, roomId] = uniqueRoomId.split('-');
-                const key = `${roomType}-${attribute}`;
-    
-                if (!roomTypeCounts[key]) {
-                    roomTypeCounts[key] = [];
-                }
-    
-                roomTypeCounts[key].push(roomId);
-            });
-    
-            // Generate display text
-            let totalRoomsText = '';
-            for (const [key, rooms] of Object.entries(roomTypeCounts)) {
-                const [roomType, attribute] = key.split('-');
-                const formattedRoomType = roomType.charAt(0).toUpperCase() + roomType.slice(1);
-                const formattedAttribute = attribute.charAt(0).toUpperCase() + attribute.slice(1);
-                totalRoomsText += `${formattedRoomType} (${formattedAttribute}): ${rooms.join(', ')} (${rooms.length})<br>`;
-            }
-    
-            document.getElementById('totalRooms').innerHTML = totalRoomsText || 'Total Rooms Selected: 0';
-        }
-    
-        // Event Listeners
-        roomTypeCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', fetchRooms);
-        });
-    
-        // Make functions available globally
-        window.fetchRoomsForType = function (roomType) {
-            fetchRoomsForType(roomType);
-        };
-    
-        // Initial fetch if any room types are pre-selected
-        fetchRooms();
     });
+});
+
+// Refresh room list on check-in/out change
+$('#checkIn, #checkOut').change(function () {
+    $('.room-type-checkbox').trigger('change');
+});
+
+
+    // end ajax code for fetching room types and rendering them dynamically
+
+
+
+//     $(document).ready(function () {
+//     $('.room-type-checkbox').change(function () {
+//         let selectedRoomTypes = [];
+//         $('.room-type-checkbox:checked').each(function () {
+//             selectedRoomTypes.push($(this).val());
+//         });
+
+//         if (selectedRoomTypes.length === 0) {
+//             $('#room-container').html('<p>Please select a room type.</p>');
+//             return;
+//         }
+
+//         let companyName = "{{ company_name }}";
+//         let checkinDate = $("#checkin-date").val();
+//         let checkoutDate = $("#checkout-date").val();
+
+//         if (!checkinDate || !checkoutDate) {
+//             $('#room-container').html('<p class="text-danger">Please select check-in and check-out dates.</p>');
+//             return;
+//         }
+
+//         $.ajax({
+//             url: `/user-panel/${companyName}/fetch-rooms/`,
+//             type: 'GET',
+//             data: {
+//                 room_type_id: selectedRoomTypes[0],
+//                 checkin_date: checkinDate,
+//                 checkout_date: checkoutDate
+//             },
+//             dataType: 'json',
+//             success: function (response) {
+//                 if (response.error) {
+//                     $('#room-container').html(`<p class="text-danger">${response.error}</p>`);
+//                     return;
+//                 }
+
+//                 let roomData = response.room_data;
+//                 let html = '<div class="room-grid">';
+
+//                 roomData.forEach(room => {
+//                     let statusClass = room.is_available ? 'available' : 'unavailable';
+//                     html += `<div class="room ${statusClass}" data-room-id="${room.room_id}">
+//                                 ${room.room_number}
+//                             </div>`;
+//                 });
+
+//                 html += `</div>`; // Close grid
+
+//                 $('#room-container').html(html);
+//             },
+//             error: function () {
+//                 $('#room-container').html('<p class="text-danger">Failed to fetch rooms.</p>');
+//             }
+//         });
+//     });
+// });
+
+    // end ajax code for fetching room types and rendering them dynamically
+
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     const roomTypeCheckboxes = document.querySelectorAll('.room-checkbox');
+    //     const roomList = document.getElementById('roomList');
+    //     const selectedRooms = new Set(); // Track selected room IDs along with room type and attributes
+    //     const roomPrices = {}; // Stores prices for each room type
+    //     function fetchRooms() {
+    //         const selectedRoomTypes = Array.from(roomTypeCheckboxes)
+    //             .filter(cb => cb.checked)
+    //             .map(cb => cb.value);
+    
+    //         if (selectedRoomTypes.length === 0) {
+    //             roomList.innerHTML = '';
+    //             updateTotalRooms();
+    //             return;
+    //         }
+    
+    //         // Keep existing rooms and add new ones
+    //         selectedRoomTypes.forEach(roomType => {
+    //             if (!document.getElementById(`rooms-${roomType}`)) {
+    //                 fetchRoomsForType(roomType);
+    //             }
+    //         });
+    
+    //         // Remove unchecked room types
+    //         document.querySelectorAll('.room-section').forEach(section => {
+    //             const roomType = section.getAttribute('data-room-type');
+    //             if (!selectedRoomTypes.includes(roomType)) {
+    //                 section.remove();
+    //                 // Remove selected rooms of this type
+    //                 const roomsOfType = Array.from(selectedRooms).filter(id =>
+    //                     id.startsWith(`${roomType}-`)
+    //                 );
+    //                 roomsOfType.forEach(id => selectedRooms.delete(id));
+    //             }
+    //         });
+    
+    //         updateTotalRooms();
+    //     }
+    
+    //     function fetchRoomsForType(roomType) {
+    //         const selectedBedType = document.querySelector(`input[name="bed-type-${roomType}"]:checked`)?.value || 'single';
+    //         const selectedAttribute = roomType === 'conference'
+    //             ? document.querySelector(`input[name="seating-capacity-${roomType}"]:checked`)?.value || '10'
+    //             : selectedBedType;
+
+    //         const checkIn = document.getElementById('checkIn').value;
+    //         const checkOut = document.getElementById('checkOut').value;
+
+    //         fetch("{% url 'user-panel:fetch_rooms' company_name=company_name %}?" + new URLSearchParams({
+    //             'room_type[]': [roomType],
+    //             'bed_type': selectedBedType,
+    //             'seating_capacity': roomType === 'conference' ? selectedAttribute : '',
+    //             'check_in': checkIn,
+    //             'check_out': checkOut
+    //         }))
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 const roomsHtml = renderRoomSection(roomType, data[roomType], selectedAttribute);
+    //                 const existingSection = document.getElementById(`rooms-${roomType}`);
+
+    //                 if (existingSection) {
+    //                     existingSection.outerHTML = roomsHtml;
+    //                 } else {
+    //                     roomList.insertAdjacentHTML('beforeend', roomsHtml);
+    //                 }
+
+    //                 addRoomSelectionHandlers();
+    //                 fetchRoomPrices(roomType);
+    //             })
+    //             .catch(error => console.error('Error fetching rooms:', error));
+    //     }
+
+        
+    //     function fetchRoomPrices(roomType) {
+    //         fetch("{% url 'user-panel:fetch_room_prices' company_name=company_name %}?" + new URLSearchParams({
+    //             'room_type': roomType
+    //         }))
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 if (data.prices) {
+    //                     // Ensure prices are stored as numbers
+    //                     roomPrices[roomType] = {};
+    //                     for (const [attribute, price] of Object.entries(data.prices)) {
+    //                         roomPrices[roomType][attribute] = parseFloat(price);
+    //                     }
+    //                     console.log(`Prices for ${roomType}:`, roomPrices[roomType]); // Debugging
+    //                     updateTotalAmount(); // Recalculate total after fetching prices
+    //                 } else {
+    //                     console.error(`No prices returned for room type: ${roomType}`);
+    //                 }
+    //             })
+    //             .catch(error => console.error('Error fetching room prices:', error));
+    //     }
+
+
+    //     function renderRoomSection(roomType, rooms, selectedAttribute) {
+    //         const isConference = roomType === 'conference';
+    
+    //         return `
+    //             <div class="room-section mb-4" id="rooms-${roomType}" data-room-type="${roomType}">
+    //                 <h3 class="section-title">${roomType.charAt(0).toUpperCase() + roomType.slice(1)} Rooms</h3>
+                    
+    //                 ${isConference ? `
+    //                     <div class="seating-capacity-selection">
+    //                         <input type="radio" id="capacity-10-${roomType}" name="seating-capacity-${roomType}" value="10" 
+    //                             class="seating-capacity-radio" ${selectedAttribute === '10' ? 'checked' : ''}
+    //                             onchange="window.fetchRoomsForType('${roomType}')">
+    //                         <label class="seating-capacity-label" for="capacity-10-${roomType}">10 Seats</label>
+    
+    //                         <input type="radio" id="capacity-25-${roomType}" name="seating-capacity-${roomType}" value="25" 
+    //                             class="seating-capacity-radio" ${selectedAttribute === '25' ? 'checked' : ''}
+    //                             onchange="window.fetchRoomsForType('${roomType}')">
+    //                         <label class="seating-capacity-label" for="capacity-25-${roomType}">25 Seats</label>
+    
+    //                         <input type="radio" id="capacity-50-${roomType}" name="seating-capacity-${roomType}" value="50" 
+    //                             class="seating-capacity-radio" ${selectedAttribute === '50' ? 'checked' : ''}
+    //                             onchange="window.fetchRoomsForType('${roomType}')">
+    //                         <label class="seating-capacity-label" for="capacity-50-${roomType}">50 Seats</label>
+    
+    //                         <input type="radio" id="capacity-100-${roomType}" name="seating-capacity-${roomType}" value="100" 
+    //                             class="seating-capacity-radio" ${selectedAttribute === '100' ? 'checked' : ''}
+    //                             onchange="window.fetchRoomsForType('${roomType}')">
+    //                         <label class="seating-capacity-label" for="capacity-100-${roomType}">100 Seats</label>
+    //                     </div>
+    //                 ` : `
+    //                     <div class="bed-type-selection">
+    //                         <input type="radio" id="single-${roomType}" name="bed-type-${roomType}" value="single" 
+    //                             class="bed-type-radio" ${selectedAttribute === 'single' ? 'checked' : ''}
+    //                             onchange="window.fetchRoomsForType('${roomType}')">
+    //                         <label class="bed-type-label" for="single-${roomType}">Single Bed</label>
+
+    //                         <input type="radio" id="double-${roomType}" name="bed-type-${roomType}" value="double" 
+    //                             class="bed-type-radio" ${selectedAttribute === 'double' ? 'checked' : ''}
+    //                             onchange="window.fetchRoomsForType('${roomType}')">
+    //                         <label class="bed-type-label" for="double-${roomType}">Double Bed</label>
+    //                     </div>
+    //                 `}
+    
+    //                 ${renderRooms(rooms, roomType)}
+    //             </div>
+    //         `;
+    //     }
+    
+    //     function renderRooms(rooms, roomType) {
+    //         let html = '';
+
+    //         // Render AC Rooms
+    //         if (rooms.ac && rooms.ac.length > 0) {
+    //             html += `
+    //                 <div class="ac-rooms mb-4">
+    //                     <h4 class="section-title">AC Rooms</h4>
+    //                     <div class="room-grid">
+    //                         ${rooms.ac.map(room => `
+    //                             <div class="room ${room.is_available ? 'available' : 'sold'}" 
+    //                                 data-room-id="${room.id}"
+    //                                 data-room-type="${roomType}"
+    //                                 data-attribute="${room.attribute || 'base_price'}">
+    //                                 ${room.room_number}
+    //                             </div>
+    //                         `).join('')}
+    //                     </div>
+    //                 </div>
+    //             `;
+    //         }
+
+    //         // Render Non-AC Rooms
+    //         if (rooms.nonAc && rooms.nonAc.length > 0) {
+    //             html += `
+    //                 <div class="non-ac-rooms mb-4">
+    //                     <h4 class="section-title">Non-AC Rooms</h4>
+    //                     <div class="room-grid">
+    //                         ${rooms.nonAc.map(room => `
+    //                             <div class="room ${room.is_available ? 'available' : 'sold'}" 
+    //                                 data-room-id="${room.id}"
+    //                                 data-room-type="${roomType}"
+    //                                 data-attribute="${room.attribute || 'base_price'}">
+    //                                 ${room.room_number}
+    //                             </div>
+    //                         `).join('')}
+    //                     </div>
+    //                 </div>
+    //             `;
+    //         }
+
+    //         // Render Conference Rooms
+    //         if (roomType === 'conference' && rooms.length > 0) {
+    //             html += `
+    //                 <div class="conference-rooms mb-4">
+    //                     <h4 class="section-title">Conference Rooms</h4>
+    //                     <div class="room-grid">
+    //                         ${rooms.map(room => `
+    //                             <div class="room ${room.is_available ? 'available' : 'sold'}" 
+    //                                 data-room-id="${room.id}"
+    //                                 data-room-type="${roomType}"
+    //                                 data-attribute="${room.seating_capacity}">
+    //                                 ${room.room_number} (${room.seating_capacity} Seats)
+    //                             </div>
+    //                         `).join('')}
+    //                     </div>
+    //                 </div>
+    //             `;
+    //         }
+
+    //         return html;
+    //     }
+
+    //     function addRoomSelectionHandlers() {
+    //         document.querySelectorAll('.room.available').forEach(room => {
+    //             room.addEventListener('click', function () {
+    //                 const roomId = this.getAttribute('data-room-id');
+    //                 const roomType = this.getAttribute('data-room-type');
+    //                 const attribute = this.getAttribute('data-attribute');
+
+    //                 if (!roomId || !roomType || !attribute) {
+    //                     console.error(`Invalid room attributes: ${roomId}, ${roomType}, ${attribute}`);
+    //                     return;
+    //                 }
+
+    //                 const uniqueRoomId = `${roomType}-${attribute}-${roomId}`;
+
+    //                 if (this.classList.toggle('selected')) {
+    //                     selectedRooms.add(uniqueRoomId);
+    //                 } else {
+    //                     selectedRooms.delete(uniqueRoomId);
+    //                 }
+
+    //                 updateTotalRooms(); // Trigger updates
+    //             });
+    //         });
+    //     }
+
+    
+        
+    
+    //     function updateTotalRooms() {
+    //     const roomTypeCounts = {};
+
+    //     // Group selected rooms by room type and attribute
+    //     selectedRooms.forEach(uniqueRoomId => {
+    //         const [roomType, attribute, roomId] = uniqueRoomId.split('-');
+    //         const key = `${roomType}-${attribute}`;
+
+    //         if (!roomTypeCounts[key]) {
+    //             roomTypeCounts[key] = [];
+    //         }
+
+    //         roomTypeCounts[key].push(roomId);
+    //     });
+
+    //     // Generate display text
+    //     let totalRoomsText = '';
+    //     for (const [key, rooms] of Object.entries(roomTypeCounts)) {
+    //         const [roomType, attribute] = key.split('-');
+    //         const formattedRoomType = roomType.charAt(0).toUpperCase() + roomType.slice(1);
+    //         const formattedAttribute = attribute.charAt(0).toUpperCase() + attribute.slice(1);
+    //         totalRoomsText += `${formattedRoomType} (${formattedAttribute}): ${rooms.join(', ')} (${rooms.length})<br>`;
+    //     }
+
+    //     document.getElementById('totalRooms').innerHTML = totalRoomsText || 'Total Rooms Selected: 0';
+    //     updateTotalAmount();
+    // }
+
+    // function updateTotalAmount() {
+    //     let totalAmount = 0;
+
+    //     console.log('Selected Rooms:', selectedRooms); // Debugging
+
+    //     selectedRooms.forEach(uniqueRoomId => {
+    //         const [roomType, attribute, roomId] = uniqueRoomId.split('-');
+
+    //         // Ensure room type and attribute exist in roomPrices
+    //         if (roomPrices[roomType] && roomPrices[roomType][attribute] != null) {
+    //             totalAmount += roomPrices[roomType][attribute];
+    //         } else {
+    //             console.warn(`Price not found for ${roomType} (${attribute})`);
+    //         }
+    //     });
+
+    //     console.log('Total Amount:', totalAmount); // Debugging
+
+    //     // Ensure totalAmount is a number before calling toFixed
+    //     totalAmount = parseFloat(totalAmount) || 0;
+    //     document.getElementById('totalAmount').textContent = `Rs. ${totalAmount.toFixed(2)}`;
+    // }
+
+    //     // Event Listeners
+    //     roomTypeCheckboxes.forEach(checkbox => {
+    //         checkbox.addEventListener('change', fetchRooms);
+    //     });
+    
+    //     // Make functions available globally
+    //     window.fetchRoomsForType = function (roomType) {
+    //         fetchRoomsForType(roomType);
+    //     };
+    
+    //     // Initial fetch if any room types are pre-selected
+    //     fetchRooms();
+    // });
     
     document.querySelectorAll('input[name="proof_type"]').forEach(radio => {
     radio.addEventListener('change', function() {
@@ -787,34 +1260,252 @@
 });
 
 // Input validation
-document.getElementById('proofInput').addEventListener('input', function() {
-    const proofType = document.querySelector('input[name="proof_type"]:checked')?.value;
-    let isValid = false;
-    
-    switch(proofType) {
-        case 'aadhar':
-            isValid = /^\d{12}$/.test(this.value);
-            this.value = this.value.replace(/\D/g, '').slice(0, 12);
-            break;
-        case 'pan':
-            isValid = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(this.value);
-            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 10);
-            break;
-        case 'passport':
-            isValid = /^[A-Z]{1}[0-9]{7}$/.test(this.value);
-            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
-            break;
+    document.getElementById('proofInput').addEventListener('input', function() {
+        const proofType = document.querySelector('input[name="proof_type"]:checked')?.value;
+        let isValid = false;
+        
+        switch(proofType) {
+            case 'aadhar':
+                isValid = /^\d{12}$/.test(this.value);
+                this.value = this.value.replace(/\D/g, '').slice(0, 12);
+                break;
+            case 'pan':
+                isValid = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(this.value);
+                this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 10);
+                break;
+            case 'passport':
+                isValid = /^[A-Z]{1}[0-9]{7}$/.test(this.value);
+                this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
+                break;
+        }
+        
+        if (this.value && !isValid) {
+            this.classList.add('is-invalid');
+        } else {
+            this.classList.remove('is-invalid');
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    fetchRoomTypes();
+
+    function fetchRoomTypes() {
+        fetch("{% url 'user-panel:fetch_room_types' company_name=company_name %}") 
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('roomSelectionContainer');
+                container.innerHTML = '';
+
+                data.forEach(roomType => {
+                    const div = document.createElement('div');
+                    div.className = 'form-check';
+                    div.innerHTML = `
+                        <input class="form-check-input room-checkbox" type="checkbox" value="${roomType.id}" id="roomType-${roomType.id}" name="room_type">
+                        <label class="form-check-label" for="roomType-${roomType.id}">${roomType.name}</label>
+                        <div id="bedOrSeatingContainer-${roomType.id}" class="bedOrSeatingContainer"></div>
+                        <div id="room-container-${roomType.id}"></div>
+                    `;
+                    container.appendChild(div);
+
+                    document.getElementById(`roomType-${roomType.id}`).addEventListener('change', function () {
+                        if (this.checked) {
+                            if (roomType.name.toLowerCase() === 'conference') {
+                                fetchSeatingCapacities(roomType.id);
+                            } else {
+                                fetchBedTypes(roomType.id);
+                            }
+                        } else {
+                            document.getElementById(`bedOrSeatingContainer-${roomType.id}`).innerHTML = '';
+                            document.getElementById(`room-container-${roomType.id}`).innerHTML = '';
+                        }
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching room types:', error));
+    }
+
+    function fetchBedTypes(roomTypeId) {
+        let companyName = "{{ company_name }}"; // Ensure this is set dynamically
+        let container = document.getElementById(`bedOrSeatingContainer-${roomTypeId}`);
+        container.innerHTML = "<strong>Loading bed types...</strong>";
+
+        fetch(`/user-panel/${companyName}/fetch-bed-types/?room_type_id=${roomTypeId}`)
+            .then(response => response.json())
+            .then(data => {
+                container.innerHTML = '<strong>Select Bed Type:</strong>';
+                if (data.error) {
+                    container.innerHTML = `<p class="text-danger">${data.error}</p>`;
+                    return;
+                }
+
+                data.bed_types.forEach(bedType => {
+                    const div = document.createElement('div');
+                    div.className = 'form-check';
+                    div.innerHTML = `
+                        <input class="form-check-input bed-radio" type="radio" name="bed_type_${roomTypeId}" value="${bedType}" id="bedType-${bedType}-${roomTypeId}">
+                        <label class="form-check-label" for="bedType-${bedType}-${roomTypeId}">${bedType}</label>
+                    `;
+                    container.appendChild(div);
+
+                    document.getElementById(`bedType-${bedType}-${roomTypeId}`).addEventListener('change', function () {
+                        fetchRooms(roomTypeId, this.value, null);
+                    });
+                });
+            })
+            .catch(error => {
+                container.innerHTML = `<p class="text-danger">Error fetching bed types.</p>`;
+                console.error("Error fetching bed types:", error);
+            });
+    }
+
+
+    function fetchSeatingCapacities(roomTypeId) {
+        let companyName = "{{ company_name }}"; // Ensure this is set dynamically
+        const url = `{% url 'user-panel:fetch_seating_capacities' company_name=company_name %}?room_type_id=${roomTypeId}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById(`bedOrSeatingContainer-${roomTypeId}`);
+                container.innerHTML = '<strong>Select Seating Capacity:</strong>';
+
+                data.seating_capacities.forEach(capacity => {
+                    const div = document.createElement('div');
+                    div.className = 'form-check';
+                    div.innerHTML = `
+                        <input class="form-check-input seating-radio" type="radio" name="seating_capacity_${roomTypeId}" value="${capacity}" id="seatingCapacity-${capacity}-${roomTypeId}">
+                        <label class="form-check-label" for="seatingCapacity-${capacity}-${roomTypeId}">${capacity} Seats</label>
+                    `;
+                    container.appendChild(div);
+
+                    document.getElementById(`seatingCapacity-${capacity}-${roomTypeId}`).addEventListener('change', function () {
+                        fetchRooms(roomTypeId, null, this.value);
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching seating capacities:', error));
     }
     
-    if (this.value && !isValid) {
-        this.classList.add('is-invalid');
-    } else {
-        this.classList.remove('is-invalid');
+    function fetchRooms(roomTypeId, bedType, seatingCapacity, acType) {
+        let companyName = "{{ company_name }}"; // Ensure this is set dynamically
+        let checkIn = document.getElementById("checkIn").value;
+        let checkOut = document.getElementById("checkOut").value;
+
+        if (!checkIn || !checkOut || (!bedType && !seatingCapacity)) {
+            console.error("ERROR: Missing required fields!");
+            return;
+        }
+
+        let url = `/user-panel/${companyName}/fetch-rooms/?room_type_id=${roomTypeId}&check_in=${encodeURIComponent(checkIn)}&check_out=${encodeURIComponent(checkOut)}`;
+
+        if (bedType) url += `&bed_type=${bedType}`;
+        if (seatingCapacity) url += `&seating_capacity=${seatingCapacity}`;
+        if (acType) url += `&ac_type=${acType}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById(`room-container-${roomTypeId}`);
+                container.innerHTML = '';
+
+                if (data.error) {
+                    container.innerHTML = `<p style="color: red;">${data.error}</p>`;
+                    return;
+                }
+
+                if (data.room_data.length === 0) {
+                    container.innerHTML = `<p style="color: gray;">No available rooms found.</p>`;
+                    return;
+                }
+
+                let grid = document.createElement('div');
+                grid.className = 'room-grid';
+
+                data.room_data.forEach(room => {
+                    let roomDiv = document.createElement('div');
+                    roomDiv.className = `room-block ${room.is_available ? 'available' : 'booked'}`;
+                    roomDiv.dataset.roomId = room.room_id;
+                    roomDiv.innerText = `${room.room_number}-${room.block || 'N/A'}`;
+
+                    if (room.is_available) {
+                        roomDiv.addEventListener('click', () => toggleRoomSelection(roomDiv, room.room_id, room.room_number, room.block));
+                    }
+
+                    grid.appendChild(roomDiv);
+                });
+
+                container.appendChild(grid);
+            })
+            .catch(error => console.error('Error fetching rooms:', error));
     }
+    
+// Event listener for bed type selection
+document.querySelectorAll('input[name="bed_type"]').forEach((bedRadio) => {
+    bedRadio.addEventListener("change", function () {
+        let selectedBedType = this.value;
+        let selectedRoomTypeId = document.querySelector('input[name="room_type"]:checked')?.value;
+
+        if (!selectedRoomTypeId) {
+            alert("Please select a room type first.");
+            return;
+        }
+
+        fetch(`/user-panel/fetch-rooms/?room_type_id=${selectedRoomTypeId}&bed_type=${selectedBedType}`)
+            .then(response => response.json())
+            .then(data => {
+                updateRoomList(data.rooms);
+            })
+            .catch(error => console.error("Error fetching rooms:", error));
+    });
 });
 
+function updateRoomList(rooms) {
+    let roomContainer = document.getElementById("room-list"); // Replace with your actual container ID
+    roomContainer.innerHTML = ""; // Clear previous results
+
+    if (rooms.length === 0) {
+        roomContainer.innerHTML = "<p>No rooms available for this selection.</p>";
+        return;
+    }
+
+    rooms.forEach((room) => {
+        let roomElement = document.createElement("div");
+        roomElement.innerHTML = `<p>${room.name} - ${room.ac ? "AC" : "Non-AC"}</p>`;
+        roomContainer.appendChild(roomElement);
+    });
+}
+})
+
+
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     fetchRoomTypes();
+
+    //     function fetchRoomTypes() {
+    //         fetch("{% url 'user-panel:fetch_room_types' company_name=company_name %}")  // Ensure you have the correct URL mapping
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 const container = document.getElementById('roomSelectionContainer');
+    //                 container.innerHTML = ''; // Clear existing content
+
+    //                 data.forEach(roomType => {
+    //                     const div = document.createElement('div');
+    //                     div.className = 'form-check';
+    //                     div.innerHTML = `
+    //                         <input class="form-check-input room-checkbox" type="checkbox" value="${roomType.id}" id="roomType-${roomType.id}" name="room_type">
+    //                         <label class="form-check-label" for="roomType-${roomType.id}">${roomType.name}</label>
+    //                         <div id="room-container"></div>
+
+    //                     `;
+    //                     container.appendChild(div);
+    //                 });
+    //             })
+    //             .catch(error => console.error('Error fetching room types:', error));
+    //     }
+    // });
 </script> 
-</body>
-</html>
+
+
+
 {% endblock %}
 

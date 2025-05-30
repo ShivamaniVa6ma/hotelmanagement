@@ -19,20 +19,20 @@
 	<link rel="shortcut icon" href="assets/img/favicon/favicon.png">
 
 	<!-- Icon CSS -->
-	<link href="{% static 'assets/css/vendor/materialdesignicons.min.css' %}" rel="stylesheet">
-	<link href="{% static 'assets/css/vendor/remixicon.css' %}" rel="stylesheet">
+	<link href="{% static '/assets/css/vendor/materialdesignicons.min.css' %}" rel="stylesheet">
+	<link href="{% static '/assets/css/vendor/remixicon.css' %}" rel="stylesheet">
 
 	<!-- Vendor CSS -->
-	<link href="{% static 'assets/css/vendor/datatables.bootstrap5.min.css' %}" rel='stylesheet'>
-	<link href="{% static 'assets/css/vendor/responsive.datatables.min.css' %}" rel='stylesheet'>
-	<link href="{% static 'assets/css/vendor/daterangepicker.css' %}" rel='stylesheet'>
-	<link href="{% static 'assets/css/vendor/simplebar.css' %}" rel="stylesheet">
-	<link href="{% static 'assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet">
-	<link href="{% static 'assets/css/vendor/apexcharts.css' %}" rel="stylesheet">
-	<link href="{% static 'assets/css/vendor/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet">
+	<link href="{% static '/assets/css/vendor/datatables.bootstrap5.min.css' %}" rel='stylesheet'>
+	<link href="{% static '/assets/css/vendor/responsive.datatables.min.css' %}" rel='stylesheet'>
+	<link href="{% static '/assets/css/vendor/daterangepicker.css' %}" rel='stylesheet'>
+	<link href="{% static '/assets/css/vendor/simplebar.css' %}" rel="stylesheet">
+	<link href="{% static '/assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static '/assets/css/vendor/apexcharts.css' %}" rel="stylesheet">
+	<link href="{% static '/assets/css/vendor/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet">
 
 	<!-- Main CSS -->
-	<link id="mainCss" href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+	<link id="mainCss" href="{% static '/assets/css/style.css' %}" rel="stylesheet">
 
 	<style>
 		.messages {
@@ -58,6 +58,15 @@
 		}
 	</style>
 
+<style>
+    input[readonly] {
+        background-color: #f8f9fa !important;
+        border: 1px solid #ced4da !important;
+        cursor: not-allowed !important;
+        color: #495057 !important;
+        opacity: 0.8 !important;
+    }
+</style>
     
 </head>
 
@@ -86,88 +95,54 @@
 											{% endif %}
 											
 											<div class="imgcontainer">
-												<a href="index.html"><img src="{% static 'assets/img/logo/logo-3.png' %}" alt="logo" class="logo"></a>
+												<a href="{% url 'admin-panel:index' %}"><img src="{% static '/assets/img/logo/logo-3.png' %}" alt="logo" class="logo"></a>
 											</div>
 											<div class="input-control">
 												<div class="row p-l-5 p-r-5">
 													<div class="col-md-6 p-l-10 p-r-10">
-														<input type="text" placeholder="Enter First Name" name="first_name" required>
+														<input type="text" placeholder="Enter First Name" name="first_name" 
+															   value="{{ form_data.first_name|default:'' }}" required>
 													</div>
 													<div class="col-md-6 p-l-10 p-r-10">
-														<input type="text" placeholder="Enter Last Name" name="last_name" required>
+														<input type="text" placeholder="Enter Last Name" name="last_name" 
+															   value="{{ form_data.last_name|default:'' }}" required>
 													</div>
 													<div class="col-md-6 p-l-10 p-r-10">
-														<input type="text" placeholder="Enter Username" name="username"
-															required>
+														<input type="text" placeholder="Enter Username" name="username" 
+															   value="{{ form_data.username|default:'' }}" required>
 													</div>
 													<div class="col-md-6 p-l-10 p-r-10">
-														<input type="email" placeholder="Enter Email" name="email"
-															required>
+														<input type="email" name="email" value="{{ email }}" readonly required>
 													</div>
 													<div class="col-md-6 p-l-10 p-r-10">
-														<input type="password" placeholder="Enter Password" name="password"
-															class="input-checkmark" required>
+														<input type="password" placeholder="Enter Password" name="password" required>
 													</div>
 													<div class="col-md-6 p-l-10 p-r-10">
-														<span class="password-field-show">
-															<input class="password-field input-checkmark"
-																type="password" placeholder="Re-enter Password"
-																name="password2" required>
-															<span data-toggle=".password-field"
-																class="fa fa-fw fa-eye field-icon toggle-password"></span>
-														</span>
+														<input type="password" placeholder="Re-enter Password" name="password2" required>
 													</div>
+													
+													<!-- Hidden fields -->
+													<input type="hidden" name="secret_key" value="{{ secret_key }}">
+													
+													<!-- Display subscription type (readonly) -->
 													<div class="col-12 mb-3">
-														<label class="mb-2">User Type</label><br>
-														<div class="form-check form-check-inline"></div>
-															<input class="form-check-input" type="radio" name="user_type" id="admin" value="admin" required>
-															<label class="form-check-label" for="admin">Admin</label>
-														</div>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="radio" name="user_type" id="vendor" value="vendor" required>
-															<label class="form-check-label" for="vendor">Vendor</label>
-														</div>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="radio" name="user_type" id="staff" value="staff" >
-															<label class="form-check-label" for="staff">Staff</label>
+														<label class="mb-2">Subscription Type:</label>
+														<input type="text" value="{{ subscription_type }}" class="form-control" readonly>
+													</div>
+													
+													<div class="col-12">
+														<div class="form-check">
+															<input class="form-check-input" type="checkbox" name="privacy_policy" id="privacy_policy" required>
+															<label class="form-check-label" for="privacy_policy">
+																I agree with <a href="#" class="text-primary">privacy policy</a>
+															</label>
 														</div>
 													</div>
 												</div>
-												<div class="mb-3">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="agreeCheckbox" onchange="toggleSignUpButton()">
-														<label class="form-check-label" for="agreeCheckbox">
-															I agree with <a href="#"> privacy policy</a>
-														</label>
-													</div>
-												</div>
-												<!-- <label class="label-container">I agree with <a href="#"> privacy
-														policy</a>
-													<input type="checkbox" id="agreeCheckbox" onchange="toggleSignUpButton()">
-													<span class="checkmark"></span>
-												</label> -->
-												<div class="login-btns">
-													<button type="submit" id="signUpButton" disabled>Sign up</button>
-												</div>
-												<div class="division-lines">
-													<p>or signup with</p>
-												</div>
-												<div class="login-with-btns">
-													<button type="button" class="google">
-														<i class="ri-google-fill"></i>
-													</button>
-													<button type="button" class="facebook">
-														<i class="ri-facebook-fill"></i>
-													</button>
-													<button type="button" class="twitter">
-														<i class="ri-twitter-fill"></i>
-													</button>
-													<button type="button" class="linkedin">
-														<i class="ri-linkedin-fill"></i>
-													</button>
-													<span class="already-acc">Already you have an account? <a
-															href="signin.html" class="login-btn">Login</a></span>
-												</div>
+												
+												<button type="submit" class="btn btn-primary w-100 mt-3">Sign up</button>
+												<button type="button" class="btn btn-primary w-100 mt-3"><a href="{% url 'admin-panel:login' %}">Login</a></button>
+
 											</div>
 										</form>
 									</div>
@@ -181,25 +156,25 @@
 	</main>
 
 	<!-- Vendor Custom -->
-	<script src="{% static 'assets/js/vendor/jquery-3.6.4.min.js' %}"></script>
-	<script src="{% static 'assets/js/vendor/simplebar.min.js' %}"></script>
-	<script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
-	<script src="{% static 'assets/js/vendor/apexcharts.min.js' %}"></script>
-	<script src="{% static 'assets/js/vendor/jquery-jvectormap-1.2.2.min.js' %}"></script>
-	<script src="{% static 'assets/js/vendor/jquery-jvectormap-world-mill-en.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/jquery-3.6.4.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/simplebar.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/apexcharts.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/jquery-jvectormap-1.2.2.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/jquery-jvectormap-world-mill-en.js' %}"></script>
 	<!-- Data Tables -->
-	<script src='{% static 'assets/js/vendor/jquery.datatables.min.js' %}'></script>
-	<script src='{% static 'assets/js/vendor/datatables.bootstrap5.min.js' %}'></script>
-	<script src='{% static 'assets/js/vendor/datatables.responsive.min.js' %}'></script>
+	<script src="{% static '/assets/js/vendor/jquery.datatables.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/datatables.bootstrap5.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/datatables.responsive.min.js' %}"></script>
 	<!-- Caleddar -->
-	<script src="{% static 'assets/js/vendor/jquery.simple-calendar.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/jquery.simple-calendar.js' %}"></script>
 	<!-- Date Range Picker -->
-	<script src="{% static 'assets/js/vendor/moment.min.js' %}"></script>
-	<script src="{% static 'assets/js/vendor/daterangepicker.js' %}"></script>
-	<script src="{% static 'assets/js/vendor/date-range.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/moment.min.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/daterangepicker.js' %}"></script>
+	<script src="{% static '/assets/js/vendor/date-range.js' %}"></script>
 
 	<!-- Main Custom -->
-	<script src="{% static 'assets/js/main.js' %}"></script>
+	<script src="{% static '/assets/js/main.js' %}"></script>
 
 	<script>
 		function toggleSignUpButton() {
@@ -208,6 +183,15 @@
 			signUpButton.disabled = !checkbox.checked;
 		}
 	</script>
+
+	<!-- Add this temporarily for debugging -->
+	{% if debug_get %}
+	<div style="display: none;">
+		<p>Debug GET params: {{ debug_get }}</p>
+		<p>Debug path: {{ debug_path }}</p>
+		<p>Email value: {{ email }}</p>
+	</div>
+	{% endif %}
 </body>
 
 

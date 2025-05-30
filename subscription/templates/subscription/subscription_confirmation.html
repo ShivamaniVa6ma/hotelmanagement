@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .details {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Subscription Confirmation</h1>
+        </div>
+        
+        <div class="content">
+            <p>Dear {{ name }},</p>
+            
+            <p>Thank you for subscribing to our Hotel Management System! Your payment has been successfully processed.</p>
+            
+            <div class="details">
+                <h3>Subscription Details:</h3>
+                <p><strong>Hotel/Company:</strong> {{ company_name }}</p>
+                <p><strong>Plan:</strong> {{ plan_name }}</p>
+                <p><strong>Duration:</strong> {{ duration_months }} Months</p>
+                <p><strong>Amount Paid:</strong> ₹{{ amount }}</p>
+                <!-- <p><strong>Start Date:</strong> {{ start_date }}</p>
+                <p><strong>End Date:</strong> {{ end_date }}</p> -->
+                <p><strong>Booking ID:</strong> {{ booking_id }}</p>
+                <p><strong>Payment ID:</strong> {{ payment_id }}</p>
+            </div>
+
+            <div class="secret-key-section" style="background-color: #fff3cd; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                <h3 style="color: #856404;">Your Access Credentials</h3>
+                <p><strong>Secret Key:</strong> <span style="background: #fff; padding: 5px; border-radius: 3px;">{{ secret_key }}</span></p>
+                <p style="color: #856404;"><strong>Important:</strong> Please save this secret key securely. You will need it to access our services.</p>
+            </div>
+            
+            <div class="login-instructions">
+                <h3>Next Steps:</h3>
+                <ol>
+                    <li>Create your account: <a href="{{ signup_url }}">Sign Up Here</a></li>
+                    {% if payment.id %}
+                        <li>Invoice: <a href="{{ invoice_url }}">View Invoice</a></li>
+                    {% else %}
+                        <li>Invoice: Not available</li>
+                    {% endif %}
+                                        <!-- Use the pre-constructed signup_url instead of building it in the template -->
+                    <li>Use your email address ({{ user_details.email }}) and the secret key provided above during signup</li>
+                    <li>Complete your profile setup</li>
+                    <li>Start managing your hotel with our system</li>
+                </ol>
+            </div>
+            
+            <p>Your subscription is now active and you can start using our services immediately.</p>
+            
+            <p>If you have any questions or need assistance, please don't hesitate to contact our support team.</p>
+        </div>
+        
+        <div class="footer">
+            <p>Thank you for choosing our service!</p>
+            <p>Best regards,<br>Hotel Management System Team</p>
+        </div>
+    </div>
+</body>
+</html> 

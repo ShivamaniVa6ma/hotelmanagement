@@ -13,7 +13,7 @@
                     <div class="lh-breadcrumb">
                         <h5>
                             <span class="lh-inner-breadcrumb">
-                                <a href="{% url 'user-panel:index' %}">Home</a>
+                                <a href="{% url 'user-panel:index' company_name=company_name %}">Home</a>
                             </span>
                             <span> / </span>
                             <span>
@@ -34,69 +34,45 @@
                     <h2>Latest <span>Gallery</span></h2>
                 </div>
                 <div class="card-columns">
+                    {% for room_image in room_images %}
+
                     <figure class="magnific-img">
-                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_1.jpg" title="Mobile App">
-                            <img class="example-image" src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_1.jpg' %}"
-                                alt="portfolio img">
-                        </a>
+                            <img class="example-image" src="{{ room_image.image.url }}" alt="room-img">
+
                     </figure>
+                    {% endfor %}
+                    {% for facility in facilities %}
+
                     <figure>
-                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_5.jpg" title="Template Project">
-                            <img class="example-image" src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_5.jpg' %}"
-                                alt="portfolio img">
-                        </a>
+                        {% if facility.image %}
+                                            <img src="{{ facility.image.url }}" alt="{{ facility.name }}" class="amenities-right-image">
+                                        {% endif %}
                     </figure>
+                    {% endfor %}
+                    {% for spa in spas %}
+
                     <figure>
-                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_9.jpg"
-                            title="Wordpress Development">
-                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_9.jpg' %}" alt="portfolio img">
-                        </a>
+                        <img src="{{ spa.image.url }}" alt="{{ spa.name }}">
+
                     </figure>
+                    {% endfor %}
+                    {% for about_us_image in about_us_images %}
+
                     <figure>
-                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_2.jpg" title="Magento Project">
-                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_2.jpg' %}" alt="portfolio img">
-                        </a>
+                        {% if about.image %}
+                        <img src="{{ about.image.url }}" alt="{{ about.title }}" class="w-100">
+                    {% endif %}
                     </figure>
+                    {% endfor %}
+                    {% for service in services %}
+
                     <figure>
                         <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_6.jpg" title="Mobile App">
-                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_6.jpg' %}" alt="portfolio img">
+                            <img src="{% static '/hotel/assets/img/gallery/gallery_img_thumb_6.jpg' %}" alt="portfolio img">
                         </a>
                     </figure>
-                    <figure>
-                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_10.jpg" title="Template Project">
-                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_10.jpg' %}" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_3.jpg" title="Web Development">
-                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_3.jpg' %}" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_7.jpg" title="Shopify Project">
-                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_7.jpg' %}" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_11.jpg" title="Prestashop site">
-                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_11.jpg' %}" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_4.jpg" title="Python Development">
-                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_4.jpg' %}" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_8.jpg" title="HTML Project">
-                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_8.jpg' %}" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="hotel/assets/img/gallery/gallery_img_12.jpg" title="Web Development">
-                            <img src="{% static 'hotel/assets/img/gallery/gallery_img_thumb_12.jpg' %}" alt="portfolio img">
-                        </a>
-                    </figure>
+                    {% endfor %}
+                    
                 </div>
             </div>
         </div>

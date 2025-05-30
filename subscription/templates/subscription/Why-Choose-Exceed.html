@@ -1,0 +1,319 @@
+﻿{% extends 'sub_base.html' %}
+{% block content %}
+{% load static %}
+
+
+
+
+    <style>
+        .solutions-hero {
+            background-image: linear-gradient(rgb(10 23 164 / 46%), rgb(0 0 0 / 41%)), url("{% static 'subscription/assets/img/img/banner.jpg' %}");
+
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        
+            padding: 100px 0;
+            position: relative;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .solutions-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .solutions-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: white;
+            clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        .hero-badge {
+            background: #e1258c;
+            color: #fff;
+            padding: 10px 25px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 25px;
+            margin-top: 20px;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #fff, #e1e1e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .feature-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .feature-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #120a8f, #e1258c);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        .feature-box:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, rgba(18,10,143,0.1), rgba(225,37,140,0.1));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            transition: all 0.4s ease;
+        }
+
+        .feature-box:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: linear-gradient(135deg, rgba(18,10,143,0.2), rgba(225,37,140,0.2));
+        }
+
+        .feature-icon img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+        }
+
+        .feature-box:hover .feature-icon img {
+            transform: scale(1.1);
+        }
+
+        .feature-title {
+            color: #120a8f;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        .feature-description {
+            color: #4a5568;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .feature-link {
+            color: #e1258c;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .feature-box:hover .feature-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-link::after {
+            content: '→';
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover .feature-link::after {
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-text {
+                font-size: 1.1rem;
+                padding: 0 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                padding: 40px 20px;
+            }
+            
+            .feature-box {
+                padding: 30px;
+            }
+        }
+
+       
+    </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CL6FNEMREJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-CL6FNEMREJ');
+    </script>
+    <!-- Global site tag (gtag.js) - Google Ads: 958701517 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-958701517"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'AW-958701517');
+    </script>
+
+<div class="lh-main-content team-list">
+    <div class="container-fluid">
+
+    <!-- #header -->
+    <section class="solutions-hero">
+        <div class="container">
+            <span class="hero-badge">Why Choose Bloom Up</span>
+            <h1 class="hero-title">Internationally Recognized Solutions</h1>
+            <p class="hero-text">Bloom UpSoftware is one of the companies to offer the complete range of integrated solutions exclusively for the hospitality industry. We offer internationally recognized, high-quality products that meet every requirement of hotels and restaurants.</p>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-box" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <img src="{% static 'subscription/assets/img/User-Experience-icon.png' %}" alt="Bloom UpSuperb User Experience" />
+                    </div>
+                    <h4 class="feature-title">Superb User Experience</h4>
+                    <p class="feature-description">Aiming for the best user-experience and streamline property operations, all Bloom Upsolutions are seamlessly integrated to meet every requirement of hotels and restaurants.</p>
+                    <!-- <a href="#" class="feature-link">Learn More</a> -->
+                </div>
+
+                <div class="feature-box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <img src="{% static 'subscription/assets/img/Value-For-Money-icon.png' %}" alt="Value For Money" />
+                    </div>
+                    <h4 class="feature-title">Value For Money</h4>
+                    <p class="feature-description">Giving you the best value for the money, all our products integrated as well as stand-alone solutions are tried, tested, and come with the highest recommendation.</p>
+                    <!-- <a href="#" class="feature-link">Learn More</a> -->
+                </div>
+
+                <div class="feature-box" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <img src="{% static 'subscription/assets/img/Latest-Technology-icon.png' %}" alt="Latest Technology" />
+                    </div>
+                    <h4 class="feature-title">Keeping Up With Latest Technology</h4>
+                    <p class="feature-description">Our products have evolved over time, adapting to new technologies. We started our flagship product in Visual Basic, we changed to VB.Net and now the third generation of our software is cloud based on the web.</p>
+                    <!-- <a href="#" class="feature-link">Learn More</a> -->
+                </div>
+
+                <div class="feature-box" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <img src="{% static 'subscription/assets/img/Technical-Support-icon.png' %}" alt="Live Technical Support" />
+                    </div>
+                    <h4 class="feature-title">24x7 Live Technical Support</h4>
+                    <p class="feature-description">Bloom UpSupport is the first point of contact for many and our support team is at your service 24 hours a day. Along with troubleshooting software queries, onboarding and training, our team also provides client requested enhancements and upgrades.</p>
+                    <!-- <a href="#" class="feature-link">Learn More</a> -->
+                </div>
+
+                <div class="feature-box" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon">
+                        <img src="{% static 'subscription/assets/img/Online-Training-icon.png' %}" alt="Unlimited Online Training" />
+                    </div>
+                    <h4 class="feature-title">Unlimited Online Training</h4>
+                    <p class="feature-description">We provide online one on one training, where Exceed’s training team will assist you with product implementation and training as well as address all your queries and assist you to enhance your business using Exceed’s cutting edge solutions.</p>
+                    <!-- <a href="#" class="feature-link">Learn More</a> -->
+                </div>
+
+                <div class="feature-box" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-icon">
+                        <img src="{% static 'subscription/assets/img/Free-Trial-icon.png' %}" alt="Free Trial Available - No Risk, No Commitment" />
+                    </div>
+                    <h4 class="feature-title">Free Trial Available - No Risk, No Commitment</h4>
+                    <p class="feature-description">Analyze Bloom Upsolutions with your live property environment without any limitation on features or modules. You are eligible to take online product training at no charge.</p>
+                    <!-- <a href="#" class="feature-link">Learn More</a> -->
+                </div>
+
+                <div class="feature-box" data-aos="fade-up" data-aos-delay="700">
+                    <div class="feature-icon">
+                        <img src="{% static 'subscription/assets/img/Client-Success-Plan-icon.png' %}" alt="Client Success Plan" />
+                    </div>
+                    <h4 class="feature-title">Client Success Plan</h4>
+                    <p class="feature-description">Special audits from our team on request to make sure that your staff is using every bit of what is available. Our job is not over once the product is sold; we make sure that you are getting the best performance from our software and achieve the highest efficiency in your operations.</p>
+                    <!-- <a href="#" class="feature-link">Learn More</a> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </div>
+</div>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true
+        });
+    </script>
+
+
+{% endblock %}

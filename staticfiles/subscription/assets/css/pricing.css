@@ -1,0 +1,260 @@
+/* Pricing Section Styles */
+/* .main-wrapper {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 80px 0;
+} */
+
+.header-title {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.header-sub-title {
+    color: #6c757d;
+    font-size: 1.25rem;
+    margin-bottom: 3rem;
+}
+
+.card-property-parent {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.card-property-parent:hover {
+    transform: translateY(-5px);
+}
+
+.card-property {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.card-property:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-property svg {
+    color: #11161c;
+    margin-bottom: 15px;
+}
+
+.card-property p {
+    margin: 0;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Pricing Cards */
+.card {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.card-active {
+    border: 2px solid #007bff;
+}
+
+.card-header {
+    /* background: linear-gradient(45deg, #007bff, #00a6ff); */
+    color: white;
+    padding: 30px 20px;
+}
+
+.card-title {
+    font-weight: 700;
+}
+
+.pricing-card-title {
+    font-size: 2.5rem;
+    color: #2c3e50;
+}
+
+.text-price-detail {
+    color: #6c757d;
+}
+
+.btn-primary, .btn-success {
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover, .btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Feature List */
+.card-body ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.card-body ul li {
+    padding: 8px 0;
+    color: #4a5568;
+    display: flex;
+    align-items: center;
+}
+
+.card-body .fa {
+    margin-right: 10px;
+}
+
+.text-cancelled {
+    color: #a0aec0;
+}
+
+/* FAQ Section */
+#section-pricing-faq {
+    background: #f8f9fa;
+    padding: 80px 0;
+}
+
+.accordion .card {
+    margin-bottom: 15px;
+    border: 1px solid #e9ecef;
+}
+
+.accordion .card-header {
+    background: white;
+    padding: 0;
+}
+
+.accordion .btn-link {
+    color: #020d17;
+    font-weight: 600;
+    text-decoration: none;
+    width: 100%;
+    text-align: left;
+    padding: 20px;
+}
+
+.accordion .btn-link:hover {
+    color: #0d1217;
+}
+
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .header-title {
+        font-size: 2rem;
+    }
+    
+    .header-sub-title {
+        font-size: 1.1rem;
+    }
+    
+    .card-property {
+        margin-bottom: 20px;
+    }
+    
+    .pricing-card-title {
+        font-size: 2rem;
+    }
+}
+
+/* Currency Selector Styles */
+.input-group-text {
+    border: none;
+    background: #120a8f;
+    color: white;
+}
+
+.form-control {
+    border: 1px solid #007bff;
+}
+
+/* Toggle Switch Styles */
+.form-switch {
+    display: inline-block;
+    position: relative;
+    margin: 0 15px;
+}
+
+.form-switch input {
+    display: none;
+}
+
+.form-switch i {
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    background-color: #e9ecef;
+    border-radius: 25px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-switch input:checked + i {
+    background-color: #120a8f;
+}
+
+.form-switch i:before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 21px;
+    height: 21px;
+    background-color: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.form-switch input:checked + i:before {
+    transform: translateX(25px);
+}
+
+.badge-discount {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.row{
+    display: flex
+    ;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+        justify-content: center;
+}
+
+.price-original {
+    text-decoration: line-through; /* Strikethrough effect */
+    color: red; /* Color for the original price */
+    font-size: 1.2rem; /* Adjust font size if needed */
+}
+
+.price-discounted {
+    color: green; /* Color for the discounted price */
+    font-size: 1.5rem; /* Adjust font size if needed */
+    font-weight: bold; /* Make the discounted price bold */
+}

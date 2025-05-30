@@ -1,0 +1,2162 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+
+<style>
+.favicon-preview,
+.preview-image {
+    display: block;
+    max-width: 150px;
+    max-height: 100px;
+    object-fit: contain;
+	border: 2px dashed #ccc;
+    background-color: #f0f0f0;
+    margin-top: 10px;
+
+}
+
+
+	/* You can add this to your CSS */
+.nav-tabs .nav-item span {
+    transition: all 0.3s ease;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* Add these new styles */
+.search-wrapper {
+    position: relative;
+    margin: 20px;
+    padding: 0 20px;
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 15px;
+    padding-right: 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+}
+
+.search-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    color: #4a90e2;
+}
+
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    display: none;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px;
+}
+
+.tab-content {
+    transition: opacity 0.3s ease;
+}
+
+.tab-content .tab-pane {
+    display: none;
+}
+
+.tab-content .tab-pane.show {
+    display: block;
+    opacity: 1;
+}
+
+.nav-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nav-tabs .nav-item {
+    transition: all 0.3s ease;
+    display: block;
+    width: 100%;
+}
+
+.nav-tabs .nav-item a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.nav-tabs .nav-item a:hover {
+    background-color: #f8f9fa;
+}
+
+.nav-tabs .nav-item a.active {
+    background-color: #e9ecef;
+    color: #4a90e2;
+}
+
+/* Ensure tab content is visible when active */
+.tab-content .tab-pane.active {
+    display: block !important;
+    opacity: 1 !important;
+}
+.row_content{
+	margin-top: 30px !important;
+}
+
+   /* Main content wrapper adjustments */
+   .lh-main-content {
+        min-height: calc(100vh - 120px);
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    /* Content area adjustments */
+    .row_content {
+        margin-bottom: 0;
+        padding-bottom: 60px; /* Space for footer */
+    }
+
+    /* Card content adjustments */
+    .lh-card-content {
+        margin-bottom: 0;
+        height: auto;
+    }
+
+    /* Tab content container */
+    .tab-content {
+        margin-bottom: 0;
+    }
+
+    /* Footer positioning */
+    body > footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999; /* Increased z-index */
+        background: white;
+        margin: 0;
+        padding: 10px 0;
+    }
+
+    /* Container adjustments */
+    .container-fluid {
+        padding-bottom: 0;
+    }
+
+    /* Remove extra margins */
+    .team-details {
+        margin-bottom: 0;
+    }
+	
+
+
+ /* Add these styles to your existing CSS */
+ .logo-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+    }
+    
+    .logo-card.dark-mode {
+        background-color: #333;
+        border-color: #555;
+    }
+    
+    .preview-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+    }
+    
+    .custom-file-upload {
+        display: inline-block;
+        padding: 8px 16px;
+        background: linear-gradient(135deg, #2224ad 0%, #4a90e2 100%);
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .custom-file-upload:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .upload-icon {
+        margin-right: 8px;
+    }
+    
+    /* Ensure preview images have consistent dimensions */
+    .preview-image, .favicon-preview {
+        max-width: 150px;
+        max-height: 100px;
+        object-fit: contain;
+        border: 2px dashed #ccc;
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 6px;
+    }
+
+	.preview-container {
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="{% static '/assets/js/settings.js' %}"></script>
+    <link id="mainCss" href="{% static 'assets/css/settings.css' %}" rel="stylesheet">
+
+		<!-- main content -->
+		<div class="lh-main-content team-list">
+			<div class="container-fluid">
+				<!-- Page title & breadcrumb -->
+				<div class="lh-page-title lh-page-title-2">
+					<div class="lh-breadcrumb">
+						<h5>Settings</h5>
+						<ul>
+							<li><a href="{% url 'admin-panel:index' %}">Luxurious</a></li>
+							<li>Team List</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row row_content">
+					<div class="col-xxl-4 col-lg-5 col-md-12">
+						<div class="team-sticky-bar">
+							<div class="lh-card">
+								
+								<!-- <div class="search-wrapper" style="margin: 31px 47px 0px;">
+									<div class="search-box">
+										<input type="text" class="search-input" placeholder="Search team members...">
+										<button class="search-button">
+											<i class="ri-search-line"></i>
+										</button>
+									</div>
+								</div> -->
+								
+
+								<div class="lh-card-content">
+									<ul class="nav nav-tabs" role="tablist">
+										<li class="nav-item" role="presentation">
+											<a class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab1" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Guest List</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/1.jpg' %}" alt="team">
+													<span>Moris Waites</span> -->
+												</div>
+											</a>
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab2" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Team List</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/2.jpg' %}" alt="team">
+													<span>Emma Grater</span> -->
+												</div>
+											</a>
+
+										</li>
+										<!-- <li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab3" id="tab3-btn" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Rooms</span>
+													
+												</div>
+											</a>
+										</li> -->
+										
+											
+										{% if not can_change_logo %}
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab4" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                 <span>Logo</span>
+							
+												</div>
+											</a>
+										</li>
+										{% endif %}
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab5" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Team Designation</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/5.jpg' %}" alt="team">
+													<span>Martin vegasu</span> -->
+												</div>
+											</a>
+										</li>
+										<!-- <li class="nav-item" role="presentation">
+											<button  data-bs-toggle="offcanvas" data-bs-target="#addRoomOffcanvas" style="border: none;background-color: white;width: 100%;">
+
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab6" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span style="padding-right: 20px;">Add New Room</span>
+													
+												</div></a>
+												</button>
+											
+										</li> -->
+
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab7" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Room Types</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/7.jpg' %}" alt="team">
+													<span>Nancy thomas</span> -->
+												</div>
+											</a>
+											
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab8" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Bookings</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/8.jpg' %}" alt="team">
+													<span>Mecov Maira</span> -->
+												</div>
+											</a>
+										
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab9" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Holidays</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/9.jpg' %}" alt="team">
+													<span>Boris Whisli</span> -->
+												</div>
+											</a>
+										</li>
+
+
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab10" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Add New Features</span>
+													<!-- <img class="team-img" src="{% static 'assets/img/user/10.jpg' %}" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+										</li>
+
+
+										<!-- <li class="nav-item" role="presentation">
+                                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab11" role="tab" aria-selected="true">
+                                                <div class="form-group">
+                                                    <span>Team Add View</span>
+                                                   
+                                                </div>
+                                            </a>
+                                        </li> -->
+ 
+ 
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab12" role="tab" aria-selected="true">
+                                                <div class="form-group">
+                                                    <span>Team Designation List</span>
+                                                    <!-- <img class="team-img" src="{% static 'assets/img/user/10.jpg' %}" alt="team">
+                                                    <span>Nirobi rainob</span> -->
+                                                </div>
+                                            </a>
+                                        </li>
+ 
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab13" role="tab" aria-selected="true">
+                                                <div class="form-group">
+                                                    <span>Room Type List</span>
+                                                    <!-- <img class="team-img" src="{% static 'assets/img/user/10.jpg' %}" alt="team">
+                                                    <span>Nirobi rainob</span> -->
+                                                </div>
+                                            </a>
+                                        </li>
+ 
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab14" role="tab" aria-selected="true">
+                                                <div class="form-group">
+                                                    <span>Holidays List</span>
+                                                    <!-- <img class="team-img" src="{% static 'assets/img/user/10.jpg' %}" alt="team">
+                                                    <span>Nirobi rainob</span> -->
+                                                </div>
+                                            </a>
+                                        </li>
+ 
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab15" role="tab" aria-selected="true">
+                                                <div class="form-group">
+                                                    <span>Features List</span>
+                                                    <!-- <img class="team-img" src="{% static 'assets/img/user/10.jpg' %}" alt="team">
+                                                    <span>Nirobi rainob</span> -->
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab16" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>About Form</span>
+													<!-- <img class="team-img" src="assets/img/user/10.jpg" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+										</li>
+
+                                        <li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab17" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>About view</span>
+													<!-- <img class="team-img" src="assets/img/user/10.jpg" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+										</li>
+
+
+                                        <li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab18" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Service Form</span>
+													<!-- <img class="team-img" src="assets/img/user/10.jpg" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+										</li>
+
+                                        <li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab19" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Service Listview</span>
+													<!-- <img class="team-img" src="assets/img/user/10.jpg" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+										</li>
+
+                                        <li class="nav-item" role="presentation">
+                                            
+											<a class="nav-link " data-bs-toggle="tab" data-bs-target="#tab20" role="tab" aria-selected="true" >
+												<div class="form-group">
+                                                    <span style="text-transform: capitalize;">Facilities form</span>
+													<!-- <img class="team-img" src="assets/img/user/10.jpg" alt="team">
+													<span>Nirobi rainob</span> --> 
+												</div>
+											</a>
+										</li>
+
+                                        <li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab21" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Facilities Listview</span>
+													<!-- <img class="team-img" src="assets/img/user/10.jpg" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+										</li>
+                                        <!-- <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                                            <button class="btn toggle-form btn-primary" id="toggleFormBtn">
+                                                <i class="fas fa-plus me-2"></i>Add New Facility
+                                            </button>
+                                        </div> -->
+                    
+                                        <li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab22" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>Faq Form</span>
+													<!-- <img class="team-img" src="assets/img/user/10.jpg" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+										</li>
+
+
+                                        <li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab23" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>FAQ Listview</span>
+													<!-- <img class="team-img" src="assets/img/user/10.jpg" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+										</li>
+
+                                        <li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab24" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>SPA Form</span>
+													<!-- <img class="team-img" src="assets/img/user/10.jpg" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+										</li>
+
+                                        <li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab25" role="tab" aria-selected="true">
+												<div class="form-group">
+                                                    <span>SPA Listview</span>
+													<!-- <img class="team-img" src="assets/img/user/10.jpg" alt="team">
+													<span>Nirobi rainob</span> -->
+												</div>
+											</a>
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab26" role="tab" aria-selected="false">
+												<div class="form-group">
+													<span>Map Embed</span>
+												</div>
+											</a>
+										</li>
+										
+
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xxl-8 col-lg-7 col-md-12">
+						<div class="lh-card" id="assigntbl">
+
+							<div class="lh-card-content card-default card-default-logo">
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="tab1" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Guest List</h4>
+												</div>
+												<div class="table-responsive">
+													<table class="table" id="guest-table" data-url="{% url 'admin-panel:ajax_guest_list' %}">
+														<thead>
+															<tr>
+																<th>ID</th>
+																<th>Name</th>
+																<th>Phone</th>
+																<th>Email</th>
+																<th>Total Amount</th>
+																<th>Actions</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td colspan="6" class="text-center">Loading guests...</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="tab-pane fade" id="tab2" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Team List</h4>
+												</div>
+												<div class="table-responsive">
+													<table class="table" id="team-table" data-url="{% url 'admin-panel:ajax_team_list' %}">
+														<thead>
+															<tr>
+																<th>ID</th>
+																<th>Name</th>
+																<th>Phone</th>
+																<th>Email</th>
+																<th>Designation</th>
+																<th>Actions</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td colspan="6" class="text-center">Loading team members...</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+
+									<!-- <div class="tab-pane fade" id="tab3" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Rooms</h4>
+												</div>
+
+													<div class="container">
+														
+													</div>
+													
+											</div>
+										</div>
+									</div> -->
+					
+									<div class="tab-pane fade" id="tab4" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Logos</h4>
+												</div>
+												<div class="row">
+													<div class="main-container">
+														<div class="container">
+															<div class="row justify-content-center">
+																<div class="col-lg-10">
+																	<div class="settings-card card">
+																		<div class="card-body p-4">
+																			
+																			<form id="logoSettingsForm" method="post" data-url="{% url 'admin-panel:logo_settings_view' %}" enctype="multipart/form-data">
+																				{% csrf_token %}
+																				
+																				<!-- Site Name -->
+																				<div class="mb-4">
+																					<label for="siteName" class="form-label fw-bold">
+																						<i class="fas fa-signature me-2"></i>Site Name
+																					</label>
+																					<input type="text" name="site_name" class="form-control" id="siteName" required placeholder="Enter your hotel name" value="{{ logo_settings.site_name }}">
+																				</div>
+																			
+																				<!-- Favicon -->
+																				<div class="mb-4">
+																					<label class="form-label fw-bold"><i class="fas fa-bookmark me-2"></i>Favicon</label>
+																					<div class="logo-card">
+																						<div class="file-upload-wrapper">
+																							<label class="custom-file-upload">
+																								<i class="fas fa-upload upload-icon"></i>
+																								<span>Choose Favicon</span>
+																								<input type="file" name="favicon" class="form-control file-input" id="favicon" accept=".ico,.png,.jpg,.jpeg" style="display: none;">																							</label>
+																						</div>
+																						<div class="preview-container">
+																							<img id="faviconPreview" 
+																							src="{% if logo_settings.favicon %}{{ logo_settings.favicon.url }}{% else %}{% static 'assets/img/logo/collapse-logo.png' %}{% endif %}" 
+																							class="favicon-preview" alt="Favicon preview">
+																						</div>
+																						<small class="text-muted d-block mt-2">Recommended size: <strong>300x300</strong></small>
+
+																					</div>
+																				</div>
+																			
+																				<!-- Light Logo -->
+																				<div class="mb-4">
+																					<label class="form-label fw-bold"><i class="fas fa-sun me-2"></i>Light Mode Logo</label>
+																					<div class="logo-card">
+																						<div class="file-upload-wrapper">
+																							<label class="custom-file-upload">
+																								<i class="fas fa-upload upload-icon"></i>
+																								<span>Choose Light Logo</span>
+																								<input type="file" name="light_logo" class="form-control file-input" id="lightLogo" accept="image/*" style="display: none;">																							</label>
+																						</div>
+																						<div class="preview-container">
+																							<img id="lightLogoPreview" 
+																								src="{% if logo_settings.light_logo and logo_settings.light_logo.name != 'assets/img/logo/collapse-logo.png' %}
+																									{{ logo_settings.light_logo.url }}
+																								{% else %}
+																									{% static 'assets/img/logo/collapse-logo.png' %}
+																								{% endif %}" 
+																								class="preview-image" 
+																								alt="Light logo preview">
+																						</div>
+																						<small class="text-muted d-block mt-2" >Recommended size: <strong>1500x450</strong></small>
+
+																					</div>
+																				</div>
+																			
+																				<!-- Dark Logo -->
+																				<div class="mb-4">
+																					<label class="form-label fw-bold"><i class="fas fa-moon me-2"></i>Dark Mode Logo</label>
+																					<div class="logo-card dark-mode">
+																						<div class="file-upload-wrapper">
+																							<label class="custom-file-upload">
+																								<i class="fas fa-upload upload-icon"></i>
+																								<span>Choose Dark Logo</span>
+																								<input type="file" name="dark_logo" class="form-control file-input" id="darkLogo" accept="image/*" style="display: none;">																							</label>
+																						</div>
+																						<div class="preview-container">
+																							<img id="darkLogoPreview" 
+																							src="{% if logo_settings.dark_logo and logo_settings.dark_logo.name != 'assets/img/logo/full-logo.png' %}
+																									{{ logo_settings.dark_logo.url }}
+																								{% else %}
+																									{% static 'assets/img/logo/full-logo.png' %}
+																								{% endif %}" class="preview-image" alt="Dark logo preview">
+																						</div>
+																						<small class="d-block mt-2" style="color: white;">Recommended size: <strong>355x350</strong></small>
+
+																					</div>
+																				</div>
+																			
+																				<!-- Submit Button -->
+																				<div class="d-flex justify-content-center">
+																					<button type="submit" class="btn btn-primary">
+																						<i class="fas fa-save me-2"></i>Save Settings
+																					</button>
+																				</div>
+																			
+																				<!-- Success Message -->
+																				<!-- <div id="successMessage" class="alert alert-success mt-3" style="display: none;">
+																					Settings saved successfully!
+																				</div> -->
+																			</form>
+																			
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="tab-pane fade" id="tab5" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Team Designation</h4>
+												</div>
+												<div class="row">
+													
+													<div class="container">
+														<div class="booking-form">
+															<h2 class="text-center mb-4">Team Designation</h2>
+															<form id="team-designation-form" method="post" data-url="{% url 'admin-panel:team_designation' %}">
+
+																{% csrf_token %}
+																<div class="mb-4">
+																	<label for="teamDesignation" class="form-label">Team Designation</label>
+																	<input type="text" 
+																		   class="form-control" 
+																		   id="teamDesignation" 
+																		   name="teamDesignation" 
+																		   placeholder="Enter Designation"
+																		   required>
+																</div>
+																<div class="mb-4">
+																	<label for="dateTime" class="form-label">Date and Time</label>
+																	<input type="datetime-local" 
+																		   class="form-control" 
+																		   id="dateTimes"
+																		   name="dateTimes"
+																		   value="{{ team_designation_form.date_time.value|default:team_designation_form.date_time.initial|date:'Y-m-d H:i' }}" 
+																			readonly
+																		   required>
+																</div>
+																<div class="button-wrapper">
+																	<button type="submit" class="btn-submit">Submit</button>
+																</div>
+															</form>
+														</div>
+													</div>
+												
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+
+									
+									<div class="tab-pane fade" id="tab7" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Room Type</h4>
+												</div>
+												<div class="container">
+													<div class="booking-form">
+														<h2 class="text-center mb-4">Room Type</h2>
+														<form id="room-type-form" method="post" data-url="{% url 'admin-panel:room_type' %}">
+															{% csrf_token %}
+														
+															<div class="mb-4">
+																<label for="name" class="form-label">Room Type</label>
+																<input type="text" 
+																	   class="form-control" 
+																	   id="name" 
+																	   name="name" 
+																	   placeholder="Enter room type" 
+																	   required>
+															</div>
+															<div class="room-type-options" style="display: flex; align-items: center;gap: 20px;">
+																<!-- Bed Type Options -->
+																<div class="mb-3">
+																	<!-- <label class="form-label">Bed Type</label> -->
+																	<div class="form-check">
+																		<input class="form-check-input" type="radio" name="bed_type" id="bed type" value="bed type" required>
+																		<label class="form-check-label ms-2" for="bed type">
+																			 Bed Type
+																		</label>
+																	</div>
+																   
+																</div>
+													   
+																<!-- Conference Room Option -->
+																<div class="mb-3">
+
+																	<div class="form-check">
+																		<input class="form-check-input" type="radio" name="bed_type" id="conference" value="conference">
+																		<label class="form-check-label ms-2" for="conference">
+																			Conference
+																		</label>
+																	</div>
+																</div>
+															</div>
+															<div class="mb-4">
+																<label for="available_from" class="form-label">Available From</label>
+																<input type="datetime-local" 
+																	   class="form-control" 
+																	   id="available_from" 
+																	   name="available_from" 
+																	   value="{{ form.available_from.value|default:form.available_from.initial|date:'Y-m-d H:i' }}" 
+																		readonly
+																	   required>
+															</div>
+														
+															<div class="button-wrapper">
+																<button type="submit" class="btn-submit">Submit</button>
+															</div>
+														</form>
+														
+														{% if error %}
+															<div class="alert alert-danger mt-3">{{ error }}</div>
+														{% endif %}
+													</div>
+												</div>
+											</div>
+										</div>
+									
+									</div>
+									
+									
+									<div class="tab-pane fade" id="tab8" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Bookings</h4>
+												</div>
+												<div class="table-responsive">
+													<table class="table" id="booking-table" data-url="{% url 'admin-panel:ajax_booking_list' %}">
+														<thead>
+															<tr>
+																<th>ID</th>
+																<th>Room Type</th>
+																<th>Check-in</th>
+																<th>Check-out</th>
+																<th>Total Amount</th>
+																<th>Actions</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td colspan="6" class="text-center">Loading Bookings...</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="tab-pane fade" id="tab9" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Calender</h4>
+												</div>
+												<div class="row">
+													<div class="container">
+														<div class="form-container">
+															<div class="header">
+																<h2>Holiday Calendar</h2>
+																<!-- <p class="text-muted">Add your events and occasions</p> -->
+															</div>
+															
+															<form id="eventform" method="post" data-url="{% url 'admin-panel:create_event' %}">
+																<div class="mb-3">
+																	<label for="occasion" class="form-label">Occasion</label>
+																	<input type="text" class="form-control" id="occasion" name="occasion" required>
+																</div>
+																
+																<div class="mb-3">
+																	<label for="startDate" class="form-label">Start Date</label>
+																	<input type="date" class="form-control" name="start_date" id="startDate" required>
+																</div>
+																
+																<div class="mb-3">
+																	<label for="endDate" class="form-label">End Date</label>
+																	<input type="date" class="form-control" name="end_date" id="endDate" required>
+																</div>
+																
+																<div style="display: flex;align-items: center;justify-content: center;" ><button type="submit" class="btn btn-primary">Add Event</button></div>
+															</form>
+															
+															<div class="events-list" id="eventsList">
+																<!-- Events will be added here -->
+															</div>
+														</div>
+													</div>
+					+								
+	</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tab10" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Features</h4>
+												</div>
+												<div class="row">
+
+													
+														<div class="container py-5" style="width: 700px;">
+															<div class="feature-form-card">
+																<!-- Form Header -->
+																<div class="form-header" style="display: flex;align-items: center;justify-content: start;gap: 5px;padding: 8px;padding-top: 18px;">
+																	<div class="feature-icon">
+																		<i class="fas fa-plus"></i>
+																	</div>
+																	<h3 style="color: white;">Add New Feature</h3>
+																	<!-- <p class="mb-0">Add and configure new features for your hotel</p> -->
+																</div>
+													
+																<!-- Form Body -->
+																<div class="p-4">
+																	<form id="featureForm" method="post" enctype="multipart/form-data" data-url="{% url 'admin-panel:create_feature' %}">
+																		<!-- Basic Information -->
+																		{% csrf_token %}
+																		<div class="row mb-4">
+																			<div class="col-md-12">
+																				<label class="form-label">Feature Name</label>
+																				<input type="text" class="form-control" name="name" placeholder="e.g., Swimming Pool">
+																			</div>
+																			
+																		</div>
+													
+																		<!-- Description -->
+																		<div class="mb-4">
+																			<label class="form-label">Description</label>
+																			<textarea class="form-control" rows="3" name="description" placeholder="Describe the feature..."></textarea>
+																		</div>
+													
+																		<!-- Feature Image -->
+																		<div class="mb-4">
+																			<label class="form-label">Feature Icon</label>
+																			<div class="feature-preview" id="dropZone">
+																				<i class="fas fa-cloud-upload-alt mb-3" style="font-size: 2rem; color: #1a73e8;"></i>
+																				<p class="mb-0">Drag & drop your Icon image here or <span class="text-primary">browse</span></p>
+																				<input type="file" id="fileInput" name="image" hidden accept="image/*">
+																				<div id="imagePreview" class="mt-3" style="display: none;">
+																					<img src="" alt="Preview" style="max-width: 200px;">
+																				</div>
+																			</div>
+																		</div>
+
+
+													
+																		
+													
+																		<!-- Submit Button -->
+																		<div class="text-center">
+																			<!-- <button type="button" class="btn btn-light me-2">Cancel</button> -->
+																			<button type="submit" class="btn btn-light me-2"  style="background-color: darkblue;color: white;">Save
+																				<!-- <i class="fas fa-save me-2"></i>Save -->
+																			</button>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<!-- <div class="tab-pane fade" id="tab11" role="tabpanel">
+                                        <div class="team-overview">
+                                            <div class="team-details lh-card-team-content">
+                                                <div class="lh-card-header">
+                                                    <h4 class="lh-card-title">Team Add View</h4>
+                                                </div>
+                                                   
+                                            </div>
+                                        </div>
+                                    </div>-->
+  
+ 
+ 
+                                    <div class="tab-pane fade" id="tab12" role="tabpanel">
+                                        <div class="team-overview">
+                                            <div class="team-details lh-card-team-content">
+                                                <div class="lh-card-header">
+                                                    <h4 class="lh-card-title">Team Designation List</h4>
+                                                </div>
+
+												<div class="container py-5">
+													<div class="card">
+													  <div class="card-header1 d-flex justify-content-center align-items-center">
+														<i class="fas fa-users team-icon"></i>
+														<span>Team Designation List</span>
+													  </div>
+													  <div class="card-body">
+														{% for team_designation in team_designation_list %}
+
+														<div class="designation-item" data-item-id="{{ team_designation.id }}">
+															<div class="info-section">
+															<span class="role-badge ceo-badge">{{ team_designation.designation }}</span> 
+															<div class="timestamp ms-3">
+															  <i class="far fa-clock"></i>
+															  <span>{{ team_designation.date_time }}</span>
+															</div>
+														  </div>
+														  {% if team_designation.id %}
+														  	<button onclick="deleteItem('/admin-panel/team-designation/{{ team_designation.id }}/delete/', {{ team_designation.id }}, 'Team Designation')"
+																	class="btn btn-danger btn-sm">
+																<i class="fas fa-trash-alt"></i> Delete
+															</button>
+												  
+
+														  {% else %}
+														  <button class="btn btn-danger btn-sm" disabled>
+															  <i class="fas fa-trash-alt"></i> Invalid ID
+														  </button>
+														  {% endif %}
+														
+														  
+														</div>
+														{% empty %}
+															<li>No team designations available.</li>
+														{% endfor %}
+														<!-- <ul>
+															{% for team_designation in team_designation_list %}
+																<li>{{ team_designation.designation }} - {{ team_designation.date_time }}
+																	<button class="btn btn-danger btn-sm delete-button" data-id="{{ team_designation.id }}">Delete</button>
+																</li>
+																{% empty %}
+																<li>No team designations available.</li>
+															{% endfor %}
+														</ul> -->
+													  </div>
+													</div>
+												  </div>
+
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+ 
+ 
+ 
+                                    <div class="tab-pane fade" id="tab13" role="tabpanel">
+                                        <div class="team-overview">
+                                            <div class="team-details lh-card-team-content">
+                                                <div class="lh-card-header">
+                                                    <h4 class="lh-card-title">Room Type List</h4>
+                                                </div>
+                                                <!-- <div class="row"> -->
+													<ul>
+														{% for room_type in room_type_list %}
+														<div class="room-card" data-item-id="{{ room_type.id }}">
+															<div class="room-header">
+																<div><span class="badge-premium">{{ room_type.name }}</span></div>
+																<div class="header-actions">
+																	<button onclick="deleteItem('/admin-panel/room-type/{{ room_type.id }}/delete/', {{ room_type.id }}, 'Room Type')"
+																			class="btn btn-danger btn-sm">
+																		<i class="fas fa-trash-alt"></i> Delete
+																	</button>
+																</div>
+															</div>
+															<div class="room-type-body">
+																<div><strong>Available From:</strong> {{ room_type.available_from }}</div>
+																<div><strong>Bed Type:</strong> {{ room_type.bed_type }}</div>
+															</div>
+														</div>
+														{% empty %}
+														<li>No room types available.</li>
+														{% endfor %}
+													</ul>
+													
+                                                   
+                                                <!-- </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+ 
+ 
+                                    <div class="tab-pane fade" id="tab14" role="tabpanel">
+                                        <div class="team-overview">
+                                            <div class="team-details lh-card-team-content">
+                                                <div class="card">
+													<div class="card-header d-flex justify-content-between align-items-center">
+														<div>
+															<h3 class="mb-0 text-white"><i class="fas fa-calendar-alt me-2"></i>Holidays List</h3>
+														</div>
+														<div>
+															<span class="badge bg-light text-dark">2025</span>
+														</div>
+													</div>
+													<ul>
+														{% for event in events %}
+														<div class="holiday-item" data-item-id="{{ event.id }}">
+															<div>
+																<div class="holiday-name">
+																	<i class="fas fa-calendar-day calendar-icon"></i>{{ event.occasion }}
+																</div>
+																<div class="holiday-date mt-2">
+																	From: {{ event.start_date }} to {{ event.end_date }}
+																</div>
+															</div>
+															<button onclick="deleteItem('/admin-panel/event/{{ event.id }}/delete/', {{ event.id }}, 'Event')"
+																	class="btn btn-danger btn-sm">
+																<i class="fas fa-trash-alt"></i> Delete
+															</button>
+
+														</div>
+															<!-- <li>{{ event.occasion }} - From: {{ event.start_date }} to {{ event.end_date }}
+																<button class="btn btn-danger btn-sm delete-button" data-id="{{ event.id }}"><i class="fas fa-trash-alt me-1"></i>Delete</button>
+
+															</li> -->
+														{% empty %}
+															<li>No events available.</li>
+														{% endfor %}
+													</ul>
+												</div>
+                                            </div>
+                                        </div>
+                                    </div>
+ 
+                                    <div class="tab-pane fade" id="tab15" role="tabpanel">
+                                        <div class="team-overview">
+                                            <div class="team-details lh-card-team-content">
+                                                <div class="card">
+													<div class="card-header d-flex justify-content-between align-items-center">
+														<div>
+															<i class="fas fa-list-check me-2"></i>Features List
+														</div>
+													  
+													</div>
+													<ul id="featureList">
+														{% for feature in features_list %}
+														<div class="feature-item" data-item-id="{{ feature.id }}">
+															<div class="feature-info">
+																<img src="{{ feature.image.url }}" alt="Business feature" class="feature-image">
+																<div class="feature-text">
+																	<div class="feature-name">{{ feature.name }}</div>
+																	<div class="feature-id">{{ feature.description }}</div>
+																</div>
+															</div>
+															<div class="feature-actions">
+																<button onclick="deleteItem('/admin-panel/feature/{{ feature.id }}/delete/', {{ feature.id }}, 'Feature')"
+																		class="btn btn-danger btn-sm">
+																	<i class="fas fa-trash-alt"></i> Delete
+																</button>		
+															</div>
+														</div>
+															<!-- <li>
+																<strong>{{ feature.name }}</strong> - {{ feature.category }}
+																<br> {{ feature.description }}
+																<br> <img src="{{ feature.image.url }}" width="100">
+																<button class="btn btn-danger btn-sm delete-button" data-id="{{ feature.id }}">Delete</button>
+
+															</li> -->
+														{% empty %}
+															<li>No features available.</li>
+														{% endfor %}
+													</ul>
+												</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="tab16" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">About Form</h4>
+												</div>
+												<!-- <div class="row"> -->
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-lg-8 col-md-10">
+                                                            <div class="card shadow">
+                                                                <div class="card-header">
+                                                                    <h3 class="mb-0"><i class="fas fa-users me-2"></i>About Us Information</h3>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <form id="aboutUsForm" method="POST" enctype="multipart/form-data" data-url="{% url 'admin-panel:about_us_submit' %}">
+                                                                        {% csrf_token %}
+                                                                        <!-- Add this near your form -->
+                                                                        <div class="mb-4">
+                                                                            <div class="section-title">
+                                                                                <i class="fas fa-image"></i> Upload Image
+                                                                            </div>
+                                                                            <div class="text-center">
+                                                                                <div class="preview-container mx-auto" id="drop-area">
+                                                                                    <div class="upload-placeholder text-center">
+                                                                                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                                                                        <div class="upload-text">Drag & drop an image or click to browse</div>
+                                                                                    </div>
+                                                                                    <img id="preview-image" class="preview-image" src="" alt="Preview" style="display: none;">
+                                                                                </div>
+                                                                                
+                                                                                <label for="file-upload" class="custom-file-upload">
+                                                                                    <i class="fas fa-upload"></i> Choose Image
+                                                                                </label>
+                                                                                <input type="file" id="file-upload" name="image" >
+                                                                                <p id="file-name" class="mt-2 text-muted small">No file chosen</p>
+                                                                                
+                                                                                <div class="upload-instruction">
+                                                                                    <i class="fas fa-info-circle"></i>
+                                                                                    Recommended: JPG, PNG or GIF, at least 800x600px
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                        <div class="mb-4">
+                                                                            <div class="section-title">
+                                                                                <i class="fas fa-heading"></i> Title
+                                                                            </div>
+                                                                            <div class="form-floating">
+                                                                                <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" required maxlength="100">
+                                                                                <label for="title">Enter a captivating title</label>
+                                                                            </div>
+                                                                            <div class="character-counter">
+                                                                                <span id="title-character-count">0</span>/100
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                        <div class="mb-4">
+                                                                            <div class="section-title">
+                                                                                <i class="fas fa-align-left"></i> Description
+                                                                            </div>
+                                                                            <div class="form-floating">
+                                                                                <textarea class="form-control" id="description" name="description" style="height: 150px" placeholder="Enter description" required maxlength="500"></textarea>
+                                                                                <label for="description">Share your story</label>
+                                                                            </div>
+                                                                            <div class="character-counter">
+                                                                                <span id="description-character-count">0</span>/500
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end btn-group">
+                                                                            <button type="button" class="btn btn-secondary me-md-2" id="resetBtn">
+                                                                                <i class="fas fa-undo me-1"></i> Reset
+                                                                            </button>
+                                                                            <button type="submit" class="btn btn-primary">
+
+                                                                                <i class="fas fa-paper-plane me-1"></i> Submit
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+                                                                    
+                                                                    <div class="success-message" id="successMessage">
+                                                                        <div class="success-icon">
+                                                                            <i class="fas fa-check-circle"></i>
+                                                                        </div>
+                                                                        <h4>Form Submitted Successfully!</h4>
+                                                                        <p>Your About Us information has been saved.</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+													
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+
+
+									<!-- aboutlistview -->
+									<div class="tab-pane fade" id="tab17" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">About Listview</h4>
+												</div>
+												<div class="row">
+													<div class="col-md-12">
+														<!-- data-url stores the API endpoint -->
+														<div class="container aboutlistview_container" id="aboutList" data-url="{% url 'admin-panel:about_us_list' %}">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- end aboutlistview -->
+
+
+									<!--service form-->
+									<div class="tab-pane fade" id="tab18" role="tabpanel">
+																			<div class="team-overview">
+																				<div class="team-details lh-card-team-content">
+																					<div class="lh-card-header">
+																						<h4 class="lh-card-title">Service form</h4>
+																					</div>
+																					<!-- <div class="row"> -->
+																						<div class="row">
+																							<div class="col-md-12">
+																								<div class="form-container">
+																									<div class="header">
+																										<h2 class="text-center"><i class="fas fa-concierge-bell me-2"></i>Hotel Service Management</h2>
+																									</div>
+																									
+																										<form id="serviceForm" method="POST" enctype="multipart/form-data">
+																											{% csrf_token %}
+																											<div class="row mb-4">
+																												<div class="col-md-4">
+																													<label for="iconUpload" class="form-label">Service Icon</label>
+																													<div class="icon-preview" id="iconPreview">
+																														<i class="fas fa-upload fa-2x text-muted"></i>
+																													</div>
+																													<input type="file" class="form-control" id="iconUpload" name="icon" accept="image/*">
+																													<div class="form-text">Upload an icon for this service (max 1MB)</div>
+																												</div>
+																												<div class="col-md-8">
+																													<div class="mb-3">
+																														<label for="serviceName" class="form-label">Service Name</label>
+																														<input type="text" class="form-control" id="serviceName" name="name" placeholder="Enter service name" required>
+																													</div>
+																													<div class="mb-3">
+																														<label for="serviceDescription" class="form-label">Service Description</label>
+																														<textarea class="form-control" id="serviceDescription" name="description" rows="3" placeholder="Enter service description" required></textarea>
+																													</div>
+																												</div>
+																											</div>
+																											
+																											<div class="mb-4">
+																												<label for="imageUpload" class="form-label">Service Image</label>
+																												<div class="image-preview" id="imagePreview">
+																													<i class="fas fa-image fa-3x text-muted"></i>
+																												</div>
+																												<input type="file" class="form-control" id="imageUpload" name="image" accept="image/*">
+																												<div class="form-text">Upload a high-quality image for this service (max 5MB)</div>
+																											</div>
+																											
+																											<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+																												<button type="button" class="btn btn-secondary me-md-2" id="resetBtn">Reset</button>
+																												<button type="submit" class="btn btn-primary">Save Service</button>
+																											</div>
+																										</form>
+																								</div>
+																							</div>
+
+																						</div>
+																						
+																					<!-- </div> -->
+																				</div>
+																			</div>
+																		</div>
+									<!--end service form-->
+
+									<!--Service listview -->
+									<div class="tab-pane fade" id="tab19" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Service Listview</h4>
+												</div>
+												<!-- <div class="row"> -->
+													<div class="services-container">
+														<div class="services-header">
+															<h2 class="services-title">Hotel Services</h2>
+														</div>
+														<div id="serviceList" data-url="{% url 'admin-panel:fetch_services' %}"></div>
+														<div class="services-list"></div> <!-- ✅ This is required -->
+
+														<!-- Service 1 -->
+															<!-- <div class="service-item">
+																<div class="service-icon-container">
+																	<img src="{% static 'assets/img/restaurant/2.png' %}" alt="Room Service Icon" class="service-icon">
+																</div>
+																<div class="service-info">
+																	<h4 class="service-name">Room Service</h4>
+																	<p class="service-description">24/7 premium room service available for all guests with a wide selection of dining options.</p>
+																</div>
+																<div class="service-image-container">
+																	<img src="{% static 'assets/img/restaurant/2.png' %}" alt="Room Service" class="service-image">
+																</div>
+																<div class="service-actions">
+																	<div class="delete-btn1">
+																		<i class="fas fa-trash"></i>
+																	</div>
+																</div>
+															</div> -->
+															
+														
+														</div>
+													</div>
+													
+												<!-- </div> -->
+											</div>
+										</div>
+
+									<!--end service listview-->
+
+									<!--Facilityes form-->
+									<div class="tab-pane fade" id="tab20" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Facilities Form</h4>
+												</div>
+												<div class="row">
+													<div class="col-md-12">
+														<div class="card">
+															<div class="card-header">
+																<h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Add New Facility</h5>
+															</div>
+															<div class="card-body p-4">
+																<form method="POST" id="facilityForm" action="{% url 'admin-panel:save_facility' %}" enctype="multipart/form-data" class="facility-form">
+																	{% csrf_token %}
+																	
+																	<div class="form-group mb-3">
+																		<label for="{{ form.name.id_for_label }}" class="form-label">Facility Name</label>
+																		<input type="text" 
+																			name="name" 
+																			id="{{ form.name.id_for_label }}" 
+																			class="form-control {% if form.name.errors %}is-invalid{% endif %}"
+																			placeholder="Enter facility name"
+																			required>
+																		{% if form.name.errors %}
+																		<div class="invalid-feedback">
+																			{{ form.name.errors }}
+																		</div>
+																		{% endif %}
+																	</div>
+																
+																	<div class="form-group mb-3">
+																		<label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+																		<textarea name="description" 
+																				id="{{ form.description.id_for_label }}" 
+																				class="form-control {% if form.description.errors %}is-invalid{% endif %}"
+																				rows="4"
+																				placeholder="Enter facility description"
+																				required></textarea>
+																		{% if form.description.errors %}
+																		<div class="invalid-feedback">
+																			{{ form.description.errors }}
+																		</div>
+																		{% endif %}
+																	</div>
+																
+																	<div class="form-group mb-3">
+																		<label for="{{ form.image.id_for_label }}" class="form-label">Facility Image</label>
+																		<input type="file" 
+																			name="image" 
+																			id="{{ form.image.id_for_label }}" 
+																			class="form-control {% if form.image.errors %}is-invalid{% endif %}"
+																			accept="image/*">
+																		{% if form.image.errors %}
+																		<div class="invalid-feedback">
+																			{{ form.image.errors }}
+																		</div>
+																		{% endif %}
+																		<small class="form-text text-muted">Upload a facility image (optional)</small>
+																	</div>
+																
+																	<div class="form-group mb-3">
+																		<label for="{{ form.icon.id_for_label }}" class="form-label">Facility Icon</label>
+																		<input type="file" 
+																			name="icon" 
+																			id="{{ form.icon.id_for_label }}" 
+																			class="form-control {% if form.icon.errors %}is-invalid{% endif %}"
+																			accept="image/*">
+																		{% if form.icon.errors %}
+																		<div class="invalid-feedback">
+																			{{ form.icon.errors }}
+																		</div>
+																		{% endif %}
+																		<small class="form-text text-muted">Upload a facility icon (optional)</small>
+																	</div>
+																
+																	<div class="form-group">
+																		<button type="submit" class="btn btn-primary">Save Facility</button>
+																	</div>
+																</form>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!--end facilities form-->
+
+									<!--facilitites Listview-->
+									<div class="tab-pane fade" id="tab21" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Facilities Listview</h4>
+												</div>
+												<!-- <div class="row"> -->
+													<div class="container mt-4">
+														<h2 class="page-title">Facility Management</h2>
+														
+														
+
+														<div id="facilitiesList" data-url="{% url 'admin-panel:fetch_facilities' %}"></div>
+
+														<div id="facilitiesList">
+															<!-- Sample facility cards -->
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!--end facilities Listview-->
+
+									<!--faq form-->
+									<div class="tab-pane fade" id="tab22" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">FAQ Form</h4>
+												</div>
+												<!-- <div class="row"> -->
+									<div class="row">
+										<div class="col-md-12">
+											<div class="container form-wrapper">
+												<div class="form-container">
+													<div class="form-header">
+														<div class="form-icon">
+															<i class="fas fa-question-circle"></i>
+														</div>
+														<h2>Frequently Asked Questions</h2>
+														<p class="text-white">FAQ Questions & Answers for Hotel Management System </p>
+													</div>
+													<div class="form-body"> <form id="faqForm" method="POST" action="{% url 'admin-panel:save_faq' %}" onsubmit="return false;">
+															{% csrf_token %}
+															<div class="section">
+																<h3 class="section-title"><i class="fas fa-list-alt"></i> FAQ Questions & Answers</h3>
+																<p class="text-muted mb-4">FAQ Questions & Answers for Hotel Management System</p>
+																
+																<div id="faq-items-container">
+																	<!-- Initial FAQ Item -->
+																	<div class="faq-item fade-in">
+																		<span class="faq-badge">FAQ #1</span>
+																		<span class="remove-faq d-none"><i class="fas fa-times"></i></span>
+																		
+																		<div class="mb-3">
+																			<label for="question1" class="form-label">Question</label>
+																			<input type="text" class="form-control" id="question1" name="question1" placeholder="Enter a frequently asked question" required>
+																		</div>
+																		
+																		<div class="mb-3">
+																			<label for="answer1" class="form-label">Answer</label>
+																			<textarea class="form-control" id="answer1" name="answer1" rows="3" placeholder="Provide a comprehensive answer to the question" required></textarea>
+																		</div>
+																	</div>
+																</div>
+																
+															</div>
+															
+															<div class="d-grid" style="display: flex;justify-content: center;">
+																<button type="submit"  class="btn btn-submit">
+																	<i class="fas fa-paper-plane me-2"></i>Submit FAQ Entries
+																</button>
+															</div>
+														</form>
+													
+													</div>
+													<!-- <div class="form-footer">
+														<p class="text-muted mb-0">Your contribution helps us improve our FAQ section and provide better support</p>
+													</div> -->
+												</div>
+											</div>
+										</div>
+									</div>
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+									<!--end faq form-->
+
+
+									<!--faq listview-->
+									<div class="tab-pane fade" id="tab23" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">FAQ Listview</h4>
+												</div>
+												<!-- <div class="row"> -->
+												
+													<div class="faq-container">
+														<!-- FAQ Header -->
+														<div class="faq-header">
+															<div class="question-icon">
+																<i class="bi bi-question-lg"></i>
+															</div>
+															<h1 class="faq-title">Frequently Asked Questions</h1>
+															<p class="faq-subtitle text-white">FAQ Questions & Answers for Hotel Management System</p>
+														</div>
+														
+														<!-- FAQ Content -->
+														<div class="faq-list" id="faqList" data-url="{% url 'admin-panel:fetch_faqs' %}" data-delete-base="{% url 'admin-panel:delete_faq' 0 %}"></div>
+
+													</div>
+												<!-- </div> -->
+											</div>
+										</div>
+									</div>
+									<!--end faq listview-->
+
+									<!--SPA Form-->
+									<div class="tab-pane fade" id="tab24" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">SPA Form</h4>
+												</div>
+												<!-- <div class="row"> -->
+													<div class="row">
+														<div class="col-md-12">
+															<!-- Form Container -->
+															<div class="form-container">
+																<div class="form-header">
+																	<h5 class="mb-0">SPA Form</h5>
+																</div>
+																
+																<form id="spaForm" method="POST" action="{% url 'admin-panel:save_spa' %}" enctype="multipart/form-data">
+																	{% csrf_token %}
+																	<div class="mb-3">
+																		<label for="name" class="form-label">Name</label>
+																		<input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+																	</div>
+																	
+																	<div class="row mb-3">
+																		<div class="col-md-6">
+																			<label for="fromTime" class="form-label">From Time</label>
+																			<div class="input-group">
+																				<input type="time" class="form-control" id="fromTime" name="fromTime" required>
+																				<span class="input-group-text"><i class="bi bi-clock"></i></span>
+																			</div>
+																		</div>
+																		<div class="col-md-6">
+																			<label for="toTime" class="form-label">To Time</label>
+																			<div class="input-group">
+																				<input type="time" class="form-control" id="toTime" name="toTime" required>
+																				<span class="input-group-text"><i class="bi bi-clock"></i></span>
+																			</div>
+																		</div>
+																	</div>
+																	
+																	<div class="mb-3">
+																		<label for="description" class="form-label">Description</label>
+																		<textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter description" required></textarea>
+																	</div>
+																	
+																	<div class="mb-3">
+																		<label for="image" class="form-label">Upload Image</label>
+																		<input type="file" class="form-control" id="image" name="image" accept="image/*">
+																		<div class="image-upload-area mt-2">
+																			<span id="imagePreviewText">No image selected</span>
+																			<img id="imagePreview" style="display: none; max-width: 100%; max-height: 200px; margin-top: 10px;">
+																		</div>
+																	</div>
+																	
+																	<div class="text-center">
+																		<button type="submit" class="btn btn-primary submit-btn px-4">Submit</button>
+																	</div>
+																</form>
+															</div>
+															
+															
+														</div>  
+													</div>
+											</div>
+										</div>
+									</div>
+									<!--end SPA FORM END-->
+
+									<!--SPA listview-->
+									<div class="tab-pane fade" id="tab25" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">SPA Listview</h4>
+												</div>
+													<div class="container spa_container" >
+														<div class="list-container">
+															<div class="list-view-header">
+																<h4 class="mb-0">SPA List</h4>
+															</div>
+														
+															<div class="list-view" id="spaList" data-url="{% url 'admin-panel:fetch_spa_list' %}" data-delete-url-base="{% url 'admin-panel:delete_spa' 0 %}"></div>
+
+															<div class="list-view">
+															</div>
+														</div>
+													</div>
+															
+											</div>
+										</div>
+									</div>
+
+									<div class="tab-pane fade" id="tab26" role="tabpanel">
+										<div class="team-overview">
+											<div class="team-details lh-card-team-content">
+												<div class="lh-card-header">
+													<h4 class="lh-card-title">Map Embed Form</h4>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12">
+														<!-- Form Container -->
+														<div class="form-container">
+															<div class="form-header">
+																<h5 class="mb-0">Embed Google Map</h5>
+															</div>
+
+															<form id="mapForm" method="POST" data-url="{% url 'admin-panel:save_map_embed' %}">
+																{% csrf_token %}
+																<div class="mb-3">
+																	<label for="embed_code" class="form-label">Embed Code</label>
+																	<textarea class="form-control" id="embed_code" name="embed_code" rows="5" placeholder="<iframe src='...'></iframe>" required>{{ embed_code }}</textarea>
+																</div>
+
+																<div class="text-center">
+																	<button type="submit" class="btn btn-primary px-4 submit-btn">Save</button>
+																</div>
+															</form>
+
+															{% if embed_code %}
+															<div class="mt-4">
+																<h6>Map Preview</h6>
+																<div class="border rounded p-3 bg-light">
+																	{{ embed_code|safe }}
+																</div>
+															</div>
+															{% endif %}
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="modal fade delete-modal" id="deleteConfirmModal" tabindex="1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<form id="deleteForm" method="POST">
+						{% csrf_token %}
+						<div class="modal-body text-center">
+							<div class="delete-icon">
+								<i class="ri-error-warning-line"></i>
+							</div>
+							<h4>Are you sure?</h4>
+							<p>Do you really want to delete this record? This process cannot be undone.</p>
+							<div class="button-row">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+								<button class="btn btn-danger delete-team-member-btn" 
+								data-member-id="{% if team.id %}{{ team.id }}{% else %}0{% endif %}" 
+								data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">
+									Delete
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div> -->
+
+
+	<!-- Add this modal HTML at the end of your file, before closing body tag -->
+	<div class="modal fade delete-modal" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body text-center">
+					<div class="delete-icon">
+						<i class="ri-error-warning-line"></i>
+					</div>
+					<h4>Are you sure?</h4>
+					<p>Do you really want to delete this feature? This process cannot be undone.</p>
+					<div class="button-row">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-danger" id="confirmDeleteFeature">Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	
+	
+	
+<!-- Bootstrap CSS -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
+<!-- Bootstrap JS Bundle (includes Popper) -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+
+
+<!-- <script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const searchInput = document.querySelector(".search-input");
+		const navItems = document.querySelectorAll(".nav-tabs .nav-item");
+	
+		searchInput.addEventListener("input", function () {
+			const searchValue = this.value.toLowerCase();
+	
+			navItems.forEach(item => {
+				const span = item.querySelector("span");
+				if (span) {
+					const text = span.textContent.toLowerCase();
+					if (text.includes(searchValue)) {
+						item.style.display = "block";
+					} else {
+						item.style.display = "none";
+					}
+				}
+			});
+		});
+	});
+
+	const noResults = document.getElementById("no-results");
+
+		searchInput.addEventListener("input", function () {
+			const searchValue = this.value.toLowerCase();
+			let found = false;
+
+			navItems.forEach(item => {
+				const span = item.querySelector("span");
+				if (span && span.textContent.toLowerCase().includes(searchValue)) {
+					item.style.display = "block";
+					found = true;
+				} else {
+					item.style.display = "none";
+				}
+			});
+
+			noResults.style.display = found ? "none" : "block";
+		});
+
+	</script> -->
+	
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			// Debug logging
+			console.log("Script loaded");
+			
+			const searchInput = document.querySelector('.search-input');
+			const navItems = document.querySelectorAll('.nav-tabs .nav-item');
+			const tabContents = document.querySelectorAll('.tab-content .tab-pane');
+			
+			if (!searchInput || !navItems.length) {
+				console.error("Search elements not found");
+				return;
+			}
+
+			// Create no results message
+			const noResults = document.createElement('div');
+			noResults.className = 'no-results';
+			noResults.textContent = 'No matching tabs found';
+			document.querySelector('.nav-tabs').parentNode.appendChild(noResults);
+
+			// Function to get tab text
+			function getTabText(tab) {
+				const span = tab.querySelector('span');
+				if (span) {
+					return span.textContent.trim().toLowerCase();
+				}
+				return tab.textContent.trim().toLowerCase();
+			}
+
+			// Function to show/hide tabs based on search
+			function filterTabs(searchTerm) {
+				let found = false;
+				searchTerm = searchTerm.toLowerCase().trim();
+
+				navItems.forEach(tab => {
+					const tabText = getTabText(tab);
+					if (tabText.includes(searchTerm)) {
+						tab.style.display = 'block';
+						found = true;
+					} else {
+						tab.style.display = 'none';
+					}
+				});
+
+				// Show/hide no results message
+				noResults.style.display = found ? 'none' : 'block';
+
+				// If no search term, show all tabs
+				if (!searchTerm) {
+					navItems.forEach(tab => {
+						tab.style.display = 'block';
+					});
+					noResults.style.display = 'none';
+				}
+			}
+
+			// Search input event listener
+			searchInput.addEventListener('input', function() {
+				filterTabs(this.value);
+			});
+
+			// Initial state - show all tabs
+			filterTabs('');
+		});
+	</script>
+	
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+    const logoSettingsForm = document.getElementById("logoSettingsForm");
+
+    if (logoSettingsForm) {
+        logoSettingsForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const url = this.getAttribute("data-url");  // 👈 Get URL from data attribute
+
+            $.ajax({
+                url: url,  // 👈 Use dynamic URL
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                success: function (data) {
+                    console.log("Success response:", data);
+
+                    if (data.success) {
+                        // Update preview images
+                        if (data.favicon_url) {
+                            $('#faviconPreview').attr('src', data.favicon_url);
+                        }
+                        if (data.light_logo_url) {
+                            $('#lightLogoPreview').attr('src', data.light_logo_url);
+                        }
+                        if (data.dark_logo_url) {
+                            $('#darkLogoPreview').attr('src', data.dark_logo_url);
+                        }
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: data.message || "Logo settings updated!",
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: data.error || "Something went wrong.",
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", xhr.responseText);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: "Something went wrong on the server.",
+                    });
+                }
+            });
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    function previewImage(inputElement, previewId) {
+        console.log(`Preview function called for ${previewId}`);
+        const file = inputElement.files[0];
+        if (file) {
+            console.log(`File selected for ${previewId}:`, file.name);
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const previewElement = document.getElementById(previewId);
+                if (previewElement) {
+                    console.log(`Found preview element for ${previewId}`);
+                    previewElement.src = e.target.result;
+                    console.log(`Successfully updated preview for: ${previewId}`);
+                } else {
+                    console.error(`Preview element #${previewId} not found in DOM`);
+                }
+            };
+            reader.readAsDataURL(file);
+        } else {
+            console.log(`No file selected for ${previewId}`);
+        }
+    }
+
+    // Setup event listeners
+    const inputs = [
+        { inputId: "favicon", previewId: "faviconPreview" },
+        { inputId: "lightLogo", previewId: "lightLogoPreview" },
+        { inputId: "darkLogo", previewId: "darkLogoPreview" }
+    ];
+
+    // Debug: Check if elements exist in DOM
+    console.log("Checking for input elements in DOM:");
+    inputs.forEach(({ inputId, previewId }) => {
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(previewId);
+        console.log(`Input ${inputId}:`, input ? "Found" : "Not found");
+        console.log(`Preview ${previewId}:`, preview ? "Found" : "Not found");
+    });
+
+    inputs.forEach(({ inputId, previewId }) => {
+        const input = document.getElementById(inputId);
+        if (input) {
+            console.log(`Found input element for ${inputId}`);
+            // Add a more specific event listener for light logo
+            if (inputId === "lightLogo") {
+                console.log("Setting up special event listener for light logo");
+                input.addEventListener("change", function () {
+                    console.log(`Special change event triggered for ${inputId}`);
+                    previewImage(this, previewId);
+                });
+            } else {
+                input.addEventListener("change", function () {
+                    console.log(`Change event triggered for ${inputId}`);
+                    previewImage(this, previewId);
+                });
+            }
+        } else {
+            console.error(`Input element #${inputId} not found in DOM`);
+        }
+    });
+});
+
+
+		</script>
+
+
+
+
+<script>
+	// Add this script to handle dark/light mode toggle
+	document.addEventListener('DOMContentLoaded', function() {
+		// Get the current mode from localStorage or default to light
+		const currentMode = localStorage.getItem('lh-mode') || 'light';
+		document.body.setAttribute('data-lh-mode', currentMode);
+		
+		// Update the mainCss link to match the current mode
+		const mainCss = document.getElementById('mainCss');
+		if (mainCss) {
+			if (currentMode === 'dark') {
+				mainCss.href = "{% static 'assets/css/style.dark.css' %}";
+			} else {
+				mainCss.href = "{% static 'assets/css/style.css' %}";
+			}
+		}
+		
+		// Listen for mode toggle events
+		document.querySelectorAll('.lh-mode-switch').forEach(function(element) {
+			element.addEventListener('click', function() {
+				const newMode = document.body.getAttribute('data-lh-mode') === 'dark' ? 'light' : 'dark';
+				document.body.setAttribute('data-lh-mode', newMode);
+				localStorage.setItem('lh-mode', newMode);
+				
+				// Update CSS link
+				if (mainCss) {
+					if (newMode === 'dark') {
+						mainCss.href = "{% static 'assets/css/style.dark.css' %}";
+					} else {
+						mainCss.href = "{% static 'assets/css/style.css' %}";
+					}
+				}
+			});
+		});
+	});
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+<!--logo preview code-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to handle file input changes and update preview
+        function setupFilePreview(inputId, previewId) {
+            const fileInput = document.getElementById(inputId);
+            const previewImg = document.getElementById(previewId);
+            
+            if (fileInput && previewImg) {
+                fileInput.addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            previewImg.src = e.target.result;
+                            previewImg.style.display = 'block'; // Ensure the preview is visible
+                        };
+                        
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
+            }
+        }
+        
+        // Setup preview for each file input
+        setupFilePreview('favicon', 'faviconPreview');
+        setupFilePreview('lightLogo', 'lightLogoPreview');
+        setupFilePreview('darkLogo', 'darkLogoPreview');
+    });
+</script>
+{% endblock %}
+

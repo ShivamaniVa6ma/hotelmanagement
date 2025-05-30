@@ -1,0 +1,101 @@
+{% extends 'sub_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Subscription Status</h3>
+                </div>
+                <div class="card-body">
+                    {% if subscription %}
+                    <div class="subscription-info">
+                        <div class="text-center mb-4">
+                            <h4 class="mb-2">{{ subscription.subscription_plan.name }}</h4>
+                            <span class="badge bg-success">Active</span>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="info-group mb-3">
+                                    <label class="text-muted">Subscription End Date</label>
+                                    <p class="h5">{{ end_date|date:"F d, Y" }}</p>
+                                </div>
+                                <div class="info-group mb-3">
+                                    <label class="text-muted">Days Remaining</label>
+                                    <p class="h5">{{ days_remaining }} days</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="info-group mb-3">
+                                    <label class="text-muted">Monthly Price</label>
+                                    <p class="h5">${{ subscription.subscription_plan.monthly_price }}</p>
+                                </div>
+                                <div class="info-group mb-3">
+                                    <label class="text-muted">Company Name</label>
+                                    <p class="h5">{{ subscription.company_name }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="features-section">
+                            <h5 class="mb-3">Your Plan Features:</h5>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <ul class="feature-list">
+                                        {% for feature in features %}
+                                        <li><i class="fas fa-check text-success"></i> {{ feature }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a href="{% url 'subscription:upgrade_subscription' subscription_user_id=subscription.id %}">Upgrade Subscription</a>
+                            <!-- {% if subscription_user_id %} -->
+                            <!-- <p>Subscription User ID: {{ subscription_user_id }}</p> -->
+                            <!-- {% else %}
+                                <p>No subscription found.</p>
+                            {% endif %} -->
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="text-center">
+                        <p class="lead">No active subscription found.</p>
+                        <a href="{% url 'subscription:plans' %}" class="btn btn-primary">View Available Plans</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .feature-list {
+        list-style: none;
+        padding-left: 0;
+    }
+    .feature-list li {
+        padding: 8px 0;
+        margin-bottom: 8px;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .feature-list li:last-child {
+        border-bottom: none;
+    }
+    .feature-list i {
+        margin-right: 10px;
+    }
+    .info-group label {
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+    }
+    .info-group p {
+        margin-bottom: 0;
+    }
+</style>
+{% endblock %}

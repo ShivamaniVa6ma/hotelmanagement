@@ -1,0 +1,1279 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Best Luxurious Hotel Booking Template.">
+        <meta name="keywords"
+            content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern">
+        <meta name="author" content="ashishmaraviya">
+    
+        <title>Luxurious - Hotel Booking HTML Template + Admin Dashboard</title>
+
+        <!-- App favicon -->
+
+	<!-- Icon CSS -->
+	<link href="{% static 'assets/css/vendor/materialdesignicons.min.css' %}" rel="stylesheet">
+	<link href="{% static 'assets/css/vendor/remixicon.css' %}" rel="stylesheet">
+
+	<!-- Vendor CSS -->
+	<link href="{% static 'assets/css/vendor/datatables.bootstrap5.min.css' %}" rel='stylesheet'>
+	<link href="{% static 'assets/css/vendor/responsive.datatables.min.css' %}" rel='stylesheet'>
+	<link href="{% static 'assets/css/vendor/daterangepicker.css' %}" rel='stylesheet'>
+	<link href="{% static 'assets/css/vendor/simplebar.css' %}" rel="stylesheet">
+	<link href="{% static 'assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'assets/css/vendor/apexcharts.css' %}" rel="stylesheet">
+	<link href="{% static 'assets/css/vendor/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet">
+
+	<!-- Main CSS -->
+	<link id="mainCss" href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css"> -->
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    
+        <!-- App favicon -->
+        {% if favicon_url %}
+            <link rel="shortcut icon" href="{{ favicon_url }}" type="image/x-icon">
+        {% else %}
+            <link rel="shortcut icon" href="{% static 'assets/img/favicon/favicon.png' %}">
+        {% endif %}
+
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Icon CSS -->
+        <link href="{% static '/assets/css/vendor/materialdesignicons.min.css' %}" rel="stylesheet">
+        <link href="{% static '/assets/css/vendor/remixicon.css' %}" rel="stylesheet">
+        <!-- Add this to base.html -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+        <!-- Vendor -->
+        <link href="{% static '/assets/css/vendor/datatables.bootstrap5.min.css' %}" rel='stylesheet'>
+        <link href="{% static '/assets/css/vendor/responsive.datatables.min.css' %}" rel='stylesheet'>
+        <link href="{% static '/assets/css/vendor/daterangepicker.css' %}" rel='stylesheet'>
+        <link href="{% static '/assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static '/assets/css/vendor/apexcharts.css' %}" rel="stylesheet">
+        <link href="{% static '/assets/css/vendor/simplebar.css' %}" rel="stylesheet">
+        <link href="{% static '/assets/css/vendor/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+        <!-- Main CSS -->
+        <link id="themeStylesheet" href="{% static '/assets/css/style.css' %}" rel="stylesheet">
+        
+    <style>
+
+/* notifications */
+ 
+  .notification-container {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .notification-item {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 12px;
+            padding: 15px;
+            transition: transform 0.2s ease;
+        }
+        .notification-item:hover {
+            transform: scale(1.02);
+        }
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .notification-sender {
+            font-weight: 600;
+            color: #333;
+        }
+        .notification-time {
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        .notification-subject {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        .notification-message {
+            color: #212529;
+            line-height: 1.6;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .offcanvas-header {
+            background-color: #007bff;
+            color: white;
+        }
+        .offcanvas-header .btn-close {
+            background-color: white;
+            opacity: 1;
+        }
+ 
+/* notifications end */
+
+
+        .logo-img {
+            max-width: 150px;  /* Set maximum width */
+            height: auto;      /* Maintain aspect ratio */
+        }
+        .user-type {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 5px;
+            padding: 2px 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .details {
+            padding: 15px;
+        }
+
+        .details h6 {
+            margin-bottom: 5px;
+        }
+
+        .details p {
+            margin-bottom: 3px;
+        }
+
+
+   /*darkmode and light mode styles*/
+        :root {
+            /* Light theme variables */
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --sidebar-bg: #ffffff;
+            --header-bg: #ffffff;
+            --input-bg: #ffffff;
+            --dropdown-bg: #ffffff;
+            --hover-bg: #f8f9fa;
+        }
+        
+        [data-theme="dark"] {
+            /* Dark theme variables */
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --card-bg: #2d2d2d;
+            --border-color: #404040;
+            --sidebar-bg: #2d2d2d;
+            --header-bg: #2d2d2d;
+            --input-bg: #333333;
+            --dropdown-bg: #333333;
+            --hover-bg: #404040;
+            --footer-bg: #1f1f1f;
+        --footer-text: #ffffff;
+        --footer-border: #404040;
+        --footer-link: #cccccc;
+        }
+        
+        /* Apply theme to elements */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .lh-sidebar {
+            background-color: var(--sidebar-bg);
+            border-color: var(--border-color);
+        }
+        
+        .lh-header {
+            background-color: #330481;
+            border-color: var(--border-color);
+        }
+        
+        .lh-card {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+        }
+        
+        .table {
+            color: var(--text-color);
+        }
+        
+        .table thead th {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border-color: var(--border-color);
+        }
+        
+        .table tbody td {
+            color: var(--text-color);
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+        }
+        
+        .dropdown-menu {
+            background-color: var(--dropdown-bg);
+            border-color: var(--border-color);
+        }
+        
+        .dropdown-item {
+            color: var(--text-color);
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--hover-bg);
+        }
+        
+        .form-control {
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border-color: var(--border-color);
+        }
+        
+        .lh-notify-bar, .lh-tools-sidebar {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+        }
+        
+        .nav-link {
+            color: var(--text-color);
+        }
+        
+        .nav-link:hover {
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .lh-sb-list a {
+            color: var(--text-color);
+        }
+        
+        .lh-sb-list a:hover {
+            background-color: var(--hover-bg);
+        }    
+        
+        
+        
+        /* Add these new footer-specific styles */
+        .lh-footer {
+        background-color: var(--footer-bg);
+        color: var(--footer-text);
+        border-color: var(--footer-border);
+        transition: all 0.3s ease;
+        }
+        
+        .lh-footer a {
+        color: var(--footer-link);
+        }
+        
+        .lh-footer a:hover {
+        color: var(--text-color);
+        }
+        
+        .lh-footer .border-top {
+        border-color: var(--footer-border) !important;
+        }
+        
+        .lh-footer .copyright {
+        color: var(--footer-text);
+        }
+        
+        /* Add to your existing CSS */
+        .lh-footer {
+        background-color: var(--footer-bg);
+        color: var(--footer-text);
+        border-color: var(--footer-border);
+        }
+        
+        .lh-footer p,
+        .lh-footer span,
+        .lh-footer h1,
+        .lh-footer h2,
+        .lh-footer h3,
+        .lh-footer h4,
+        .lh-footer h5,
+        .lh-footer h6 {
+        color: var(--footer-text);
+        }
+        
+        .lh-footer a {
+        color: var(--footer-link);
+        }
+        
+        .lh-footer a:hover {
+        color: var(--text-color);
+        opacity: 0.8;
+        }
+        
+        .lh-footer .border-top,
+        .lh-footer .border-bottom {
+        border-color: var(--footer-border) !important;
+        }
+        
+        /*end dark mode and light mode styles*/
+ 
+
+    </style>
+        <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </head>
+<body data-lh-mode="light">
+    <main class="wrapper sb-default">
+            <!-- Loader -->
+            <div id="lh-overlay">
+                <div class="lh-ellipsis">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+    <!-- header -->
+    <header class="lh-header">
+        <div class="container-fluid">
+            <div class="lh-header-items">
+                <div class="left-header">
+                    <a href="javascript:void(0)" class="lh-toggle-sidebar">
+                        <span class="outer-ring">
+                            <span class="inner-ring"></span>
+                        </span>
+                    </a>
+                    <div class="header-search-box">
+                        <div class="header-search-drop">
+                            <a href="javascript:void(0)" class="open-search"><i class="ri-search-line"></i></a>
+                            <form class="lh-search">
+                                <input class="search-input" type="text" placeholder="Search...">
+                                <a href="javascript:void(0)" class="search-btn"><i class="ri-search-line"></i>
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-header">
+                    <div class="lh-right-tool lh-flag-drop language">
+                        <div class="lh-hover-drop">
+                            <div class="lh-hover-tool">
+                                <img class="flag" src="{% static '/assets/img/flag/us.png' %}" alt="flag">
+                            </div>
+                            <div class="lh-hover-drop-panel right">
+                                <ul>
+                                    <!-- {% if subscription_user_id %} -->
+                                        <!-- <a href="{% url 'subscription:upgrade_subscription' subscription_user_id=subscription.id %}">Upgrade Subscription</a> -->
+                                    <!-- {% else %}
+                                        <p>No subscription found.</p>
+                                    {% endif %} -->
+                                </ul>
+                                <!-- <ul>
+                                    <li><a href="javascript:void(0)"><img class="flag" src="{% static '/assets/img/flag/us.png' %}"
+                                                alt="flag">English</a></li>
+                                    <li><a href="javascript:void(0)"><img class="flag" src="{% static '/assets/img/flag/in.png' %}"
+                                                alt="flag">Hindi</a></li>
+                                    <li><a href="javascript:void(0)"><img class="flag" src="{% static '/assets/img/flag/de.png' %}"
+                                                alt="flag"> Deutsch</a></li>
+                                    <li><a href="javascript:void(0)"><img class="flag" src="{% static '/assets/img/flag/it.png' %}"
+                                                alt="flag">Italian</a></li>
+                                    <li><a href="javascript:void(0)"><img class="flag" src="{% static '/assets/img/flag/jp.png' %}"
+                                                alt="flag">Japanese</a></li>
+                                </ul> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lh-right-tool apps">
+                        <div class="lh-hover-drop">
+                            <div class="lh-hover-tool">
+                                <i class="ri-apps-2-line"></i>
+                            </div>
+                            <div class="lh-hover-drop-panel right apps">
+                                <h6 class="title">Apps</h6>
+                                <ul>
+                                    <li><a href="javascript:void(0)"><img class="app" src="{% static '/assets/img/apps/1.png' %}"
+                                                alt="flag">Github</a></li>
+                                    <li><a href="javascript:void(0)"><img class="app" src="{% static '/assets/img/apps/2.png' %}"
+                                                alt="flag">Dribbble</a></li>
+                                    <li><a href="javascript:void(0)"><img class="app" src="{% static '/assets/img/apps/3.png' %}"
+                                                alt="flag">Dropbox</a></li>
+                                    <li><a href="javascript:void(0)"><img class="app" src="{% static '/assets/img/apps/4.png' %}"
+                                                alt="flag">Figma</a></li>
+                                    <li><a href="javascript:void(0)"><img class="app" src="{% static '/assets/img/apps/5.png' %}"
+                                                alt="flag">Meta</a></li>
+                                    <li><a href="javascript:void(0)"><img class="app" src="{% static '/assets/img/apps/6.png' %}"
+                                                alt="flag">Adsense</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lh-right-tool display-screen">
+                        <a class="lh-screen full" href="javascript:void(0)"><i class="ri-fullscreen-line"></i></a>
+                        <a class="lh-screen reset" href="javascript:void(0)"><i
+                                class="ri-fullscreen-exit-line"></i></a>
+                    </div>
+                    <div class="container mt-5">
+                        <!-- Notification Bell Icon -->
+                        <div class="position-relative">
+                            <button id="notificationIcon" class="btn btn-primary position-relative">
+                                <i class="bi bi-bell-fill"></i>
+                                <span id="notificationBadge" class="badge bg-danger rounded-circle notification-badge">0</span>
+                            </button>
+                        </div>
+                    </div>
+                 
+                    <!-- Notification Offcanvas -->
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="notificationOffcanvas" aria-labelledby="notificationOffcanvasLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="notificationOffcanvasLabel">
+                                <i class="bi bi-bell-fill me-2"></i>Notifications
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body notification-container" id="notificationContainer">
+                            <!-- Notifications will be dynamically inserted here -->
+                        </div>
+                    </div>
+                    <!-- <div class="lh-right-tool">
+                        <a class="lh-notify" href="javascript:void(0)">
+                            <i class="ri-notification-2-line"></i>
+                            <span class="label"></span>
+                        </a>
+                    </div> -->
+                    <div class="lh-right-tool">
+                        <!-- Add this before your existing tools -->
+                        <button id="themeToggle" class="btn btn-outline-primary me-2">
+                          <i class="ri-moon-line dark-icon"></i>
+                          <i class="ri-sun-line light-icon" style="display: none;"></i>
+                        </button>
+                    </div>
+                    <!-- <div class="lh-right-tool display-dark">
+                        <a class="lh-mode" href="javascript:void(0)" id="toggleMode">
+                            <i class="ri-moon-clear-line dark-icon"></i>
+                            <i class="ri-sun-line light-icon" style="display: none;"></i>
+                        </a>
+                    </div> -->
+                    <div class="lh-right-tool lh-user-drop">
+                        <div class="lh-hover-drop">
+                            <div class="lh-hover-tool">
+                                <img class="user" src="{% static '/assets/img/user/1.jpg' %}" alt="user">
+                            </div>
+                            <div class="lh-hover-drop-panel right">
+                                <div class="details">
+                                    <h6>{{ request.user.get_full_name|default:request.user.username }}</h6>
+                                    <p>{{ request.user.email }}</p>
+                                    <p class="user-type">Role: {% if request.user.is_superuser %}Super Admin{% else %}{{ request.user.user_type|title }}{% endif %}</p>
+                                </div>
+                                <ul class="border-top">
+                                    <li><a href="team-profile.html">Profile</a></li>
+                                    <li><a href="#">Help</a></li>
+                                    <li><a href="#">Messages</a></li>
+                                    <li><a href="team-update.html">Settings</a></li>
+                                </ul>
+                                <ul class="border-top">
+                                    <li>
+                                        <form id="logout-form" action="{% url 'admin-panel:logout' %}" method="POST">
+                                            {% csrf_token %}
+                                            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                <i class="ri-logout-circle-r-line"></i>Logout
+                                            </a>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- sidebar -->
+    <div class="lh-sidebar-overlay"></div>
+    <div class="lh-sidebar" data-mode="light">
+        <div class="lh-sb-logo">
+            {% if light_logo_url %}
+                <!-- <a href="{% url 'admin-panel:index' %}"><img id="lightLogo" src="{{ light_logo_url }}" alt="Light Logo" class="logo-img"></a> -->
+                <a href="{% url 'admin-panel:index' %}" class="sb-full"><img id="lightLogo" src="{{ light_logo_url }}" alt="Light Logo" class="logo-img"></a>
+
+                <a href="{% url 'admin-panel:index' %}" class="sb-collapse"><img src="{{ favicon_url }}" alt="logo"></a>
+            {% else %}
+                <a href="{% url 'admin-panel:index' %}" class="sb-full"><img src="{% static '/assets/img/logo/full-logo.png' %}" alt="logo"></a>
+                <a href="{% url 'admin-panel:index' %}" class="sb-collapse"><img src="{% static '/assets/img/logo/collapse-logo.png' %}" alt="logo"></a>
+            {% endif %}
+        </div>
+        <div class="lh-sb-wrapper">
+            <div class="lh-sb-content">
+                <ul class="lh-sb-list">
+                    <li class="lh-sb-item"></li>
+                            <a href="{% url 'admin-panel:index' %}" class="lh-page-link">
+                                <i class="ri-dashboard-3-line"></i><span class="condense">
+                                    Dashboard</span>
+                            </a>
+                    </li>
+                    <!-- <li class="lh-sb-item sb-drop-item">
+                        <a href="javascript:void(0)" class="lh-drop-toggle">
+                            <i class="ri-dashboard-3-line"></i>
+                            <span class="condense">Dashboard<i class="drop-arrow ri-arrow-down-s-line"></i></span>
+                        </a>
+                        <ul class="lh-sb-drop condense">
+                            <li class="list"><a href="{% url 'admin-panel:index' %}" class="lh-page-link drop"><i
+                                        class="ri-git-commit-line"></i>Report</a></li>
+                        </ul>
+                    </li> -->
+                    <li class="lh-sb-item-separator"></li>
+                    <li class="lh-sb-title condense">Apps</li>
+                    <li class="lh-sb-item sb-drop-item">
+                        <a href="javascript:void(0)" class="lh-drop-toggle">
+                            <i class="ri-shield-user-line"></i><span class="condense">Staff<i
+                                    class="drop-arrow ri-arrow-down-s-line"></i></span></a>
+                        <ul class="lh-sb-drop condense">
+                                <!-- <li><a href="team-profile.html" class="lh-page-link drop"><i
+                                        class="ri-git-commit-line"></i>Team Profile</a></li> -->
+                            <li><a href="{% url 'admin-panel:add_team_member' %}" class="lh-page-link drop"><i
+                                        class="ri-git-commit-line"></i>Team Add</a></li>
+                             <!-- <li><a href="team-update.html" class="lh-page-link drop"><i
+                                        class="ri-git-commit-line"></i>Team Update</a></li> --> 
+                            <li><a href="{% url 'admin-panel:team_list' %}" class="lh-page-link drop"><i
+                                        class="ri-git-commit-line"></i>Team List</a></li>
+                        </ul>
+                    </li>						
+                    <li class="lh-sb-item-separator"></li>
+                    <li class="lh-sb-title condense">Hotel | Resort</li>
+                    <li class="lh-sb-item">
+                        <a href="{% url 'admin-panel:guest_list' %}" class="lh-page-link">
+                            <i class="ri-group-line"></i><span class="condense"><span
+                                    class="hover-title">Guest</span> </span>
+                        </a>
+                    </li>
+                        <!-- <li class="lh-sb-item">
+                        <a href="guest-details.html" class="lh-page-link">
+                            <i class="ri-user-search-line"></i><span class="condense"><span class="hover-title">Guest
+                                    Details</span> </span>
+                        </a>
+                    </li> -->
+                    <li class="lh-sb-item">
+                        <a href="{% url 'admin-panel:room_list' %}" class="lh-page-link">
+                            <i class="ri-home-8-line"></i><span class="condense"><span
+                                    class="hover-title">Rooms</span> </span>
+                        </a>
+                    </li>
+                    <li class="lh-sb-item">
+                        <a href="{% url 'admin-panel:booking_list' %}" class="lh-page-link">
+                            <i class="ri-contacts-book-line"></i><span class="condense"><span
+                                    class="hover-title">Bookings</span> </span>
+                        </a>
+                    </li>
+                    <li class="lh-sb-item">
+                        <a href="{% url 'admin-panel:invoice' %}" class="lh-page-link">
+                            <i class="ri-bill-line"></i><span class="condense"><span
+                                    class="hover-title">Invoice</span> </span>
+                        </a>
+                    </li>
+                    <li class="lh-sb-item-separator"></li>
+                    <li class="lh-sb-title condense">Restaurant</li>
+                    <li class="lh-sb-item">
+                        <a href="{% url 'admin-panel:menu' %}" class="lh-page-link">
+                            <i class="ri-restaurant-2-line"></i><span class="condense"><span
+                                    class="hover-title">Menu</span> </span>
+                        </a>
+                    </li>
+                    <li class="lh-sb-item">
+                        <a href="{% url 'admin-panel:menu-add' %}" class="lh-page-link">
+                            <i class="ri-restaurant-2-line"></i><span class="condense"><span
+                                    class="hover-title">Add Menu</span> </span>
+                        </a>
+                    </li>
+                    <li class="lh-sb-item">
+                        <a href="{% url 'admin-panel:orders' %}" class="lh-page-link">
+                            <i class="ri-bookmark-3-line"></i><span class="condense"><span
+                                    class="hover-title">Orders</span> </span>
+                        </a>
+                    </li>
+                    <li class="lh-sb-item-separator"></li>
+                    <li class="lh-sb-title condense">Extra</li>
+                    <li class="lh-sb-item sb-drop-item">
+                        <a href="javascript:void(0)" class="lh-drop-toggle">
+                            <i class="ri-pages-line"></i><span class="condense">Authentication<i
+                                    class="drop-arrow ri-arrow-down-s-line"></i></span></a>
+                        <ul class="lh-sb-drop condense">
+                            <li><a href="{% url 'admin-panel:login' %}" class="lh-page-link drop"><i
+                                        class="ri-git-commit-line"></i>Login</a></li>
+                            <li><a href="{% url 'admin-panel:signup' %}" class="lh-page-link drop"><i
+                                        class="ri-git-commit-line"></i>Signup</a></li>
+                        <!-- <li><a href="forgot.html" class="lh-page-link drop"><i
+                                        class="ri-git-commit-line"></i>Forgot password</a></li>
+                            <li><a href="reset-password.html" class="lh-page-link drop"><i
+                                        class="ri-git-commit-line"></i>Reset password</a></li> -->
+                        </ul>
+                    </li>
+                    <!-- <li class="lh-sb-item sb-drop-item">
+                        <a href="javascript:void(0)" class="lh-drop-toggle">
+                            <i class="ri-service-line"></i><span class="condense">Service pages<i
+                                    class="drop-arrow ri-arrow-down-s-line"></i></span></a>
+                        <ul class="lh-sb-drop condense">
+                            <li><a href="404-error-page.html" class="lh-page-link drop"><i
+                                        class="ri-git-commit-line"></i>404 error</a></li>
+                            <li><a href="maintenance.html" class="lh-page-link drop"><i
+                                        class="ri-git-commit-line"></i>Maintenance</a></li>
+                        </ul>
+                    </li> -->
+                    <!-- <li class="lh-sb-item-separator"></li>
+                    <li class="lh-sb-title condense">Elements</li>
+                    <li class="lh-sb-item">
+                        <a href="remix-icons.html" class="lh-page-link">
+                            <i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
+                                    icons</span></span></a>
+                    </li>
+                    <li class="lh-sb-item">
+                        <a href="material-icons.html" class="lh-page-link">
+                            <i class="mdi mdi-material-ui"></i><span class="condense"><span
+                                    class="hover-title">Material icons</span></span></a>
+                    </li>
+                    <li class="lh-sb-item">
+                        <a href="alert-popup.html" class="lh-page-link">
+                            <i class="ri-file-warning-line"></i><span class="condense"><span
+                                    class="hover-title">Alert Popup</span></span></a>
+                    </li> -->
+
+                    <li class="lh-sb-item-separator"></li>
+                    <li class="lh-sb-title condense">Settings</li>
+                    <li class="lh-sb-item">
+                        <a href="{% url 'admin-panel:settings_view' %}" class="lh-page-link">
+                            <i class="ri-magic-line"></i><span class="condense"><span
+                                    class="hover-title">Settings</span></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notify sidebar -->
+    <div class="lh-notify-bar-overlay"></div>
+		<div class="lh-notify-bar">
+			<div class="lh-bar-title">
+				<h6>Notifications<span class="label">12</span></h6>
+				<a href="javascript:void(0)" class="close-notify"><i class="ri-close-line"></i></a>
+			</div>
+			<div class="lh-bar-content">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link active" id="alert-tab" data-bs-toggle="tab" data-bs-target="#alert"
+							type="button" role="tab" aria-controls="alert" aria-selected="true">Alert</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages"
+							type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>
+					</li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="alert" role="tabpanel" aria-labelledby="alert-tab">
+						<div class="lh-alert-list">
+							<ul>
+								<li>
+									<div class="icon lh-alert">
+										<i class="ri-alarm-warning-line"></i>
+									</div>
+									<div class="detail">
+										<div class="title">Your final report is overdue</div>
+										<p class="time">Just now</p>
+										<p class="message">Please submit your quarterly report before - June 15.</p>
+									</div>
+								</li>
+								<li>
+									<div class="icon lh-warn">
+										<i class="ri-error-warning-line"></i>
+									</div>
+									<div class="detail">
+										<div class="title">Your Booking campaign is stop!</div>
+										<p class="time">5:45AM - 25/05/2024</p>
+										<p class="message">Please submit your quarterly report before Jun 15.</p>
+									</div>
+								</li>
+								<li>
+									<div class="icon lh-success">
+										<i class="ri-check-double-line"></i>
+									</div>
+									<div class="detail">
+										<div class="title">Your payment is successfully processed</div>
+										<p class="time">9:20PM - 19/06/2024</p>
+										<p class="message">Check your account wallet. if there is any issue, create
+											support ticket.</p>
+									</div>
+								</li>
+								<li>
+									<div class="icon lh-warn">
+										<i class="ri-error-warning-line"></i>
+									</div>
+									<div class="detail">
+										<div class="title">Budget threshold exceeded!</div>
+										<p class="time">4:15AM - 01/04/2024</p>
+										<p class="message">Budget threshold was exceeded for project "Luxurious" B612
+											elements.</p>
+									</div>
+								</li>
+								<li>
+									<div class="icon lh-warn">
+										<i class="ri-close-line"></i>
+									</div>
+									<div class="detail">
+										<div class="title">Booking was decline!</div>
+										<p class="time">4:15AM - 01/04/2024</p>
+										<p class="message">Your booking "B126" is declined by Theresa Mayeras.</p>
+									</div>
+								</li>
+								<li>
+									<div class="icon lh-success">
+										<i class="ri-check-double-line"></i>
+									</div>
+									<div class="detail">
+										<div class="title">Your payment is successfully processed</div>
+										<p class="time">9:20PM - 19/06/2024</p>
+										<p class="message">Check your account wallet. if there is any issue, create
+											support ticket.</p>
+									</div>
+								</li>
+								<li class="check"><a class="lh-primary-btn" href="#">View all</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+						<div class="lh-message-list">
+							<ul>
+								<li>
+									<a href="#" class="reply">Reply</a>
+									<div class="user">
+										<img src="{% static '/assets/img/user/9.jpg' %}" alt="user">
+										<span class="label online"></span>
+									</div>
+									<div class="detail">
+										<a href="#" class="name">Boris Whisli</a>
+										<p class="time">5:30AM, Today</p>
+										<p class="message">Hello, Room 204 need to be clean.</p>
+										<span class="download-files">
+											<span class="download">
+												<img src="{% static '/assets/img/room/1.png' %}" alt="image">
+												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
+											</span>
+											<span class="download">
+												<img src="{% static '/assets/img/room/2.png' %}" alt="image">
+												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
+											</span>
+											<span class="download">
+												<img src="{% static '/assets/img/room/3.png' %}" alt="image">
+												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
+											</span>
+										</span>
+									</div>
+								</li>
+								<li>
+									<a href="#" class="reply">Reply</a>
+									<div class="user">
+										<img src="{% static '/assets/img/user/8.jpg' %}" alt="user">
+										<span class="label offline"></span>
+									</div>
+									<div class="detail">
+										<a href="#" class="name">Frank N. Stein</a>
+										<p class="time">8:30PM, 05/12/2024</p>
+										<p class="message">Please take a look and get order from table 06.</p>
+									</div>
+								</li>
+								<li>
+									<a href="#" class="reply">Reply</a>
+									<div class="user">
+										<img src="{% static '/assets/img/user/7.jpg' %}" alt="user">
+										<span class="label busy"></span>
+									</div>
+									<div class="detail">
+										<a href="#" class="name">Frank N. Stein</a>
+										<p class="time">8:30PM, 05/12/2024</p>
+										<p class="message">Room 65 AC repair service is done.</p>
+										<span class="download-files">
+											<span class="download">
+												<img src="{% static '/assets/img/facilities/1.png' %}" alt="image">
+												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
+											</span>
+										</span>
+									</div>
+								</li>
+								<li>
+									<a href="#" class="reply">Reply</a>
+									<div class="user">
+										<img src="{% static '/assets/img/user/6.jpg' %}" alt="user">
+										<span class="label busy"></span>
+									</div>
+									<div class="detail">
+										<a href="#" class="name">Paige Turner</a>
+										<p class="time">4:30PM, 12/12/2024</p>
+										<p class="message">Take a Spa trainer interview.</p>
+									</div>
+								</li>
+								<li>
+									<a href="#" class="reply">Reply</a>
+									<div class="user">
+										<img src="{% static '/assets/img/user/5.jpg' %}" alt="user">
+										<span class="label busy"></span>
+									</div>
+									<div class="detail">
+										<a href="#" class="name">Allie Grater</a>
+										<p class="time">8:30PM, 05/12/2024</p>
+										<p class="message">Take marketing module task.</p>
+									</div>
+								</li>
+								<li class="check"><a class="lh-primary-btn" href="#">View all</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+          <!-- Main Content Area -->
+          <div class="container-fluid">
+            <div class="row">
+                <main class="col-md-12">
+                    <!-- {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %} -->
+
+                    {% if user.is_authenticated %}
+                        {% block content %}{% endblock %}
+                        <div class="active-subscription">
+                            {% if has_subscription %}
+                                <div class="subscription-info">
+                                    <span class="company">{{ company_name|default:"" }}</span>
+                                    {% if subscription_plan %}
+                                        <span class="plan">{{ subscription_plan.name|default:"" }}</span>
+                                    {% endif %}
+                                </div>
+                           
+                            {% endif %}
+                        </div> 
+                    {% else %}
+                        <div class="auth-content">
+                            {% block auth_content %}{% endblock %}
+                        </div>
+                    {% endif %}
+                </main>
+            </div>
+        </div>
+
+
+        <!-- Footer -->
+		<footer>
+			<div class="container-fluid" >
+				<div class="copyright">
+					<p class="mb-0" >© <script>document.write(new Date().getFullYear())</script> <a href="{% url 'admin-panel:index' %}" class="link">{{ site_name }}</a> – All Rights Reserved ||  Developed by <a href="https://ultrakeyit.in/" target="_blank" class="link" >Ultrakey It Solutions Private Limited </a>.</p>
+
+				</div>
+			</div>
+		</footer>
+
+        <div class="lh-tools-sidebar-overlay"></div>
+		<div class="lh-tools-sidebar">
+			<a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
+				<i class="ri-settings-4-line"></i>
+			</a>
+			<div class="lh-bar-title">
+				<h6>Tools</h6>
+				<a href="javascript:void(0)" class="close-tools"><i class="ri-close-line"></i></a>
+			</div>
+			<div class="lh-tools-detail">
+				<div class="lh-tools-block">
+					<h3>Modes</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item mode active" data-lh-mode-tool="light">
+							<img src="{% static '/assets/img/tools/light.png' %}" alt="light">
+							<p>light</p>
+						</div>
+						<div class="lh-tools-item mode" data-lh-mode-tool="dark">
+							<img src="{% static '/assets/img/tools/dark.png' %}" alt="dark">
+							<p>dark</p>
+						</div>
+					</div>
+				</div>
+				<div class="lh-tools-block">
+					<h3>Sidebar</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item sidebar active" data-sidebar-mode-tool="light">
+							<img src="{% static '/assets/img/tools/side-light.png' %}" alt="light">
+							<p>light</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="dark">
+							<img src="{% static '/assets/img/tools/side-dark.png' %}" alt="dark">
+							<p>dark</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-1">
+							<img src="{% static '/assets/img/tools/side-bg-1.png' %}" alt="background">
+							<p>Bg-1</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-2">
+							<img src="{% static '/assets/img/tools/side-bg-2.png' %}" alt="background">
+							<p>Bg-2</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-3">
+							<img src="{% static '/assets/img/tools/side-bg-3.png' %}" alt="background">
+							<p>Bg-3</p>
+						</div>
+						<div class="lh-tools-item sidebar" data-sidebar-mode-tool="bg-4">
+							<img src="{% static '/assets/img/tools/side-bg-4.png' %}" alt="background">
+							<p>Bg-4</p>
+						</div>
+					</div>
+				</div>
+				<div class="lh-tools-block">
+					<h3>Header</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item header active" data-header-mode="light">
+							<img src="{% static '/assets/img/tools/header-light.png' %}" alt="light">
+							<p>light</p>
+						</div>
+						<div class="lh-tools-item header" data-header-mode="dark">
+							<img src="{% static '/assets/img/tools/header-dark.png' %}" alt="dark">
+							<p>dark</p>
+						</div>
+					</div>
+				</div>
+				<div class="lh-tools-block">
+					<h3>Backgrounds</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item bg active" data-bg-mode="default">
+							<img src="{% static '/assets/img/tools/bg-0.png' %}" alt="default">
+							<p>Default</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-1">
+							<img src="{% static '/assets/img/tools/bg-1.png' %}" alt="bg-1">
+							<p>Bg-1</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-2">
+							<img src="{% static '/assets/img/tools/bg-2.png' %}" alt="bg-2">
+							<p>Bg-2</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-3">
+							<img src="{% static '/assets/img/tools/bg-3.png' %}" alt="bg-3">
+							<p>Bg-3</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-4">
+							<img src="{% static '/assets/img/tools/bg-4.png' %}" alt="bg-4">
+							<p>Bg-4</p>
+						</div>
+						<div class="lh-tools-item bg" data-bg-mode="bg-5">
+							<img src="{% static '/assets/img/tools/bg-5.png' %}" alt="bg-5">
+							<p>Bg-5</p>
+						</div>
+					</div>
+				</div>
+				<div class="lh-tools-block">
+					<h3>Box Design</h3>
+					<div class="lh-tools-info">
+						<div class="lh-tools-item box active" data-box-mode-tool="default">
+							<img src="{% static '/assets/img/tools/box-0.png' %}" alt="default">
+							<p>Default</p>
+						</div>
+						<div class="lh-tools-item box" data-box-mode-tool="box-1">
+							<img src="{% static '/assets/img/tools/box-1.png' %}" alt="box-1">
+							<p>Box-1</p>
+						</div>
+						<div class="lh-tools-item box" data-box-mode-tool="box-2">
+							<img src="{% static '/assets/img/tools/box-2.png' %}" alt="box-2">
+							<p>Box-2</p>
+						</div>
+						<div class="lh-tools-item box" data-box-mode-tool="box-3">
+							<img src="{% static '/assets/img/tools/box-3.png' %}" alt="box-3">
+							<p>Box-3</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+    <!-- <div class="container-fluid">
+        <div class="row">
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                
+            </main>
+        </div>
+    </div> -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Vendor Custom -->
+<script src="{% static '/assets/js/vendor/jquery-3.6.4.min.js' %}"></script>
+<script src="{% static '/assets/js/vendor/simplebar.min.js' %}"></script>
+<!-- <script src="{% static '/assets/js/vendor/bootstrap.bundle.min.js' %}"></script> -->
+<script src="{% static '/assets/js/vendor/apexcharts.min.js' %}"></script>
+<script src="{% static '/assets/js/vendor/jquery-jvectormap-1.2.2.min.js' %}"></script>
+<script src="{% static '/assets/js/vendor/jquery-jvectormap-world-mill-en.js' %}"></script>
+<!-- Data Tables -->
+<script src="{% static '/assets/js/vendor/jquery.datatables.min.js' %}"></script>
+<script src="{% static '/assets/js/vendor/datatables.bootstrap5.min.js' %}"></script>
+<script src="{% static '/assets/js/vendor/datatables.responsive.min.js' %}"></script>
+<!-- Caleddar -->
+<script src="{% static '/assets/js/vendor/jquery.simple-calendar.js' %}"></script>
+<!-- Date Range Picker -->
+<script src="{% static '/assets/js/vendor/moment.min.js' %}"></script>
+<script src="{% static '/assets/js/vendor/daterangepicker.js' %}"></script>
+<script src="{% static '/assets/js/vendor/date-range.js' %}"></script>
+
+<!-- Main Custom -->
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script> -->
+<script src="{% static 'assets/js/vendor/jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+
+<script src="{% static '/assets/js/main.js' %}"></script>
+<script src="{% static '/assets/js/data/dashboard-chart-data.js' %}"></script>
+<!-- Vendor Custom -->
+<!-- <script src="{% static 'assets/js/vendor/jquery-3.6.4.min.js' %}"></script> -->
+<script src="{% static 'assets/js/vendor/simplebar.min.js' %}"></script>
+<!-- <script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script> -->
+<script src="{% static 'assets/js/vendor/apexcharts.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/jquery-jvectormap-1.2.2.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/jquery-jvectormap-world-mill-en.js' %}"></script>
+<!-- Data Tables -->
+<script src="{% static 'assets/js/vendor/jquery.datatables.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/datatables.bootstrap5.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/datatables.responsive.min.js' %}"></script>
+<!-- Caleddar -->
+<script src="{% static 'assets/js/vendor/jquery.simple-calendar.js' %}"></script>
+<!-- Date Range Picker -->
+<script src="{% static 'assets/js/vendor/moment.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/daterangepicker.js' %}"></script>
+<script src="{% static 'assets/js/vendor/date-range.js' %}"></script>
+
+<!-- Main Custom -->
+<!-- <script src="{% static 'assets/js/main.js' %}"></script> -->
+<!-- <script>
+    $(document).ready(function() {
+    console.log(typeof $.fn.tooltip); // Should log "function" if Bootstrap is loaded correctly
+    if (typeof $.fn.tooltip === 'function') {
+        // Only initialize if the tooltip function is available
+        $('[data-toggle="tooltip"]').tooltip();
+    } else {
+        console.error('Tooltip function is not available.');
+    }
+});
+</script> -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleButton = document.getElementById('toggleMode');
+    const darkIcon = document.querySelector('.dark-icon');
+    const lightIcon = document.querySelector('.light-icon');
+    
+    toggleButton.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const header = document.querySelector('.lh-header');
+        const sidebar = document.querySelector('.lh-sidebar');
+        
+        header.classList.toggle('dark-mode');
+        sidebar.classList.toggle('dark-mode');
+        
+        // Toggle icons
+        darkIcon.style.display = darkIcon.style.display === 'none' ? 'block' : 'none';
+        lightIcon.style.display = lightIcon.style.display === 'none' ? 'block' : 'none';
+        
+        // Save preference
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    });
+    
+    // Load saved preference
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        header.classList.add('dark-mode');
+        sidebar.classList.add('dark-mode');
+        darkIcon.style.display = 'none';
+        lightIcon.style.display = 'block';
+    }
+});
+</script>
+
+<script>
+function handleLogout(event) {
+    event.preventDefault();
+    if (confirm('Are you sure you want to logout?')) {
+        document.getElementById('logout-form').submit();
+    }
+}
+
+// Add event listener to logout link
+document.addEventListener('DOMContentLoaded', function() {
+    const logoutLink = document.querySelector('a[href*="logout"]');
+    if (logoutLink) {
+        logoutLink.addEventListener('click', handleLogout);
+    }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Logout confirmation
+    const logoutForm = document.getElementById('logout-form');
+    if (logoutForm) {
+        logoutForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                this.submit();
+            }
+        });
+    }
+});
+</script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+
+<!--dark mode and light mode script-->
+ 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const themeToggle = document.getElementById('themeToggle');
+      const footer = document.querySelector('.lh-footer');
+     
+      // Initial theme check
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      applyTheme(currentTheme);
+     
+      // Theme toggle handler
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        applyTheme(newTheme);
+      });
+     
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        document.body.setAttribute('data-lh-mode', theme);
+        localStorage.setItem('theme', theme);
+       
+        if (footer) {
+          footer.classList.toggle('dark-mode', theme === 'dark');
+        }
+      }
+    });
+  </script>
+
+<!--end dark mode and light mode script-->
+
+<!-- notification -->
+<script>
+    // Notification Class
+    class Notification {
+        constructor(name, date, subject, message) {
+            this.name = name;
+            this.date = date;
+            this.subject = subject;
+            this.message = message;
+        }
+    }
+
+    // Notification Manager
+    class NotificationManager {
+        constructor() {
+            this.notifications = [];
+            this.notificationIcon = document.getElementById('notificationIcon');
+            this.notificationBadge = document.getElementById('notificationBadge');
+            this.notificationContainer = document.getElementById('notificationContainer');
+            this.offcanvas = new bootstrap.Offcanvas(document.getElementById('notificationOffcanvas'));
+
+            this.notificationIcon.addEventListener('click', () => this.showNotifications());
+        }
+
+        addNotification(notification) {
+            this.notifications.unshift(notification);
+            this.updateBadge();
+        }
+
+        updateBadge() {
+            this.notificationBadge.textContent = this.notifications.length;
+        }
+
+        showNotifications() {
+            // Clear previous notifications
+            this.notificationContainer.innerHTML = '';
+
+            // Render notifications
+            this.notifications.forEach(notification => {
+                const notificationElement = document.createElement('div');
+                notificationElement.classList.add('notification-item');
+                notificationElement.innerHTML = `
+                    <div class="notification-header">
+                        <div class="notification-sender">${notification.name}</div>
+                        <div class="notification-time">${notification.date}</div>
+                    </div>
+                    <div class="notification-subject">${notification.subject}</div>
+                    <div class="notification-message">${notification.message}</div>
+                `;
+                this.notificationContainer.appendChild(notificationElement);
+            });
+
+            // Show offcanvas
+            this.offcanvas.show();
+        }
+    }
+
+    // Initialize Notification Manager
+    const notificationManager = new NotificationManager();
+
+    // Example: Add some sample notifications
+    function addSampleNotifications() {
+        const sampleNotifications = [
+            new Notification(
+                "John Doe",
+                new Date().toLocaleString(),
+                "Meeting Reminder",
+                "Your team meeting is scheduled for 2 PM today. Please make sure to prepare your quarterly report."
+            ),
+            // new Notification(
+            //     "System",
+            //     new Date().toLocaleString(),
+            //     "Update Available",
+            //     "A new software update is ready to be installed. We recommend backing up your data before proceeding."
+            // )
+        ];
+
+        sampleNotifications.forEach(notification => {
+            notificationManager.addNotification(notification);
+        });
+    }
+
+    // Add sample notifications when page loads
+    addSampleNotifications();
+</script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- end notification -->
+
+</body>
+</html> 
