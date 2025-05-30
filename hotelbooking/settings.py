@@ -108,7 +108,10 @@ if DATABASE_URL:
         'default': dj_database_url.config(
             default=DATABASE_URL,
             conn_max_age=600,
-            ssl_require=True
+            engine='django.db.backends.mysql',
+            options={
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+            }
         )
     }
 else:
