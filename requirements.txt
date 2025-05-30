@@ -70,3 +70,4 @@ yarl==1.18.3
 zopfli==0.2.3.post1
 gunicorn==23.0.0
 whitenoise==6.9.0
+pymysql==1.1.1
