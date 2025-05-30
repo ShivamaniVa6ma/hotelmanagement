@@ -105,19 +105,14 @@ WSGI_APPLICATION = 'hotelbooking.wsgi.application'
 
 if DATABASE_URL:
     DATABASES = {
-        'default': {
-            **dj_database_url.config(
-                default=DATABASE_URL,
-                conn_max_age=600,
-                engine='django.db.backends.mysql'
-            ),
-            'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-            }
-        }
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True
+        )
     }
 else:
-    # fallback to local MySQL
+    # fallback to local MySQL for development
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
