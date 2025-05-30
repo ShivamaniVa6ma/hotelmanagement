@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-#+)fxqdjxv)j-4pl8nmar)00uisw2=_9a8sl(q$w*ed=-@ycy0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['hotelbooking.onrender.com']
+ALLOWED_HOSTS = ['hotel-management-w2xo.onrender.com', 'www.hotel-management-w2xo.onrender.com']
 
 
 # Application definition
