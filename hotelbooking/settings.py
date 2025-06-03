@@ -103,26 +103,41 @@ WSGI_APPLICATION = 'hotelbooking.wsgi.application'
 # }
 
 
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=True
-        )
+# if DATABASE_URL:
+#     DATABASES = {
+#         'default': dj_database_url.config(
+#             default=DATABASE_URL,
+#             conn_max_age=600,
+#             ssl_require=True
+#         )
+#     }
+# else:
+#     # fallback to local MySQL for development
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': 'hotelbloom',
+#             'USER': 'root',
+#             'PASSWORD': '1234',
+#             'HOST': 'localhost',
+#             'PORT': '3306',
+#         }
+#     }
+
+DATABASES = {
+    'default': dj_database_url.parse(
+        DATABASE_URL,
+        conn_max_age=600,
+        ssl_require=True
+    ) if DATABASE_URL else {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hotelbloom',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
-else:
-    # fallback to local MySQL for development
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'hotelbloom',
-            'USER': 'root',
-            'PASSWORD': '1234',
-            'HOST': 'localhost',
-            'PORT': '3306',
-        }
-    }
+}
 
 
 # Password validation

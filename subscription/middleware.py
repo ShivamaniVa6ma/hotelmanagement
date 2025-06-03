@@ -16,7 +16,7 @@ class SubscriptionMiddleware:
             r'^/admin-panel/(login|signup|forgot-password|reset-password)/$',
             r'^/admin-panel/invoice/[\w-]+/$',  # ✅ Add this for invoice detail view
             # Subscription URLs
-            r'^/subscription/(plans|cart/\d+|user-details/\d+/\d+|create-payment|payment-callback|payment-success|payment-failed|payment-cancel|create-plan|edit-plan/\d+|send-guest-otp|validate-guest-otp|cart/update-price|checkout|login|exceed|support|contact|exceed-cloud|clients|contact/submit|guest/register|fetch-pricing|upgrade/\d+|status|terms-and-condition|privacy-policy|refund-policy|invoice/[\w\-]+)/$',
+            r'^/subscription/(plans|cart/\d+|user-details/\d+/\d+|create-payment|bloomup|payment-callback|payment-success|payment-failed|payment-cancel|create-plan|edit-plan/\d+|send-guest-otp|validate-guest-otp|cart/update-price|checkout|login|exceed|support|contact|exceed-cloud|clients|contact/submit|guest/register|fetch-pricing|upgrade/\d+|status|terms-and-condition|privacy-policy|refund-policy|invoice/[\w\-]+)/$',
             r'^/subscription/$',
 
             # User panel URLs with dynamic company_name
