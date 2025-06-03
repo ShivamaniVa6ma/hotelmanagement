@@ -127,20 +127,26 @@ WSGI_APPLICATION = 'hotelbooking.wsgi.application'
 #         }
 #     }
 
+# DATABASES = {
+#     'default': dj_database_url.parse(
+#         DATABASE_URL,
+#         conn_max_age=600,
+#         ssl_require=True
+#     ) if DATABASE_URL else {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'hotelbloom',
+#         'USER': 'root',
+#         'PASSWORD': '1234',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
+# mysql://root:DxEBtDQjPNqpgfVCupvCndydvfsUOAXz@shortline.proxy.rlwy.net:34847/railway
 DATABASES = {
-    'default': dj_database_url.parse(
-        DATABASE_URL,
-        conn_max_age=600,
-        ssl_require=True
-    ) if DATABASE_URL else {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hotelbloom',
-        'USER': 'root',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
+    'default': dj_database_url.config(default='mysql://root:DxEBtDQjPNqpgfVCupvCndydvfsUOAXz@shortline.proxy.rlwy.net:34847/railway')
 }
+
 print("DATABASE_URL =>", DATABASE_URL)
 
 
