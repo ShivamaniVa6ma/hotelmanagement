@@ -228,7 +228,7 @@ AUTHENTICATION_BACKENDS = [
 RAZORPAY_KEY_ID = 'rzp_test_Bvq9kiuaq8gkcs'
 RAZORPAY_KEY_SECRET = 'qnN6ytUKNw6beVzQUw7OBiJM'
 
-SITE_URL = 'hotel-management-w2xo.onrender.com/'  # Change this to your domain
+SITE_URL = 'hotel-management-w2xo.onrender.com'  # Change this to your domain
 
 
 DEFAULT_LOGO_URL = '/static//hotel/assets/img/logo/logo.png'
