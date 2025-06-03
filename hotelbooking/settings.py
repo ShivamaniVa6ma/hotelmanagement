@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import dj_database_url
 
+import pymysql
+pymysql.install_as_MySQLdb()
+
 from pathlib import Path
 import os
 
@@ -138,6 +141,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+print("DATABASE_URL =>", DATABASE_URL)
 
 
 # Password validation
